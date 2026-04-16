@@ -1,0 +1,131 @@
+﻿#include "uidemo6.h"
+#include "ui_uidemo6.h"
+#include "quiwidget.h"
+#include "homepage.h"
+#include "alarmpage.h"
+#include "app.h"
+
+UIDemo6::UIDemo6(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::UIDemo6)
+{
+    ui->setupUi(this);
+    this->initForm();
+    QUIWidget::setFormInCenter(this);
+    
+    // 初始化双击标题栏最大化功能，默认启用
+    this->doubleClickMaximize = true;
+}
+
+UIDemo6::~UIDemo6()
+{
+    delete ui;
+}
+
+void UIDemo6::initForm()
+{
+    this->max = false;
+    this->location = this->geometry();
+    this->setProperty("form", true);
+    this->setProperty("canMove", true);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint);
+
+    // 设置uidemo6主界面的名称
+    ui->labTitle->setText(App::getDisplayName());
+    this->setWindowTitle(App::getDisplayName());
+
+    QStringList qss;
+    qss.append("QLabel#label{color:#F0F0F0;font:50pt;}");
+    qss.append("QWidget#widgetLeft>QAbstractButton{background:none;border-radius:0px;}");
+    qss.append("QWidget#widgetMenu>QAbstractButton{border:0px solid #FF0000;border-radius:0px;padding:0px;margin:0px;}");
+    this->setStyleSheet(qss.join(""));
+
+    //添加自定义属性,用于切换ico用
+    ui->btnHome->setProperty("icoName", "homepage");
+    ui->btnSetting->setProperty("icoName", "configpage");
+    ui->btnChart->setProperty("icoName", "chartpage");
+    ui->btnAlarm->setProperty("icoName", "alarmpage");
+    ui->btnDebug->setProperty("icoName", "debugpage");
+
+    // ui->btnDebug->hide();
+    // ui->btnChart->hide();
+    // ui->btnMenu_Max->hide();
+
+    QList<QToolButton *> btns = ui->widgetLeft->findChildren<QToolButton *>();
+    foreach (QToolButton *btn, btns) {
+        btn->setMaximumHeight(90);
+        btn->setCheckable(true);
+        connect(btn, SIGNAL(clicked(bool)), this, SLOT(buttonClick()));
+    }
+
+    ui->btnHome->click();
+    
+    // 为 widgetTitle 安装事件过滤器以处理双击事件
+    ui->widgetTitle->installEventFilter(this);
+    
+    // 启动时全屏显示
+    this->showFullScreen();
+}
+
+bool UIDemo6::eventFilter(QObject *obj, QEvent *event)
+{
+    if (doubleClickMaximize && obj == ui->widgetTitle && event->type() == QEvent::MouseButtonDblClick) {
+        // 双击标题栏时触发最大化/还原
+        emit requestMaximizeOrRestore();
+        return true;
+    }
+    return QDialog::eventFilter(obj, event);
+}
+
+void UIDemo6::buttonClick()
+{
+    QToolButton *b = (QToolButton *)sender();
+
+    QList<QToolButton *> btns = ui->widgetLeft->findChildren<QToolButton *>();
+    foreach (QToolButton *btn, btns)
+    {
+        QString icoName = btn->property("icoName").toString();
+        if (btn != b) {
+            btn->setChecked(false);
+            btn->setIcon(QIcon(QString(":/image/%1.png").arg(icoName)));
+        } else {
+            btn->setChecked(true);
+            btn->setIcon(QIcon(QString(":/image/%1_focus.png").arg(icoName)));
+            if (icoName == "homepage")
+                ui->stackedWidget->setCurrentIndex(0);
+            else if (icoName == "configpage")
+                ui->stackedWidget->setCurrentIndex(1);
+            else if (icoName == "chartpage")
+                ui->stackedWidget->setCurrentIndex(2);
+            else if (icoName == "alarmpage")
+                ui->stackedWidget->setCurrentIndex(3);
+            else if (icoName == "debugpage")
+                ui->stackedWidget->setCurrentIndex(4);
+        }
+    }
+}
+
+void UIDemo6::on_btnMenu_Min_clicked()
+{
+    emit requestMinimize();
+}
+
+void UIDemo6::on_btnMenu_Max_clicked()
+{
+    emit requestMaximizeOrRestore();
+}
+
+void UIDemo6::on_btnMenu_Close_clicked()
+{
+    emit requestClose();
+}
+
+void UIDemo6::setDoubleClickMaximize(bool enabled)
+{
+    this->doubleClickMaximize = enabled;
+}
+
+bool UIDemo6::getDoubleClickMaximize() const
+{
+    return this->doubleClickMaximize;
+}
