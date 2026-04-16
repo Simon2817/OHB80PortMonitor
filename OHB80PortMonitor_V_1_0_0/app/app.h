@@ -19,6 +19,9 @@ public:
     // 获取日志管理器
     static AppLogger* getLogger() { return s_logger; }
     
+    // 获取共享数据管理器
+    static void getSharedData();
+    
     // 应用信息
     static QString getAppName();        // 获取应用名称
     static QString getAppVersion();     // 获取应用版本

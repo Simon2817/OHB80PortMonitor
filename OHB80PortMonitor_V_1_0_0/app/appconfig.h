@@ -22,6 +22,7 @@ public:
     QString getConfigDir() const;      // 获取配置文件目录
     QString getDebugLogDir() const;    // 获取调试日志目录
     QString getUserLogDir() const;     // 获取用户日志目录
+    QString getGraphConfigPath() const; // 获取天车地图配置文件路径
     
     // 配置文件操作
     void reload();

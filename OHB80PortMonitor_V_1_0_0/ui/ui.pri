@@ -10,7 +10,6 @@ HEADERS += \
     $$PWD/alarmpage.h \
     $$PWD/chartpage.h \
     $$PWD/configpage.h \
-    $$PWD/customwidget/quiwidget.h \
     $$PWD/debugpage.h \
     $$PWD/homepage.h \
     $$PWD/uidemo6.h
@@ -19,10 +18,10 @@ SOURCES += \
     $$PWD/alarmpage.cpp \
     $$PWD/chartpage.cpp \
     $$PWD/configpage.cpp \
-    $$PWD/customwidget/quiwidget.cpp \
     $$PWD/debugpage.cpp \
     $$PWD/homepage.cpp \
     $$PWD/uidemo6.cpp
 
-INCLUDEPATH += \
-    $$PWD/customwidget
+#customwidget
+include ($$PWD/customwidget/customwidget.pri)
+INCLUDEPATH += $$PWD/customwidget

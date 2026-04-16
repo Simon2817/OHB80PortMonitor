@@ -1,6 +1,7 @@
 #include "app.h"
 #include "appconfig.h"
 #include "applogger.h"
+#include "shareddata.h"
 #include "qthelper.h"
 #include <qdir>
 #include <qstandardpaths>
@@ -60,6 +61,9 @@ bool App::initialize()
         qCritical() << "Failed to initialize logging";
         return false;
     }
+    
+    // 初始化共享数据
+    getSharedData();
     
     s_initialized = true;
     
@@ -155,6 +159,13 @@ QString App::getDisplayName()
     }
     
     return appName;
+}
+
+void App::getSharedData()
+{
+    // 创建静态实例以触发 SharedData 的构造函数初始化
+    static SharedData sharedDataInstance;
+    qDebug() << "SharedData initialized successfully";
 }
 
 void App::onAboutToQuit()

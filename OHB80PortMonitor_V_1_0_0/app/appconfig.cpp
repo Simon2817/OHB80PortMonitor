@@ -91,6 +91,11 @@ QString AppConfig::getUserLogDir() const
     return m_userLogDir;
 }
 
+QString AppConfig::getGraphConfigPath() const
+{
+    return m_configDir + "/graph_config.xml";
+}
+
 void AppConfig::reload()
 {
     if (m_settings) {
