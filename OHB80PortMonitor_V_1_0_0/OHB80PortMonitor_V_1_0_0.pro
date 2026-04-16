@@ -49,6 +49,11 @@ INCLUDEPATH += $$PWD/scheduler
 include ($$PWD/data/data.pri)
 INCLUDEPATH += $$PWD/data
 
+#classes，存放一些数据类对象
+include ($$PWD/classes/classes.pri)
+INCLUDEPATH += $$PWD/classes
+
+
 #resources
 RESOURCES += \
     resource/main.qrc \
