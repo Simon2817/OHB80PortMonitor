@@ -1,8 +1,0 @@
-[2026-04-17 14:20:26] [WARN] 响应超时 - 设备ID=12055 module=PERIODIC id=ReadFoupStatus uuid=110 timeout=1000ms
-[2026-04-17 14:20:26] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12055 module=PERIODIC id=ReadFoupStatus uuid=110 timeout=1000ms
-[2026-04-17 14:20:26] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12055 module=PERIODIC id=ReadFoupStatus uuid=110 error=等待RTU响应超时 sendCount=1/1
-[2026-04-17 14:20:26] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12055 本轮失败1条 连续失败轮次:1
-[2026-04-17 14:22:57] [WARN] [ModbusConnecter][performConnection]：设备ID=12055 TCP 连接失败 - error=套接字操作超时
-[2026-04-17 14:27:01] [WARN] [ModbusConnecter][performConnection]：设备ID=12055 TCP 连接失败 - error=套接字操作超时
-[2026-04-17 14:31:04] [WARN] [ModbusConnecter][performConnection]：设备ID=12055 TCP 连接失败 - error=套接字操作超时
-[2026-04-17 14:50:51] [WARN] [ModbusConnecter][performConnection]：设备ID=12055 TCP 连接失败 - error=主机不能访问

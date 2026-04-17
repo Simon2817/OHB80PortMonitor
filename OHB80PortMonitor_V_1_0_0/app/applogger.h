@@ -24,18 +24,15 @@ public:
     // 获取日志目录
     QString getLogDir() const { return m_logDir; }
     
-    // 日志路径管理方法
-    // 获取 ModbusMaster 日志路径: modbus/deviceid_{id}
-    static QString getModbusMasterLogPath(const QString& id);
+    // 日志路径静态方法（简短命名）
+    // 获取 ModbusMaster 日志路径: modbustcpmaster/deviceid_{id}
+    static QString ModbusMasterLoggerPath(const QString& id);
 
-    // 获取 Modbus 帧消息日志路径: modbus/frame_message/device_id_{id}
-    static QString getModbusFrameMessageLogPath(const QString& id);
+    // 获取天车轨道布局日志路径: cranemap
+    static QString CraneMapLoggerPath();
 
-    // 获取数据层业务日志路径: modbus/data
-    static QString getDataLayerLogPath();
-
-    // 获取 ModbusMaster 日志路径（带扩展名）
-    static QString getModbusMasterLogPath(const QString& id, const QString& extension);
+    // 获取系统日志路径: system（UI层、调度层、数据层完整日志）
+    static QString SystemLoggerPath();
 
 private:
     bool m_initialized;

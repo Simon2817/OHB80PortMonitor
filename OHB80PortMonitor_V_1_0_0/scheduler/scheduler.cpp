@@ -1,4 +1,6 @@
 #include "scheduler.h"
+#include "app/applogger.h"
+#include "loggermanager.h"
 #include <QDebug>
 
 Scheduler* Scheduler::s_instance = nullptr;
@@ -6,6 +8,9 @@ Scheduler* Scheduler::s_instance = nullptr;
 Scheduler::Scheduler(QObject *parent)
     : QObject(parent)
 {
+    qDebug() << "=============================Scheduler 调度器开始=============================";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+        "=============================Scheduler 调度器开始=============================");
     // 将调度器移动到独立线程
     this->moveToThread(&m_thread);
     m_thread.setObjectName("SchedulerThread");
@@ -14,6 +19,9 @@ Scheduler::Scheduler(QObject *parent)
 Scheduler::~Scheduler()
 {
     stop();
+    qDebug() << "=============================Scheduler 调度器结束=============================";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+        "=============================Scheduler 调度器结束=============================");
 }
 
 Scheduler* Scheduler::instance()
@@ -28,7 +36,8 @@ void Scheduler::start()
 {
     if (!m_thread.isRunning()) {
         m_thread.start();
-        qDebug() << "[Scheduler] 调度器线程已启动";
+        qDebug() << "[Scheduler][start] 调度器线程已启动";
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, "[Scheduler][start] 调度器线程已启动");
     }
 }
 
@@ -63,7 +72,8 @@ void Scheduler::stop()
     // 停止线程
     m_thread.quit();
     m_thread.wait();
-    qDebug() << "[Scheduler] 调度器线程已停止";
+    qDebug() << "[Scheduler][stop] 调度器线程已停止";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, "[Scheduler][stop] 调度器线程已停止");
 }
 
 QString Scheduler::submitTask(SchedulerTask *task)
@@ -87,12 +97,16 @@ QString Scheduler::submitTask(SchedulerTask *task)
     if (task->isPersistent()) {
         // 长驻任务：立即启动，不入队，不占并发槽位
         m_persistentTasks.insert(task);
-        qDebug() << "[Scheduler] 提交长驻任务:" << task->taskType() << "taskId:" << taskId;
+        qDebug() << "[Scheduler][submitTask] 提交长驻任务:" << task->taskType() << "taskId:" << taskId;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, 
+            QString("[Scheduler][submitTask] 提交长驻任务: %1 taskId: %2").arg(task->taskType()).arg(taskId).toStdString());
         QMetaObject::invokeMethod(task, [task]() { task->start(); }, Qt::QueuedConnection);
     } else {
         // 普通任务：入队等待调度
         m_pendingQueue.enqueue(task);
-        qDebug() << "[Scheduler] 提交普通任务:" << task->taskType() << "taskId:" << taskId;
+        qDebug() << "[Scheduler][submitTask] 提交普通任务:" << task->taskType() << "taskId:" << taskId;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, 
+            QString("[Scheduler][submitTask] 提交普通任务: %1 taskId: %2").arg(task->taskType()).arg(taskId).toStdString());
     }
     
     locker.unlock();
@@ -131,7 +145,9 @@ bool Scheduler::cancelTask(const QString &taskId)
     m_tasks.remove(taskId);
     task->deleteLater();
     
-    qDebug() << "[Scheduler] 取消任务:" << taskId;
+    qDebug() << "[Scheduler][cancelTask] 取消任务:" << taskId;
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, 
+        QString("[Scheduler][cancelTask] 取消任务: %1").arg(taskId).toStdString());
     
     return true;
 }
@@ -163,7 +179,9 @@ void Scheduler::scheduleNext()
         SchedulerTask *task = m_pendingQueue.dequeue();
         m_runningTasks.insert(task);
         
-        qDebug() << "[Scheduler] 启动任务:" << task->taskType() << "taskId:" << task->taskId();
+        qDebug() << "[Scheduler][scheduleNext] 启动任务:" << task->taskType() << "taskId:" << task->taskId();
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, 
+            QString("[Scheduler][scheduleNext] 启动任务: %1 taskId: %2").arg(task->taskType()).arg(task->taskId()).toStdString());
         
         // 在调度器线程中启动任务
         QMetaObject::invokeMethod(task, [task]() { task->start(); }, Qt::QueuedConnection);
@@ -185,9 +203,12 @@ void Scheduler::onTaskFinished(bool success, const QString &msg)
     
     QString taskId = task->taskId();
     
-    qDebug() << "[Scheduler] 任务完成:" << task->taskType() 
+    qDebug() << "[Scheduler][onTaskFinished] 任务完成:" << task->taskType() 
              << "taskId:" << taskId 
              << "成功:" << success << msg;
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), 
+        success ? Level::INFO : Level::WARN,
+        QString("[Scheduler][onTaskFinished] 任务完成: %1 taskId: %2 成功: %3 %4").arg(task->taskType()).arg(taskId).arg(success).arg(msg).toStdString());
     
     emit taskFinished(taskId, success, msg);
     

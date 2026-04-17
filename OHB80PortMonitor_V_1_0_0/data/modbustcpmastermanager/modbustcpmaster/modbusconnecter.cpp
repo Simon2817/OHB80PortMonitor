@@ -28,7 +28,7 @@ ModbusConnecter::ModbusConnecter(QTcpSocket& socket, const QString& host, quint1
         }
 
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Socket disconnected signal received, starting auto-reconnect";
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][disconnected --- socket断开信号槽]：设备ID=%1 Socket断开信号接收，开始自动重连").arg(m_masterId).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][disconnected --- socket断开信号槽]：设备ID=%1 Socket断开信号接收，开始自动重连").arg(m_masterId).toStdString());
         stopConnectionCheck();
         setStatus(ConnectionStatus::Disconnected);
 
@@ -51,7 +51,7 @@ bool ModbusConnecter::connectDevice(ConnectionMode mode)
 {
     if (!m_socket) {
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] QTcpSocket 指针为空";
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusConnecter][connectDevice]：设备ID=%1 QTcpSocket 指针为空").arg(m_masterId).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusConnecter][connectDevice]：设备ID=%1 QTcpSocket 指针为空").arg(m_masterId).toStdString());
         emit connectionError("QTcpSocket 无效");
         return false;
     }
@@ -102,7 +102,7 @@ bool ModbusConnecter::disconnectDevice(ConnectionMode mode)
         }
         setStatus(ConnectionStatus::Disconnected);
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] 单次断开 - 主动断开完成";
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][disconnectDevice]：设备ID=%1 单次断开 - 主动断开完成").arg(m_masterId).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][disconnectDevice]：设备ID=%1 单次断开 - 主动断开完成").arg(m_masterId).toStdString());
 
         if (m_autoReconnectEnabled) {
             m_retryCount = 0;
@@ -118,7 +118,7 @@ bool ModbusConnecter::disconnectDevice(ConnectionMode mode)
         }
         setStatus(ConnectionStatus::Disconnected);
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] 完全断开 - 已停止自动重连";
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][disconnectDevice]：设备ID=%1 完全断开 - 已停止自动重连").arg(m_masterId).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][disconnectDevice]：设备ID=%1 完全断开 - 已停止自动重连").arg(m_masterId).toStdString());
         return true;
     }
 }
@@ -145,12 +145,12 @@ bool ModbusConnecter::performConnection()
 
     QString logMsg = QString("设备ID=%1 正在尝试连接服务器 %2:%3").arg(m_masterId).arg(m_host).arg(m_port);
     qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] " << logMsg;
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][performConnection]：%1").arg(logMsg).toStdString());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][performConnection]：%1").arg(logMsg).toStdString());
     m_socket->connectToHost(m_host, m_port);
     if (!m_socket->waitForConnected(3000)) {
         QString logMsg = QString("设备ID=%1 TCP 连接失败 - error=%2").arg(m_masterId).arg(m_socket->errorString());
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] " << logMsg;
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusConnecter][performConnection]：%1").arg(logMsg).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusConnecter][performConnection]：%1").arg(logMsg).toStdString());
         m_lastError = getErrorString(m_socket->error());
         return false;
     }
@@ -163,7 +163,7 @@ void ModbusConnecter::setStatus(ConnectionStatus status)
     if (m_status != status) {
         ConnectionStatus oldStatus = m_status;
         m_status = status;
-        emit statusChanged(status);
+        emit statusChanged(status, m_masterId);
 
         QString oldStatusStr;
         switch (oldStatus) {
@@ -198,7 +198,7 @@ void ModbusConnecter::setStatus(ConnectionStatus status)
         }
         QString logMsg = QString("设备ID=%1 状态转变：%2 -> %3").arg(m_masterId).arg(oldStatusStr).arg(newStatusStr);
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] " << logMsg;
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][setStatus]：%1").arg(logMsg).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][setStatus]：%1").arg(logMsg).toStdString());
     }
 }
 
@@ -209,7 +209,7 @@ void ModbusConnecter::startAutoReconnect()
     }
     
     qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Starting auto-reconnect";
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][startAutoReconnect]：设备ID=%1 开始自动重连").arg(m_masterId).toStdString());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][startAutoReconnect]：设备ID=%1 开始自动重连").arg(m_masterId).toStdString());
     m_reconnectTimer->start();
 }
 
@@ -218,7 +218,7 @@ void ModbusConnecter::stopAutoReconnect()
     if (m_reconnectTimer->isActive()) {
         m_reconnectTimer->stop();
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Stopped auto-reconnect";
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][stopAutoReconnect]：设备ID=%1 停止自动重连").arg(m_masterId).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][stopAutoReconnect]：设备ID=%1 停止自动重连").arg(m_masterId).toStdString());
     }
     
     m_autoReconnectEnabled = false;
@@ -229,7 +229,7 @@ void ModbusConnecter::startConnectionCheck()
     if (!m_connectionCheckTimer->isActive()) {
         m_connectionCheckTimer->start();
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Started connection check";
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][startConnectionCheck]：设备ID=%1 启动连接心跳检查").arg(m_masterId).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][startConnectionCheck]：设备ID=%1 启动连接心跳检查").arg(m_masterId).toStdString());
     }
 }
 
@@ -238,7 +238,7 @@ void ModbusConnecter::stopConnectionCheck()
     if (m_connectionCheckTimer->isActive()) {
         m_connectionCheckTimer->stop();
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Stopped connection check";
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][stopConnectionCheck]：设备ID=%1 停止连接心跳检查").arg(m_masterId).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][stopConnectionCheck]：设备ID=%1 停止连接心跳检查").arg(m_masterId).toStdString());
     }
 }
 
@@ -251,7 +251,7 @@ void ModbusConnecter::onReconnectTimer()
     m_retryCount++;
     QString logMsg = QString("设备ID=%1 第 %2 次重连尝试").arg(m_masterId).arg(m_retryCount);
     qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] " << logMsg;
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][onReconnectTimer]：%1").arg(logMsg).toStdString());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][onReconnectTimer]：%1").arg(logMsg).toStdString());
 
     if (performConnection()) {
         setStatus(ConnectionStatus::Connected);
@@ -263,7 +263,7 @@ void ModbusConnecter::onReconnectTimer()
             }
         });
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Reconnection successful";
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][onReconnectTimer]：设备ID=%1 重连成功").arg(m_masterId).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][onReconnectTimer]：设备ID=%1 重连成功").arg(m_masterId).toStdString());
     } else {
         setStatus(ConnectionStatus::Error);
         emit connectionError(m_lastError);
@@ -279,7 +279,7 @@ void ModbusConnecter::checkConnection()
 
     if (m_socket->state() != QAbstractSocket::ConnectedState) {
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Connection lost (socket disconnected), starting auto-reconnect";
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusConnecter][checkConnection]：设备ID=%1 连接丢失（socket断开），开始自动重连").arg(m_masterId).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusConnecter][checkConnection]：设备ID=%1 连接丢失（socket断开），开始自动重连").arg(m_masterId).toStdString());
         setStatus(ConnectionStatus::Disconnected);
 
         if (m_autoReconnectEnabled) {
@@ -289,7 +289,7 @@ void ModbusConnecter::checkConnection()
         emit connectionError("Connection lost: " + getErrorString(m_socket->error()));
     } else {
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Connection check - socket OK";
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusConnecter][checkConnection]：设备ID=%1 连接检查 - socket正常").arg(m_masterId).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][checkConnection]：设备ID=%1 连接检查 - socket正常").arg(m_masterId).toStdString());
     }
 }
 

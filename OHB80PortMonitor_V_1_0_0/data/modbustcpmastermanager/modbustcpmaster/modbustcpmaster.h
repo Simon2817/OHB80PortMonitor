@@ -145,7 +145,7 @@ private slots:
      * @brief 连接状态改变槽函数
      * @param status 新的连接状态
      */
-    void onConnectionStatusChanged(ModbusConnecter::ConnectionStatus status);
+    void onConnectionStatusChanged(ModbusConnecter::ConnectionStatus status, const QString& masterId);
 
     /**
      * @brief 连接错误槽函数

@@ -42,18 +42,25 @@ void AppConfig::initializePaths()
     
     m_configDir = m_rootDir + "/config";
     m_debugLogDir = m_executableDir + "/log";
-    m_userLogDir = m_rootDir + "/log/user";
+    m_userLogDir = m_rootDir + "/log";
     
-    // 确保目录存在
-    QDir dir;
-    if (!dir.exists(m_configDir)) {
-        dir.mkpath(m_configDir);
-    }
-    if (!dir.exists(m_debugLogDir)) {
-        dir.mkpath(m_debugLogDir);
-    }
-    if (!dir.exists(m_userLogDir)) {
-        dir.mkpath(m_userLogDir);
+    // 确保所有目录存在
+    QStringList dirs = {
+        m_executableDir,
+        m_configDir,
+        m_debugLogDir,
+        m_userLogDir
+    };
+    
+    for (const QString& dir : dirs) {
+        QDir directory(dir);
+        if (!directory.exists()) {
+            if (!directory.mkpath(".")) {
+                qCritical() << "Failed to create directory:" << dir;
+            } else {
+                qDebug() << "Created directory:" << dir;
+            }
+        }
     }
 }
 

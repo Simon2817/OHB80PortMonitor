@@ -36,12 +36,13 @@ SharedData::SharedData() {
                 foup.inletFlow = 0;
                 foup.RH = 0;
                 foup.foupIn = false;
-                foup.hasAlarm = false;
+                foup.hasAlarm = true;
                 foups.append(foup);
 
                 if (!foup.ip.isEmpty() && foup.port > 0) {
                     ModbusTcpMasterManager::instance().addMaster(foup.ip, foup.port, foup.qrCode);
-                    ModbusTcpMasterManager::instance().startMaster(foup.qrCode, ModbusConnecter::ConnectionMode::AutoReconnect);
+                    // ModbusTcpMasterManager::instance().startMaster(foup.qrCode, ModbusConnecter::ConnectionMode::AutoReconnect);
+                    // 启动逻辑移至 MonitorDataTask
                 }
                 else {
                     qDebug() << "Invalid IP or port for foup:" << foup.qrCode;

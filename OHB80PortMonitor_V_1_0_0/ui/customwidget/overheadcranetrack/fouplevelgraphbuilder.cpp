@@ -3,6 +3,7 @@
 #include "framedevice.h"
 #include "framedevicepool.h"
 #include "app/shareddata.h"
+#include "app/applogger.h"
 #include <cmath>
 #include <algorithm>
 
@@ -21,7 +22,7 @@ Graph::FoupLevelGraphBuilder::FoupLevelGraphBuilder(GraphMultilist &graph, QMap<
       m_startNodePosition(20.0, 170.0),
       m_currentConfig(nullptr),
       m_logger(LoggerManager::instance()),
-      m_loggerFileName("debug.log"),
+      m_loggerFileName(AppLogger::CraneMapLoggerPath().toStdString()),
       m_stage(BuildStage::NotStarted)
 {
 }
@@ -44,7 +45,7 @@ const char* Graph::FoupLevelGraphBuilder::stageToString(BuildStage stage)
 void Graph::FoupLevelGraphBuilder::setStartNodePosition(const QPointF& position)
 {
     m_startNodePosition = position;
-    std::string loggerPre = "[FoupLevelGraphBuilder::setStartNodePosition()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][setStartNodePosition]";
     m_logger.log(m_loggerFileName, Level::INFO, "{}设置起始节点坐标: ({}, {})",
                  loggerPre, position.x(), position.y());
 }
@@ -72,7 +73,7 @@ void Graph::FoupLevelGraphBuilder::setFoupSpacing(int spacing)
 
 bool Graph::FoupLevelGraphBuilder::buildGraph(const GraphConfig& config)
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::buildGraph()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][buildGraph]";
     m_stage = BuildStage::NotStarted;
     m_logger.log(m_loggerFileName, Level::INFO, "====================Foup视图天车轨道布局图重构  开始====================");
 
@@ -116,7 +117,7 @@ bool Graph::FoupLevelGraphBuilder::buildGraph(const GraphConfig& config)
 
 void Graph::FoupLevelGraphBuilder::buildMultilist(const GraphConfig& config)
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::buildMultilist()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][buildMultilist]";
 
     for (auto it = config.nodes.begin(); it != config.nodes.end(); ++it)
     {
@@ -144,7 +145,7 @@ void Graph::FoupLevelGraphBuilder::buildMultilist(const GraphConfig& config)
 
 void Graph::FoupLevelGraphBuilder::layoutAndDraw(const GraphConfig& config)
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::layoutAndDraw()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][layoutAndDraw]";
 
     if (config.nodes.contains(config.startNodeId))
     {
@@ -189,7 +190,7 @@ void Graph::FoupLevelGraphBuilder::layoutAndDraw(const GraphConfig& config)
 
 void Graph::FoupLevelGraphBuilder::processNode(int nodeId, const QSharedPointer<GraphNode>& node)
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::processNode()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][processNode]";
 
     if (node->getNodeType() == NodeType::SET)
     {
@@ -203,7 +204,7 @@ void Graph::FoupLevelGraphBuilder::processNode(int nodeId, const QSharedPointer<
 
 void Graph::FoupLevelGraphBuilder::createFoupDevices(int nodeId, const QPointF& trackPos)
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::createFoupDevices()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][createFoupDevices]";
 
     if (!m_currentConfig || !m_currentConfig->nodes.contains(nodeId)) {
         m_logger.log(m_loggerFileName, Level::ERROR, "{}无法找到节点ID={}", loggerPre, nodeId);
@@ -294,7 +295,7 @@ void Graph::FoupLevelGraphBuilder::processEdge(const GraphConfig::EdgeInfo& edge
                                            const QSharedPointer<GraphNode>& fromNode,
                                            const QSharedPointer<GraphNode>& toNode)
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::processEdge()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][processEdge]";
     
     m_logger.log(m_loggerFileName, Level::DEBUG, 
                  "{}处理边: {} -> {}, 类型: {}, size: {}, offset: {}",
@@ -329,7 +330,7 @@ void Graph::FoupLevelGraphBuilder::processEdge(const GraphConfig::EdgeInfo& edge
 
 void Graph::FoupLevelGraphBuilder::processStraightLine(int fromId, int toId, double size, double offset)
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::processStraightLine()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][processStraightLine]";
 
     if (!m_nodePositions.contains(fromId))
     {
@@ -587,7 +588,7 @@ void Graph::FoupLevelGraphBuilder::processStraightLine(int fromId, int toId, dou
 
 void Graph::FoupLevelGraphBuilder::processVirtualLine(int fromId, int toId, EdgeType edgeType, double size, double offset)
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::processVirtualLine()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][processVirtualLine]";
 
     if (!m_nodePositions.contains(fromId))
     {
@@ -618,7 +619,7 @@ void Graph::FoupLevelGraphBuilder::processVirtualLine(int fromId, int toId, Edge
 
 void Graph::FoupLevelGraphBuilder::processSCurve(int fromId, int toId, EdgeType edgeType, double size, double offset)
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::processSCurve()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][processSCurve]";
 
     if (!m_nodePositions.contains(fromId))
     {
@@ -677,7 +678,7 @@ void Graph::FoupLevelGraphBuilder::processSCurve(int fromId, int toId, EdgeType 
 
 void Graph::FoupLevelGraphBuilder::processSemicircleArc(int fromId, int toId, EdgeType edgeType, double size, double offset)
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::processSemicircleArc()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][processSemicircleArc]";
 
     if (!m_nodePositions.contains(fromId))
     {
@@ -724,7 +725,7 @@ void Graph::FoupLevelGraphBuilder::processSemicircleArc(int fromId, int toId, Ed
 
 double Graph::FoupLevelGraphBuilder::computeFoupUnit() const
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::computeFoupUnit()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][computeFoupUnit]";
     
     if (!m_currentConfig) {
         m_logger.log(m_loggerFileName, Level::ERROR, "{}m_currentConfig 为空", loggerPre);
@@ -776,7 +777,7 @@ double Graph::FoupLevelGraphBuilder::computeFoupUnit() const
 
 double Graph::FoupLevelGraphBuilder::rescaleToFoupLevel(double setLevelSize) const
 {
-    std::string loggerPre = "[FoupLevelGraphBuilder::rescaleToFoupLevel()]";
+    std::string loggerPre = "[ui][FoupLevelGraphBuilder][rescaleToFoupLevel]";
     
     m_logger.log(m_loggerFileName, Level::INFO, "{}输入参数: setLevelSize={}, m_foupUnit={}", 
                  loggerPre, setLevelSize, m_foupUnit);

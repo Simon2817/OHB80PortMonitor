@@ -303,6 +303,9 @@ void FrameDevice::updateSetInfo()
 
     if (hasAlarmFoup) {
         setDeviceStatus(DeviceStatus::Alarm);
+    } else {
+        m_bgStyleSheet.clear();
+        updateStyleSheet();
     }
 }
 

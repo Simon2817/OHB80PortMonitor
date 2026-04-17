@@ -3,6 +3,7 @@
 #include "framedevice.h"
 #include "framedevicepool.h"
 #include "app/shareddata.h"
+#include "app/applogger.h"
 #include <cmath>
 #include <algorithm>
 
@@ -18,7 +19,7 @@ Graph::SetLevelGraphBuilder::SetLevelGraphBuilder(GraphMultilist &graph, QMap<in
       m_startNodePosition(20.0, 170.0),
       m_currentConfig(nullptr),
       m_logger(LoggerManager::instance()),
-      m_loggerFileName("debug.log"),
+      m_loggerFileName(AppLogger::CraneMapLoggerPath().toStdString()),
       m_stage(BuildStage::NotStarted)
 {
 }
@@ -41,8 +42,8 @@ const char* Graph::SetLevelGraphBuilder::stageToString(BuildStage stage)
 void Graph::SetLevelGraphBuilder::setStartNodePosition(const QPointF& position)
 {
     m_startNodePosition = position;
-    std::string loggerPre = "[SetLevelGraphBuilder::setStartNodePosition()]";
-    m_logger.log(m_loggerFileName, Level::INFO, "{}设置起始节点坐标: ({}, {})", 
+    std::string loggerPre = "[ui][SetLevelGraphBuilder][setStartNodePosition]";
+    m_logger.log(m_loggerFileName, Level::INFO, "{} 设置起始节点坐标: ({}, {})", 
                  loggerPre, position.x(), position.y());
 }
 
@@ -62,11 +63,11 @@ void Graph::SetLevelGraphBuilder::setFrameDeviceWidth(int width)
 
 bool Graph::SetLevelGraphBuilder::buildGraph(const GraphConfig& config)
 {
-    std::string loggerPre = "[SetLevelGraphBuilder::buildGraph()]";
+    std::string loggerPre = "[ui][SetLevelGraphBuilder][buildGraph]";
     m_stage = BuildStage::NotStarted;
     m_logger.log(m_loggerFileName, Level::INFO, "====================Set视图天车轨道布局图重构  开始====================");
     
-    m_logger.log(m_loggerFileName, Level::INFO, "{}开始构建图，节点数: {}，边数: {}", 
+    m_logger.log(m_loggerFileName, Level::INFO, "{} 开始构建图，节点数: {}，边数: {}", 
                  loggerPre, config.nodes.size(), config.edges.size());
     
     m_currentConfig = &config;
@@ -83,25 +84,25 @@ bool Graph::SetLevelGraphBuilder::buildGraph(const GraphConfig& config)
     buildMultilist(config);
     if (m_stage != BuildStage::MultilistBuilt) {
         m_stage = BuildStage::MultilistBuilt;
-        m_logger.log(m_loggerFileName, Level::INFO, "{}阶段(1): 重建邻接多重表完成", loggerPre);
+        m_logger.log(m_loggerFileName, Level::INFO, "{} 阶段(1): 重建邻接多重表完成", loggerPre);
     }
     
     layoutAndDraw(config);
     if (m_stage != BuildStage::LayoutDrawn) {
         m_stage = BuildStage::LayoutDrawn;
-        m_logger.log(m_loggerFileName, Level::INFO, "{}阶段(2): 绘制图像界面完成", loggerPre);
+        m_logger.log(m_loggerFileName, Level::INFO, "{} 阶段(2): 绘制图像界面完成", loggerPre);
     }
     
     m_stage = BuildStage::Completed;
-    m_logger.log(m_loggerFileName, Level::INFO, "{}阶段(3): 布局图重构完毕", loggerPre);
-    m_logger.log(m_loggerFileName, Level::INFO, "{}图构建完成", loggerPre);
+    m_logger.log(m_loggerFileName, Level::INFO, "{} 阶段(3): 布局图重构完毕", loggerPre);
+    m_logger.log(m_loggerFileName, Level::INFO, "{} 图构建完成", loggerPre);
     m_logger.log(m_loggerFileName, Level::INFO, "====================Set视图天车轨道布局图重构  结束====================");
     return true;
 }
 
 void Graph::SetLevelGraphBuilder::buildMultilist(const GraphConfig& config)
 {
-    std::string loggerPre = "[SetLevelGraphBuilder::buildMultilist()]";
+    std::string loggerPre = "[ui][SetLevelGraphBuilder][buildMultilist]";
     
     for (auto it = config.nodes.begin(); it != config.nodes.end(); ++it)
     {
@@ -129,7 +130,7 @@ void Graph::SetLevelGraphBuilder::buildMultilist(const GraphConfig& config)
 
 void Graph::SetLevelGraphBuilder::layoutAndDraw(const GraphConfig& config)
 {
-    std::string loggerPre = "[SetLevelGraphBuilder::layoutAndDraw()]";
+    std::string loggerPre = "[ui][SetLevelGraphBuilder][layoutAndDraw]";
     
     if (config.nodes.contains(config.startNodeId))
     {
@@ -174,7 +175,7 @@ void Graph::SetLevelGraphBuilder::layoutAndDraw(const GraphConfig& config)
 
 void Graph::SetLevelGraphBuilder::processNode(int nodeId, const QSharedPointer<GraphNode>& node)
 {
-    std::string loggerPre = "[SetLevelGraphBuilder::processNode()]";
+    std::string loggerPre = "[ui][SetLevelGraphBuilder][processNode]";
     
     if (node->getNodeType() == NodeType::SET)
     {
@@ -188,7 +189,7 @@ void Graph::SetLevelGraphBuilder::processNode(int nodeId, const QSharedPointer<G
 
 void Graph::SetLevelGraphBuilder::createFrameDevice(int nodeId, const QPointF& pos)
 {
-    std::string loggerPre = "[SetLevelGraphBuilder::createFrameDevice()]";
+    std::string loggerPre = "[ui][SetLevelGraphBuilder][createFrameDevice]";
     
     if (!m_currentConfig || !m_currentConfig->nodes.contains(nodeId)) {
         m_logger.log(m_loggerFileName, Level::ERROR, "{}无法找到节点ID={}", loggerPre, nodeId);
@@ -284,7 +285,7 @@ void Graph::SetLevelGraphBuilder::processEdge(const GraphConfig::EdgeInfo& edgeI
 
 void Graph::SetLevelGraphBuilder::processStraightLine(int fromId, int toId, double size, double offset)
 {
-    std::string loggerPre = "[SetLevelGraphBuilder::processStraightLine()]";
+    std::string loggerPre = "[ui][SetLevelGraphBuilder][processStraightLine]";
     
     if (!m_nodePositions.contains(fromId))
     {
@@ -325,7 +326,7 @@ void Graph::SetLevelGraphBuilder::processStraightLine(int fromId, int toId, doub
 
 void Graph::SetLevelGraphBuilder::processVirtualLine(int fromId, int toId, EdgeType edgeType, double size, double offset)
 {
-    std::string loggerPre = "[SetLevelGraphBuilder::processVirtualLine()]";
+    std::string loggerPre = "[ui][SetLevelGraphBuilder][processVirtualLine]";
     
     if (!m_nodePositions.contains(fromId))
     {
@@ -356,7 +357,7 @@ void Graph::SetLevelGraphBuilder::processVirtualLine(int fromId, int toId, EdgeT
 
 void Graph::SetLevelGraphBuilder::processSCurve(int fromId, int toId, EdgeType edgeType, double size, double offset)
 {
-    std::string loggerPre = "[SetLevelGraphBuilder::processSCurve()]";
+    std::string loggerPre = "[ui][SetLevelGraphBuilder][processSCurve]";
     
     if (!m_nodePositions.contains(fromId))
     {
@@ -432,7 +433,7 @@ void Graph::SetLevelGraphBuilder::processSCurve(int fromId, int toId, EdgeType e
 
 void Graph::SetLevelGraphBuilder::processSemicircleArc(int fromId, int toId, EdgeType edgeType, double size, double offset)
 {
-    std::string loggerPre = "[SetLevelGraphBuilder::processSemicircleArc()]";
+    std::string loggerPre = "[ui][SetLevelGraphBuilder][processSemicircleArc]";
     
     if (!m_nodePositions.contains(fromId))
     {

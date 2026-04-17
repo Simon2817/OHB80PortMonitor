@@ -38,6 +38,8 @@ release/settingwidget.o
 release/scheduler.o
 release/monitor_data_task.o
 release/send_command_task.o
+release/init_check_task.o
+release/network_status_task.o
 release/modbustcpmastermanager.o
 release/modbustcpmasterpool.o
 release/modbuscommand.o
@@ -74,6 +76,8 @@ release/moc_scheduler_task.o
 release/moc_scheduler.o
 release/moc_monitor_data_task.o
 release/moc_send_command_task.o
+release/moc_init_check_task.o
+release/moc_network_status_task.o
 release/moc_modbustcpmastermanager.o
 release/moc_modbustcpmasterpool.o
 release/moc_modbustcpmaster.o

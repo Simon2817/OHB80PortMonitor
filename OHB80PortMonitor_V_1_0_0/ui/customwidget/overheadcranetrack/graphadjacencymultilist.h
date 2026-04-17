@@ -18,6 +18,7 @@ namespace Graph {
 #include "graphnode.h"
 #include "graphedge.h"
 #include "loggermanager.h"
+#include "app/applogger.h"
 
 namespace Graph
 {
@@ -137,7 +138,7 @@ private:
 template <typename VertexType, typename EdgeType>
 GraphAdjacencyMultilist<VertexType, EdgeType>::GraphAdjacencyMultilist()
     : m_logger(LoggerManager::instance())
-    , m_loggerFileName("debug")
+    , m_loggerFileName(AppLogger::CraneMapLoggerPath().toStdString())
 {
 }
 
@@ -155,7 +156,7 @@ void GraphAdjacencyMultilist<VertexType, EdgeType>::addVertex(const VertexType& 
         std::ostringstream oss;
         oss << vertex;
         m_logger.log(m_loggerFileName, Level::DEBUG,
-                     "[GraphAdjacencyMultilist::addVertex] 顶点 {} 已存在，跳过", oss.str());
+                     "[ui][Graph][addVertex] 顶点 {} 已存在，跳过", oss.str());
         return;
     }
 
@@ -164,7 +165,7 @@ void GraphAdjacencyMultilist<VertexType, EdgeType>::addVertex(const VertexType& 
     std::ostringstream oss;
     oss << vertex;
     m_logger.log(m_loggerFileName, Level::DEBUG,
-                 "[GraphAdjacencyMultilist::addVertex] 添加顶点 {}", oss.str());
+                 "[ui][Graph][addVertex] 添加顶点 {}", oss.str());
 }
 
 template <typename VertexType, typename EdgeType>
@@ -193,7 +194,7 @@ bool GraphAdjacencyMultilist<VertexType, EdgeType>::addEdge(const VertexType& fr
         oss1 << from;
         oss2 << to;
         m_logger.log(m_loggerFileName, Level::DEBUG,
-                     "[GraphAdjacencyMultilist::addEdge] 边 ({},{}) 已存在，跳过",
+                     "[ui][Graph][addEdge] 边 ({},{}) 已存在，跳过",
                      oss1.str(), oss2.str());
         return false;
     }
@@ -219,7 +220,7 @@ bool GraphAdjacencyMultilist<VertexType, EdgeType>::addEdge(const VertexType& fr
     oss1 << from;
     oss2 << to;
     m_logger.log(m_loggerFileName, Level::DEBUG,
-                 "[GraphAdjacencyMultilist::addEdge] 添加边 ({},{})",
+                 "[ui][Graph][addEdge] 添加边 ({},{})",
                  oss1.str(), oss2.str());
     return true;
 }
@@ -310,7 +311,7 @@ VertexType GraphAdjacencyMultilist<VertexType, EdgeType>::getTargetNode(
     std::ostringstream oss;
     oss << startVertex;
     m_logger.log(m_loggerFileName, Level::DEBUG,
-                 "[GraphAdjacencyMultilist::getTargetNode] 从顶点 {} 未找到匹配的边",
+                 "[ui][Graph][getTargetNode] 从顶点 {} 未找到匹配的边",
                  oss.str());
     return VertexType();
 }
@@ -364,9 +365,9 @@ template <typename VertexType, typename EdgeType>
 void GraphAdjacencyMultilist<VertexType, EdgeType>::printMultilist() const
 {
     m_logger.log(m_loggerFileName, Level::DEBUG,
-                 "[GraphAdjacencyMultilist::printMultilist] ========== 邻接多重表 ==========");
+                 "[ui][Graph][printMultilist] ========== 邻接多重表 ==========");
     m_logger.log(m_loggerFileName, Level::DEBUG,
-                 "[GraphAdjacencyMultilist::printMultilist] 顶点数: {}，边数: {}",
+                 "[ui][Graph][printMultilist] 顶点数: {}，边数: {}",
                  vertexCount(), edgeCount());
 
     for (const VertexType& v : m_vertexOrder)
@@ -394,10 +395,10 @@ void GraphAdjacencyMultilist<VertexType, EdgeType>::printMultilist() const
         }
 
         m_logger.log(m_loggerFileName, Level::DEBUG,
-                     "[GraphAdjacencyMultilist::printMultilist] {}", line);
+                     "[ui][Graph][printMultilist] {}", line);
     }
     m_logger.log(m_loggerFileName, Level::DEBUG,
-                 "[GraphAdjacencyMultilist::printMultilist] ====================================");
+                 "[ui][Graph][printMultilist] ====================================");
 }
 
 template <typename VertexType, typename EdgeType>

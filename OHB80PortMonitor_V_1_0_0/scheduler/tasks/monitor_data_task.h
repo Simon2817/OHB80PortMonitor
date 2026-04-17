@@ -14,6 +14,7 @@ class MonitorDataTask : public SchedulerTask
 
 public:
     explicit MonitorDataTask(QObject *parent = nullptr);
+    ~MonitorDataTask();
 
     Q_INVOKABLE void start() override;
     Q_INVOKABLE void stop() override;

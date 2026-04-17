@@ -90,9 +90,10 @@ signals:
     /**
      * @brief 连接状态改变信号
      * @param status 新的连接状态
+     * @param masterId Master 设备 ID
      * @details  当连接状态改变时发射
      */
-    void statusChanged(ConnectionStatus status);
+    void statusChanged(ConnectionStatus status, const QString& masterId);
     
     /**
      * @brief 连接错误信号

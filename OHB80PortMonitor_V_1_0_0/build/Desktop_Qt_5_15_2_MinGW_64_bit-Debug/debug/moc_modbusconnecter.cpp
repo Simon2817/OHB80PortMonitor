@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ModbusConnecter_t {
-    QByteArrayData data[9];
-    char stringdata0[117];
+    QByteArrayData data[10];
+    char stringdata0[126];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,16 +37,17 @@ QT_MOC_LITERAL(1, 16, 13), // "statusChanged"
 QT_MOC_LITERAL(2, 30, 0), // ""
 QT_MOC_LITERAL(3, 31, 16), // "ConnectionStatus"
 QT_MOC_LITERAL(4, 48, 6), // "status"
-QT_MOC_LITERAL(5, 55, 15), // "connectionError"
-QT_MOC_LITERAL(6, 71, 12), // "errorMessage"
-QT_MOC_LITERAL(7, 84, 16), // "onReconnectTimer"
-QT_MOC_LITERAL(8, 101, 15) // "checkConnection"
+QT_MOC_LITERAL(5, 55, 8), // "masterId"
+QT_MOC_LITERAL(6, 64, 15), // "connectionError"
+QT_MOC_LITERAL(7, 80, 12), // "errorMessage"
+QT_MOC_LITERAL(8, 93, 16), // "onReconnectTimer"
+QT_MOC_LITERAL(9, 110, 15) // "checkConnection"
 
     },
     "ModbusConnecter\0statusChanged\0\0"
-    "ConnectionStatus\0status\0connectionError\0"
-    "errorMessage\0onReconnectTimer\0"
-    "checkConnection"
+    "ConnectionStatus\0status\0masterId\0"
+    "connectionError\0errorMessage\0"
+    "onReconnectTimer\0checkConnection"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,16 +65,16 @@ static const uint qt_meta_data_ModbusConnecter[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   34,    2, 0x06 /* Public */,
-       5,    1,   37,    2, 0x06 /* Public */,
+       1,    2,   34,    2, 0x06 /* Public */,
+       6,    1,   39,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    0,   40,    2, 0x08 /* Private */,
-       8,    0,   41,    2, 0x08 /* Private */,
+       8,    0,   42,    2, 0x08 /* Private */,
+       9,    0,   43,    2, 0x08 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3,    4,
-    QMetaType::Void, QMetaType::QString,    6,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::QString,    4,    5,
+    QMetaType::Void, QMetaType::QString,    7,
 
  // slots: parameters
     QMetaType::Void,
@@ -88,7 +89,7 @@ void ModbusConnecter::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         auto *_t = static_cast<ModbusConnecter *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->statusChanged((*reinterpret_cast< ConnectionStatus(*)>(_a[1]))); break;
+        case 0: _t->statusChanged((*reinterpret_cast< ConnectionStatus(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
         case 1: _t->connectionError((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 2: _t->onReconnectTimer(); break;
         case 3: _t->checkConnection(); break;
@@ -97,7 +98,7 @@ void ModbusConnecter::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (ModbusConnecter::*)(ConnectionStatus );
+            using _t = void (ModbusConnecter::*)(ConnectionStatus , const QString & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&ModbusConnecter::statusChanged)) {
                 *result = 0;
                 return;
@@ -154,9 +155,9 @@ int ModbusConnecter::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ModbusConnecter::statusChanged(ConnectionStatus _t1)
+void ModbusConnecter::statusChanged(ConnectionStatus _t1, const QString & _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 

@@ -1,6 +1,6 @@
 #include "modbuscommandreceiver.h"
 #include "loggermanager.h"
-#include "app.h"
+#include "app/applogger.h"
 #include <QDateTime>
 #include <QDebug>
 #include <QMutexLocker>
@@ -104,8 +104,7 @@ void ModbusCommandReceiver::onResponseTimeout()
              << "uuid=" << failed.uuid
              << "timeout=" << failed.timeoutMs << "ms";
     QString logMsg = QString("响应超时 - 设备ID=%1 module=%2 id=%3 uuid=%4 timeout=%5ms").arg(m_masterId).arg(moduleStr).arg(failed.id).arg(failed.uuid).arg(failed.timeoutMs);
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, (logMsg).toStdString());
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][onResponseTimeout]：%1").arg(logMsg).toStdString());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][onResponseTimeout]：%1").arg(logMsg).toStdString());
 
     failPendingCommand("等待RTU响应超时", true, false);
 }
@@ -130,8 +129,7 @@ void ModbusCommandReceiver::onSocketDisconnected()
              << "id=" << failed.id
              << "uuid=" << failed.uuid;
     QString logMsg = QString("TCP连接断开 - 设备ID=%1 module=%2 id=%3 uuid=%4").arg(m_masterId).arg(moduleStr).arg(failed.id).arg(failed.uuid);
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, (logMsg).toStdString());
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][onSocketDisconnected]：%1").arg(logMsg).toStdString());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][onSocketDisconnected]：%1").arg(logMsg).toStdString());
 
     failPendingCommand("TCP连接已断开", false, false);
 }
@@ -170,7 +168,7 @@ bool ModbusCommandReceiver::processPendingFrame()
         logMsgWithDiscarded += "\n有效帧=" + toHexSpaced(frame);
 
         qDebug() << logMsgWithDiscarded;
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, logMsgWithDiscarded.toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, logMsgWithDiscarded.toStdString());
     }
 
     QString errorMessage;
@@ -199,9 +197,7 @@ bool ModbusCommandReceiver::processPendingFrame()
         }
 
         qDebug() << logMsgWithFrame;
-        LoggerManager::instance().log(AppLogger::getModbusFrameMessageLogPath(m_masterId).toStdString(), Level::WARN, (logMsg).toStdString());
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][processPendingFrame]：%1").arg(logMsgWithFrame).toStdString());
-
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][processPendingFrame]：%1").arg(logMsgWithFrame).toStdString());
         return processPendingFrame();
     }
 
@@ -217,8 +213,7 @@ bool ModbusCommandReceiver::processPendingFrame()
     QString logMsgWithFrame = logMsg + "\nframe=" + frameHex;
 
     qDebug() << logMsgWithFrame;
-    LoggerManager::instance().log(AppLogger::getModbusFrameMessageLogPath(m_masterId).toStdString(), Level::INFO, logMsgWithFrame.toStdString());
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusCommandReceiver][processPendingFrame]：%1").arg(logMsgWithFrame).toStdString());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusCommandReceiver][processPendingFrame]：%1").arg(logMsgWithFrame).toStdString());
 
     succeedPendingCommand(frame);
     return true;
@@ -319,7 +314,7 @@ bool ModbusCommandReceiver::tryExtractMatchedFrame(const ModbusCommand& cmd, QBy
                  << "dropBytes=" << dirtyBytes
                  << "reason=未找到合法RTU响应帧";
         QString logMsg = QString("丢弃脏数据 - 设备ID=%1 id=%2 uuid=%3 dropBytes=%4 reason=未找到合法RTU响应帧").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(dirtyBytes);
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][tryExtractMatchedFrame]：%1").arg(logMsg).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][tryExtractMatchedFrame]：%1").arg(logMsg).toStdString());
         ringConsume(dirtyBytes);
         discardedPrefixBytes += dirtyBytes;
     }
@@ -347,7 +342,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                  << "actual=" << frame.size()
                  << "min=4";
         QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=帧长度过短 actual=%4 min=5").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(frame.size());
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
         return false;
     }
 
@@ -363,7 +358,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                  << "actualFunc=" << QString::number(static_cast<quint8>(frame[1]), 16);
         QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=帧头不匹配 expectedSlave=0x%4 actualSlave=0x%5 expectedFunc=0x%6 actualFunc=0x%7")
                 .arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(cmd.response.slaveAddr, 0, 16).arg(static_cast<quint8>(frame[0]), 0, 16).arg(cmd.response.functionCode, 0, 16).arg(static_cast<quint8>(frame[1]), 0, 16);
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
         return false;
     }
 
@@ -380,7 +375,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                  << "expected=0x" << QString::number(expectedCrc, 16)
                  << "actual=0x" << QString::number(actualCrc, 16);
         QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=CRC不匹配 expected=0x%4 actual=0x%5").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(expectedCrc, 0, 16).arg(actualCrc, 0, 16);
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
         return false;
     }
 
@@ -393,7 +388,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                  << "expected=" << cmd.response.slaveAddr
                  << "actual=" << static_cast<quint8>(payload[0]);
         QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=从站地址不匹配 expected=%4 actual=%5").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(cmd.response.slaveAddr).arg(static_cast<quint8>(payload[0]));
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
         return false;
     }
 
@@ -407,7 +402,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                  << "expected=0x" << QString::number(cmd.response.functionCode, 16)
                  << "actual=0x" << QString::number(static_cast<quint8>(payload[1]), 16);
         QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=功能码不匹配 expected=0x%4 actual=0x%5").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(cmd.response.functionCode, 0, 16).arg(static_cast<quint8>(payload[1]), 0, 16);
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
         return false;
     }
 
@@ -425,7 +420,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                          << "actual=" << payload.size()
                          << "min=3";
                 QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=读响应帧长度不足 actual=%4 min=3").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(payload.size());
-                LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+                LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
                 return false;
             }
             const quint8 byteCount = static_cast<quint8>(payload[2]);
@@ -438,7 +433,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                          << "expected=" << cmd.response.byteCount
                          << "actual=" << byteCount;
                 QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=字节数不匹配 expected=%4 actual=%5").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(cmd.response.byteCount).arg(byteCount);
-                LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+                LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
                 return false;
             }
             if (payload.size() != 3 + byteCount) {
@@ -450,7 +445,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                          << "expected=" << (3 + byteCount)
                          << "actual=" << payload.size();
                 QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=读响应帧长度与字节数不一致 expected=%4 actual=%5").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(3 + byteCount).arg(payload.size());
-                LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+                LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
                 return false;
             }
             break;
@@ -466,7 +461,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                          << "expected=6"
                          << "actual=" << payload.size();
                 QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=写响应帧长度错误 expected=6 actual=%4").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(payload.size());
-                LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+                LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
                 return false;
             }
             const quint16 startAddr = (static_cast<quint8>(payload[2]) << 8) |
@@ -480,7 +475,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                          << "expected=0x" << QString::number(cmd.response.startAddr, 16)
                          << "actual=0x" << QString::number(startAddr, 16);
                 QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=起始地址不匹配 expected=0x%4 actual=0x%5").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(cmd.response.startAddr, 0, 16).arg(startAddr, 0, 16);
-                LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+                LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
                 return false;
             }
             const QByteArray echoedValue = payload.mid(4, 2);
@@ -493,7 +488,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                          << "expected=" << toHexSpaced(cmd.response.registerValue)
                          << "actual=" << toHexSpaced(echoedValue);
                 QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=写入值不匹配 expected=%4 actual=%5").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(toHexSpaced(cmd.response.registerValue)).arg(toHexSpaced(echoedValue));
-                LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+                LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
                 return false;
             }
             break;
@@ -509,7 +504,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                          << "expected=6"
                          << "actual=" << payload.size();
                 QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=写响应帧长度错误 expected=6 actual=%4").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(payload.size());
-                LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+                LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
                 return false;
             }
             const quint16 startAddr = (static_cast<quint8>(payload[2]) << 8) |
@@ -523,7 +518,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                          << "expected=0x" << QString::number(cmd.response.startAddr, 16)
                          << "actual=0x" << QString::number(startAddr, 16);
                 QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=起始地址不匹配 expected=0x%4 actual=0x%5").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(cmd.response.startAddr, 0, 16).arg(startAddr, 0, 16);
-                LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+                LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
                 return false;
             }
             const quint16 count = (static_cast<quint8>(payload[4]) << 8) |
@@ -537,7 +532,7 @@ bool ModbusCommandReceiver::validateResponseFrame(const ModbusCommand& cmd, cons
                          << "expected=" << cmd.response.count
                          << "actual=" << count;
                 QString logMsg = QString("验证失败 - 设备ID=%1 id=%2 uuid=%3 reason=数量不匹配 expected=%4 actual=%5").arg(m_masterId).arg(cmd.id).arg(cmd.uuid).arg(cmd.response.count).arg(count);
-                LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
+                LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusCommandReceiver][validateResponseFrame]：%1").arg(logMsg).toStdString());
                 return false;
             }
             break;
@@ -637,7 +632,7 @@ void ModbusCommandReceiver::succeedPendingCommand(const QByteArray& frame)
              << "crc=" << toHexSpaced(finished.response.crc)
              << "elapsed=" << elapsed << "ms";
     QString logMsg = QString("接收成功 - 设备ID=%1 module=%2 id=%3 uuid=%4 crc=%5 elapsed=%6ms").arg(m_masterId).arg(moduleStr).arg(finished.id).arg(finished.uuid).arg(toHexSpaced(finished.response.crc)).arg(elapsed);
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::INFO, QString("[ModbusCommandReceiver][succeedPendingCommand]：%1").arg(logMsg).toStdString());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusCommandReceiver][succeedPendingCommand]：%1").arg(logMsg).toStdString());
 
     emit commandSucceeded(finished);
 }

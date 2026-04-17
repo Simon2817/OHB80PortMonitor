@@ -1,8 +1,11 @@
 #include "monitor_data_task.h"
 #include "modbustcpmastermanager/modbustcpmastermanager.h"
 #include "modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h"
+#include "modbustcpmastermanager/modbustcpmaster/modbusconnecter.h"
 #include "modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h"
 #include "app/shareddata.h"
+#include "app/applogger.h"
+#include "loggermanager.h"
 #include "classes/setofohbinfo.h"
 #include "classes/foupofohbinfo.h"
 
@@ -11,6 +14,16 @@
 MonitorDataTask::MonitorDataTask(QObject *parent)
     : SchedulerTask(parent)
 {
+    qDebug() << "=============================MonitorDataTask 调度任务开始=============================";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+        "=============================MonitorDataTask 调度任务开始=============================");
+}
+
+MonitorDataTask::~MonitorDataTask()
+{
+    qDebug() << "=============================MonitorDataTask 调度任务结束=============================";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+        "=============================MonitorDataTask 调度任务结束=============================");
 }
 
 void MonitorDataTask::start()
@@ -29,7 +42,9 @@ void MonitorDataTask::start()
 
         PeriodicCommandSender* periodicSender = master->periodicSender();
         if (!periodicSender) {
-            qWarning() << "[MonitorDataTask] 设备" << id << "的 PeriodicCommandSender 为空";
+            qWarning() << "[Scheduler][MonitorDataTask] 设备" << id << "的 PeriodicCommandSender 为空，跳过该设备的数据监控";
+            LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+                QString("[Scheduler][MonitorDataTask] 设备 %1 的 PeriodicCommandSender 为空，跳过该设备的数据监控").arg(id).toStdString());
             continue;
         }
 
@@ -39,7 +54,9 @@ void MonitorDataTask::start()
                 Qt::QueuedConnection);
     }
 
-    qDebug() << "[MonitorDataTask] 启动，监听" << m_totalCount << "个设备的 ReadFoupStatus 响应";
+    qDebug() << "[Scheduler][MonitorDataTask] 启动，监听" << m_totalCount << "个设备的 ReadFoupStatus 响应";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, 
+        QString("[Scheduler][MonitorDataTask] 启动，监听 %1 个设备的 ReadFoupStatus 响应").arg(m_totalCount).toStdString());
     emit progress(0, QString("开始监控 %1 个设备的实时数据").arg(m_totalCount));
 }
 
@@ -61,7 +78,8 @@ void MonitorDataTask::stop()
 
     setState(Cancelled);
     emit finished(false, "监控任务被取消");
-    qDebug() << "[MonitorDataTask] 已停止";
+    qDebug() << "[Scheduler][MonitorDataTask] 已停止";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, "[Scheduler][MonitorDataTask] 已停止");
 }
 
 void MonitorDataTask::onCommandCompleted(ModbusCommand cmd, const QString& masterId)
@@ -75,7 +93,9 @@ void MonitorDataTask::onCommandCompleted(ModbusCommand cmd, const QString& maste
     // 解析响应数据
     QVariantMap data = parseReadFoupStatusResponse(cmd);
     if (data.isEmpty()) {
-        qDebug() << "[MonitorDataTask] ReadFoupStatus 响应解析失败";
+        qDebug() << "[Scheduler][MonitorDataTask] ReadFoupStatus 响应解析失败";
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN, 
+            QString("[Scheduler][MonitorDataTask] 设备 %1 ReadFoupStatus 响应解析失败").arg(masterId).toStdString());
         return;
     }
 
@@ -88,7 +108,9 @@ void MonitorDataTask::updateFoupInfo(const QString& masterId, const QVariantMap&
     // 通过 SharedData 直接获取对应 qrCode 的 FoupOfOHBInfo 指针
     FoupOfOHBInfo* foup = SharedData::getFoupByQRCode(masterId);
     if (!foup) {
-        qWarning() << "[MonitorDataTask] 未找到设备" << masterId << "对应的 FoupOfOHBInfo";
+        qWarning() << "[Scheduler][MonitorDataTask] 未找到设备" << masterId << "对应的 FoupOfOHBInfo";
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN, 
+            QString("[Scheduler][MonitorDataTask] 未找到设备 %1 对应的 FoupOfOHBInfo").arg(masterId).toStdString());
         return;
     }
 
@@ -105,7 +127,7 @@ void MonitorDataTask::updateFoupInfo(const QString& masterId, const QVariantMap&
     foup->purgeTimeMs = data.value("purgeTimeMs").toUInt();
     foup->idleTimeMs  = data.value("idleTimeMs").toUInt();
 
-    qDebug() << "[MonitorDataTask] 设备" << masterId
+    qDebug() << "[Scheduler][MonitorDataTask] 设备" << masterId
              << "数据已更新 压力=" << foup->inletPressure
              << "流量=" << foup->inletFlow
              << "湿度=" << foup->RH
@@ -122,7 +144,7 @@ QVariantMap MonitorDataTask::parseReadFoupStatusResponse(const ModbusCommand& cm
     // ReadFoupStatus 响应：9 个寄存器 = 18 字节（存放在 response.registerValue）
     const QByteArray& payload = cmd.response.registerValue;
     if (payload.size() < 18) {
-        qWarning() << "[MonitorDataTask] ReadFoupStatus 响应字节数不足，实际=" << payload.size();
+        qWarning() << "[Scheduler][MonitorDataTask] ReadFoupStatus 响应字节数不足，实际=" << payload.size();
         return result;
     }
 

@@ -20,6 +20,7 @@ namespace Graph {
 #include "graphnode.h"
 #include "graphedge.h"
 #include "loggermanager.h"
+#include "app/applogger.h"
 
 namespace Graph
 {
@@ -105,11 +106,11 @@ void GraphAdjacencyList<VertexType, EdgeType>::addVertex(const VertexType& verte
         m_vertexOrder.append(vertex);
         std::ostringstream oss;
         oss << vertex;
-        LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][addVertex] 顶点 {} 添加成功", oss.str());
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][addVertex] 顶点 {} 添加成功", oss.str());
     } else {
         std::ostringstream oss;
         oss << vertex;
-        LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][addVertex] 顶点 {} 已存在，无需重复添加", oss.str());
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][addVertex] 顶点 {} 已存在，无需重复添加", oss.str());
     }
 }
 
@@ -118,7 +119,7 @@ bool GraphAdjacencyList<VertexType, EdgeType>::removeVertex(const VertexType& ve
     if (!m_adjacencyList.contains(vertex)) {
         std::ostringstream oss;
         oss << vertex;
-        LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][removeVertex] 顶点 {} 不存在，删除失败", oss.str());
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][removeVertex] 顶点 {} 不存在，删除失败", oss.str());
         return false;
     }
 
@@ -135,13 +136,13 @@ bool GraphAdjacencyList<VertexType, EdgeType>::removeVertex(const VertexType& ve
             removeEdgeByTarget(edges, vertex);  // 替代removeIf
         }
     } else {
-        LoggerManager::instance().log("debug", Level::WARN, "[ui][Graph][removeVertex] 未设置边的目标顶点获取函数，无法删除指向该顶点的边");
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::WARN, "[ui][Graph][removeVertex] 未设置边的目标顶点获取函数，无法删除指向该顶点的边");
         return false;
     }
 
     std::ostringstream oss;
     oss << vertex;
-    LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][removeVertex] 顶点 {} 及关联边已删除", oss.str());
+    LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][removeVertex] 顶点 {} 及关联边已删除", oss.str());
     return true;
 }
 
@@ -166,7 +167,7 @@ bool GraphAdjacencyList<VertexType, EdgeType>::addEdge(const VertexType& from, c
         std::ostringstream oss1, oss2;
         oss1 << from;
         oss2 << to;
-        LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][addEdge] 边 {} -> {} 已存在，添加失败", oss1.str(), oss2.str());
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][addEdge] 边 {} -> {} 已存在，添加失败", oss1.str(), oss2.str());
         return false;
     }
 
@@ -179,7 +180,7 @@ bool GraphAdjacencyList<VertexType, EdgeType>::addEdge(const VertexType& from, c
             EdgeType reverseEdge = m_createReverseEdge(edge);
             m_adjacencyList[to].append(reverseEdge);
         } else {
-            LoggerManager::instance().log("debug", Level::WARN, "[ui][Graph][addEdge] 未设置反向边构造函数，无向图反向边添加失败");
+            LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::WARN, "[ui][Graph][addEdge] 未设置反向边构造函数，无向图反向边添加失败");
             return false;
         }
     }
@@ -187,19 +188,19 @@ bool GraphAdjacencyList<VertexType, EdgeType>::addEdge(const VertexType& from, c
     std::ostringstream oss1, oss2;
     oss1 << from;
     oss2 << to;
-    LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][addEdge] 边 {} -> {} 添加成功", oss1.str(), oss2.str());
+    LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][addEdge] 边 {} -> {} 添加成功", oss1.str(), oss2.str());
     return true;
 }
 
 template <typename VertexType, typename EdgeType>
 bool GraphAdjacencyList<VertexType, EdgeType>::removeEdge(const VertexType& from, const VertexType& to) {
     if (!hasVertex(from) || !hasVertex(to)) {
-        LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][removeEdge] 顶点不存在，删除边失败");
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][removeEdge] 顶点不存在，删除边失败");
         return false;
     }
 
     if (!m_getEdgeTarget) {
-        LoggerManager::instance().log("debug", Level::WARN, "[ui][Graph][removeEdge] 未设置边的目标顶点获取函数，无法删除边");
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::WARN, "[ui][Graph][removeEdge] 未设置边的目标顶点获取函数，无法删除边");
         return false;
     }
 
@@ -229,12 +230,12 @@ bool GraphAdjacencyList<VertexType, EdgeType>::removeEdge(const VertexType& from
         std::ostringstream oss1, oss2;
         oss1 << from;
         oss2 << to;
-        LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][removeEdge] 边 {} -> {} 删除成功", oss1.str(), oss2.str());
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][removeEdge] 边 {} -> {} 删除成功", oss1.str(), oss2.str());
     } else {
         std::ostringstream oss1, oss2;
         oss1 << from;
         oss2 << to;
-        LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][removeEdge] 边 {} -> {} 不存在，删除失败", oss1.str(), oss2.str());
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][removeEdge] 边 {} -> {} 不存在，删除失败", oss1.str(), oss2.str());
     }
     return removed;
 }
@@ -242,7 +243,7 @@ bool GraphAdjacencyList<VertexType, EdgeType>::removeEdge(const VertexType& from
 template <typename VertexType, typename EdgeType>
 bool GraphAdjacencyList<VertexType, EdgeType>::hasEdge(const VertexType& from, const VertexType& to) const {
     if (!m_isEdgeExist) {
-        LoggerManager::instance().log("debug", Level::WARN, "[ui][Graph][hasEdge] 未设置边存在判断函数，默认返回false");
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::WARN, "[ui][Graph][hasEdge] 未设置边存在判断函数，默认返回false");
         return false;
     }
     return m_isEdgeExist(from, to);
@@ -265,8 +266,8 @@ void GraphAdjacencyList<VertexType, EdgeType>::setCreateReverseEdgeFunc(std::fun
 
 template <typename VertexType, typename EdgeType>
 void GraphAdjacencyList<VertexType, EdgeType>::printAdjacencyList() const {
-    LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][printAdjacencyList] ========== 邻接表 ==========");
-    LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][printAdjacencyList] 图类型：{}", m_isUndirected ? "无向图" : "有向图");
+    LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][printAdjacencyList] ========== 邻接表 ==========");
+    LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][printAdjacencyList] 图类型：{}", m_isUndirected ? "无向图" : "有向图");
 
     for (const VertexType& vertex : m_vertexOrder) {
         if (!m_adjacencyList.contains(vertex)) {
@@ -291,9 +292,9 @@ void GraphAdjacencyList<VertexType, EdgeType>::printAdjacencyList() const {
                 }
             }
         }
-        LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][printAdjacencyList] {}", line.toStdString());
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][printAdjacencyList] {}", line.toStdString());
     }
-    LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][printAdjacencyList] ===========================");
+    LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][printAdjacencyList] ===========================");
 }
 
 template <typename VertexType, typename EdgeType>
@@ -315,16 +316,16 @@ void GraphAdjacencyList<VertexType, EdgeType>::dfs(const VertexType& startVertex
     if (!hasVertex(startVertex)) {
         std::ostringstream oss;
         oss << startVertex;
-        LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][dfs] 起始顶点 {} 不存在", oss.str());
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][dfs] 起始顶点 {} 不存在", oss.str());
         return;
     }
 
     QSet<VertexType> visited;
     std::ostringstream oss;
     oss << startVertex;
-    LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][dfs] ========== DFS遍历（起始顶点：{}）==========", oss.str());
+    LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][dfs] ========== DFS遍历（起始顶点：{}）==========", oss.str());
     dfsHelper(startVertex, visited);
-    LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][dfs] ===========================");
+    LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][dfs] ===========================");
 }
 
 template <typename VertexType, typename EdgeType>
@@ -332,7 +333,7 @@ void GraphAdjacencyList<VertexType, EdgeType>::bfs(const VertexType& startVertex
     if (!hasVertex(startVertex)) {
         std::ostringstream oss;
         oss << startVertex;
-        LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][bfs] 起始顶点 {} 不存在", oss.str());
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][bfs] 起始顶点 {} 不存在", oss.str());
         return;
     }
 
@@ -345,12 +346,12 @@ void GraphAdjacencyList<VertexType, EdgeType>::bfs(const VertexType& startVertex
 
     std::ostringstream oss;
     oss << startVertex;
-    LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][bfs] ========== BFS遍历（起始顶点：{}）==========", oss.str());
+    LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][bfs] ========== BFS遍历（起始顶点：{}）==========", oss.str());
     while (!queue.isEmpty()) {
         VertexType current = queue.takeFirst();
         std::ostringstream oss_cur;
         oss_cur << current;
-        LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][bfs] 访问顶点：{}", oss_cur.str());
+        LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][bfs] 访问顶点：{}", oss_cur.str());
 
         // 遍历邻接顶点
         if (m_adjacencyList.contains(current)) {
@@ -364,7 +365,7 @@ void GraphAdjacencyList<VertexType, EdgeType>::bfs(const VertexType& startVertex
             }
         }
     }
-    LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][bfs] ===========================");
+    LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][bfs] ===========================");
 }
 
 template <typename VertexType, typename EdgeType>
@@ -373,7 +374,7 @@ void GraphAdjacencyList<VertexType, EdgeType>::dfsHelper(const VertexType& curre
     visited.insert(currentVertex);
     std::ostringstream oss;
     oss << currentVertex;
-    LoggerManager::instance().log("debug", Level::DEBUG, "[ui][Graph][dfsHelper] 访问顶点：{}", oss.str());
+    LoggerManager::instance().log(AppLogger::CraneMapLoggerPath().toStdString(), Level::DEBUG, "[ui][Graph][dfsHelper] 访问顶点：{}", oss.str());
 
     // 遍历所有邻接顶点
     if (m_adjacencyList.contains(currentVertex)) {

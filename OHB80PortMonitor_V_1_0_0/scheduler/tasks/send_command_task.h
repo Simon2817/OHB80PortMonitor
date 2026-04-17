@@ -18,6 +18,7 @@ class SendCommandTask : public SchedulerTask
 
 public:
     explicit SendCommandTask(QObject *parent = nullptr);
+    ~SendCommandTask();
 
     // 设置：给指定 QRCode 列表的设备下发一条业务指令
     void setSendToDevices(const QVector<QString> &qrcodes,

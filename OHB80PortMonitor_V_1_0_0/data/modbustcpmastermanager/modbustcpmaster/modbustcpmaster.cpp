@@ -67,7 +67,7 @@ ModbusTcpMaster::State ModbusTcpMaster::currentState() const
     return m_state;
 }
 
-void ModbusTcpMaster::onConnectionStatusChanged(ModbusConnecter::ConnectionStatus status)
+void ModbusTcpMaster::onConnectionStatusChanged(ModbusConnecter::ConnectionStatus status, const QString& masterId)
 {
     switch (status) {
         case ModbusConnecter::ConnectionStatus::Connected:
@@ -108,8 +108,8 @@ void ModbusTcpMaster::startSender()
     enterState(State::SenderStartup);
     m_sender->start();
     qDebug() << "ModbusTcpMaster: [设备ID=" << ID << "] 指令发送器已启动，立即进入初始化阶段";
-    QString logMsg = "[ModbusTcpMaster][startSender]：设备ID=" + ID + " 指令发送器已启动，立即进入初始化阶段";
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(ID).toStdString(), Level::INFO, logMsg.toStdString());
+    QString logMsg = "[data][ModbusTcpMaster][startSender]：设备ID=" + ID + " 指令发送器已启动，立即进入初始化阶段";
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(ID).toStdString(), Level::INFO, logMsg.toStdString());
 }
 
 void ModbusTcpMaster::startInitialIssuer()
@@ -128,8 +128,8 @@ void ModbusTcpMaster::onInitialFinished(QList<ModbusCommand> failedCommands)
 {
     qDebug() << "ModbusTcpMaster: [设备ID=" << ID << "] 初始化完成，失败指令数："
              << failedCommands.size();
-    QString logMsg = QString("[ModbusTcpMaster][onInitialFinished]：设备ID=%1 初始化完成，失败指令数：%2").arg(ID).arg(failedCommands.size());
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(ID).toStdString(), Level::INFO, logMsg.toStdString());
+    QString logMsg = QString("[data][ModbusTcpMaster][onInitialFinished]：设备ID=%1 初始化完成，失败指令数：%2").arg(ID).arg(failedCommands.size());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(ID).toStdString(), Level::INFO, logMsg.toStdString());
 
     m_initialStarted = false;
 
@@ -163,8 +163,8 @@ void ModbusTcpMaster::startPeriodicSender()
     // 检查 periodicSender 的队列是否为空，避免空队列启动
     if (m_periodicSender && m_periodicSender->commandQueue().isEmpty()) {
         qDebug() << "ModbusTcpMaster: [设备ID=" << ID << "] 定时发送器队列为空，跳过启动，直接进入运行状态";
-        QString logMsg = "[ModbusTcpMaster][startPeriodicSender]：设备ID=" + ID + " 定时发送器队列为空，跳过启动，直接进入运行状态";
-        LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(ID).toStdString(), Level::INFO, logMsg.toStdString());
+        QString logMsg = "[data][ModbusTcpMaster][startPeriodicSender]：设备ID=" + ID + " 定时发送器队列为空，跳过启动，直接进入运行状态";
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(ID).toStdString(), Level::INFO, logMsg.toStdString());
         enterState(State::Running);
         return;
     }
@@ -174,8 +174,8 @@ void ModbusTcpMaster::startPeriodicSender()
     m_periodicSender->start();
 
     qDebug() << "ModbusTcpMaster: [设备ID=" << ID << "] 定时发送器已启动，进入正常运行状态";
-    QString logMsg = "[ModbusTcpMaster][startPeriodicSender]：设备ID=" + ID + " 定时发送器已启动，进入正常运行状态";
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(ID).toStdString(), Level::INFO, logMsg.toStdString());
+    QString logMsg = "[data][ModbusTcpMaster][startPeriodicSender]：设备ID=" + ID + " 定时发送器已启动，进入正常运行状态";
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(ID).toStdString(), Level::INFO, logMsg.toStdString());
     enterState(State::Running);
 }
 
@@ -184,8 +184,8 @@ void ModbusTcpMaster::onPeriodicDisconnectRequested()
     const QString msg = QString("定时发送器连续失败达到阈值（%1 次），触发断开重连")
                             .arg(PeriodicCommandSender::MAX_CONSECUTIVE_FAILURES);
     qDebug() << "ModbusTcpMaster: [设备ID=" << ID << "] " << msg;
-    QString logMsg = QString("[ModbusTcpMaster][onPeriodicDisconnectRequested]：设备ID=%1 %2").arg(ID).arg(msg);
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(ID).toStdString(), Level::WARN, logMsg.toStdString());
+    QString logMsg = QString("[data][ModbusTcpMaster][onPeriodicDisconnectRequested]：设备ID=%1 %2").arg(ID).arg(msg);
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(ID).toStdString(), Level::WARN, logMsg.toStdString());
 
     emit errorOccurred(State::Running, msg);
 
@@ -238,8 +238,8 @@ void ModbusTcpMaster::enterState(State state)
     m_state = state;
     emit stateChanged(state);
     qDebug() << "ModbusTcpMaster: [设备ID=" << ID << "] 状态切换: " << stateToString(oldState) << " -> " << stateToString(state);
-    QString logMsg = QString("[ModbusTcpMaster][enterState]：设备ID=%1 状态切换: %2 -> %3").arg(ID).arg(stateToString(oldState)).arg(stateToString(state));
-    LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(ID).toStdString(), Level::INFO, logMsg.toStdString());
+    QString logMsg = QString("[data][ModbusTcpMaster][enterState]：设备ID=%1 状态切换: %2 -> %3").arg(ID).arg(stateToString(oldState)).arg(stateToString(state));
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(ID).toStdString(), Level::INFO, logMsg.toStdString());
 }
 
 QString ModbusTcpMaster::stateToString(State state)

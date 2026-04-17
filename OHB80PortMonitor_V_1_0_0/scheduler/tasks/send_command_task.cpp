@@ -3,12 +3,25 @@
 #include "modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h"
 #include "modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h"
 #include "modbustcpmastermanager/modbuscommand/commandpool.h"
+#include "app/applogger.h"
+#include "loggermanager.h"
 
 #include <QDebug>
 
 SendCommandTask::SendCommandTask(QObject *parent)
     : SchedulerTask(parent)
-{}
+{
+    qDebug() << "=============================SendCommandTask 调度任务开始=============================";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+        "=============================SendCommandTask 调度任务开始=============================");
+}
+
+SendCommandTask::~SendCommandTask()
+{
+    qDebug() << "=============================SendCommandTask 调度任务结束=============================";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+        "=============================SendCommandTask 调度任务结束=============================");
+}
 
 // ============================================================
 // 配置接口
@@ -51,6 +64,7 @@ void SendCommandTask::start()
         setState(Failed);
         emit allFinished(false, 0, 0, {});
         emit finished(false, "SendCommandTask: 未配置指令名");
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN, "[Scheduler][SendCommandTask] 未配置指令名");
         return;
     }
 
@@ -60,6 +74,7 @@ void SendCommandTask::start()
         setState(Failed);
         emit allFinished(false, 0, 0, {});
         emit finished(false, "SendCommandTask: CommandPool 未初始化");
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN, "[Scheduler][SendCommandTask] CommandPool 未初始化");
         return;
     }
 
@@ -67,6 +82,8 @@ void SendCommandTask::start()
         setState(Failed);
         emit allFinished(false, 0, 0, {});
         emit finished(false, QString("SendCommandTask: 指令模板 '%1' 不存在").arg(m_commandName));
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN, 
+            QString("[Scheduler][SendCommandTask] 指令模板 '%1' 不存在").arg(m_commandName).toStdString());
         return;
     }
 
@@ -79,6 +96,7 @@ void SendCommandTask::start()
         setState(Failed);
         emit allFinished(false, 0, 0, {});
         emit finished(false, "SendCommandTask: 没有找到目标设备");
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN, "[Scheduler][SendCommandTask] 没有找到目标设备");
         return;
     }
 
@@ -89,14 +107,14 @@ void SendCommandTask::start()
     for (const QString &id : qAsConst(targetIds)) {
         ModbusTcpMaster *master = mgr.getMaster(id);
         if (!master) {
-            qWarning() << "[SendCommandTask] Master 不存在:" << id;
+            qWarning() << "[Scheduler][SendCommandTask] Master 不存在:" << id;
             m_resultFailedIds.append(id);
             continue;
         }
 
         ModbusCommandSender *sender = master->sender();
         if (!sender) {
-            qWarning() << "[SendCommandTask] Sender 为空:" << id;
+            qWarning() << "[Scheduler][SendCommandTask] Sender 为空:" << id;
             m_resultFailedIds.append(id);
             continue;
         }
@@ -104,7 +122,7 @@ void SendCommandTask::start()
         // 从池中克隆指令副本（uuid 已生成，运行时状态已重置）
         ModbusCommand cmd = pool->clone(m_commandName);
         if (!cmd.isValid()) {
-            qWarning() << "[SendCommandTask] 克隆指令失败:" << id;
+            qWarning() << "[Scheduler][SendCommandTask] 克隆指令失败:" << id;
             m_resultFailedIds.append(id);
             continue;
         }
@@ -127,6 +145,9 @@ void SendCommandTask::start()
         // 记录 uuid 以便在回调中匹配
         m_pendingMap[cmd.uuid] = id;
         m_totalCount++;
+        qDebug() << "[Scheduler][SendCommandTask] 向设备" << id << "发送指令" << m_commandName;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, 
+            QString("[Scheduler][SendCommandTask] 向设备 %1 发送指令 %2").arg(id).arg(m_commandName).toStdString());
 
         // 提交指令（线程安全）
         QMetaObject::invokeMethod(sender, [sender, cmd]() {
@@ -140,6 +161,8 @@ void SendCommandTask::start()
         emit allFinished(false, 0, m_resultFailedIds.count(), m_resultFailedIds);
         emit finished(false, QString("SendCommandTask: 所有设备无法接收指令（失败数=%1）")
                                 .arg(m_resultFailedIds.count()));
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN, 
+            QString("[Scheduler][SendCommandTask] 所有设备无法接收指令（失败数=%1）").arg(m_resultFailedIds.count()).toStdString());
     }
 }
 
@@ -153,6 +176,7 @@ void SendCommandTask::stop()
     disconnectAll();
     setState(Cancelled);
     emit finished(false, "SendCommandTask: 任务被取消");
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, "[Scheduler][SendCommandTask] 任务被取消");
 }
 
 // ============================================================
@@ -176,16 +200,21 @@ void SendCommandTask::onCommandFinished(ModbusCommand cmd, const QString &master
     if (success) {
         ++m_resultSuccessCount;
         emit dataResult(masterId, cmd);
-        qDebug() << "[SendCommandTask] 设备" << masterId
+        qDebug() << "[Scheduler][SendCommandTask] 设备" << masterId
                  << "指令" << cmd.id << "成功 响应字节="
                  << cmd.response.registerValue.toHex(' ');
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+            QString("[Scheduler][SendCommandTask] 设备 %1 指令 %2 成功 响应字节=%3").arg(masterId).arg(cmd.id).arg(QString::fromLatin1(cmd.response.registerValue.toHex(' '))).toStdString());
     } else {
         m_resultFailedIds.append(masterId);
-        qWarning() << "[SendCommandTask] 设备" << masterId
+        qWarning() << "[Scheduler][SendCommandTask] 设备" << masterId
                    << "指令" << cmd.id << "失败:" << cmd.errorMessage
                    << "timedOut=" << cmd.timedOut
                    << "checksumError=" << cmd.checksumError
                    << "deviceBusy=" << cmd.deviceBusy;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+            QString("[Scheduler][SendCommandTask] 设备 %1 指令 %2 失败: %3 timedOut=%4 checksumError=%5 deviceBusy=%6")
+                .arg(masterId).arg(cmd.id).arg(cmd.errorMessage).arg(cmd.timedOut).arg(cmd.checksumError).arg(cmd.deviceBusy).toStdString());
     }
 
     checkAllFinished();
@@ -211,6 +240,10 @@ void SendCommandTask::checkAllFinished()
                             .arg(m_commandName)
                             .arg(m_resultSuccessCount)
                             .arg(m_resultFailedIds.count()));
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), 
+        allSuccess ? Level::INFO : Level::WARN,
+        QString("[Scheduler][SendCommandTask] 指令 '%1' 执行完成: %2 台成功，%3 台失败")
+            .arg(m_commandName).arg(m_resultSuccessCount).arg(m_resultFailedIds.count()).toStdString());
 }
 
 // ============================================================

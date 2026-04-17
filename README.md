@@ -8,6 +8,117 @@
 
 ## 更新日志
 
+### 2026-04-17 19:30 - Simon
+**调度系统完善与日志格式优化**
+
+#### 修改内容
+1. **InitCheckTask 初始化检查任务**
+   - 创建 `scheduler/tasks/init_check_task.h` 和 `.cpp`
+   - 普通任务，监听所有 ModbusTcpMaster 的 InitialCommandIssuer 的 `finished` 信号
+   - 汇总所有设备的初始化结果，区分成功和失败设备
+   - 发射 `allFinished` 信号，携带成功数、失败数和失败设备ID列表
+   - 任务完成后自动释放，不占用调度器资源
+
+2. **NetworkStatusTask 网络状态监控任务**
+   - 创建 `scheduler/tasks/network_status_task.h` 和 `.cpp`
+   - 长驻任务，监听所有 ModbusTcpMaster 的 ModbusConnecter 的 `statusChanged` 信号
+   - 在 `start()` 方法中创建并启动 InitCheckTask，管理其生命周期
+   - 启动所有 ModbusTcpMaster 的自动重连功能
+   - 根据连接状态实时更新 FoupOfOHBInfo 的告警信息（alarmId=111）
+   - 连接成功时清除告警，断开或出错时设置告警
+   - 接收 InitCheckTask 的 `allFinished` 信号并转发为 `allInitFinished` 信号
+
+3. **调度器初始化流程优化**
+   - `App::initScheduler()` 在 `getSharedData()` 之后调用，确保 ModbusTcpMaster 实例已创建
+   - 在 NetworkStatusTask 启动前提交任务，保证能够监控到底层 Master 类的初始化过程
+   - 只提交 NetworkStatusTask，InitCheckTask 由 NetworkStatusTask 内部管理
+   - 移除 SharedData 中的 ModbusTcpMaster 自动启动调用
+   - 将 ModbusTcpMaster 启动控制权交给 NetworkStatusTask
+
+4. **MonitorDataTask 完善**
+   - 添加构造函数和析构函数日志，格式与 InitCheckTask 一致
+   - 移除冗余的数据更新日志，减少日志输出量
+   - 添加 PeriodicCommandSender 为空的详细日志提示
+
+5. **日志格式统一优化**
+   - **Scheduler 模块**：统一为 `[Scheduler][类名][方法名]` 格式
+     - Scheduler 类：`[Scheduler][方法名]`（避免重复类名）
+     - InitCheckTask：`[Scheduler][InitCheckTask][方法名]`
+     - NetworkStatusTask：`[Scheduler][NetworkStatusTask][方法名]`
+     - MonitorDataTask：`[Scheduler][MonitorDataTask][方法名]`
+     - SendCommandTask：`[Scheduler][SendCommandTask][方法名]`
+   
+   - **UI 模块**：统一为 `[ui][类名][方法名]` 格式
+     - GraphConfigParser：`[ui][GraphConfigParser][方法名]`
+     - SetLevelGraphBuilder：`[ui][SetLevelGraphBuilder][方法名]`
+     - FoupLevelGraphBuilder：`[ui][FoupLevelGraphBuilder][方法名]`
+     - GraphAdjacencyList：`[ui][Graph][方法名]`
+     - GraphAdjacencyMultilist：`[ui][Graph][方法名]`
+   
+   - **Data 模块**：统一为 `[data][类名][方法名]` 格式
+     - ModbusTcpMasterManager：`[data][ModbusTcpMasterManager][方法名]`
+     - ModbusTcpMasterPool：`[data][ModbusTcpMasterPool][方法名]`
+     - ModbusTcpMaster：`[data][ModbusTcpMaster][方法名]`
+     - ModbusConnecter：`[data][ModbusConnecter][方法名]`
+     - ModbusCommandReceiver：`[data][ModbusCommandReceiver][方法名]`
+     - ModbusCommandSender：`[data][ModbusCommandSender][方法名]`
+     - ModbusConfigParser：`[data][ModbusConfigParser][方法名]`
+   
+   - **日志路径优化**：
+     - 添加 `AppLogger::CraneMapLoggerPath()` 返回 `"ui/cranemap"`
+     - 修改 `AppLogger::ModbusMasterLoggerPath()` 返回 `"data/modbustcpmaster/deviceid_%1"`
+     - 天车轨道布局相关类统一使用 CraneMapLoggerPath
+
+6. **界面刷新问题修复**
+   - 解决 FrameDevice 控件背景颜色状态不刷新的问题
+   - 确保设备状态变化时界面能够实时更新显示
+
+7. **QString::arg() 歧义修复**
+   - 在 `send_command_task.cpp` 中使用 `QString::fromLatin1()` 显式转换 QByteArray
+   - 避免 QString::arg() 重载解析冲突
+
+#### 技术细节
+- **任务生命周期管理**：InitCheckTask 由 NetworkStatusTask 创建、启动和释放
+- **信号转发机制**：NetworkStatusTask 接收 InitCheckTask 的 allFinished 信号并转发为 allInitFinished
+- **线程安全**：所有信号连接使用 Qt::QueuedConnection 确保跨线程安全
+- **日志分层**：按模块（Scheduler/ui/data）和类名分层，便于日志过滤和问题定位
+- **启动顺序**：Scheduler → SharedData → NetworkStatusTask → InitCheckTask → ModbusTcpMaster
+
+#### 数据流向
+```
+App::initialize()
+  ↓ initScheduler()
+Scheduler::start()
+  ↓ submitTask(NetworkStatusTask)
+NetworkStatusTask::start()
+  ↓ create InitCheckTask
+  ↓ start all ModbusTcpMaster
+  ↓ connect statusChanged signals
+InitCheckTask::start()
+  ↓ connect InitialCommandIssuer::finished signals
+  ↓ wait for all devices init
+  ↓ emit allFinished
+NetworkStatusTask::onInitCheckFinished()
+  ↓ release InitCheckTask
+  ↓ emit allInitFinished
+```
+
+#### 影响范围
+- 新增文件：`scheduler/tasks/init_check_task.h`、`scheduler/tasks/init_check_task.cpp`
+- 新增文件：`scheduler/tasks/network_status_task.h`、`scheduler/tasks/network_status_task.cpp`
+- 修改文件：`app/app.cpp`（调整 initScheduler 调用顺序）
+- 修改文件：`app/shareddata.cpp`（移除 ModbusTcpMaster 自动启动）
+- 修改文件：`app/applogger.h`、`app/applogger.cpp`（添加日志路径方法）
+- 修改文件：`scheduler/scheduler.cpp`（日志格式优化）
+- 修改文件：`scheduler/tasks/monitor_data_task.cpp`（添加构造/析构日志，移除冗余日志）
+- 修改文件：`scheduler/tasks/send_command_task.cpp`（修复 QString::arg 歧义）
+- 修改文件：`ui/customwidget/overheadcranetrack/graphconfigparser.cpp`（日志格式优化）
+- 修改文件：`ui/customwidget/overheadcranetrack/setlevelgraphbuilder.cpp`（日志格式优化）
+- 修改文件：`ui/customwidget/overheadcranetrack/fouplevelgraphbuilder.cpp`（日志格式优化）
+- 修改文件：`ui/customwidget/overheadcranetrack/graphadjacencylist.h`（日志格式优化）
+
+---
+
 ### 2026-04-17 15:48 - Simon
 **重大功能：调度层实现与 UI-Scheduler-Data 三层通路打通**
 

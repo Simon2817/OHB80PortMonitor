@@ -20,14 +20,14 @@ ModbusTcpMasterManager::ModbusTcpMasterManager(QObject* parent)
     , m_masterPool(new ModbusTcpMasterPool(this))
     , m_commandPool(new CommandPool())
 {
-    qDebug() << "[ModbusTcpMasterManager] 已创建管理器";
-    LoggerManager::instance().log(AppLogger::getDataLayerLogPath().toStdString(), Level::INFO, QString("[ModbusTcpMasterManager] 已创建管理器").toStdString());
+    qDebug() << "[data][ModbusTcpMasterManager] 已创建管理器";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterManager] 已创建管理器").toStdString());
 }
 
 ModbusTcpMasterManager::~ModbusTcpMasterManager()
 {
-    qDebug() << "[ModbusTcpMasterManager] 析构管理器";
-    LoggerManager::instance().log(AppLogger::getDataLayerLogPath().toStdString(), Level::INFO, QString("[ModbusTcpMasterManager] 析构管理器").toStdString());
+    qDebug() << "[data][ModbusTcpMasterManager] 析构管理器";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterManager] 析构管理器").toStdString());
 
     delete m_configParser;
     delete m_commandPool;
@@ -36,11 +36,11 @@ ModbusTcpMasterManager::~ModbusTcpMasterManager()
 
 bool ModbusTcpMasterManager::loadConfig(const QString& xmlFilePath)
 {
-    qDebug() << "[ModbusTcpMasterManager] 开始加载配置文件:" << xmlFilePath;
-    LoggerManager::instance().log(AppLogger::getDataLayerLogPath().toStdString(), Level::INFO, QString("[ModbusTcpMasterManager] 开始加载配置文件：%1").arg(xmlFilePath).toStdString());
+    qDebug() << "[data][ModbusTcpMasterManager] 开始加载配置文件:" << xmlFilePath;
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterManager] 开始加载配置文件：%1").arg(xmlFilePath).toStdString());
 
     if (!m_configParser->parse(xmlFilePath)) {
-        qWarning() << "[ModbusTcpMasterManager] 配置文件解析失败:" << m_configParser->errorMessage();
+        qWarning() << "[data][ModbusTcpMasterManager] 配置文件解析失败:" << m_configParser->errorMessage();
         return false;
     }
 
@@ -50,8 +50,8 @@ bool ModbusTcpMasterManager::loadConfig(const QString& xmlFilePath)
     // 设置配置解析器到 MasterPool
     m_masterPool->setConfigParser(m_configParser);
 
-    qDebug() << "[ModbusTcpMasterManager] 配置文件加载成功";
-    LoggerManager::instance().log(AppLogger::getDataLayerLogPath().toStdString(), Level::INFO, QString("[ModbusTcpMasterManager] 配置文件加载成功").toStdString());
+    qDebug() << "[data][ModbusTcpMasterManager] 配置文件加载成功";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterManager] 配置文件加载成功").toStdString());
     return true;
 }
 
@@ -67,8 +67,8 @@ void ModbusTcpMasterManager::setThreadCount(ModbusTcpMasterPool::ThreadCountMode
 
 ModbusTcpMaster* ModbusTcpMasterManager::addMaster(const QString& ip, quint16 port, const QString& id)
 {
-    qDebug() << "[ModbusTcpMasterManager] 创建 Master (ID:" << id << ", IP:" << ip << ", Port:" << port << ")";
-    LoggerManager::instance().log(AppLogger::getDataLayerLogPath().toStdString(), Level::INFO, QString("[ModbusTcpMasterManager] 创建 Master (ID:%1, IP:%2, Port:%3)").arg(id).arg(ip).arg(port).toStdString());
+    qDebug() << "[data][ModbusTcpMasterManager] 创建 Master (ID:" << id << ", IP:" << ip << ", Port:" << port << ")";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterManager] 创建 Master (ID:%1, IP:%2, Port:%3)").arg(id).arg(ip).arg(port).toStdString());
     return m_masterPool->addMaster(ip, port, id);
 }
 
@@ -81,7 +81,7 @@ bool ModbusTcpMasterManager::startMaster(const QString& id, ModbusConnecter::Con
 {
     ModbusTcpMaster* master = m_masterPool->getMaster(id);
     if (!master) {
-        qWarning() << "[ModbusTcpMasterManager] 未找到要启动的 Master, ID:" << id;
+        qWarning() << "[data][ModbusTcpMasterManager] 未找到要启动的 Master, ID:" << id;
         return false;
     }
 
@@ -89,8 +89,8 @@ bool ModbusTcpMasterManager::startMaster(const QString& id, ModbusConnecter::Con
         master->start(mode);
     }, Qt::QueuedConnection);
 
-    qDebug() << "[ModbusTcpMasterManager] 已投递启动请求, ID:" << id;
-    LoggerManager::instance().log(AppLogger::getDataLayerLogPath().toStdString(), Level::INFO, QString("[ModbusTcpMasterManager] 已投递启动请求, ID:%1").arg(id).toStdString());
+    qDebug() << "[data][ModbusTcpMasterManager] 已投递启动请求, ID:" << id;
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterManager] 已投递启动请求, ID:%1").arg(id).toStdString());
     return true;
 }
 

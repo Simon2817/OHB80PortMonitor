@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ModbusTcpMaster_t {
-    QByteArrayData data[23];
-    char stringdata0[329];
+    QByteArrayData data[24];
+    char stringdata0[338];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,29 +43,30 @@ QT_MOC_LITERAL(6, 68, 12), // "stateChanged"
 QT_MOC_LITERAL(7, 81, 25), // "onConnectionStatusChanged"
 QT_MOC_LITERAL(8, 107, 33), // "ModbusConnecter::ConnectionSt..."
 QT_MOC_LITERAL(9, 141, 6), // "status"
-QT_MOC_LITERAL(10, 148, 17), // "onConnectionError"
-QT_MOC_LITERAL(11, 166, 17), // "onInitialFinished"
-QT_MOC_LITERAL(12, 184, 20), // "QList<ModbusCommand>"
-QT_MOC_LITERAL(13, 205, 14), // "failedCommands"
-QT_MOC_LITERAL(14, 220, 29), // "onPeriodicDisconnectRequested"
-QT_MOC_LITERAL(15, 250, 5), // "State"
-QT_MOC_LITERAL(16, 256, 4), // "Idle"
-QT_MOC_LITERAL(17, 261, 10), // "Connecting"
-QT_MOC_LITERAL(18, 272, 13), // "SenderStartup"
-QT_MOC_LITERAL(19, 286, 12), // "Initializing"
-QT_MOC_LITERAL(20, 299, 15), // "PeriodicStartup"
-QT_MOC_LITERAL(21, 315, 7), // "Running"
-QT_MOC_LITERAL(22, 323, 5) // "Error"
+QT_MOC_LITERAL(10, 148, 8), // "masterId"
+QT_MOC_LITERAL(11, 157, 17), // "onConnectionError"
+QT_MOC_LITERAL(12, 175, 17), // "onInitialFinished"
+QT_MOC_LITERAL(13, 193, 20), // "QList<ModbusCommand>"
+QT_MOC_LITERAL(14, 214, 14), // "failedCommands"
+QT_MOC_LITERAL(15, 229, 29), // "onPeriodicDisconnectRequested"
+QT_MOC_LITERAL(16, 259, 5), // "State"
+QT_MOC_LITERAL(17, 265, 4), // "Idle"
+QT_MOC_LITERAL(18, 270, 10), // "Connecting"
+QT_MOC_LITERAL(19, 281, 13), // "SenderStartup"
+QT_MOC_LITERAL(20, 295, 12), // "Initializing"
+QT_MOC_LITERAL(21, 308, 15), // "PeriodicStartup"
+QT_MOC_LITERAL(22, 324, 7), // "Running"
+QT_MOC_LITERAL(23, 332, 5) // "Error"
 
     },
     "ModbusTcpMaster\0errorOccurred\0\0"
     "ModbusTcpMaster::State\0state\0message\0"
     "stateChanged\0onConnectionStatusChanged\0"
     "ModbusConnecter::ConnectionStatus\0"
-    "status\0onConnectionError\0onInitialFinished\0"
-    "QList<ModbusCommand>\0failedCommands\0"
-    "onPeriodicDisconnectRequested\0State\0"
-    "Idle\0Connecting\0SenderStartup\0"
+    "status\0masterId\0onConnectionError\0"
+    "onInitialFinished\0QList<ModbusCommand>\0"
+    "failedCommands\0onPeriodicDisconnectRequested\0"
+    "State\0Idle\0Connecting\0SenderStartup\0"
     "Initializing\0PeriodicStartup\0Running\0"
     "Error"
 };
@@ -79,7 +80,7 @@ static const uint qt_meta_data_ModbusTcpMaster[] = {
        0,    0, // classinfo
        6,   14, // methods
        0,    0, // properties
-       1,   62, // enums/sets
+       1,   64, // enums/sets
        0,    0, // constructors
        0,       // flags
        2,       // signalCount
@@ -89,32 +90,32 @@ static const uint qt_meta_data_ModbusTcpMaster[] = {
        6,    1,   49,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    1,   52,    2, 0x08 /* Private */,
-      10,    1,   55,    2, 0x08 /* Private */,
-      11,    1,   58,    2, 0x08 /* Private */,
-      14,    0,   61,    2, 0x08 /* Private */,
+       7,    2,   52,    2, 0x08 /* Private */,
+      11,    1,   57,    2, 0x08 /* Private */,
+      12,    1,   60,    2, 0x08 /* Private */,
+      15,    0,   63,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::QString,    4,    5,
     QMetaType::Void, 0x80000000 | 3,    4,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 8,    9,
+    QMetaType::Void, 0x80000000 | 8, QMetaType::QString,    9,   10,
     QMetaType::Void, QMetaType::QString,    5,
-    QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, 0x80000000 | 13,   14,
     QMetaType::Void,
 
  // enums: name, alias, flags, count, data
-      15,   15, 0x2,    7,   67,
+      16,   16, 0x2,    7,   69,
 
  // enum data: key, value
-      16, uint(ModbusTcpMaster::State::Idle),
-      17, uint(ModbusTcpMaster::State::Connecting),
-      18, uint(ModbusTcpMaster::State::SenderStartup),
-      19, uint(ModbusTcpMaster::State::Initializing),
-      20, uint(ModbusTcpMaster::State::PeriodicStartup),
-      21, uint(ModbusTcpMaster::State::Running),
-      22, uint(ModbusTcpMaster::State::Error),
+      17, uint(ModbusTcpMaster::State::Idle),
+      18, uint(ModbusTcpMaster::State::Connecting),
+      19, uint(ModbusTcpMaster::State::SenderStartup),
+      20, uint(ModbusTcpMaster::State::Initializing),
+      21, uint(ModbusTcpMaster::State::PeriodicStartup),
+      22, uint(ModbusTcpMaster::State::Running),
+      23, uint(ModbusTcpMaster::State::Error),
 
        0        // eod
 };
@@ -127,7 +128,7 @@ void ModbusTcpMaster::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         switch (_id) {
         case 0: _t->errorOccurred((*reinterpret_cast< ModbusTcpMaster::State(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
         case 1: _t->stateChanged((*reinterpret_cast< ModbusTcpMaster::State(*)>(_a[1]))); break;
-        case 2: _t->onConnectionStatusChanged((*reinterpret_cast< ModbusConnecter::ConnectionStatus(*)>(_a[1]))); break;
+        case 2: _t->onConnectionStatusChanged((*reinterpret_cast< ModbusConnecter::ConnectionStatus(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
         case 3: _t->onConnectionError((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 4: _t->onInitialFinished((*reinterpret_cast< QList<ModbusCommand>(*)>(_a[1]))); break;
         case 5: _t->onPeriodicDisconnectRequested(); break;

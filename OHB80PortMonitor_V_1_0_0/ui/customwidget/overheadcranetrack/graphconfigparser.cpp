@@ -1,4 +1,5 @@
 #include "graphconfigparser.h"
+#include "app/applogger.h"
 
 #include <QFile>
 #include <QFileInfo>
@@ -8,7 +9,7 @@ Graph::GraphConfigParser::GraphConfigParser(const QString& filePath)
       m_startNodeFound(false),
       m_fixSpacingValue(10.0),
       m_logger(LoggerManager::instance()),
-      m_loggerFileName("debug.log"),
+      m_loggerFileName(AppLogger::CraneMapLoggerPath().toStdString()),
       m_stage(ParseStage::NotStarted)
 {
     m_config.isUndirected = false;
@@ -43,7 +44,7 @@ void Graph::GraphConfigParser::setFixSpacingValue(double value)
 
 bool Graph::GraphConfigParser::parse()
 {
-    std::string loggerPre = "[GraphConfigParser::parse()]";
+    std::string loggerPre = "[ui][GraphConfig][parse]";
     m_logger.log(m_loggerFileName, Level::INFO, "====================天车轨道布局图配置文件解析 开始====================");
     
     QFile file(m_filePath);
@@ -95,7 +96,7 @@ bool Graph::GraphConfigParser::parse()
 
 bool Graph::GraphConfigParser::parseGraphSettings(const QDomElement& root)
 {
-    std::string loggerPre = "[GraphConfigParser::parseGraphSettings()]";
+    std::string loggerPre = "[ui][GraphConfig][parseGraphSettings]";
     
     QDomElement settingsEle = root.firstChildElement("GraphSettings");
     if (settingsEle.isNull())
@@ -139,7 +140,7 @@ bool Graph::GraphConfigParser::parseGraphSettings(const QDomElement& root)
 
 bool Graph::GraphConfigParser::parseEdges(const QDomElement& root)
 {
-    std::string loggerPre = "[GraphConfigParser::parseEdges()]";
+    std::string loggerPre = "[ui][GraphConfig][parseEdges]";
     
     QDomElement edgesEle = root.firstChildElement("Edges");
     if (edgesEle.isNull())
@@ -326,7 +327,7 @@ bool Graph::GraphConfigParser::parseEdges(const QDomElement& root)
 
 void Graph::GraphConfigParser::processNode(const QDomElement& nodeEle)
 {
-    std::string loggerPre = "[GraphConfigParser::processNode()]";
+    std::string loggerPre = "[ui][GraphConfig][processNode]";
     
     int nodeId = getAttributeInt(nodeEle, "id", -1);
     QString nodeType = getAttributeText(nodeEle, "type");
