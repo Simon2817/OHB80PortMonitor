@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ModbusCommandSender_t {
-    QByteArrayData data[10];
-    char stringdata0[124];
+    QByteArrayData data[11];
+    char stringdata0[133];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,15 +37,16 @@ QT_MOC_LITERAL(1, 20, 15), // "commandFinished"
 QT_MOC_LITERAL(2, 36, 0), // ""
 QT_MOC_LITERAL(3, 37, 13), // "ModbusCommand"
 QT_MOC_LITERAL(4, 51, 3), // "cmd"
-QT_MOC_LITERAL(5, 55, 8), // "dispatch"
-QT_MOC_LITERAL(6, 64, 19), // "onReceiverSucceeded"
-QT_MOC_LITERAL(7, 84, 16), // "onReceiverFailed"
-QT_MOC_LITERAL(8, 101, 8), // "timedOut"
-QT_MOC_LITERAL(9, 110, 13) // "checksumError"
+QT_MOC_LITERAL(5, 55, 8), // "masterId"
+QT_MOC_LITERAL(6, 64, 8), // "dispatch"
+QT_MOC_LITERAL(7, 73, 19), // "onReceiverSucceeded"
+QT_MOC_LITERAL(8, 93, 16), // "onReceiverFailed"
+QT_MOC_LITERAL(9, 110, 8), // "timedOut"
+QT_MOC_LITERAL(10, 119, 13) // "checksumError"
 
     },
     "ModbusCommandSender\0commandFinished\0"
-    "\0ModbusCommand\0cmd\0dispatch\0"
+    "\0ModbusCommand\0cmd\0masterId\0dispatch\0"
     "onReceiverSucceeded\0onReceiverFailed\0"
     "timedOut\0checksumError"
 };
@@ -65,20 +66,20 @@ static const uint qt_meta_data_ModbusCommandSender[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   34,    2, 0x06 /* Public */,
+       1,    2,   34,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   37,    2, 0x08 /* Private */,
-       6,    1,   38,    2, 0x08 /* Private */,
-       7,    3,   41,    2, 0x08 /* Private */,
+       6,    0,   39,    2, 0x08 /* Private */,
+       7,    1,   40,    2, 0x08 /* Private */,
+       8,    3,   43,    2, 0x08 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::QString,    4,    5,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 3,    4,
-    QMetaType::Void, 0x80000000 | 3, QMetaType::Bool, QMetaType::Bool,    4,    8,    9,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::Bool, QMetaType::Bool,    4,    9,   10,
 
        0        // eod
 };
@@ -89,16 +90,41 @@ void ModbusCommandSender::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         auto *_t = static_cast<ModbusCommandSender *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->commandFinished((*reinterpret_cast< ModbusCommand(*)>(_a[1]))); break;
+        case 0: _t->commandFinished((*reinterpret_cast< ModbusCommand(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 1: _t->dispatch(); break;
         case 2: _t->onReceiverSucceeded((*reinterpret_cast< ModbusCommand(*)>(_a[1]))); break;
         case 3: _t->onReceiverFailed((*reinterpret_cast< ModbusCommand(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
         default: ;
         }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 0:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< ModbusCommand >(); break;
+            }
+            break;
+        case 2:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< ModbusCommand >(); break;
+            }
+            break;
+        case 3:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< ModbusCommand >(); break;
+            }
+            break;
+        }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (ModbusCommandSender::*)(ModbusCommand );
+            using _t = void (ModbusCommandSender::*)(ModbusCommand , QString );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&ModbusCommandSender::commandFinished)) {
                 *result = 0;
                 return;
@@ -141,16 +167,16 @@ int ModbusCommandSender::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 4)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            qt_static_metacall(this, _c, _id, _a);
         _id -= 4;
     }
     return _id;
 }
 
 // SIGNAL 0
-void ModbusCommandSender::commandFinished(ModbusCommand _t1)
+void ModbusCommandSender::commandFinished(ModbusCommand _t1, QString _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

@@ -71,7 +71,7 @@ void ModbusCommandSender::submit(const ModbusCommand& cmd)
         QString logMsg = QString("设备繁忙，指令被拒绝 - 设备ID=%1 id=%2 uuid=%3 queue=%4").arg(m_masterId).arg(rejected.id).arg(rejected.uuid).arg(queueName);
         LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandSender][submit]：%1").arg(logMsg).toStdString());
         locker.unlock();
-        emit commandFinished(rejected);
+        emit commandFinished(rejected, m_masterId);
         return;
     }
 
@@ -154,7 +154,7 @@ void ModbusCommandSender::doSend(ModbusCommand cmd)
         cmd.timedOut = false;
         cmd.checksumError = false;
         cmd.deviceBusy = false;
-        emit commandFinished(cmd);
+        emit commandFinished(cmd, m_masterId);
         return;
     }
 
@@ -164,7 +164,7 @@ void ModbusCommandSender::doSend(ModbusCommand cmd)
         cmd.timedOut = false;
         cmd.checksumError = false;
         cmd.deviceBusy = false;
-        emit commandFinished(cmd);
+        emit commandFinished(cmd, m_masterId);
         return;
     }
 
@@ -262,7 +262,7 @@ QByteArray ModbusCommandSender::buildRequestFrame(const ModbusCommand& cmd) cons
 void ModbusCommandSender::finishCurrentCommand(ModbusCommand cmd)
 {
     m_hasPendingCommand = false;
-    emit commandFinished(cmd);
+    emit commandFinished(cmd, m_masterId);
     if (m_running) {
         dispatch();
     }
@@ -302,7 +302,7 @@ void ModbusCommandSender::handleFailedCommand(ModbusCommand cmd, const QString& 
                 .arg(cmd.deviceBusy ? " (deviceBusy)" : "")
                 .arg(cmd.checksumError ? " (checksumError)" : "");
         LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandSender][handleFailedCommand]：%1").arg(logMsg).toStdString());
-        emit commandFinished(cmd);
+        emit commandFinished(cmd, m_masterId);
         if (m_running) {
             dispatch();
         }
@@ -328,7 +328,7 @@ void ModbusCommandSender::addToRetryQueue(ModbusCommand cmd)
 {
     if (!enqueue(m_retryState, cmd)) {
         cmd.errorMessage = "重发队列已满，放弃发送";
-        emit commandFinished(cmd);
+        emit commandFinished(cmd, m_masterId);
     } else {
         QString moduleStr;
         switch (cmd.module) {

@@ -22,6 +22,9 @@ public:
     // 获取共享数据管理器
     static void getSharedData();
     
+    // 初始化并启动调度器
+    static void initScheduler();
+    
     // 应用信息
     static QString getAppName();        // 获取应用名称
     static QString getAppVersion();     // 获取应用版本

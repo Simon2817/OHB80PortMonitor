@@ -1,0 +1,5 @@
+[2026-04-17 11:43:01] [WARN] [接收-脏帧] 11:43:01.081 设备ID=12001 module=INITIAL id=ReadVersion uuid=1 error=响应帧CRC校验失败
+[2026-04-17 11:43:02] [WARN] [接收-脏帧] 11:43:02.060 设备ID=12001 module=INITIAL id=ReadVersion uuid=1 error=响应帧CRC校验失败
+[2026-04-17 11:43:03] [WARN] [接收-脏帧] 11:43:03.039 设备ID=12001 module=INITIAL id=ReadVersion uuid=1 error=响应帧CRC校验失败
+[2026-04-17 11:43:04] [WARN] [接收-脏帧] 11:43:04.022 设备ID=12001 module=INITIAL id=ReadVersion uuid=1 error=响应帧CRC校验失败
+[2026-04-17 11:43:05] [WARN] [接收-脏帧] 11:43:05.009 设备ID=12001 module=PERIODIC id=ReadFoupStatus uuid=2 error=响应帧CRC校验失败

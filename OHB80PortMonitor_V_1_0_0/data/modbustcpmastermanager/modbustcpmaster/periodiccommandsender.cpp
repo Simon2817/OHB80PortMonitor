@@ -12,9 +12,11 @@ PeriodicCommandSender::PeriodicCommandSender(ModbusCommandSender& sender, const 
     , m_masterId(const_cast<QString&>(masterId))
 {
     setExecutionCount(0);  // 无限循环
-    // 指令成功信号转发为 commandCompleted
+    // 指令成功信号转发为 commandCompleted，并附加 masterId
     connect(this, &CyclicCommandIssuer::commandSucceeded,
-            this, &PeriodicCommandSender::commandCompleted);
+            this, [this](ModbusCommand cmd) {
+                emit commandCompleted(cmd, m_masterId);
+            });
     connect(this, &CyclicCommandIssuer::roundFinished,
             this, &PeriodicCommandSender::onRoundComplete);
     connect(this, &CyclicCommandIssuer::logMessage,

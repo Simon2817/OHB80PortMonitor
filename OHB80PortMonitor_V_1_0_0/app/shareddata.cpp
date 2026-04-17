@@ -74,3 +74,21 @@ QSharedPointer<SetOfOHBInfo> SharedData::getSetOfOHBInfoByUiId(int uiId)
     // 未找到时返回空指针
     return QSharedPointer<SetOfOHBInfo>(nullptr);
 }
+
+FoupOfOHBInfo* SharedData::getFoupByQRCode(const QString& qrCode)
+{
+    // 遍历所有 SetOfOHBInfo，查找匹配的 qrCode
+    for (int i = 0; i < setOfOHBInfoList.size(); ++i) {
+        SetOfOHBInfo& setInfo = setOfOHBInfoList[i];
+        QVector<FoupOfOHBInfo>& foups = setInfo.getFoups();
+        for (int j = 0; j < foups.size(); ++j) {
+            if (foups[j].qrCode == qrCode) {
+                // 返回指向该 Foup 的指针
+                return &foups[j];
+            }
+        }
+    }
+    
+    // 未找到时返回空指针
+    return nullptr;
+}

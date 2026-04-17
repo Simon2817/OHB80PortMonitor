@@ -31,6 +31,9 @@ private:
     // 初始化 overheadCranesWidget（天车提示控件）
     void initOverheadCranesWidget();
 
+    // 初始化调度器
+    void initScheduler();
+
 private:
     // 设备监控器
     Graph::DeviceMonitorWidget* m_deviceMonitor;

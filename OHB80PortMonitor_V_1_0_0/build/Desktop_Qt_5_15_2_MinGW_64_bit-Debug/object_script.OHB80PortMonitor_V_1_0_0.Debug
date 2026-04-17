@@ -35,6 +35,9 @@ debug/tablewidgetmanager.o
 debug/zoomcontroller.o
 debug/settingitemwidget.o
 debug/settingwidget.o
+debug/scheduler.o
+debug/monitor_data_task.o
+debug/send_command_task.o
 debug/modbustcpmastermanager.o
 debug/modbustcpmasterpool.o
 debug/modbuscommand.o
@@ -67,6 +70,10 @@ debug/moc_scrollcontroller.o
 debug/moc_zoomcontroller.o
 debug/moc_settingitemwidget.o
 debug/moc_settingwidget.o
+debug/moc_scheduler_task.o
+debug/moc_scheduler.o
+debug/moc_monitor_data_task.o
+debug/moc_send_command_task.o
 debug/moc_modbustcpmastermanager.o
 debug/moc_modbustcpmasterpool.o
 debug/moc_modbustcpmaster.o

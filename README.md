@@ -8,6 +8,104 @@
 
 ## 更新日志
 
+### 2026-04-17 15:48 - Simon
+**重大功能：调度层实现与 UI-Scheduler-Data 三层通路打通**
+
+#### 修改内容
+1. **Scheduler 调度器核心实现**
+   - 创建 `scheduler/scheduler.h` 和 `scheduler.cpp`，实现单例模式的任务调度器
+   - 支持长驻任务（persistent）和普通任务两种类型
+   - 长驻任务不占用并发槽位，立即启动并持续运行
+   - 普通任务进入队列，按并发数限制调度执行
+   - 调度器运行在独立线程 `SchedulerThread`，避免阻塞主线程
+   - 使用 `QMetaObject::invokeMethod` 的 functor 形式跨线程调用任务方法，避免 moc 名字查找问题
+
+2. **SchedulerTask 任务基类**
+   - 创建 `scheduler/scheduler_task.h`，定义任务生命周期接口
+   - 任务状态：Pending、Running、Paused、Finished、Failed、Cancelled
+   - 任务优先级：Low、Normal、High、Urgent
+   - 提供 `start()`、`stop()`、`pause()`、`resume()` 虚方法供子类实现
+   - 支持 `isPersistent()` 和 `isRecurring()` 属性标识
+   - 信号：`stateChanged`、`progress`、`finished`、`dataResult`
+
+3. **MonitorDataTask 监控数据任务**
+   - 创建 `scheduler/tasks/monitor_data_task.h` 和 `.cpp`
+   - 长驻任务，监听所有 ModbusTcpMaster 的 PeriodicCommandSender 的 `commandCompleted` 信号
+   - 解析 ReadFoupStatus 响应帧（18字节，9个寄存器，大端序）
+   - 通过 `SharedData::getFoupByQRCode()` 更新 FoupOfOHBInfo 实时数据
+   - 支持跨线程信号连接（Qt::QueuedConnection）
+
+4. **SendCommandTask 业务指令任务**
+   - 创建 `scheduler/tasks/send_command_task.h` 和 `.cpp`
+   - 普通任务，用于发送业务指令（如充氮、抽真空等）
+   - 通过 `ModbusTcpMasterManager` 获取 ModbusCommandSender
+   - 克隆指令模板，构建参数覆盖，提交高优先级指令
+   - 监听 `commandFinished` 信号，解析响应并发射 `finished` 信号
+   - 支持超时、重试、设备繁忙等异常处理
+
+5. **SharedData 增强**
+   - 添加 `getFoupByQRCode()` 静态方法，根据 qrCode 快速查找 FoupOfOHBInfo 指针
+   - 遍历所有 SetOfOHBInfo 和 FoupOfOHBInfo，匹配 qrCode 并返回
+
+6. **PeriodicCommandSender 信号增强**
+   - `commandCompleted` 信号添加 `masterId` 参数，方便调度层直接使用
+   - 构造函数中通过 lambda 转发 `commandSucceeded` 信号并附加 masterId
+
+7. **ModbusCommandSender 信号增强**
+   - `commandFinished` 信号添加 `masterId` 参数
+   - 所有 `emit commandFinished` 调用均添加 `m_masterId` 参数
+
+8. **App 初始化流程完善**
+   - 在 `App::initialize()` 中添加 `initScheduler()` 调用
+   - `App::initScheduler()` 启动调度器线程并打印日志
+   - 确保调度器线程在任务提交前已启动
+
+9. **HomePage 集成调度器**
+   - 添加 `initScheduler()` 方法，创建并提交 MonitorDataTask
+   - 在构造函数中调用 `initScheduler()`，启动实时数据监控
+
+10. **日志系统统一**
+    - `modbuscommandreceiver.cpp` 中所有日志路径获取从 `LoggerFilePathManager::` 改为 `AppLogger::`
+    - 统一使用 `AppLogger::getModbusMasterLogPath()` 和 `AppLogger::getModbusFrameMessageLogPath()`
+
+#### 技术细节
+- **线程模型**：Scheduler 运行在独立线程，所有 Task 通过 `moveToThread` 移动到 Scheduler 线程执行
+- **信号槽连接**：使用 `Qt::QueuedConnection` 确保跨线程安全
+- **invokeMethod 优化**：使用 functor 形式 `[task]() { task->start(); }` 替代字符串 `"start"`，避免 moc 元信息查找失败
+- **大端序解析**：MonitorDataTask 中使用 `(data[i] << 8) | data[i+1]` 解析 Modbus 大端序数据
+- **UUID 追踪**：所有指令使用 `cmd.uuid` 在异步通信中追踪指令生命周期
+
+#### 数据流向
+```
+UI (HomePage)
+  ↓ submitTask(MonitorDataTask)
+Scheduler
+  ↓ invokeMethod(task->start)
+MonitorDataTask
+  ↓ connect(PeriodicCommandSender::commandCompleted)
+Data Layer (ModbusTcpMaster)
+  ↓ emit commandCompleted(cmd, masterId)
+MonitorDataTask::onCommandCompleted
+  ↓ parseReadFoupStatusResponse
+  ↓ SharedData::getFoupByQRCode
+  ↓ updateFoupInfo
+SharedData (FoupOfOHBInfo)
+```
+
+#### 影响范围
+- 新增文件：`scheduler/scheduler.h`、`scheduler/scheduler.cpp`
+- 新增文件：`scheduler/scheduler_task.h`
+- 新增文件：`scheduler/tasks/monitor_data_task.h`、`scheduler/tasks/monitor_data_task.cpp`
+- 新增文件：`scheduler/tasks/send_command_task.h`、`scheduler/tasks/send_command_task.cpp`
+- 修改文件：`app/app.h`、`app/app.cpp`（添加 initScheduler）
+- 修改文件：`app/shareddata.h`、`app/shareddata.cpp`（添加 getFoupByQRCode）
+- 修改文件：`ui/homepage.h`、`ui/homepage.cpp`（集成调度器）
+- 修改文件：`data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h`、`.cpp`（信号增强）
+- 修改文件：`data/modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h`、`.cpp`（信号增强）
+- 修改文件：`data/modbustcpmastermanager/modbustcpmaster/modbuscommandreceiver.cpp`（日志统一）
+
+---
+
 ### 2026-04-17 09:46 - Simon
 **重大重构：配置系统优化与 Modbus 初始化改进**
 

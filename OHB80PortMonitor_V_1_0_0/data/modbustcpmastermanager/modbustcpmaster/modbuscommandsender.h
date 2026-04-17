@@ -38,8 +38,8 @@ public:
     void setQueueCapacity(int capacity);
 
 signals:
-    // 指令发送完毕信号（无论成功或失败）
-    void commandFinished(ModbusCommand cmd);
+    // 指令发送完毕信号（无论成功或失败，携带 Master ID 方便调度层使用）
+    void commandFinished(ModbusCommand cmd, QString masterId);
 
 private slots:
     void dispatch();  // 调度一次：取出优先级最高的就绪指令并发送

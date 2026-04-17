@@ -5,6 +5,7 @@
 #include <QString>
 #include <QStringList>
 #include <QMap>
+#include <QMetaType>
 #include <QtGlobal>
 
 // ============================================================
@@ -113,5 +114,7 @@ public:
     qint64 sentMs   = 0;          // 发送时刻（QDateTime::currentMSecsSinceEpoch）
     qint64 responseMs = 0;        // 从机响应时刻（QDateTime::currentMSecsSinceEpoch）
 };
+
+Q_DECLARE_METATYPE(ModbusCommand)
 
 #endif // MODBUSCOMMAND_H

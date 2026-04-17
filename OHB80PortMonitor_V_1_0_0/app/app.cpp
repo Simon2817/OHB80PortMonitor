@@ -5,6 +5,7 @@
 #include "qthelper.h"
 #include "metatypes.h"
 #include "modbustcpmastermanager/modbustcpmastermanager.h"
+#include "scheduler/scheduler.h"
 #include <qdir>
 #include <qstandardpaths>
 #include <qdebug>
@@ -74,7 +75,10 @@ bool App::initialize()
 
     // 初始化共享数据
     getSharedData();
-    
+
+    // 初始化并启动调度器线程
+    initScheduler();
+
     s_initialized = true;
     
     qDebug() << "Application initialized successfully";
@@ -176,6 +180,15 @@ void App::getSharedData()
     // 创建静态实例以触发 SharedData 的构造函数初始化
     static SharedData sharedDataInstance;
     qDebug() << "SharedData initialized successfully";
+}
+
+void App::initScheduler()
+{
+    // 启动调度器
+    Scheduler* scheduler = Scheduler::instance();
+    scheduler->start();
+
+    qDebug() << "调度器已启动";
 }
 
 void App::onAboutToQuit()

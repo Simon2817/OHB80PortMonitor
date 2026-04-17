@@ -30,8 +30,8 @@ public:
     PeriodicCommandSender& operator=(const PeriodicCommandSender&) = delete;
 
 signals:
-    // 指令成功完成
-    void commandCompleted(ModbusCommand cmd);
+    // 指令成功完成（携带 Master ID 方便调度层使用）
+    void commandCompleted(ModbusCommand cmd, QString masterId);
 
     // 连续失败轮次达到阈値，请求断开设备
     void disconnectDevice();

@@ -35,6 +35,9 @@ release/tablewidgetmanager.o
 release/zoomcontroller.o
 release/settingitemwidget.o
 release/settingwidget.o
+release/scheduler.o
+release/monitor_data_task.o
+release/send_command_task.o
 release/modbustcpmastermanager.o
 release/modbustcpmasterpool.o
 release/modbuscommand.o
@@ -67,6 +70,10 @@ release/moc_scrollcontroller.o
 release/moc_zoomcontroller.o
 release/moc_settingitemwidget.o
 release/moc_settingwidget.o
+release/moc_scheduler_task.o
+release/moc_scheduler.o
+release/moc_monitor_data_task.o
+release/moc_send_command_task.o
 release/moc_modbustcpmastermanager.o
 release/moc_modbustcpmasterpool.o
 release/moc_modbustcpmaster.o

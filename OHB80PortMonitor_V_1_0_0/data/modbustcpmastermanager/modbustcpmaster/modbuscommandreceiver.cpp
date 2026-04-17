@@ -1,6 +1,6 @@
 #include "modbuscommandreceiver.h"
 #include "loggermanager.h"
-#include "app/applogger.h"
+#include "app.h"
 #include <QDateTime>
 #include <QDebug>
 #include <QMutexLocker>
@@ -186,6 +186,18 @@ bool ModbusCommandReceiver::processPendingFrame()
         QString frameHex = toHexSpaced(frame);
         QString logMsgWithFrame = logMsg + "\nframe=" + frameHex;
 
+        // 如果是CRC错误，额外打印期望和实际CRC
+        if (errorMessage.contains("CRC")) {
+            const QByteArray payload = frame.left(frame.size() - 2);
+            const quint16 expectedCrc = crc16(payload);
+            const quint16 actualCrc = static_cast<quint8>(frame[frame.size() - 2]) |
+                                      (static_cast<quint16>(static_cast<quint8>(frame[frame.size() - 1])) << 8);
+            QString crcMsg = QString("\nexpectedCrc=0x%1 actualCrc=0x%2")
+                    .arg(expectedCrc, 4, 16, QLatin1Char('0'))
+                    .arg(actualCrc, 4, 16, QLatin1Char('0'));
+            logMsgWithFrame += crcMsg;
+        }
+
         qDebug() << logMsgWithFrame;
         LoggerManager::instance().log(AppLogger::getModbusFrameMessageLogPath(m_masterId).toStdString(), Level::WARN, (logMsg).toStdString());
         LoggerManager::instance().log(AppLogger::getModbusMasterLogPath(m_masterId).toStdString(), Level::WARN, QString("[ModbusCommandReceiver][processPendingFrame]：%1").arg(logMsgWithFrame).toStdString());
@@ -214,56 +226,91 @@ bool ModbusCommandReceiver::processPendingFrame()
 
 int ModbusCommandReceiver::expectedResponseLength(const ModbusCommand& cmd) const
 {
-    if (!cmd.response.rawBytes.isEmpty()) {
-        return cmd.response.rawBytes.size() + 2;
+    // 对于功能码 0x01-0x04，响应长度由帧内的字节计数字段决定
+    // 这里只返回最小长度（从站+功能码+字节计数+CRC=5字节）
+    // 实际提取时根据字节计数动态计算完整长度
+    const quint8 fc = cmd.request.functionCode;
+
+    switch (fc) {
+    case 0x01: // Read Coils
+    case 0x02: // Read Discrete Inputs
+    case 0x03: // Read Holding Registers
+    case 0x04: // Read Input Registers
+        // 最小响应长度：从站(1) + 功能码(1) + 字节计数(1) + CRC(2) = 5
+        return 5;
+    case 0x05: // Write Single Coil
+    case 0x06: // Write Single Register
+    case 0x0F: // Write Multiple Coils
+    case 0x10: // Write Multiple Registers
+        // 响应格式: 从站(1) + 功能码(1) + 起始地址(2) + 数量(2) + CRC(2)
+        return 1 + 1 + 2 + 2 + 2;
+    default:
+        qDebug() << "[expectedResponseLength] 未知功能码:" << fc;
+        return 0;
     }
-    return 0;
 }
 
 bool ModbusCommandReceiver::tryExtractMatchedFrame(const ModbusCommand& cmd, QByteArray& frame, int& discardedPrefixBytes, QByteArray& discardedData)
 {
     discardedPrefixBytes = 0;
 
-    const int expectedLength = expectedResponseLength(cmd);
-    if (expectedLength <= 0 || ringSize() < expectedLength) {
+    const int minLength = expectedResponseLength(cmd);
+    if (minLength <= 0 || ringSize() < minLength) {
         return false;
     }
 
     const quint8 expectedSlave = cmd.response.slaveAddr;
     const quint8 expectedFunction = cmd.response.functionCode;
+    const quint8 fc = cmd.request.functionCode;
+    const bool isReadFc = (fc == 0x01 || fc == 0x02 || fc == 0x03 || fc == 0x04);
 
-    const int maxOffset = ringSize() - expectedLength;
+    // 滑动查找匹配帧头（从站+功能码）的起始位置
+    const int maxOffset = ringSize() - minLength;
     for (int offset = 0; offset <= maxOffset; ++offset) {
-        QByteArray candidate = ringPeek(offset, expectedLength);
-        if (candidate.size() != expectedLength) {
+        // 先读取最小长度以确认帧头
+        QByteArray head = ringPeek(offset, minLength);
+        if (head.size() != minLength) {
             return false;
         }
 
-        const quint8 slave = static_cast<quint8>(candidate[0]);
-        const quint8 function = static_cast<quint8>(candidate[1]);
+        const quint8 slave    = static_cast<quint8>(head[0]);
+        const quint8 function = static_cast<quint8>(head[1]);
         if (slave != expectedSlave || function != expectedFunction) {
             continue;
         }
 
-        const QByteArray payload = candidate.left(candidate.size() - 2);
-        const quint16 candidateCrc = crc16(payload);
-        const quint16 actualCrc = static_cast<quint8>(candidate[candidate.size() - 2]) |
-                                  (static_cast<quint16>(static_cast<quint8>(candidate[candidate.size() - 1])) << 8);
-        if (candidateCrc != actualCrc) {
-            continue;
+        // 根据功能码动态计算实际帧总长度
+        int actualLength = minLength;
+        if (isReadFc) {
+            // 读类响应: 从站(1) + 功能码(1) + 字节计数(1) + 数据(N) + CRC(2)
+            const quint8 byteCount = static_cast<quint8>(head[2]);
+            actualLength = 1 + 1 + 1 + byteCount + 2;
+        }
+        // 写类响应固定长度，actualLength 保持 minLength 即可
+
+        // 缓冲区数据不足整个帧 → 等待更多数据
+        if (ringSize() - offset < actualLength) {
+            // 注意：不要把前面不匹配的前缀保留太多；此处只等待更多数据，下一次readyRead再尝试
+            return false;
         }
 
-        QByteArray discardedData;
+        // 提取完整帧
+        QByteArray candidate = ringPeek(offset, actualLength);
+        if (candidate.size() != actualLength) {
+            return false;
+        }
+
         if (offset > 0) {
             discardedData = ringPeek(0, offset);
         }
-        ringConsume(offset + expectedLength);
+        ringConsume(offset + actualLength);
         discardedPrefixBytes = offset;
         frame = candidate;
         return true;
     }
 
-    const int preserveBytes = expectedLength - 1;
+    // 整段缓冲都没找到匹配帧头：保留末尾 minLength-1 字节，丢弃其余
+    const int preserveBytes = minLength - 1;
     const int dirtyBytes = ringSize() - preserveBytes;
     if (dirtyBytes > 0) {
         qDebug() << "[接收-脏帧] [设备ID=" << m_masterId << "] " << nowStr()
