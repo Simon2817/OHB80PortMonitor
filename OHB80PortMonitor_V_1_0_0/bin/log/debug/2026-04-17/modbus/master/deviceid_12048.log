@@ -1,0 +1,1624 @@
+[2026-04-17 09:14:00] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 空闲 -> 连接中
+[2026-04-17 09:14:00] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：已断开 -> 连接中
+[2026-04-17 09:14:00] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.147:8899
+[2026-04-17 09:14:00] [WARN] [ModbusConnecter][performConnection]：设备ID=12048 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:14:00] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：连接中 -> 错误
+[2026-04-17 09:14:00] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 连接中 -> 错误状态
+[2026-04-17 09:14:00] [INFO] [ModbusConnecter][startAutoReconnect]：设备ID=12048 开始自动重连
+[2026-04-17 09:14:03] [INFO] [ModbusConnecter][onReconnectTimer]：设备ID=12048 第 1 次重连尝试
+[2026-04-17 09:14:03] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.147:8899
+[2026-04-17 09:14:03] [WARN] [ModbusConnecter][performConnection]：设备ID=12048 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:14:06] [INFO] [ModbusConnecter][onReconnectTimer]：设备ID=12048 第 2 次重连尝试
+[2026-04-17 09:14:06] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.147:8899
+[2026-04-17 09:14:06] [WARN] [ModbusConnecter][performConnection]：设备ID=12048 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:14:09] [INFO] [ModbusConnecter][onReconnectTimer]：设备ID=12048 第 3 次重连尝试
+[2026-04-17 09:14:09] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.147:8899
+[2026-04-17 09:14:09] [WARN] [ModbusConnecter][performConnection]：设备ID=12048 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:14:12] [INFO] [ModbusConnecter][onReconnectTimer]：设备ID=12048 第 4 次重连尝试
+[2026-04-17 09:14:12] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.147:8899
+[2026-04-17 09:14:12] [WARN] [ModbusConnecter][performConnection]：设备ID=12048 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:14:15] [INFO] [ModbusConnecter][onReconnectTimer]：设备ID=12048 第 5 次重连尝试
+[2026-04-17 09:14:15] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.147:8899
+[2026-04-17 09:14:15] [WARN] [ModbusConnecter][performConnection]：设备ID=12048 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:17:03] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 空闲 -> 连接中
+[2026-04-17 09:17:03] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：已断开 -> 连接中
+[2026-04-17 09:17:03] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.206:547
+[2026-04-17 09:17:03] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 连接中 -> 指令发送器已启动
+[2026-04-17 09:17:03] [INFO] [ModbusTcpMaster][startSender]：设备ID=12048 指令发送器已启动，立即进入初始化阶段
+[2026-04-17 09:17:03] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 指令发送器已启动 -> 初始指令下发中
+[2026-04-17 09:17:03] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 指令队列为空，无法启动
+[2026-04-17 09:17:03] [INFO] [ModbusTcpMaster][startPeriodicSender]：设备ID=12048 定时发送器队列为空，跳过启动，直接进入运行状态
+[2026-04-17 09:17:03] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 初始指令下发中 -> 正常运行
+[2026-04-17 09:17:03] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：连接中 -> 已连接
+[2026-04-17 09:17:13] [INFO] [ModbusConnecter][startConnectionCheck]：设备ID=12048 启动连接心跳检查
+[2026-04-17 09:17:43] [INFO] [ModbusConnecter][checkConnection]：设备ID=12048 连接检查 - socket正常
+[2026-04-17 09:24:09] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 空闲 -> 连接中
+[2026-04-17 09:24:09] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：已断开 -> 连接中
+[2026-04-17 09:24:09] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.206:547
+[2026-04-17 09:24:09] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 连接中 -> 指令发送器已启动
+[2026-04-17 09:24:09] [INFO] [ModbusTcpMaster][startSender]：设备ID=12048 指令发送器已启动，立即进入初始化阶段
+[2026-04-17 09:24:09] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 指令发送器已启动 -> 初始指令下发中
+[2026-04-17 09:24:09] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 启动循环下发 指令数:1 轮数:1 间隔:100ms
+[2026-04-17 09:24:09] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadVersion 索引:0
+[2026-04-17 09:24:09] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:09.390 设备ID=12048 module=INITIAL id=ReadVersion uuid=95 sendCount=1/4 timeout=1000ms crc=B1 CD len=8
+frame=01 04 00 18 00 01 B1 CD
+[2026-04-17 09:24:09] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 初始指令下发中 -> 启动定时发送器中
+[2026-04-17 09:24:09] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 启动循环下发 指令数:1 轮数:无限 间隔:1000ms
+[2026-04-17 09:24:09] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:09] [INFO] [ModbusTcpMaster][startPeriodicSender]：设备ID=12048 定时发送器已启动，进入正常运行状态
+[2026-04-17 09:24:09] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 启动定时发送器中 -> 正常运行
+[2026-04-17 09:24:09] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：连接中 -> 已连接
+[2026-04-17 09:24:10] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:10.169 设备ID=12048 module=INITIAL id=ReadVersion uuid=95 len=7
+frame=01 04 02 00 00 B9 30
+[2026-04-17 09:24:10] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=INITIAL id=ReadVersion uuid=95 crc=B9 30 elapsed=779ms
+[2026-04-17 09:24:10] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadVersion
+[2026-04-17 09:24:10] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 第1轮完成 失败:0条
+[2026-04-17 09:24:10] [INFO] [InitialCommandIssuer][onRoundComplete]：设备ID=12048 完成，失败0条
+[2026-04-17 09:24:10] [INFO] [ModbusTcpMaster][onInitialFinished]：设备ID=12048 初始化完成，失败指令数：0
+[2026-04-17 09:24:10] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 全部轮次执行完毕
+[2026-04-17 09:24:10] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:10.169 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:10] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=3 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:11] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:11] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:11] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:11] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:11] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第1轮完成 失败:1条
+[2026-04-17 09:24:11] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:1
+[2026-04-17 09:24:12] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:12] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:12.171 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:12] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:13] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:13] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:13] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:13] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:13] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第2轮完成 失败:1条
+[2026-04-17 09:24:13] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:2
+[2026-04-17 09:24:14] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:14] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:14.177 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:14] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:15] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:15] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:15] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:15] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:15] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第3轮完成 失败:1条
+[2026-04-17 09:24:15] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:3
+[2026-04-17 09:24:16] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:16] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:16.170 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:16] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:17] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:17] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:17] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:17] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:17] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第4轮完成 失败:1条
+[2026-04-17 09:24:17] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:4
+[2026-04-17 09:24:18] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:18] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:18.170 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:18] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:19] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:19] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:19] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:19] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:19] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第5轮完成 失败:1条
+[2026-04-17 09:24:19] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:5
+[2026-04-17 09:24:19] [INFO] [ModbusConnecter][startConnectionCheck]：设备ID=12048 启动连接心跳检查
+[2026-04-17 09:24:20] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:20] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:20.191 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:20] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:21] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:21] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:21] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:21] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:21] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第6轮完成 失败:1条
+[2026-04-17 09:24:21] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:6
+[2026-04-17 09:24:22] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:22] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:22.188 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:22] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:23] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:23] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:23] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:23] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:23] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第7轮完成 失败:1条
+[2026-04-17 09:24:23] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:7
+[2026-04-17 09:24:24] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:24] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:24.184 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:24] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:25] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:25] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:25] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:25] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:25] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第8轮完成 失败:1条
+[2026-04-17 09:24:25] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:8
+[2026-04-17 09:24:26] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:26] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:26.182 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:26] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:27] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:27] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:27] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:27] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:27] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第9轮完成 失败:1条
+[2026-04-17 09:24:27] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:9
+[2026-04-17 09:24:28] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:28] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:28.182 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:28] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:29] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:29] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:29] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:29] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:29] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第10轮完成 失败:1条
+[2026-04-17 09:24:29] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:10
+[2026-04-17 09:24:29] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 连续失败达到阈值，请求断开设备
+[2026-04-17 09:24:29] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 已停止
+[2026-04-17 09:24:29] [WARN] [ModbusTcpMaster][onPeriodicDisconnectRequested]：设备ID=12048 定时发送器连续失败达到阈值（10 次），触发断开重连
+[2026-04-17 09:24:29] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 已停止
+[2026-04-17 09:24:29] [INFO] [ModbusConnecter][stopConnectionCheck]：设备ID=12048 停止连接心跳检查
+[2026-04-17 09:24:29] [INFO] [ModbusConnecter][disconnected --- socket断开信号槽]：设备ID=12048 Socket断开信号接收，开始自动重连
+[2026-04-17 09:24:29] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 正常运行 -> 连接中
+[2026-04-17 09:24:29] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：已连接 -> 已断开
+[2026-04-17 09:24:29] [INFO] [ModbusConnecter][startAutoReconnect]：设备ID=12048 开始自动重连
+[2026-04-17 09:24:29] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 连接中 -> 错误状态
+[2026-04-17 09:24:29] [INFO] [ModbusConnecter][disconnectDevice]：设备ID=12048 单次断开 - 主动断开完成
+[2026-04-17 09:24:32] [INFO] [ModbusConnecter][onReconnectTimer]：设备ID=12048 第 1 次重连尝试
+[2026-04-17 09:24:32] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.206:547
+[2026-04-17 09:24:32] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 错误状态 -> 指令发送器已启动
+[2026-04-17 09:24:32] [INFO] [ModbusTcpMaster][startSender]：设备ID=12048 指令发送器已启动，立即进入初始化阶段
+[2026-04-17 09:24:32] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 指令发送器已启动 -> 启动定时发送器中
+[2026-04-17 09:24:32] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 启动循环下发 指令数:1 轮数:无限 间隔:1000ms
+[2026-04-17 09:24:32] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:32] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:32.288 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:32] [INFO] [ModbusTcpMaster][startPeriodicSender]：设备ID=12048 定时发送器已启动，进入正常运行状态
+[2026-04-17 09:24:32] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 启动定时发送器中 -> 正常运行
+[2026-04-17 09:24:32] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：已断开 -> 已连接
+[2026-04-17 09:24:32] [INFO] [ModbusConnecter][onReconnectTimer]：设备ID=12048 重连成功
+[2026-04-17 09:24:32] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:33] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:33] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:33] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:33] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:33] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第1轮完成 失败:1条
+[2026-04-17 09:24:33] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:1
+[2026-04-17 09:24:34] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:34] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:34.292 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:34] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:35] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:35] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:35] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:35] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:35] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第2轮完成 失败:1条
+[2026-04-17 09:24:35] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:2
+[2026-04-17 09:24:36] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:36] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:36.292 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:36] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:37] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:37] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:37] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第3轮完成 失败:1条
+[2026-04-17 09:24:37] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:3
+[2026-04-17 09:24:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:38] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:38.298 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:38] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:39] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:39] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:39] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第4轮完成 失败:1条
+[2026-04-17 09:24:39] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:4
+[2026-04-17 09:24:40] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:40] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:40.296 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:40] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:41] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:41] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:41] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第5轮完成 失败:1条
+[2026-04-17 09:24:41] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:5
+[2026-04-17 09:24:42] [INFO] [ModbusConnecter][startConnectionCheck]：设备ID=12048 启动连接心跳检查
+[2026-04-17 09:24:42] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:42] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:42.291 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:42] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:43] [WARN] 响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:43] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 timeout=1000ms
+[2026-04-17 09:24:43] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令失败:ReadFoupStatus 原因:等待RTU响应超时 发送次数:1
+[2026-04-17 09:24:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第6轮完成 失败:1条
+[2026-04-17 09:24:43] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12048 本轮失败1条 连续失败轮次:6
+[2026-04-17 09:24:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:44] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:44.302 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:44] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12048 id=ReadFoupStatus uuid=96 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:44] [INFO] [ModbusConnecter][disconnected --- socket断开信号槽]：设备ID=12048 Socket断开信号接收，开始自动重连
+[2026-04-17 09:24:44] [INFO] [ModbusConnecter][stopConnectionCheck]：设备ID=12048 停止连接心跳检查
+[2026-04-17 09:24:44] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 已停止
+[2026-04-17 09:24:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 已停止
+[2026-04-17 09:24:44] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 正常运行 -> 连接中
+[2026-04-17 09:24:44] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：已连接 -> 已断开
+[2026-04-17 09:24:44] [INFO] [ModbusConnecter][startAutoReconnect]：设备ID=12048 开始自动重连
+[2026-04-17 09:24:44] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 连接中 -> 错误状态
+[2026-04-17 09:24:47] [INFO] [ModbusConnecter][onReconnectTimer]：设备ID=12048 第 1 次重连尝试
+[2026-04-17 09:24:47] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.206:547
+[2026-04-17 09:24:47] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 错误状态 -> 指令发送器已启动
+[2026-04-17 09:24:47] [INFO] [ModbusTcpMaster][startSender]：设备ID=12048 指令发送器已启动，立即进入初始化阶段
+[2026-04-17 09:24:47] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 指令发送器已启动 -> 初始指令下发中
+[2026-04-17 09:24:47] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 指令队列为空，无法启动
+[2026-04-17 09:24:47] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 初始指令下发中 -> 启动定时发送器中
+[2026-04-17 09:24:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 启动循环下发 指令数:1 轮数:无限 间隔:1000ms
+[2026-04-17 09:24:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:47] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:47.947 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:47] [INFO] [ModbusTcpMaster][startPeriodicSender]：设备ID=12048 定时发送器已启动，进入正常运行状态
+[2026-04-17 09:24:47] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 启动定时发送器中 -> 正常运行
+[2026-04-17 09:24:47] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：已断开 -> 已连接
+[2026-04-17 09:24:47] [INFO] [ModbusConnecter][onReconnectTimer]：设备ID=12048 重连成功
+[2026-04-17 09:24:48] [INFO] [接收-重新同步] 09:24:48.062 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 因帧头不匹配丢弃了22字节的前缀数据
+丢弃数据=
+有效帧=01 04 12 32 FC 81 80 28 7D A4 19 73 38 16 AB 46 2A FC E4 29 19 27 B1
+[2026-04-17 09:24:48] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:48.062 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 32 FC 81 80 28 7D A4 19 73 38 16 AB 46 2A FC E4 29 19 27 B1
+[2026-04-17 09:24:48] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=27 B1 elapsed=115ms
+[2026-04-17 09:24:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:24:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第1轮完成 失败:0条
+[2026-04-17 09:24:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:49] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:49.066 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:49] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:49.159 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 3B 44 0E 52 9C 86 81 0A 0D 1A C6 7F 1C 6B 39 1B 4E F1 24 A3
+[2026-04-17 09:24:49] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=24 A3 elapsed=93ms
+[2026-04-17 09:24:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:24:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第2轮完成 失败:0条
+[2026-04-17 09:24:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:50] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:50.153 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:50] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:50.278 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 EE 4D BB B0 25 E4 03 63 07 3A 50 90 32 82 13 62 A8 9D FD A8
+[2026-04-17 09:24:50] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=FD A8 elapsed=126ms
+[2026-04-17 09:24:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:24:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第3轮完成 失败:0条
+[2026-04-17 09:24:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:51] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:51.277 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:51] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:51.356 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 68 0B 6C 8C 07 B2 B8 B2 23 2E DB AC 6E 18 DC 9D 07 2B 88 E0
+[2026-04-17 09:24:51] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=88 E0 elapsed=81ms
+[2026-04-17 09:24:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:24:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第4轮完成 失败:0条
+[2026-04-17 09:24:52] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:52] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:52.358 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:52] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:52.450 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 D1 C3 D4 36 41 50 2C 69 6E 3B 14 E0 1B 7E 9C 4F 3A C2 A4 8A
+[2026-04-17 09:24:52] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=A4 8A elapsed=92ms
+[2026-04-17 09:24:52] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:24:52] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第5轮完成 失败:0条
+[2026-04-17 09:24:53] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:53] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:53.454 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:53] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:53.531 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 38 E1 C3 B3 5A 6B 7D 23 5E D9 D1 AB 38 D0 C4 78 19 F1 09 9F
+[2026-04-17 09:24:53] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=09 9F elapsed=77ms
+[2026-04-17 09:24:53] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:24:53] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第6轮完成 失败:0条
+[2026-04-17 09:24:54] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:54] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:54.524 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:54] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:54.627 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 55 82 90 45 94 B4 F8 67 2F 1B F6 68 69 71 D1 69 80 A3 58 DD
+[2026-04-17 09:24:54] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=58 DD elapsed=103ms
+[2026-04-17 09:24:54] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:24:54] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第7轮完成 失败:0条
+[2026-04-17 09:24:55] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:55] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:55.622 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:55] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:55.720 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 2C 6D 15 7B DC 1E 56 EC 55 2C 7D 1D 4E CD 4D DD 48 14 D4 8F
+[2026-04-17 09:24:55] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=D4 8F elapsed=98ms
+[2026-04-17 09:24:55] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:24:55] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第8轮完成 失败:0条
+[2026-04-17 09:24:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:56] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:56.721 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:56] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:56.816 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 AB 37 7E 98 21 95 98 2D D2 8D 8F 57 35 FA 0F 03 3C 17 5B D9
+[2026-04-17 09:24:56] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=5B D9 elapsed=95ms
+[2026-04-17 09:24:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:24:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第9轮完成 失败:0条
+[2026-04-17 09:24:57] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:57] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:57.814 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:57] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:57.910 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 15 2F F6 D1 F0 79 5B 65 2A 94 F5 A2 35 91 DC F2 D8 D0 FB DB
+[2026-04-17 09:24:57] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=FB DB elapsed=96ms
+[2026-04-17 09:24:57] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:24:57] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第10轮完成 失败:0条
+[2026-04-17 09:24:57] [INFO] [ModbusConnecter][startConnectionCheck]：设备ID=12048 启动连接心跳检查
+[2026-04-17 09:24:58] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:58] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:58.910 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:59] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:24:59.003 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 D0 BD 0E 3A 2A EB 10 51 7E 58 29 99 F8 08 16 6C 9E 02 C1 26
+[2026-04-17 09:24:59] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=C1 26 elapsed=93ms
+[2026-04-17 09:24:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:24:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第11轮完成 失败:0条
+[2026-04-17 09:24:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:24:59] [INFO] [ModbusCommandSender][doSend]：[发送] 09:24:59.998 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:00] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:00.101 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 FE FD 8E 91 D7 81 8B DC C7 39 58 EC 24 9C B0 1E F1 53 1E 34
+[2026-04-17 09:25:00] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=1E 34 elapsed=103ms
+[2026-04-17 09:25:00] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:00] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第12轮完成 失败:0条
+[2026-04-17 09:25:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:01] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:01.086 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:01] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:01.187 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 71 D0 76 3F 4E BC 68 E3 A5 46 64 B4 49 8B 74 8C EF 88 93 FC
+[2026-04-17 09:25:01] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=93 FC elapsed=101ms
+[2026-04-17 09:25:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第13轮完成 失败:0条
+[2026-04-17 09:25:02] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:02] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:02.191 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:02] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:02.282 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 B6 09 BD 45 B6 CC 35 C4 75 9F 74 47 97 1B 10 30 36 6F 84 67
+[2026-04-17 09:25:02] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=84 67 elapsed=91ms
+[2026-04-17 09:25:02] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:02] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第14轮完成 失败:0条
+[2026-04-17 09:25:03] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:03] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:03.275 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:03] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:03.377 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 CF EC B1 8B DA 14 D5 20 9C 97 CC 02 AA C6 EC A8 D9 EB 68 D1
+[2026-04-17 09:25:03] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=68 D1 elapsed=102ms
+[2026-04-17 09:25:03] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:03] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第15轮完成 失败:0条
+[2026-04-17 09:25:04] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:04] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:04.374 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:04] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:04.469 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 17 F4 79 1B FB 4E A5 42 C9 19 54 44 5B EB 1C 8E B5 B2 45 25
+[2026-04-17 09:25:04] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=45 25 elapsed=95ms
+[2026-04-17 09:25:04] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:04] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第16轮完成 失败:0条
+[2026-04-17 09:25:05] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:05] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:05.468 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:05] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:05.566 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 7F E6 98 10 02 10 B4 61 68 88 4A 69 17 BF 82 D6 E4 63 E6 18
+[2026-04-17 09:25:05] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=E6 18 elapsed=98ms
+[2026-04-17 09:25:05] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:05] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第17轮完成 失败:0条
+[2026-04-17 09:25:06] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:06] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:06.568 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:06] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:06.653 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 10 34 B3 04 71 BF 70 69 D0 E9 B3 0A 01 38 FE 16 83 FD F8 00
+[2026-04-17 09:25:06] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=F8 00 elapsed=85ms
+[2026-04-17 09:25:06] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:06] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第18轮完成 失败:0条
+[2026-04-17 09:25:07] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:07] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:07.650 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:07] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:07.753 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 7B 17 9B CD 88 F8 0B 91 11 60 75 E7 40 64 60 59 C2 E9 F4 94
+[2026-04-17 09:25:07] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=F4 94 elapsed=103ms
+[2026-04-17 09:25:07] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:07] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第19轮完成 失败:0条
+[2026-04-17 09:25:08] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:08] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:08.746 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:08] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:08.848 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 40 79 4C 64 94 2D EB A7 6D 59 87 B9 75 CA 63 7B 5E F3 97 CB
+[2026-04-17 09:25:08] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=97 CB elapsed=104ms
+[2026-04-17 09:25:08] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:08] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第20轮完成 失败:0条
+[2026-04-17 09:25:09] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:09] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:09.838 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:09] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:09.940 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 1B 3E 5D 06 D1 20 49 25 B2 2C FC 05 3A 39 F5 5D DA BF 27 13
+[2026-04-17 09:25:09] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=27 13 elapsed=102ms
+[2026-04-17 09:25:09] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:09] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第21轮完成 失败:0条
+[2026-04-17 09:25:10] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:10] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:10.934 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:11] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:11.028 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 06 1F 4E 1C 27 36 4E C0 BA 2C 23 89 40 03 9E A3 A7 CA 93 B3
+[2026-04-17 09:25:11] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=93 B3 elapsed=94ms
+[2026-04-17 09:25:11] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:11] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第22轮完成 失败:0条
+[2026-04-17 09:25:12] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:12] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:12.028 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:12] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:12.127 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 60 27 0C 6A FA 46 B5 4C FE 42 51 CF 1A E5 E4 92 82 CA BB CA
+[2026-04-17 09:25:12] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=BB CA elapsed=99ms
+[2026-04-17 09:25:12] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:12] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第23轮完成 失败:0条
+[2026-04-17 09:25:13] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:13] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:13.122 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:13] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:13.222 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 93 A3 E7 8D FB F1 36 87 7B 39 38 47 EB 42 D4 E4 4C E6 CC 54
+[2026-04-17 09:25:13] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=CC 54 elapsed=100ms
+[2026-04-17 09:25:13] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:13] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第24轮完成 失败:0条
+[2026-04-17 09:25:14] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:14] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:14.216 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:14] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:14.313 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 62 8C FF CC E1 70 FE 7C 66 04 C6 4F 6D 58 09 04 AD D9 C5 F3
+[2026-04-17 09:25:14] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=C5 F3 elapsed=97ms
+[2026-04-17 09:25:14] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:14] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第25轮完成 失败:0条
+[2026-04-17 09:25:15] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:15] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:15.319 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:15] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:15.409 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 8A E0 F3 BD D5 E9 46 F6 51 64 FB C0 C4 B6 A2 D3 95 A9 3C B8
+[2026-04-17 09:25:15] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=3C B8 elapsed=90ms
+[2026-04-17 09:25:15] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:15] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第26轮完成 失败:0条
+[2026-04-17 09:25:16] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:16] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:16.410 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:16] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:16.501 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 E1 5E FE C2 71 4F 68 CC 64 10 B3 3F 9B 7A 13 7B DA 9E A2 F3
+[2026-04-17 09:25:16] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=A2 F3 elapsed=91ms
+[2026-04-17 09:25:16] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:16] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第27轮完成 失败:0条
+[2026-04-17 09:25:17] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:17] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:17.495 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:17] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:17.592 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 94 65 0B AD A7 4A 9F ED AF 4C 1B EE 9F A6 88 A6 AD FE FE 9E
+[2026-04-17 09:25:17] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=FE 9E elapsed=99ms
+[2026-04-17 09:25:17] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:17] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第28轮完成 失败:0条
+[2026-04-17 09:25:18] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:18] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:18.593 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:18] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:18.688 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 36 4F 64 53 53 0B AD FA 35 52 1C A0 22 93 3C BD EF 1E 16 5F
+[2026-04-17 09:25:18] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=16 5F elapsed=96ms
+[2026-04-17 09:25:18] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:18] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第29轮完成 失败:0条
+[2026-04-17 09:25:19] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:19] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:19.692 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:19] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:19.784 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BD DA 9A 73 70 21 C4 6C 8F 67 4D A1 DA 89 4C 18 5A E9 01 93
+[2026-04-17 09:25:19] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=01 93 elapsed=92ms
+[2026-04-17 09:25:19] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:19] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第30轮完成 失败:0条
+[2026-04-17 09:25:20] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:20] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:20.775 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:20] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:20.874 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 ED 78 D8 27 12 4A 31 55 D1 49 BE 60 7E 1C 94 5D F0 AC E2 E1
+[2026-04-17 09:25:20] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=E2 E1 elapsed=99ms
+[2026-04-17 09:25:20] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:20] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第31轮完成 失败:0条
+[2026-04-17 09:25:21] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:21] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:21.877 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:21] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:21.974 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 1C 98 AC 59 F7 E5 6F 8B 53 68 3F 1C 55 77 F9 25 B5 17 5E F4
+[2026-04-17 09:25:21] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=5E F4 elapsed=97ms
+[2026-04-17 09:25:21] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:21] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第32轮完成 失败:0条
+[2026-04-17 09:25:22] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:22] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:22.963 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:23] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:23.062 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 F8 E2 EA 98 3C 0A 32 78 46 44 9D B2 E4 42 6B 08 8D D9 B9 56
+[2026-04-17 09:25:23] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=B9 56 elapsed=99ms
+[2026-04-17 09:25:23] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:23] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第33轮完成 失败:0条
+[2026-04-17 09:25:24] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:24] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:24.055 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:24] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:24.160 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 08 5D 64 AC C4 63 9B 09 3C A7 40 9F 99 4B 60 DA E0 AC 18 AD
+[2026-04-17 09:25:24] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=18 AD elapsed=105ms
+[2026-04-17 09:25:24] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:24] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第34轮完成 失败:0条
+[2026-04-17 09:25:25] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:25] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:25.157 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:25] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:25.249 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 9F 8E 92 E6 2F CD EC 00 B1 D5 53 69 C6 03 9D D7 C8 8D 6C B1
+[2026-04-17 09:25:25] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=6C B1 elapsed=92ms
+[2026-04-17 09:25:25] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:25] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第35轮完成 失败:0条
+[2026-04-17 09:25:26] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:26] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:26.249 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:26] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:26.342 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 9B E8 18 B0 D5 9C 67 FB 05 91 C3 C7 9A 8F 8C E0 58 FA A8 5F
+[2026-04-17 09:25:26] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=A8 5F elapsed=93ms
+[2026-04-17 09:25:26] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:26] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第36轮完成 失败:0条
+[2026-04-17 09:25:27] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:27] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:27.337 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:27] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:27.440 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 9F 9A 9A 49 5D 2F 70 5A BE CE 3B 2C 6C 3A 1F 9A 26 B9 DE 8B
+[2026-04-17 09:25:27] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=DE 8B elapsed=103ms
+[2026-04-17 09:25:27] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:27] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第37轮完成 失败:0条
+[2026-04-17 09:25:27] [INFO] [ModbusConnecter][checkConnection]：设备ID=12048 连接检查 - socket正常
+[2026-04-17 09:25:28] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:28] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:28.444 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:28] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:28.535 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 E9 61 7D 67 6F 27 29 EC 55 F4 71 AB DC 4A 3F 47 D2 4A E0 83
+[2026-04-17 09:25:28] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=E0 83 elapsed=91ms
+[2026-04-17 09:25:28] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:28] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第38轮完成 失败:0条
+[2026-04-17 09:25:29] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:29] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:29.531 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:29] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:29.630 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 97 D8 29 FC B2 59 3C 06 D6 44 20 2A 79 1C 15 07 93 22 EE 4A
+[2026-04-17 09:25:29] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=EE 4A elapsed=99ms
+[2026-04-17 09:25:29] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:29] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第39轮完成 失败:0条
+[2026-04-17 09:25:30] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:30] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:30.626 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:30] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:30.718 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 26 A4 FE CB 76 02 86 89 89 05 2B 83 D3 BD F8 62 DA 26 0C 76
+[2026-04-17 09:25:30] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=0C 76 elapsed=92ms
+[2026-04-17 09:25:30] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:30] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第40轮完成 失败:0条
+[2026-04-17 09:25:31] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:31] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:31.711 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:31] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:31.813 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 30 2B 65 AB 25 E8 2E D4 67 65 35 31 92 A5 27 0C F4 F6 2C D5
+[2026-04-17 09:25:31] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=2C D5 elapsed=102ms
+[2026-04-17 09:25:31] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:31] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第41轮完成 失败:0条
+[2026-04-17 09:25:32] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:32] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:32.815 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:32] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:32.909 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 E8 24 EF ED EB DA CA A0 4D 31 EE 33 76 81 CB CD 7E 75 63 1C
+[2026-04-17 09:25:32] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=63 1C elapsed=94ms
+[2026-04-17 09:25:32] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:32] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第42轮完成 失败:0条
+[2026-04-17 09:25:33] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:33] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:33.912 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:34] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:34.000 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 36 56 01 E1 79 D8 F8 8C 9E BD 20 FA 55 2A A4 0A EB 6B B0 D1
+[2026-04-17 09:25:34] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=B0 D1 elapsed=88ms
+[2026-04-17 09:25:34] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:34] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第43轮完成 失败:0条
+[2026-04-17 09:25:34] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:34] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:34.993 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:35] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:35.094 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 83 2E E1 4F 06 D8 AA EF 26 F8 80 5A B8 99 C9 FC 3F EA A6 AE
+[2026-04-17 09:25:35] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=A6 AE elapsed=101ms
+[2026-04-17 09:25:35] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:35] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第44轮完成 失败:0条
+[2026-04-17 09:25:36] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:36] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:36.093 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:36] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:36.188 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 57 64 78 10 6F 3D 94 3F 08 2B 0E 27 5A 57 53 B0 05 8C A9 DD
+[2026-04-17 09:25:36] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=A9 DD elapsed=95ms
+[2026-04-17 09:25:36] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:36] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第45轮完成 失败:0条
+[2026-04-17 09:25:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:37] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:37.180 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:37] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:37.281 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 55 9F 95 EC DC 84 DE AB 30 34 3E 20 09 70 D8 B2 41 0E D3 76
+[2026-04-17 09:25:37] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=D3 76 elapsed=101ms
+[2026-04-17 09:25:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第46轮完成 失败:0条
+[2026-04-17 09:25:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:38] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:38.281 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:38] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:38.373 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 3C E2 8D 3B 42 CE F8 2B BA CD 26 25 F4 E0 1A DB 74 86 58 5F
+[2026-04-17 09:25:38] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=58 5F elapsed=92ms
+[2026-04-17 09:25:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第47轮完成 失败:0条
+[2026-04-17 09:25:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:39] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:39.369 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:39] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:39.466 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BA 73 CA A2 CF 4F 1E 7A D1 D1 11 2B E2 E0 FB 3D 9D 03 65 4A
+[2026-04-17 09:25:39] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=65 4A elapsed=97ms
+[2026-04-17 09:25:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第48轮完成 失败:0条
+[2026-04-17 09:25:40] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:40] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:40.466 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:40] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:40.568 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 08 55 F2 9E AF 49 04 1B CA EC 39 CB CA E7 0E 30 B1 31 6F 62
+[2026-04-17 09:25:40] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=6F 62 elapsed=102ms
+[2026-04-17 09:25:40] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:40] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第49轮完成 失败:0条
+[2026-04-17 09:25:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:41] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:41.554 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:41] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:41.657 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 60 32 6A CD CB 35 E4 18 41 2C C0 3F 1D 3D 48 85 27 95 2A EC
+[2026-04-17 09:25:41] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=2A EC elapsed=103ms
+[2026-04-17 09:25:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第50轮完成 失败:0条
+[2026-04-17 09:25:42] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:42] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:42.649 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:42] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:42.750 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BF 9D 11 6A B6 83 D4 D0 45 3B FD D5 49 32 2E 18 0E 48 9F CF
+[2026-04-17 09:25:42] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=9F CF elapsed=102ms
+[2026-04-17 09:25:42] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:42] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第51轮完成 失败:0条
+[2026-04-17 09:25:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:43] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:43.743 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:43] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:43.848 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 CC A4 78 42 85 B8 71 28 0D 6C 29 AB 31 65 01 A6 55 BB 18 1F
+[2026-04-17 09:25:43] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=18 1F elapsed=105ms
+[2026-04-17 09:25:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第52轮完成 失败:0条
+[2026-04-17 09:25:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:44] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:44.839 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:44] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:44.939 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 78 94 4C F1 61 71 44 16 46 71 96 27 98 15 0D AA 97 78 9A E1
+[2026-04-17 09:25:44] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=9A E1 elapsed=100ms
+[2026-04-17 09:25:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第53轮完成 失败:0条
+[2026-04-17 09:25:45] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:45] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:45.936 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:46] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:46.036 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 C2 92 C2 27 45 4E 5F 60 F5 33 AB A8 CF 6F DA F4 A9 6F 91 8A
+[2026-04-17 09:25:46] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=91 8A elapsed=101ms
+[2026-04-17 09:25:46] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:46] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第54轮完成 失败:0条
+[2026-04-17 09:25:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:47] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:47.024 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:47] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:47.124 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 EA 87 E1 B0 85 F9 6B 1A AA 7E 43 C1 98 07 BA E1 33 4B 62 4A
+[2026-04-17 09:25:47] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=62 4A elapsed=100ms
+[2026-04-17 09:25:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第55轮完成 失败:0条
+[2026-04-17 09:25:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:48] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:48.132 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:48] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:48.217 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 2F 94 9F 21 21 93 CB 91 88 06 C2 7C D6 F2 3E E7 AF B1 D4 C7
+[2026-04-17 09:25:48] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=D4 C7 elapsed=85ms
+[2026-04-17 09:25:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第56轮完成 失败:0条
+[2026-04-17 09:25:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:49] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:49.215 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:49] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:49.316 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 16 38 48 5F 65 A8 6E 2B 73 BC 96 36 B1 67 4D 34 84 AB 13 17
+[2026-04-17 09:25:49] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=13 17 elapsed=101ms
+[2026-04-17 09:25:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第57轮完成 失败:0条
+[2026-04-17 09:25:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:50] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:50.306 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:50] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:50.407 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 77 8C 62 C5 0F B7 2E 3E CE 58 95 63 2B D5 A9 B3 71 01 A6 EE
+[2026-04-17 09:25:50] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=A6 EE elapsed=102ms
+[2026-04-17 09:25:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第58轮完成 失败:0条
+[2026-04-17 09:25:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:51] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:51.404 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:51] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:51.534 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 3D 53 41 D9 06 16 B4 01 57 8D 63 EA 72 80 40 C7 90 E5 FD 97
+[2026-04-17 09:25:51] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=FD 97 elapsed=130ms
+[2026-04-17 09:25:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第59轮完成 失败:0条
+[2026-04-17 09:25:52] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:52] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:52.524 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:52] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:52.592 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 26 F7 29 1D 51 01 80 DF F9 06 D8 49 61 1A BE 0B 0D E2 3A B8
+[2026-04-17 09:25:52] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=3A B8 elapsed=68ms
+[2026-04-17 09:25:52] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:52] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第60轮完成 失败:0条
+[2026-04-17 09:25:53] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:53] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:53.587 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:53] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:53.690 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 3A 33 E4 A5 F0 47 EC 64 D3 F6 BF 6C 7E 47 CE 61 83 97 10 0E
+[2026-04-17 09:25:53] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=10 0E elapsed=103ms
+[2026-04-17 09:25:53] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:53] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第61轮完成 失败:0条
+[2026-04-17 09:25:54] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:54] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:54.683 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:54] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:54.781 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 43 58 6C 47 C6 56 68 E3 91 02 67 91 40 CA 07 53 75 7E 4D 3B
+[2026-04-17 09:25:54] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=4D 3B elapsed=98ms
+[2026-04-17 09:25:54] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:54] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第62轮完成 失败:0条
+[2026-04-17 09:25:55] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:55] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:55.774 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:55] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:55.879 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 1C 83 62 F6 BD BC 67 D5 A0 5A B4 F5 F8 96 2A 70 3A 92 FC 72
+[2026-04-17 09:25:55] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=FC 72 elapsed=106ms
+[2026-04-17 09:25:55] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:55] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第63轮完成 失败:0条
+[2026-04-17 09:25:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:56] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:56.876 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:56] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:56.971 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 7A 53 6C DA 68 B3 0C 06 D7 AC EE 97 D0 A6 42 14 0A 16 A0 83
+[2026-04-17 09:25:56] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=A0 83 elapsed=95ms
+[2026-04-17 09:25:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第64轮完成 失败:0条
+[2026-04-17 09:25:57] [INFO] [ModbusConnecter][checkConnection]：设备ID=12048 连接检查 - socket正常
+[2026-04-17 09:25:57] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:57] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:57.963 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:58] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:58.066 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 05 60 98 90 5D DE A3 E7 9B FE BE 8F 1B 35 50 C0 19 1D A5 56
+[2026-04-17 09:25:58] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=A5 56 elapsed=103ms
+[2026-04-17 09:25:58] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:58] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第65轮完成 失败:0条
+[2026-04-17 09:25:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:25:59] [INFO] [ModbusCommandSender][doSend]：[发送] 09:25:59.056 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:59] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:25:59.155 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 05 63 9C 8D 2A 41 F1 7E 8A 69 4D 72 CD 48 3D 0C 8B 66 F5 08
+[2026-04-17 09:25:59] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=F5 08 elapsed=99ms
+[2026-04-17 09:25:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:25:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第66轮完成 失败:0条
+[2026-04-17 09:26:00] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:00] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:00.155 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:00] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:00.255 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 5F 89 02 94 92 A5 42 42 2F AB 2A BB 2B D9 20 53 23 71 74 FC
+[2026-04-17 09:26:00] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=74 FC elapsed=100ms
+[2026-04-17 09:26:00] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:00] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第67轮完成 失败:0条
+[2026-04-17 09:26:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:01] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:01.243 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:01] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:01.342 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 87 7F C6 B7 F7 D6 87 A3 00 8B 50 92 1B 99 B0 9D 34 41 0B BD
+[2026-04-17 09:26:01] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=0B BD elapsed=99ms
+[2026-04-17 09:26:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第68轮完成 失败:0条
+[2026-04-17 09:26:02] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:02] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:02.337 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:02] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:02.451 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 B7 6F 8E 45 83 7C A2 F5 4D 89 41 0B 3B 4F 06 9E 4D CD CA A9
+[2026-04-17 09:26:02] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=CA A9 elapsed=115ms
+[2026-04-17 09:26:02] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:02] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第69轮完成 失败:0条
+[2026-04-17 09:26:03] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:03] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:03.447 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:03] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:03.532 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 45 D9 C9 CF BE 5A AE C3 A5 DC CD DB A2 5F F8 74 0F 48 AE 00
+[2026-04-17 09:26:03] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=AE 00 elapsed=86ms
+[2026-04-17 09:26:03] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:03] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第70轮完成 失败:0条
+[2026-04-17 09:26:04] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:04] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:04.543 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:04] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:04.632 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 42 C8 B2 AD B0 ED CB 9B 54 7B 59 5C 9D 7B AC 52 8C 00 4E DC
+[2026-04-17 09:26:04] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=4E DC elapsed=89ms
+[2026-04-17 09:26:04] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:04] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第71轮完成 失败:0条
+[2026-04-17 09:26:05] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:05] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:05.630 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:05] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:05.716 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 A8 27 2B 23 FD 6D 56 49 33 2F E6 EE BF 0F A6 E0 25 15 B2 7F
+[2026-04-17 09:26:05] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=B2 7F elapsed=86ms
+[2026-04-17 09:26:05] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:05] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第72轮完成 失败:0条
+[2026-04-17 09:26:06] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:06] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:06.717 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:06] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:06.839 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 F4 A7 68 B4 20 92 9D 01 9C 82 56 49 8F 0F 42 6C 75 5A 73 26
+[2026-04-17 09:26:06] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=73 26 elapsed=122ms
+[2026-04-17 09:26:06] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:06] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第73轮完成 失败:0条
+[2026-04-17 09:26:07] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:07] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:07.859 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:07] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:07.906 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 56 25 B5 A9 3B 76 9F D6 C8 92 E9 B3 35 D0 6C E1 1C 8A F3 53
+[2026-04-17 09:26:07] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=F3 53 elapsed=48ms
+[2026-04-17 09:26:07] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:07] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第74轮完成 失败:0条
+[2026-04-17 09:26:08] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:08] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:08.903 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:09] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:09.000 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 F7 70 6B 26 88 B9 6D 56 73 45 62 35 0E 1A 54 E6 3C 54 D7 96
+[2026-04-17 09:26:09] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=D7 96 elapsed=97ms
+[2026-04-17 09:26:09] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:09] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第75轮完成 失败:0条
+[2026-04-17 09:26:09] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:09] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:09.993 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:10] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:10.095 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 A8 24 1F B6 94 66 2D 2E 07 AF D3 01 D7 4D D4 FC D6 0D 21 AE
+[2026-04-17 09:26:10] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=21 AE elapsed=102ms
+[2026-04-17 09:26:10] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:10] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第76轮完成 失败:0条
+[2026-04-17 09:26:11] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:11] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:11.093 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:11] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:11.193 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 28 77 06 42 07 C3 CA 3E EB 3E FD 13 74 BE AA A1 42 1D E9 A2
+[2026-04-17 09:26:11] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=E9 A2 elapsed=100ms
+[2026-04-17 09:26:11] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:11] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第77轮完成 失败:0条
+[2026-04-17 09:26:12] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:12] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:12.187 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:12] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:12.280 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 20 12 AB 57 DE 64 E7 3D 65 B4 A7 AA 14 ED B1 E4 18 97 FC D3
+[2026-04-17 09:26:12] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=FC D3 elapsed=93ms
+[2026-04-17 09:26:12] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:12] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第78轮完成 失败:0条
+[2026-04-17 09:26:13] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:13] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:13.275 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:13] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:13.384 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 05 93 30 59 98 65 54 97 E3 16 14 69 86 2C E8 6F 45 63 96 2B
+[2026-04-17 09:26:13] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=96 2B elapsed=110ms
+[2026-04-17 09:26:13] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:13] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第79轮完成 失败:0条
+[2026-04-17 09:26:14] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:14] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:14.384 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:14] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:14.471 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 3B AC BC 72 F2 D1 6A 22 87 1D 6A 97 A1 32 53 8C 93 AD ED C0
+[2026-04-17 09:26:14] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=ED C0 elapsed=88ms
+[2026-04-17 09:26:14] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:14] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第80轮完成 失败:0条
+[2026-04-17 09:26:15] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:15] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:15.649 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:15] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:15.722 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 41 A5 EC BE 48 48 E2 44 90 C4 32 F4 28 7F 2D 45 88 A9 76 04
+[2026-04-17 09:26:15] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=76 04 elapsed=73ms
+[2026-04-17 09:26:15] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:15] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第81轮完成 失败:0条
+[2026-04-17 09:26:16] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:16] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:16.717 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:16] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:16.774 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 4E 21 05 59 E9 D5 0F 76 4F 98 89 F3 4B 89 A7 49 1E C1 43 08
+[2026-04-17 09:26:16] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=43 08 elapsed=57ms
+[2026-04-17 09:26:16] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:16] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第82轮完成 失败:0条
+[2026-04-17 09:26:17] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:17] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:17.784 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:17] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:17.871 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 57 C0 90 35 65 F0 8D 3B CE D4 3D 87 19 12 06 74 98 54 50 E5
+[2026-04-17 09:26:17] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=50 E5 elapsed=96ms
+[2026-04-17 09:26:17] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:17] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第83轮完成 失败:0条
+[2026-04-17 09:26:18] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:18] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:18.894 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:18] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:18.960 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 4B DC F9 E1 EC E3 91 8F 8A 05 06 1F 4D 73 E8 BC B1 32 57 D9
+[2026-04-17 09:26:18] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=57 D9 elapsed=66ms
+[2026-04-17 09:26:18] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:18] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第84轮完成 失败:0条
+[2026-04-17 09:26:19] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:19] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:19.948 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:20] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:20.059 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 B8 39 FE FF 3A F3 3F FE C0 ED F8 0E EA 16 4A 91 A2 06 D6 EE
+[2026-04-17 09:26:20] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=D6 EE elapsed=111ms
+[2026-04-17 09:26:20] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:20] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第85轮完成 失败:0条
+[2026-04-17 09:26:21] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:21] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:21.061 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:21] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:21.145 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 90 B5 22 8F 42 E0 35 90 62 57 78 1D 1E C6 75 51 52 4B D8 FF
+[2026-04-17 09:26:21] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=D8 FF elapsed=84ms
+[2026-04-17 09:26:21] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:21] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第86轮完成 失败:0条
+[2026-04-17 09:26:22] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:22] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:22.147 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:22] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:22.460 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 CE C4 C2 50 24 F7 03 19 81 23 68 11 79 83 9F 2B 03 CF 16 84
+[2026-04-17 09:26:22] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=16 84 elapsed=313ms
+[2026-04-17 09:26:22] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:22] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第87轮完成 失败:0条
+[2026-04-17 09:26:23] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:23] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:23.478 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:23] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:23.563 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 D7 45 13 D8 D1 E9 1D 69 8B 0F E5 3D 1C 0C 58 D3 27 85 08 4D
+[2026-04-17 09:26:23] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=08 4D elapsed=87ms
+[2026-04-17 09:26:23] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:23] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第88轮完成 失败:0条
+[2026-04-17 09:26:24] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:24] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:24.585 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:24] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:24.643 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 EE E4 70 27 E3 07 FD F1 37 0B CC CA 45 4C 11 A9 CB 24 22 D8
+[2026-04-17 09:26:24] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=22 D8 elapsed=58ms
+[2026-04-17 09:26:24] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:24] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第89轮完成 失败:0条
+[2026-04-17 09:26:25] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:25] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:25.635 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:25] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:25.797 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BA EE CB EA 2C B7 72 C9 5D 46 05 1C B6 05 86 AC 69 53 24 7C
+[2026-04-17 09:26:25] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=24 7C elapsed=162ms
+[2026-04-17 09:26:25] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:25] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第90轮完成 失败:0条
+[2026-04-17 09:26:27] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:27] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:27.165 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:27] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:27.276 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 C6 C5 8A CA C6 2D 55 2A 47 A5 92 05 52 51 DE A0 B3 94 8E 85
+[2026-04-17 09:26:27] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=8E 85 elapsed=111ms
+[2026-04-17 09:26:27] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:27] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第91轮完成 失败:0条
+[2026-04-17 09:26:27] [INFO] [ModbusConnecter][checkConnection]：设备ID=12048 连接检查 - socket正常
+[2026-04-17 09:26:28] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:28] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:28.378 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:28] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:28.491 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 1F 7A 90 56 58 30 A9 7B 2C A9 17 1B 49 CF EC 86 28 0D 29 80
+[2026-04-17 09:26:28] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=29 80 elapsed=113ms
+[2026-04-17 09:26:28] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:28] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第92轮完成 失败:0条
+[2026-04-17 09:26:29] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:29] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:29.484 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:29] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:29.608 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BF 1C 07 35 FA B7 BD 79 53 10 54 CE 66 65 E3 34 2E B0 73 07
+[2026-04-17 09:26:29] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=73 07 elapsed=124ms
+[2026-04-17 09:26:29] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:29] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第93轮完成 失败:0条
+[2026-04-17 09:26:30] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:30] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:30.834 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:30] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:30.874 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 24 AB 3A 23 B1 4C 93 80 23 81 2C 72 67 35 64 94 9D 18 BC A2
+[2026-04-17 09:26:30] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=BC A2 elapsed=40ms
+[2026-04-17 09:26:30] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:30] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第94轮完成 失败:0条
+[2026-04-17 09:26:31] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:31] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:31.880 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:31] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:31.981 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 C9 52 77 7B 9D FE E7 73 AA F6 37 23 B7 9C 00 FD 93 58 1F D6
+[2026-04-17 09:26:31] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=1F D6 elapsed=101ms
+[2026-04-17 09:26:31] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:31] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第95轮完成 失败:0条
+[2026-04-17 09:26:32] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:32] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:32.982 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:33] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:33.062 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 68 F3 89 CB D3 20 4C 10 9D 10 A3 65 35 34 24 FE 23 F8 49 48
+[2026-04-17 09:26:33] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=49 48 elapsed=80ms
+[2026-04-17 09:26:33] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:33] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第96轮完成 失败:0条
+[2026-04-17 09:26:34] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:34] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:34.065 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:34] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:34.204 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 62 6D D3 36 38 55 2A C4 AE 91 EA 2C 1A CE 5D 36 5D 4D AF A5
+[2026-04-17 09:26:34] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=AF A5 elapsed=150ms
+[2026-04-17 09:26:34] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:34] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第97轮完成 失败:0条
+[2026-04-17 09:26:35] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:35] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:35.216 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:35] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:35.258 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BB 9C B9 60 DF 37 FD 27 05 4B 58 E1 E1 1E 76 C5 B0 8C 84 0A
+[2026-04-17 09:26:35] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=84 0A elapsed=42ms
+[2026-04-17 09:26:35] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:35] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第98轮完成 失败:0条
+[2026-04-17 09:26:36] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:36] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:36.267 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:36] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:36.352 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 0F 92 C4 42 1D 3C 31 89 A4 03 13 86 65 13 CA 10 89 9E FF 54
+[2026-04-17 09:26:36] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=FF 54 elapsed=85ms
+[2026-04-17 09:26:36] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:36] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第99轮完成 失败:0条
+[2026-04-17 09:26:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:37] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:37.356 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:37] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:37.444 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BB B1 1D 22 93 F1 C1 92 53 A6 DE 8A 7A E7 02 67 51 99 70 F8
+[2026-04-17 09:26:37] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=70 F8 elapsed=88ms
+[2026-04-17 09:26:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第100轮完成 失败:0条
+[2026-04-17 09:26:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:38] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:38.445 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:38] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:38.570 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 89 31 35 42 35 17 DD 71 B1 5C CA 09 C1 57 1B 00 A1 A4 9D 34
+[2026-04-17 09:26:38] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=9D 34 elapsed=125ms
+[2026-04-17 09:26:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第101轮完成 失败:0条
+[2026-04-17 09:26:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:39] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:39.576 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:39] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:39.627 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 D7 D8 11 D0 D5 21 DE A0 53 00 9A 1F 17 B0 5E C9 7A C2 3F 5B
+[2026-04-17 09:26:39] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=3F 5B elapsed=51ms
+[2026-04-17 09:26:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第102轮完成 失败:0条
+[2026-04-17 09:26:40] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:40] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:40.620 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:40] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:40.716 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 A8 C4 DA 32 80 51 BD FA 60 3D FC 11 61 E5 94 68 CA 32 6C 00
+[2026-04-17 09:26:40] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=6C 00 elapsed=97ms
+[2026-04-17 09:26:40] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:40] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第103轮完成 失败:0条
+[2026-04-17 09:26:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:41] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:41.716 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:41] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:41.814 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 88 91 BB 8F F3 4A B0 B0 44 AA 51 62 30 19 69 F5 3A 91 A9 20
+[2026-04-17 09:26:41] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=A9 20 elapsed=98ms
+[2026-04-17 09:26:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第104轮完成 失败:0条
+[2026-04-17 09:26:42] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:42] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:42.944 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:43] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:43.018 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 16 42 5B 7F 10 D3 3D A6 E8 88 BC 23 C5 67 48 B9 56 A8 AB E2
+[2026-04-17 09:26:43] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=AB E2 elapsed=74ms
+[2026-04-17 09:26:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第105轮完成 失败:0条
+[2026-04-17 09:26:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:44] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:44.013 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:44] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:44.110 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 17 25 75 10 F9 3A 42 D3 06 39 81 6F 08 12 A5 17 65 32 F8 3B
+[2026-04-17 09:26:44] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=F8 3B elapsed=97ms
+[2026-04-17 09:26:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第106轮完成 失败:0条
+[2026-04-17 09:26:45] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:45] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:45.104 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:45] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:45.207 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BA 94 66 E9 25 78 51 97 F3 4F 80 2F 79 9A C5 0B C3 E4 AD 95
+[2026-04-17 09:26:45] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=AD 95 elapsed=103ms
+[2026-04-17 09:26:45] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:45] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第107轮完成 失败:0条
+[2026-04-17 09:26:46] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:46] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:46.207 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:46] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:46.298 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 44 34 39 F0 51 92 42 84 F8 35 33 8B B4 C5 BD 5C 8B A6 F7 B0
+[2026-04-17 09:26:46] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=F7 B0 elapsed=91ms
+[2026-04-17 09:26:46] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:46] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第108轮完成 失败:0条
+[2026-04-17 09:26:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:47] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:47.293 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:47] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:47.417 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 9F C1 04 7A 4F 30 1F D5 67 36 F7 22 F2 AB 92 6F 26 A2 F5 0B
+[2026-04-17 09:26:47] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=F5 0B elapsed=124ms
+[2026-04-17 09:26:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第109轮完成 失败:0条
+[2026-04-17 09:26:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:48] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:48.423 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:48] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:48.484 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 5A 5C DF 13 69 74 80 61 51 A7 64 2C 64 18 B1 C7 32 B0 2B 4E
+[2026-04-17 09:26:48] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=2B 4E elapsed=61ms
+[2026-04-17 09:26:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第110轮完成 失败:0条
+[2026-04-17 09:26:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:49] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:49.487 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:49] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:49.585 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 64 93 F5 B2 ED 17 72 F8 9A 46 81 C2 3C E9 F5 6D 2C 33 C8 35
+[2026-04-17 09:26:49] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=C8 35 elapsed=98ms
+[2026-04-17 09:26:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第111轮完成 失败:0条
+[2026-04-17 09:26:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:50] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:50.597 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:50] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:50.671 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 65 8E EB D4 90 AA F7 0F FA 77 31 AB F3 19 ED FD 0A 76 8C B0
+[2026-04-17 09:26:50] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=8C B0 elapsed=74ms
+[2026-04-17 09:26:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第112轮完成 失败:0条
+[2026-04-17 09:26:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:51] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:51.670 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:51] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:51.800 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 7E C7 30 C3 2D BB 5C 10 92 F3 D8 5D E8 06 77 3A DF F3 CC 52
+[2026-04-17 09:26:51] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=CC 52 elapsed=130ms
+[2026-04-17 09:26:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第113轮完成 失败:0条
+[2026-04-17 09:26:52] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:52] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:52.797 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:52] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:52.858 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 49 2E 94 77 68 C1 46 5D B8 AD B7 0C 76 5E B9 9F 9F 68 83 E2
+[2026-04-17 09:26:52] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=83 E2 elapsed=61ms
+[2026-04-17 09:26:52] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:52] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第114轮完成 失败:0条
+[2026-04-17 09:26:53] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:53] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:53.869 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:53] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:53.957 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 19 98 11 47 05 03 8F 2B 89 34 E6 B9 1A 0A EC D2 74 80 17 3A
+[2026-04-17 09:26:53] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=17 3A elapsed=88ms
+[2026-04-17 09:26:53] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:53] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第115轮完成 失败:0条
+[2026-04-17 09:26:54] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:54] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:54.946 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:55] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:55.093 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 4C FE 1C 06 09 3E 12 E6 7B C5 2F 72 1E D2 BB 1F BA D4 C1 58
+[2026-04-17 09:26:55] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=C1 58 elapsed=148ms
+[2026-04-17 09:26:55] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:55] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第116轮完成 失败:0条
+[2026-04-17 09:26:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:56] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:56.099 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:56] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:56.155 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 22 98 81 46 6F 59 FE 61 86 4F D4 D4 A2 50 B6 E1 33 1C 37 18
+[2026-04-17 09:26:56] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=37 18 elapsed=56ms
+[2026-04-17 09:26:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第117轮完成 失败:0条
+[2026-04-17 09:26:57] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:57] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:57.157 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:57] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:57.249 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 46 2D 4C 71 8C 4F 15 FF C0 FC 62 2B 77 8A D1 DF A1 EB C9 0D
+[2026-04-17 09:26:57] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=C9 0D elapsed=92ms
+[2026-04-17 09:26:57] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:57] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第118轮完成 失败:0条
+[2026-04-17 09:26:57] [INFO] [ModbusConnecter][checkConnection]：设备ID=12048 连接检查 - socket正常
+[2026-04-17 09:26:58] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:58] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:58.247 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:58] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:58.329 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 31 B8 CA D9 EE 27 00 67 9D 81 87 97 DE FA D1 2E 47 35 6E 14
+[2026-04-17 09:26:58] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=6E 14 elapsed=88ms
+[2026-04-17 09:26:58] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:58] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第119轮完成 失败:0条
+[2026-04-17 09:26:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:26:59] [INFO] [ModbusCommandSender][doSend]：[发送] 09:26:59.341 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:59] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:26:59.420 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 C2 F0 85 8E 36 1A F5 15 F9 FD A4 09 17 EA 65 5F A4 97 3C 0B
+[2026-04-17 09:26:59] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=3C 0B elapsed=79ms
+[2026-04-17 09:26:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:26:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第120轮完成 失败:0条
+[2026-04-17 09:27:00] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:00] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:00.419 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:00] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:00.519 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 F2 E2 4C 26 00 3B 37 E0 4F 90 D1 D8 B5 10 35 EF 7D 2B 98 5B
+[2026-04-17 09:27:00] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=98 5B elapsed=100ms
+[2026-04-17 09:27:00] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:00] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第121轮完成 失败:0条
+[2026-04-17 09:27:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:01] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:01.510 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:01] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:01.612 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 D0 8E 58 27 1C 17 05 D4 A9 C9 95 C0 EB 67 05 BD 88 E8 8E 81
+[2026-04-17 09:27:01] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=8E 81 elapsed=103ms
+[2026-04-17 09:27:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第122轮完成 失败:0条
+[2026-04-17 09:27:37] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 空闲 -> 连接中
+[2026-04-17 09:27:37] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：已断开 -> 连接中
+[2026-04-17 09:27:37] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.206:547
+[2026-04-17 09:27:37] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 连接中 -> 指令发送器已启动
+[2026-04-17 09:27:37] [INFO] [ModbusTcpMaster][startSender]：设备ID=12048 指令发送器已启动，立即进入初始化阶段
+[2026-04-17 09:27:37] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 指令发送器已启动 -> 初始指令下发中
+[2026-04-17 09:27:37] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 启动循环下发 指令数:1 轮数:1 间隔:100ms
+[2026-04-17 09:27:37] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadVersion 索引:0
+[2026-04-17 09:27:37] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:37.483 设备ID=12048 module=INITIAL id=ReadVersion uuid=95 sendCount=1/4 timeout=1000ms crc=B1 CD len=8
+frame=01 04 00 18 00 01 B1 CD
+[2026-04-17 09:27:37] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 初始指令下发中 -> 启动定时发送器中
+[2026-04-17 09:27:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 启动循环下发 指令数:1 轮数:无限 间隔:1000ms
+[2026-04-17 09:27:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:37] [INFO] [ModbusTcpMaster][startPeriodicSender]：设备ID=12048 定时发送器已启动，进入正常运行状态
+[2026-04-17 09:27:37] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 启动定时发送器中 -> 正常运行
+[2026-04-17 09:27:37] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：连接中 -> 已连接
+[2026-04-17 09:27:37] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:37.759 设备ID=12048 module=INITIAL id=ReadVersion uuid=95 len=7
+frame=01 04 02 00 00 B9 30
+[2026-04-17 09:27:37] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=INITIAL id=ReadVersion uuid=95 crc=B9 30 elapsed=276ms
+[2026-04-17 09:27:37] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadVersion
+[2026-04-17 09:27:37] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 第1轮完成 失败:0条
+[2026-04-17 09:27:37] [INFO] [InitialCommandIssuer][onRoundComplete]：设备ID=12048 完成，失败0条
+[2026-04-17 09:27:37] [INFO] [ModbusTcpMaster][onInitialFinished]：设备ID=12048 初始化完成，失败指令数：0
+[2026-04-17 09:27:37] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 全部轮次执行完毕
+[2026-04-17 09:27:37] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:37.759 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:37] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:37.801 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 E2 04 91 DF 3A E6 8A 22 4C E5 C5 BD 64 7F 57 5A 62 96 47 01
+[2026-04-17 09:27:37] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=47 01 elapsed=42ms
+[2026-04-17 09:27:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第1轮完成 失败:0条
+[2026-04-17 09:27:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:38] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:38.793 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:38] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:38.892 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 25 60 A4 5F 6C C3 E7 C2 1D CF BE 95 35 70 1B AB 10 9F 49 26
+[2026-04-17 09:27:38] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=49 26 elapsed=99ms
+[2026-04-17 09:27:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第2轮完成 失败:0条
+[2026-04-17 09:27:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:39] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:39.885 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:39] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:39.988 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 6E 25 C2 DC FA 6F 2B 6C F5 6F F7 4C 41 A5 6A 9B 69 13 89 B6
+[2026-04-17 09:27:39] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=89 B6 elapsed=103ms
+[2026-04-17 09:27:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第3轮完成 失败:0条
+[2026-04-17 09:27:40] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:40] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:40.980 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:41] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:41.087 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 92 38 30 DE 1C 29 29 07 99 6B 56 DD 3B 23 1E D8 90 14 44 A8
+[2026-04-17 09:27:41] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=44 A8 elapsed=107ms
+[2026-04-17 09:27:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第4轮完成 失败:0条
+[2026-04-17 09:27:42] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:42] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:42.104 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:42] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:42.177 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 5D E5 94 DF 7E 3C CE A4 69 1C CD 79 FE DA 37 3F F4 4A 67 20
+[2026-04-17 09:27:42] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=67 20 elapsed=73ms
+[2026-04-17 09:27:42] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:42] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第5轮完成 失败:0条
+[2026-04-17 09:27:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:43] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:43.172 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:43] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:43.263 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 88 65 D9 A9 F4 2D BA 30 D1 F8 39 37 87 22 21 13 C7 61 24 3F
+[2026-04-17 09:27:43] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=24 3F elapsed=91ms
+[2026-04-17 09:27:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第6轮完成 失败:0条
+[2026-04-17 09:27:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:44] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:44.271 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:44] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:44.363 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 45 CE 43 67 67 5B DE 33 E9 C2 E3 B9 9A D3 1D 9D 10 05 7E EA
+[2026-04-17 09:27:44] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=7E EA elapsed=92ms
+[2026-04-17 09:27:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第7轮完成 失败:0条
+[2026-04-17 09:27:45] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:45] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:45.360 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:45] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:45.454 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 5F 21 25 5A 59 83 BA 82 C6 72 7D C3 2C 32 29 4E 1A 31 46 79
+[2026-04-17 09:27:45] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=46 79 elapsed=94ms
+[2026-04-17 09:27:45] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:45] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第8轮完成 失败:0条
+[2026-04-17 09:27:46] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:46] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:46.456 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:46] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:46.551 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 E2 2B 16 6A 66 EA 81 EA BC ED AF 8A 07 71 9A C3 0A 81 00 7D
+[2026-04-17 09:27:46] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=00 7D elapsed=96ms
+[2026-04-17 09:27:46] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:46] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第9轮完成 失败:0条
+[2026-04-17 09:27:47] [INFO] [ModbusConnecter][startConnectionCheck]：设备ID=12048 启动连接心跳检查
+[2026-04-17 09:27:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:47] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:47.553 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:47] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:47.651 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 AF 9E D4 4E 42 A2 41 40 46 CE 71 B0 DD 0F DF C7 C4 B2 34 24
+[2026-04-17 09:27:47] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=34 24 elapsed=98ms
+[2026-04-17 09:27:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第10轮完成 失败:0条
+[2026-04-17 09:27:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:48] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:48.652 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:48] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:48.741 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 C5 41 54 66 68 2B 45 3E 36 2D 63 D8 0C 5F AE 99 E9 53 4D E7
+[2026-04-17 09:27:48] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=4D E7 elapsed=90ms
+[2026-04-17 09:27:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第11轮完成 失败:0条
+[2026-04-17 09:27:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:49] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:49.730 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:49] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:49.831 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BE FC CE DD 40 7C D4 C4 7E D2 7B 8A 50 EB 31 F4 82 2B B3 88
+[2026-04-17 09:27:49] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=B3 88 elapsed=101ms
+[2026-04-17 09:27:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第12轮完成 失败:0条
+[2026-04-17 09:27:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:27:50] [INFO] [ModbusCommandSender][doSend]：[发送] 09:27:50.825 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:50] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:27:50.920 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 89 B9 40 C4 EE 30 86 A5 73 DF 0B 22 D5 48 E7 55 5C D3 9D A1
+[2026-04-17 09:27:50] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=9D A1 elapsed=95ms
+[2026-04-17 09:27:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:27:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第13轮完成 失败:0条
+[2026-04-17 09:31:34] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 空闲 -> 连接中
+[2026-04-17 09:31:34] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：已断开 -> 连接中
+[2026-04-17 09:31:34] [INFO] [ModbusConnecter][performConnection]：设备ID=12048 正在尝试连接服务器 169.254.173.206:547
+[2026-04-17 09:31:34] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 连接中 -> 指令发送器已启动
+[2026-04-17 09:31:34] [INFO] [ModbusTcpMaster][startSender]：设备ID=12048 指令发送器已启动，立即进入初始化阶段
+[2026-04-17 09:31:34] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 指令发送器已启动 -> 初始指令下发中
+[2026-04-17 09:31:34] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 启动循环下发 指令数:1 轮数:1 间隔:100ms
+[2026-04-17 09:31:34] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadVersion 索引:0
+[2026-04-17 09:31:34] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:34.138 设备ID=12048 module=INITIAL id=ReadVersion uuid=95 sendCount=1/4 timeout=1000ms crc=B1 CD len=8
+frame=01 04 00 18 00 01 B1 CD
+[2026-04-17 09:31:34] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 初始指令下发中 -> 启动定时发送器中
+[2026-04-17 09:31:34] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 启动循环下发 指令数:1 轮数:无限 间隔:1000ms
+[2026-04-17 09:31:34] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:34] [INFO] [ModbusTcpMaster][startPeriodicSender]：设备ID=12048 定时发送器已启动，进入正常运行状态
+[2026-04-17 09:31:34] [INFO] [ModbusTcpMaster][enterState]：设备ID=12048 状态切换: 启动定时发送器中 -> 正常运行
+[2026-04-17 09:31:34] [INFO] [ModbusConnecter][setStatus]：设备ID=12048 状态转变：连接中 -> 已连接
+[2026-04-17 09:31:34] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:34.337 设备ID=12048 module=INITIAL id=ReadVersion uuid=95 len=7
+frame=01 04 02 00 00 B9 30
+[2026-04-17 09:31:34] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=INITIAL id=ReadVersion uuid=95 crc=B9 30 elapsed=199ms
+[2026-04-17 09:31:34] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadVersion
+[2026-04-17 09:31:34] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 第1轮完成 失败:0条
+[2026-04-17 09:31:34] [INFO] [InitialCommandIssuer][onRoundComplete]：设备ID=12048 完成，失败0条
+[2026-04-17 09:31:34] [INFO] [ModbusTcpMaster][onInitialFinished]：设备ID=12048 初始化完成，失败指令数：0
+[2026-04-17 09:31:34] [INFO] [InitialCommandIssuer]：设备ID=12048 [CyclicCommandIssuer] 全部轮次执行完毕
+[2026-04-17 09:31:34] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:34.337 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:34] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:34.361 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BC 2E 23 F0 6D 27 43 BF 72 03 03 A8 9B D3 F3 C5 29 11 B6 F0
+[2026-04-17 09:31:34] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=B6 F0 elapsed=24ms
+[2026-04-17 09:31:34] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:34] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第1轮完成 失败:0条
+[2026-04-17 09:31:35] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:35] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:35.356 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:35] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:35.460 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BC A5 8A 39 F7 07 69 B0 49 A8 4D 1F D4 94 37 40 54 39 54 26
+[2026-04-17 09:31:35] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=54 26 elapsed=104ms
+[2026-04-17 09:31:35] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:35] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第2轮完成 失败:0条
+[2026-04-17 09:31:36] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:36] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:36.448 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:36] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:36.547 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 84 72 6B 9F 37 E7 4E F2 CF CC 9B BF E8 55 DA 46 6E F8 62 B4
+[2026-04-17 09:31:36] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=62 B4 elapsed=99ms
+[2026-04-17 09:31:36] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:36] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第3轮完成 失败:0条
+[2026-04-17 09:31:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:37] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:37.545 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:37] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:37.753 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 F1 98 C0 73 6A 0F 9A DF 30 A5 3B 07 82 6F 7E 80 DD 12 69 32
+[2026-04-17 09:31:37] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=69 32 elapsed=208ms
+[2026-04-17 09:31:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:37] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第4轮完成 失败:0条
+[2026-04-17 09:31:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:38] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:38.745 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:38] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:38.847 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 74 A9 05 B7 B5 4C 8B E7 26 88 A8 FC CD C8 8B 92 5A 1D 26 2E
+[2026-04-17 09:31:38] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=26 2E elapsed=102ms
+[2026-04-17 09:31:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:38] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第5轮完成 失败:0条
+[2026-04-17 09:31:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:39] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:39.840 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:39] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:39.944 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 38 55 D1 01 00 BA 41 A6 DD 77 5C CA CF 65 4C F8 7F E0 AC B3
+[2026-04-17 09:31:39] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=AC B3 elapsed=104ms
+[2026-04-17 09:31:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:39] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第6轮完成 失败:0条
+[2026-04-17 09:31:40] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:40] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:40.930 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:41] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:41.035 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 BA F6 40 95 0D EE C5 F3 5A D5 AC 69 3F C9 FD 2D 44 CD 1E DD
+[2026-04-17 09:31:41] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=1E DD elapsed=105ms
+[2026-04-17 09:31:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:41] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第7轮完成 失败:0条
+[2026-04-17 09:31:42] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:42] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:42.034 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:42] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:42.130 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 70 E9 1D 15 DC 76 6B 95 86 16 04 9E AE 9C 28 F2 73 A2 86 86
+[2026-04-17 09:31:42] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=86 86 elapsed=96ms
+[2026-04-17 09:31:42] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:42] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第8轮完成 失败:0条
+[2026-04-17 09:31:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:43] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:43.122 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:43] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:43.221 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 9F 63 3C 5D A5 36 37 D1 AD 3D 3B 39 67 19 6E A3 3A F3 22 59
+[2026-04-17 09:31:43] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=22 59 elapsed=99ms
+[2026-04-17 09:31:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:43] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第9轮完成 失败:0条
+[2026-04-17 09:31:44] [INFO] [ModbusConnecter][startConnectionCheck]：设备ID=12048 启动连接心跳检查
+[2026-04-17 09:31:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:44] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:44.212 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:44] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:44.318 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 F5 C5 8C 51 6C 06 E6 6A 42 A8 26 1B 09 26 55 CA 87 52 2D F1
+[2026-04-17 09:31:44] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=2D F1 elapsed=106ms
+[2026-04-17 09:31:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:44] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第10轮完成 失败:0条
+[2026-04-17 09:31:45] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:45] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:45.311 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:45] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:45.413 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 6E B4 C0 D5 6C DF 96 A0 20 A5 77 D6 45 FC 49 D6 F1 B2 9C 62
+[2026-04-17 09:31:45] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=9C 62 elapsed=102ms
+[2026-04-17 09:31:45] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:45] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第11轮完成 失败:0条
+[2026-04-17 09:31:46] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:46] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:46.405 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:46] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:46.501 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 E4 55 96 E6 C7 EB 61 77 D4 E7 06 CA CA D5 50 29 7D C0 45 33
+[2026-04-17 09:31:46] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=45 33 elapsed=96ms
+[2026-04-17 09:31:46] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:46] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第12轮完成 失败:0条
+[2026-04-17 09:31:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:47] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:47.494 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:47] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:47.597 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 E3 EF C0 D5 5B F6 E0 F8 F1 7B 83 80 07 0A 6E 1D 41 38 AE 2F
+[2026-04-17 09:31:47] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=AE 2F elapsed=103ms
+[2026-04-17 09:31:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:47] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第13轮完成 失败:0条
+[2026-04-17 09:31:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:48] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:48.589 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:48] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:48.690 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 50 E1 BB 55 62 38 7F 8C 1C 6D 6C E8 5E 46 2B CD 0C 79 90 1E
+[2026-04-17 09:31:48] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=90 1E elapsed=101ms
+[2026-04-17 09:31:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:48] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第14轮完成 失败:0条
+[2026-04-17 09:31:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:49] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:49.685 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:49] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:49.785 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 EC 39 33 D0 2A B0 A6 0F 6D 8B 97 B0 F9 78 74 D1 25 C3 07 EA
+[2026-04-17 09:31:49] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=07 EA elapsed=100ms
+[2026-04-17 09:31:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:49] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第15轮完成 失败:0条
+[2026-04-17 09:31:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:50] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:50.778 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:50] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:50.878 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 D9 0B A0 F2 61 0F 1C 9D 7E 43 B3 2D 2D 7D 2D E4 8D BE 84 30
+[2026-04-17 09:31:50] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=84 30 elapsed=100ms
+[2026-04-17 09:31:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:50] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第16轮完成 失败:0条
+[2026-04-17 09:31:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:51] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:51.874 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:51] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:51.969 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 D8 37 1F E7 E9 C7 37 6E 59 85 4A 2D 50 18 BF 0D 2B A0 5B 97
+[2026-04-17 09:31:51] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=5B 97 elapsed=95ms
+[2026-04-17 09:31:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:51] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第17轮完成 失败:0条
+[2026-04-17 09:31:52] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:52] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:52.964 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:53] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:53.071 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 42 ED AC 93 49 B7 66 E0 AE 43 21 51 03 E3 A6 09 6A E4 7A 49
+[2026-04-17 09:31:53] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=7A 49 elapsed=107ms
+[2026-04-17 09:31:53] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:53] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第18轮完成 失败:0条
+[2026-04-17 09:31:54] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:54] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:54.082 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:54] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:54.161 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 90 F6 D4 B4 86 6A A7 51 CD C3 74 89 65 DD 4B 68 DC A2 2F 32
+[2026-04-17 09:31:54] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=2F 32 elapsed=79ms
+[2026-04-17 09:31:54] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:54] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第19轮完成 失败:0条
+[2026-04-17 09:31:55] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:55] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:55.154 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:55] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:55.256 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 B8 55 F6 9A 98 83 F0 16 41 5D 1E 51 DF 34 70 D2 05 9E D6 03
+[2026-04-17 09:31:55] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=D6 03 elapsed=102ms
+[2026-04-17 09:31:55] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:55] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第20轮完成 失败:0条
+[2026-04-17 09:31:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:56] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:56.245 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:56] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:56.349 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 B1 F5 A7 0F E8 EB 32 5E C8 43 FA 38 73 AF 56 F7 A5 7E 01 62
+[2026-04-17 09:31:56] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=01 62 elapsed=104ms
+[2026-04-17 09:31:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:56] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第21轮完成 失败:0条
+[2026-04-17 09:31:57] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:57] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:57.336 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:57] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:57.447 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 F5 35 76 EA 31 E0 A3 8B FA 08 EA E3 06 34 BD 00 D8 78 3B 19
+[2026-04-17 09:31:57] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=3B 19 elapsed=111ms
+[2026-04-17 09:31:57] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:57] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第22轮完成 失败:0条
+[2026-04-17 09:31:58] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:58] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:58.461 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:58] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:58.537 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 6C 92 64 32 87 EE 35 3F 9C FB 4B 64 7E 61 D3 52 1F 42 D4 4A
+[2026-04-17 09:31:58] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=D4 4A elapsed=76ms
+[2026-04-17 09:31:58] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:58] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第23轮完成 失败:0条
+[2026-04-17 09:31:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:31:59] [INFO] [ModbusCommandSender][doSend]：[发送] 09:31:59.529 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:59] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:31:59.627 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 91 1B 2C B8 1E 15 DB D1 50 9B D4 4B 94 67 A1 BE E0 9C 4A DC
+[2026-04-17 09:31:59] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=4A DC elapsed=98ms
+[2026-04-17 09:31:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:31:59] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第24轮完成 失败:0条
+[2026-04-17 09:32:00] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:32:00] [INFO] [ModbusCommandSender][doSend]：[发送] 09:32:00.626 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:32:00] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:32:00.724 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 0C 3F 76 94 F6 27 26 4B 16 05 5F D2 DF FE A8 0F 23 A0 B6 0B
+[2026-04-17 09:32:00] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=B6 0B elapsed=98ms
+[2026-04-17 09:32:00] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:32:00] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第25轮完成 失败:0条
+[2026-04-17 09:32:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:32:01] [INFO] [ModbusCommandSender][doSend]：[发送] 09:32:01.720 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:32:01] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:32:01.816 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 6C B7 69 CC D6 AC 4E D1 18 CA 93 4A 7C 02 71 65 7C 98 29 3B
+[2026-04-17 09:32:01] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=29 3B elapsed=96ms
+[2026-04-17 09:32:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:32:01] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第26轮完成 失败:0条
+[2026-04-17 09:32:02] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:32:02] [INFO] [ModbusCommandSender][doSend]：[发送] 09:32:02.814 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:32:02] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:32:02.910 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 02 95 24 3C 53 0C 49 AE 8F AC 72 3E 99 B8 1F 9C 1A 52 E4 F9
+[2026-04-17 09:32:02] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=E4 F9 elapsed=96ms
+[2026-04-17 09:32:02] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:32:02] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第27轮完成 失败:0条
+[2026-04-17 09:32:03] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 发送指令:ReadFoupStatus 索引:0
+[2026-04-17 09:32:03] [INFO] [ModbusCommandSender][doSend]：[发送] 09:32:03.903 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:32:04] [INFO] [ModbusCommandReceiver][processPendingFrame]：[接收-帧] 09:32:04.010 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 len=23
+frame=01 04 12 79 54 8D 03 1C 0D 92 D1 0B 1E E9 DB 65 C2 8A DD BE 35 A0 A7
+[2026-04-17 09:32:04] [INFO] [ModbusCommandReceiver][succeedPendingCommand]：接收成功 - 设备ID=12048 module=PERIODIC id=ReadFoupStatus uuid=96 crc=A0 A7 elapsed=107ms
+[2026-04-17 09:32:04] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 指令成功:ReadFoupStatus
+[2026-04-17 09:32:04] [INFO] [PeriodicCommandSender]：设备ID=12048 [CyclicCommandIssuer] 第28轮完成 失败:0条

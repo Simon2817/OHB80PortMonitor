@@ -1,35 +1,60 @@
 #include "shareddata.h"
+#include "appconfig.h"
+#include "networkconfig.h"
+#include "qrcodeconfig.h"
+#include "modbustcpmastermanager/modbustcpmastermanager.h"
 #include <QDebug>
+#include <QHash>
 
 QVector<SetOfOHBInfo> SharedData::setOfOHBInfoList;
+bool SharedData::s_modbusManagerInitialized = false;
 
 SharedData::SharedData() {
+
     if (setOfOHBInfoList.isEmpty()) {
         setOfOHBInfoList.reserve(20);
-        int qrCodeStart = 12001;
         QVector<int> uiIds = {2,3,4,5,6,7,8,9,10,11,12,13,36,37,38,39,40,41,42,43};
+        
+        // 读取网络配置
+        QVector<OHBNetworkInfo> networkInfos = AppConfig::getInstance().getNetworkConfig().readNetworkConfig();
+        // 读取二维码配置
+        QVector<QString> qrCodeInfos = AppConfig::getInstance().getQRCodeConfig().readQRCodeMapping();
+        // 索引
+        int index = 0;
         
         for (int i = 0; i < 20; ++i) {
             SetOfOHBInfo setInfo;
             setInfo.setUiId(uiIds[i]);
             
-            // 创建 Foup 队列
             QVector<FoupOfOHBInfo> foups;
-            foups.reserve(4);
-            
             for (int j = 0; j < 4; ++j) {
                 FoupOfOHBInfo foup;
-                foup.qrCode = QString::number(qrCodeStart + i * 4 + j);
-                foup.inletPressure = 0.12 + (i * 0.01) + (j * 0.002); // 示例压力值
-                foup.inletFlow = 10.0 + (i * 0.5) + (j * 0.1); // 示例流量值
-                foup.RH = 45.0 + (i * 2.0) + (j * 0.5); // 示例湿度值
+                foup.qrCode = qrCodeInfos.at(index);
+                foup.ip = networkInfos.at(index).ip;
+                foup.port = networkInfos.at(index++).port;
+                foup.inletPressure = 0;
+                foup.inletFlow = 0;
+                foup.RH = 0;
+                foup.foupIn = false;
+                foup.hasAlarm = false;
                 foups.append(foup);
+
+                if (!foup.ip.isEmpty() && foup.port > 0) {
+                    ModbusTcpMasterManager::instance().addMaster(foup.ip, foup.port, foup.qrCode);
+                    ModbusTcpMasterManager::instance().startMaster(foup.qrCode, ModbusConnecter::ConnectionMode::AutoReconnect);
+                }
+                else {
+                    qDebug() << "Invalid IP or port for foup:" << foup.qrCode;
+                }
             }
             
             // 一次性设置整个 Foup 队列
             setInfo.setFoups(foups);
             setOfOHBInfoList.append(setInfo);
         }
+        
+        qDebug() << "SharedData initialized" << setOfOHBInfoList.size() << "OHB items from config";
+
     }
 }
 

@@ -14,6 +14,10 @@ public:
     
     // 根据 uiId 获取 SetOfOHBInfo 对象
     static QSharedPointer<SetOfOHBInfo> getSetOfOHBInfoByUiId(int uiId);
+    
+
+private:
+    static bool s_modbusManagerInitialized;
 };
 
 #endif // SHAREDDATA_H

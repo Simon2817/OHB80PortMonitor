@@ -1,0 +1,92 @@
+[2026-04-17 09:14:00] [WARN] [ModbusConnecter][performConnection]：设备ID=12006 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:14:03] [WARN] [ModbusConnecter][performConnection]：设备ID=12006 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:14:06] [WARN] [ModbusConnecter][performConnection]：设备ID=12006 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:14:09] [WARN] [ModbusConnecter][performConnection]：设备ID=12006 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:14:12] [WARN] [ModbusConnecter][performConnection]：设备ID=12006 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:14:15] [WARN] [ModbusConnecter][performConnection]：设备ID=12006 TCP 连接失败 - error=对于这个操作代理类型是无效的。
+[2026-04-17 09:24:10] [WARN] 响应超时 - 设备ID=12006 module=INITIAL id=ReadVersion uuid=11 timeout=1000ms
+[2026-04-17 09:24:10] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=INITIAL id=ReadVersion uuid=11 timeout=1000ms
+[2026-04-17 09:24:11] [WARN] 响应超时 - 设备ID=12006 module=INITIAL id=ReadVersion uuid=11 timeout=1000ms
+[2026-04-17 09:24:11] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=INITIAL id=ReadVersion uuid=11 timeout=1000ms
+[2026-04-17 09:24:11] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=3 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:12] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:12] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:12] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:12] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:1
+[2026-04-17 09:24:13] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:14] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:14] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:14] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:14] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:2
+[2026-04-17 09:24:15] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:16] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:16] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:16] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:16] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:3
+[2026-04-17 09:24:17] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:18] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:18] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:18] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:18] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:4
+[2026-04-17 09:24:19] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:20] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:20] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:20] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:20] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:5
+[2026-04-17 09:24:21] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:22] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:22] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:22] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:22] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:6
+[2026-04-17 09:24:23] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:24] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:24] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:24] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:24] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:7
+[2026-04-17 09:24:25] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:26] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:26] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:26] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:26] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:8
+[2026-04-17 09:24:27] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:28] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:28] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:28] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:28] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:9
+[2026-04-17 09:24:29] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:30] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:30] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:30] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:30] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:10
+[2026-04-17 09:24:30] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 连续失败达到阈值，请求断开设备
+[2026-04-17 09:24:30] [WARN] [ModbusTcpMaster][onPeriodicDisconnectRequested]：设备ID=12006 定时发送器连续失败达到阈值（10 次），触发断开重连
+[2026-04-17 09:24:33] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:34] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:34] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:34] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:34] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:1
+[2026-04-17 09:24:35] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:36] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:36] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:36] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:36] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:2
+[2026-04-17 09:24:37] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:38] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:38] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:38] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:38] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:3
+[2026-04-17 09:24:39] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:40] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:40] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:40] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:40] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:4
+[2026-04-17 09:24:41] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:42] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:42] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:42] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:42] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:5
+[2026-04-17 09:24:43] [WARN] [ModbusCommandReceiver][tryExtractMatchedFrame]：丢弃脏数据 - 设备ID=12006 id=ReadFoupStatus uuid=12 dropBytes=25 reason=未找到合法RTU响应帧
+[2026-04-17 09:24:44] [WARN] 响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:44] [WARN] [ModbusCommandReceiver][onResponseTimeout]：响应超时 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 timeout=1000ms
+[2026-04-17 09:24:44] [WARN] [ModbusCommandSender][handleFailedCommand]：指令失败 - 设备ID=12006 module=PERIODIC id=ReadFoupStatus uuid=12 error=等待RTU响应超时 sendCount=1/1
+[2026-04-17 09:24:44] [WARN] [PeriodicCommandSender][onRoundComplete]：设备ID=12006 本轮失败1条 连续失败轮次:6

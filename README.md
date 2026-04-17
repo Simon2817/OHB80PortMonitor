@@ -8,6 +8,66 @@
 
 ## 更新日志
 
+### 2026-04-17 09:46 - Simon
+**重大重构：配置系统优化与 Modbus 初始化改进**
+
+#### 修改内容
+1. **配置类重构**
+   - 创建 `NetworkConfig` 类，管理 `network.ini` 配置文件（80个OHB的IP和端口）
+   - 创建 `QRCodeConfig` 类，管理 `qrcode.ini` 配置文件（80个OHB的二维码映射）
+   - 创建 `UserInfoConfig` 类，管理 `userinfo.ini` 配置文件
+   - 从 `OHBNetworkInfo` 和 `OHBQRCodeInfo` 结构体中移除 `ohbIndex` 字段
+   - 删除 `OHBQRCodeInfo` 结构体，改用 `QString` 直接存储二维码
+
+2. **AppConfig 类增强**
+   - 添加 `getNetworkConfigPath()`、`getQRCodeConfigPath()`、`getUserInfoConfigPath()` 方法
+   - 添加 `getModbusConfigPath()` 方法，获取 Modbus 配置文件路径
+   - 添加 `getNetworkConfig()`、`getQRCodeConfig()`、`getUserInfoConfig()` 方法获取配置类实例
+   - 修复循环依赖问题
+
+3. **SharedData 初始化优化**
+   - 从配置文件读取 OHB 网络信息和二维码映射
+   - 按数字顺序（OHB1-OHB80）读取配置，确保顺序正确
+   - 为每个 Foup 创建独立的 ModbusTcpMaster 实例（共320个）
+   - 添加 `foupIn` 和 `hasAlarm` 字段初始化
+   - 移除 SharedData 中的 ModbusTcpMasterManager 初始化，改为在 App::initialize() 中加载
+
+4. **配置文件更新**
+   - `network.ini`：所有 OHB 的 IP 统一为 169.254.173.206，端口从 500-579
+   - 配置读取添加详细的调试日志，打印每一条配置项
+
+5. **App 初始化流程优化**
+   - 在 `App::initialize()` 中添加 ModbusTcpMasterManager 配置文件加载
+   - 使用 `AppConfig::getInstance().getModbusConfigPath()` 获取配置路径
+   - 添加 `modbustcpmastermanager.h` 头文件引用
+
+6. **CraneMapWidget 自动刷新**
+   - 添加 QTimer 定时器，每隔1秒自动刷新设备数据
+   - 在构造函数中初始化并启动定时器
+
+7. **Modbus 日志系统整合**
+   - 将 `modbustcpmastermanager` 模块中的所有日志引用从 `loggermanager.h` 改为 `applogger.h`
+   - 修改文件包括：`modbustcpmastermanager.cpp`、`modbustcpmasterpool.cpp`、`modbuscommandreceiver.cpp`、`modbusconnecter.cpp`、`periodiccommandsender.cpp`、`initialcommandissuer.cpp`、`modbustcpmaster.cpp`、`modbuscommandsender.cpp`、`modbusconfigparser.cpp`
+   - 统一使用 AppLogger 进行日志管理，确保日志路径一致性
+
+#### 技术细节
+- 配置读取顺序：使用 `for (int i = 1; i <= 80; ++i)` 确保按 OHB1-OHB80 顺序读取
+- Modbus Master 创建：每个 Foup 使用独立的 IP、端口和二维码作为 Master ID
+- 日志增强：在 `readNetworkConfig()`、`readQRCodeMapping()`、`readMasterDevices()` 中添加详细日志
+
+#### 影响范围
+- 新增文件：`app/networkconfig.h`、`app/networkconfig.cpp`
+- 新增文件：`app/qrcodeconfig.h`、`app/qrcodeconfig.cpp`
+- 新增文件：`app/userinfoconfig.h`、`app/userinfoconfig.cpp`
+- 修改文件：`app/appconfig.h`、`app/appconfig.cpp`
+- 修改文件：`app/shareddata.h`、`app/shareddata.cpp`
+- 修改文件：`app/app.cpp`
+- 修改文件：`ui/customwidget/overheadcranetrack/cranemapwidget.h`、`cranemapwidget.cpp`
+- 修改文件：`bin/config/network.ini`
+- 修改文件：`data/modbustcpmastermanager/` 目录下的 9 个 .cpp 文件（日志系统整合）
+
+---
+
 ### 2026-04-16 19:20 - Simon
 **功能增强：添加全局共享数据类**
 

@@ -3,6 +3,8 @@
 #include "applogger.h"
 #include "shareddata.h"
 #include "qthelper.h"
+#include "metatypes.h"
+#include "modbustcpmastermanager/modbustcpmastermanager.h"
 #include <qdir>
 #include <qstandardpaths>
 #include <qdebug>
@@ -28,6 +30,9 @@ bool App::initialize()
     
     qDebug() << "Initializing application...";
     
+    // 注册元类型
+    MetaTypes::registerTypes();
+
     // 获取并缓存路径信息
     QString executablePath = QCoreApplication::applicationFilePath();
     executableDir = QFileInfo(executablePath).absolutePath();  // bin/x32 或 bin/x64
@@ -62,6 +67,11 @@ bool App::initialize()
         return false;
     }
     
+    // ModbusTcpMasterManager加载配置文件
+    if (!ModbusTcpMasterManager::instance().loadConfig(AppConfig::getInstance().getModbusConfigPath())) {
+        qWarning() << "ModbusTcpMasterConfig.xml 配置文件加载失败，使用默认配置";
+    }
+
     // 初始化共享数据
     getSharedData();
     

@@ -128,6 +128,11 @@ CraneMapWidget::CraneMapWidget(QWidget *parent)
     connect(m_configLoadWatcher, &QFutureWatcher<bool>::finished,
             this, &CraneMapWidget::onConfigLoadFinished);
     
+    // 创建设备数据刷新定时器
+    m_refreshTimer = new QTimer(this);
+    connect(m_refreshTimer, &QTimer::timeout, this, &CraneMapWidget::refreshDeviceData);
+    m_refreshTimer->start(1000);  // 每1秒刷新一次
+    
     // 设置鼠标追踪
     setMouseTracking(true);
 

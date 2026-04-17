@@ -20,6 +20,7 @@
 #include <QPainterPath>
 #include <QFuture>
 #include <QFutureWatcher>
+#include <QTimer>
 
 // 图邻接多重表类型别名
 using GraphMultilist = Graph::GraphAdjacencyMultilist<QSharedPointer<Graph::GraphNode>, QSharedPointer<Graph::GraphEdge>>;
@@ -181,6 +182,9 @@ private:
     // 异步加载相关
     QFutureWatcher<bool>* m_configLoadWatcher;
     QString m_pendingConfigPath;  // 待加载的配置文件路径
+    
+    // 设备数据刷新定时器
+    QTimer* m_refreshTimer;
     
     // 内部辅助方法
     QRectF calculateMapBounds() const;

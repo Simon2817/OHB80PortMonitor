@@ -92,3 +92,28 @@ void AppLogger::crashHandler(int sig)
     std::signal(sig, SIG_DFL);
     std::raise(sig);
 }
+
+QString AppLogger::getModbusMasterLogPath(const QString& id)
+{
+    return QString("modbus/master/deviceid_%1").arg(id);
+}
+
+QString AppLogger::getModbusFrameMessageLogPath(const QString& id)
+{
+    return QString("modbus/frame_message/device_id_%1").arg(id);
+}
+
+QString AppLogger::getDataLayerLogPath()
+{
+    return QString("data");
+}
+
+QString AppLogger::getModbusMasterLogPath(const QString& id, const QString& extension)
+{
+    QString basePath = getModbusMasterLogPath(id);
+    if (extension.startsWith(".")) {
+        return basePath + extension;
+    } else {
+        return basePath + "." + extension;
+    }
+}

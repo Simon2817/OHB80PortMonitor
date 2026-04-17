@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModbusTcpMasterConfig version="1.0">
+
+    <!-- ==================== 初始化指令集 ==================== -->
+    <InitialCommands>
+        <CommandInterval>100</CommandInterval>
+        <CommandTimeout>1000</CommandTimeout>
+        <RetryCount>3</RetryCount>
+        <CommandSet>
+            <Command ref="ReadVersion"/>
+        </CommandSet>
+    </InitialCommands>
+
+    <!-- ==================== 周期轮询指令集 ==================== -->
+    <PeriodicCommands>
+        <CommandInterval>1000</CommandInterval>
+        <CommandTimeout>1000</CommandTimeout>
+        <RetryCount>0</RetryCount>
+        <CommandSet>
+            <Command ref="ReadFoupStatus"/>
+        </CommandSet>
+    </PeriodicCommands>
+
+    <!-- ==================== 业务指令集 ==================== -->
+    <BusinessCommands>
+        <CommandTimeout>1000</CommandTimeout>
+        <RetryCount>5</RetryCount>
+    </BusinessCommands>
+
+    <!-- ==================== 指令定义 ==================== -->
+    <CommandDefinitions>
+
+        <!-- ========================================
+             1. 功能码 01 — 读线圈
+             读取电磁阀状态，4个线圈
+             请求帧: 01 01 00 00 00 04
+             响应帧: 01 01 01 XX
+             ======================================== -->
+        <Command id="ReadCoilStatus">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>01</Function>
+                <StartAddr>00 00</StartAddr>
+                <RegisterCount>00 04</RegisterCount>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>01</Function>
+                <ByteCount>01</ByteCount>
+                <RegisterValue>00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             2. 功能码 04 — 读输入寄存器（多寄存器）
+             读取 FOUP 状态，9个输入寄存器
+             请求帧: 01 04 00 00 00 09
+             响应帧: 01 04 12 XX×18
+             ======================================== -->
+        <Command id="ReadFoupStatus">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <StartAddr>00 00</StartAddr>
+                <RegisterCount>00 09</RegisterCount>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <ByteCount>12</ByteCount>
+                <RegisterValue>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             3. 功能码 06 — 写单个保持寄存器
+             写入 MFC 控制值
+             请求帧: 01 06 00 00 XX XX
+             响应帧: 01 06 00 00 XX XX（镜像）
+             ======================================== -->
+        <Command id="WriteMFC">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>06</Function>
+                <StartAddr>00 00</StartAddr>
+                <!-- 写入值，固定2字节 -->
+                <RegisterValue>00 00</RegisterValue>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>06</Function>
+                <StartAddr>00 00</StartAddr>
+                <RegisterValue>00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             4. 功能码 04 — 读输入寄存器（单寄存器）
+             读取固件版本号
+             请求帧: 01 04 00 18 00 01
+             响应帧: 01 04 02 XX XX
+             ======================================== -->
+        <Command id="ReadVersion">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <StartAddr>00 18</StartAddr>
+                <RegisterCount>00 01</RegisterCount>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <ByteCount>02</ByteCount>
+                <RegisterValue>00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             示例: 功能码 0F — 写多个线圈
+             写入5个线圈，13h = 00010011b
+             线圈1=ON, 线圈2=ON, 线圈3=OFF, 线圈4=OFF, 线圈5=ON
+             请求帧: 01 0F 00 12 00 05 01 13
+             响应帧: 01 0F 00 12 00 05
+             ======================================== -->
+        <Command id="WriteMultipleCoilsExample">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>0F</Function>
+                <StartAddr>00 12</StartAddr>
+                <CoilCount>00 05</CoilCount>
+                <ByteCount>01</ByteCount>
+                <CoilValue>13</CoilValue>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>0F</Function>
+                <StartAddr>00 12</StartAddr>
+                <CoilCount>00 05</CoilCount>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             示例: 功能码 10 — 写多个保持寄存器
+             写入2个寄存器：0x0013=19, 0x0011=17
+             请求帧: 01 10 00 12 00 02 04 00 13 00 11
+             响应帧: 01 10 00 12 00 02
+             ======================================== -->
+        <Command id="WriteMultipleRegistersExample">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>10</Function>
+                <StartAddr>00 12</StartAddr>
+                <RegisterCount>00 02</RegisterCount>
+                <ByteCount>04</ByteCount>
+                <RegisterValues>00 13 00 11</RegisterValues>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>10</Function>
+                <StartAddr>00 12</StartAddr>
+                <RegisterCount>00 02</RegisterCount>
+            </respond>
+        </Command>
+
+    </CommandDefinitions>
+
+</ModbusTcpMasterConfig>

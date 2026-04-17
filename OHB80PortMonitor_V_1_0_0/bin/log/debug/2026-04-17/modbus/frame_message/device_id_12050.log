@@ -1,0 +1,694 @@
+[2026-04-17 09:24:09] [INFO] [发送] 09:24:09.398 设备ID=12050 module=INITIAL id=ReadVersion uuid=99 sendCount=1/4 timeout=1000ms crc=B1 CD len=8
+frame=01 04 00 18 00 01 B1 CD
+[2026-04-17 09:24:10] [INFO] [接收-帧] 09:24:10.161 设备ID=12050 module=INITIAL id=ReadVersion uuid=99 len=7
+frame=01 04 02 00 00 B9 30
+[2026-04-17 09:24:10] [INFO] [发送] 09:24:10.161 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:12] [INFO] [发送] 09:24:12.154 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:14] [INFO] [发送] 09:24:14.158 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:16] [INFO] [发送] 09:24:16.151 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:18] [INFO] [发送] 09:24:18.151 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:20] [INFO] [发送] 09:24:20.191 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:22] [INFO] [发送] 09:24:22.184 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:24] [INFO] [发送] 09:24:24.183 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:26] [INFO] [发送] 09:24:26.205 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:28] [INFO] [发送] 09:24:28.209 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:32] [INFO] [发送] 09:24:32.268 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:34] [INFO] [发送] 09:24:34.264 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:36] [INFO] [发送] 09:24:36.260 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:38] [INFO] [发送] 09:24:38.264 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:40] [INFO] [发送] 09:24:40.271 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:42] [INFO] [发送] 09:24:42.267 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:44] [INFO] [发送] 09:24:44.269 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:48] [INFO] [发送] 09:24:48.227 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:48] [INFO] [接收-帧] 09:24:48.331 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 02 E2 CF 85 B6 F6 E3 1D 54 14 FA 69 7F A8 16 83 46 3D EE A4
+[2026-04-17 09:24:49] [INFO] [发送] 09:24:49.322 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:49] [INFO] [接收-帧] 09:24:49.421 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 25 B3 B3 BE FF 58 2A B9 A0 26 6F 4F 20 16 5E CF 6E B0 1F E1
+[2026-04-17 09:24:50] [INFO] [发送] 09:24:50.426 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:50] [INFO] [接收-帧] 09:24:50.514 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 D9 51 7E F2 D7 74 FE CD 90 78 6E 3E 47 8C 0F 60 86 56 BA E8
+[2026-04-17 09:24:51] [INFO] [发送] 09:24:51.516 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:51] [INFO] [接收-帧] 09:24:51.611 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 ED 2D 14 FB 44 2A 25 86 25 DF 43 70 BA 81 49 F5 DA 35 81 9E
+[2026-04-17 09:24:52] [INFO] [发送] 09:24:52.605 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:52] [INFO] [接收-帧] 09:24:52.701 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 FC 67 8C 1F DB 7E BD EE 20 2F 2E 05 4B A7 48 CA D0 CA 77 D0
+[2026-04-17 09:24:53] [INFO] [发送] 09:24:53.702 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:53] [INFO] [接收-帧] 09:24:53.794 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 CC 13 39 37 4D E9 73 A1 9E DE 0E 5D FE EC 21 2C 67 A4 52 48
+[2026-04-17 09:24:54] [INFO] [发送] 09:24:54.794 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:54] [INFO] [接收-帧] 09:24:54.888 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 02 74 FA 9B 3E 6B A8 74 27 14 69 DE BC 84 82 32 E5 3A FF 0C
+[2026-04-17 09:24:55] [INFO] [发送] 09:24:55.898 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:55] [INFO] [接收-帧] 09:24:55.985 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 CF 6F 0E 74 A6 54 C6 F9 9D D3 EC C1 3B E6 03 37 93 37 BA 86
+[2026-04-17 09:24:56] [INFO] [发送] 09:24:56.980 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:57] [INFO] [接收-帧] 09:24:57.077 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 F6 D3 91 EE 09 D0 02 C7 08 AD 7F 02 9F 9D FC 9C 65 FD 7C 1B
+[2026-04-17 09:24:58] [INFO] [发送] 09:24:58.071 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:58] [INFO] [接收-帧] 09:24:58.169 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 D6 C8 55 38 29 AD E1 6B 6C B7 D4 BC B7 47 05 2F 80 22 4E 9D
+[2026-04-17 09:24:59] [INFO] [发送] 09:24:59.166 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:24:59] [INFO] [接收-帧] 09:24:59.266 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 29 89 DF 60 71 42 1C B6 5B DB B4 37 C5 5D DE 08 5C 4C EE 5F
+[2026-04-17 09:25:00] [INFO] [发送] 09:25:00.264 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:00] [INFO] [接收-帧] 09:25:00.359 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 AE 0E 52 D3 F1 50 F4 EB C0 72 9C 06 36 FD 82 0D 13 B7 37 CF
+[2026-04-17 09:25:01] [INFO] [发送] 09:25:01.352 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:01] [INFO] [接收-帧] 09:25:01.454 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 0C 93 DE 1D 9C 62 5A E9 56 B2 8D 3F B8 57 25 D7 40 6B CB 1F
+[2026-04-17 09:25:02] [INFO] [发送] 09:25:02.448 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:02] [INFO] [接收-帧] 09:25:02.550 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 A0 0E 81 0D B2 4F 9C 09 85 19 80 7D E8 C3 72 57 2A 52 BB 32
+[2026-04-17 09:25:03] [INFO] [发送] 09:25:03.550 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:03] [INFO] [接收-帧] 09:25:03.641 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 14 16 BD D7 0F 87 94 61 86 FC 5D 5B E9 6D C2 D0 19 B7 AD E4
+[2026-04-17 09:25:04] [INFO] [发送] 09:25:04.636 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:04] [INFO] [接收-帧] 09:25:04.735 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 4B 87 E8 39 57 DF FF DD 9A B4 7E 6D D4 61 49 A5 C8 96 98 08
+[2026-04-17 09:25:05] [INFO] [发送] 09:25:05.732 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:05] [INFO] [接收-帧] 09:25:05.833 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 64 EC 41 DA BC D5 99 36 3B 15 04 8B F1 3B 41 6D 35 2F 14 D1
+[2026-04-17 09:25:06] [INFO] [发送] 09:25:06.827 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:06] [INFO] [接收-帧] 09:25:06.930 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 5F 2F 25 0A D5 7C E9 E1 A4 E1 EE 43 21 9F 96 C6 D0 60 D2 41
+[2026-04-17 09:25:07] [INFO] [发送] 09:25:07.942 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:08] [INFO] [接收-帧] 09:25:08.017 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 7C F2 15 C3 4B B6 4B 50 4A 76 5E 42 11 A6 E8 01 89 CF ED A7
+[2026-04-17 09:25:09] [INFO] [发送] 09:25:09.010 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:09] [INFO] [接收-帧] 09:25:09.112 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 E5 05 DB 45 50 A4 9E 79 11 7A B4 3D 2D 33 D1 36 D8 A4 B1 3F
+[2026-04-17 09:25:10] [INFO] [发送] 09:25:10.102 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:10] [INFO] [接收-帧] 09:25:10.201 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 4E B7 4D D9 7E 84 DC E4 BE E1 33 46 A9 09 06 CD 1B 6B DC A6
+[2026-04-17 09:25:11] [INFO] [发送] 09:25:11.195 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:11] [INFO] [接收-帧] 09:25:11.315 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 C4 F7 BB C2 71 29 E8 1B 76 5E 9D DB EE BC 65 2A B5 35 83 4C
+[2026-04-17 09:25:12] [INFO] [发送] 09:25:12.313 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:12] [INFO] [接收-帧] 09:25:12.393 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 0B C8 2D 30 94 C9 07 AF D4 4F A6 27 21 74 F5 5E BF 18 3D 74
+[2026-04-17 09:25:13] [INFO] [发送] 09:25:13.388 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:13] [INFO] [接收-帧] 09:25:13.484 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 A2 B0 9C EA 09 86 CA DE C1 19 E0 D6 BC F2 8D E5 57 B6 26 CA
+[2026-04-17 09:25:14] [INFO] [发送] 09:25:14.480 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:14] [INFO] [接收-帧] 09:25:14.579 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 60 8C 7D F4 13 D0 16 5E AF 3A D3 46 7E B6 6B 1B 50 ED 1C 9E
+[2026-04-17 09:25:15] [INFO] [发送] 09:25:15.576 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:15] [INFO] [接收-帧] 09:25:15.671 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 31 A4 FA 54 44 0B DA 57 48 57 03 E0 FB E6 F9 02 42 DF 2E 0A
+[2026-04-17 09:25:16] [INFO] [发送] 09:25:16.669 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:16] [INFO] [接收-帧] 09:25:16.766 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 79 6E 34 D2 03 BA F5 33 17 40 4B DC 3B C0 3F 87 9A 36 17 25
+[2026-04-17 09:25:17] [INFO] [发送] 09:25:17.765 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:17] [INFO] [接收-帧] 09:25:17.858 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 0C 10 D6 36 EF 97 D1 CB 84 CB 29 73 5A CB 1A E4 C0 AC 78 2D
+[2026-04-17 09:25:18] [INFO] [发送] 09:25:18.860 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:18] [INFO] [接收-帧] 09:25:18.961 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 C3 D7 C2 EA 49 C6 EC 9F 1E F5 AA CF A9 07 60 7D 12 67 40 D9
+[2026-04-17 09:25:19] [INFO] [发送] 09:25:19.969 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:20] [INFO] [接收-帧] 09:25:20.047 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 5D 92 BE 7F F0 8C FF B2 D2 37 D6 95 D0 23 7B 3D 6F D5 FF 99
+[2026-04-17 09:25:21] [INFO] [发送] 09:25:21.047 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:21] [INFO] [接收-帧] 09:25:21.138 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 84 CF 4A 45 4F E7 FF 46 8D 1C C8 C9 54 CA DB ED 90 AA D6 F0
+[2026-04-17 09:25:22] [INFO] [发送] 09:25:22.137 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:22] [INFO] [接收-帧] 09:25:22.231 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 85 1F 1E 96 DF 4C 5B 09 88 2D D8 EB DA 14 6F 10 9F 4B E5 FC
+[2026-04-17 09:25:23] [INFO] [发送] 09:25:23.232 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:23] [INFO] [接收-帧] 09:25:23.328 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 51 3A 7B 33 19 92 E4 D4 9E 92 4C 23 86 5A D4 68 53 49 F2 73
+[2026-04-17 09:25:24] [INFO] [发送] 09:25:24.325 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:24] [INFO] [接收-帧] 09:25:24.424 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 8F 59 68 9B 55 B4 C1 9F 6B FA 07 FC 1F 9D BE 2F 57 8C 25 A9
+[2026-04-17 09:25:25] [INFO] [发送] 09:25:25.416 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:25] [INFO] [接收-帧] 09:25:25.515 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 F3 E4 6A AD BD 86 AD 62 CF 05 6E 6D C3 D8 78 0D 50 DF 68 73
+[2026-04-17 09:25:26] [INFO] [发送] 09:25:26.510 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:26] [INFO] [接收-帧] 09:25:26.606 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 F2 D9 68 E3 FB 3C 1F 95 C6 6F 46 7E 5B 12 F8 18 E6 3A 99 60
+[2026-04-17 09:25:27] [INFO] [发送] 09:25:27.603 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:27] [INFO] [接收-帧] 09:25:27.708 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 29 EF 06 68 CB 7A AF 4F A2 8E AC 16 6D 92 45 B0 F0 50 81 6C
+[2026-04-17 09:25:28] [INFO] [发送] 09:25:28.699 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:28] [INFO] [接收-帧] 09:25:28.794 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 8E 29 E8 CE 36 04 9B BE BD 7A 15 DD 23 43 10 2E 3F 02 48 A3
+[2026-04-17 09:25:29] [INFO] [发送] 09:25:29.792 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:29] [INFO] [接收-帧] 09:25:29.893 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 52 A5 B6 01 3C B4 C0 3B 2D 99 72 66 1D 28 5B 44 BA 74 6B D5
+[2026-04-17 09:25:30] [INFO] [发送] 09:25:30.890 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:30] [INFO] [接收-帧] 09:25:30.983 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 E2 FA 76 4D 31 29 88 01 D8 DF 87 D4 F5 F3 E8 82 34 1F 7B 51
+[2026-04-17 09:25:31] [INFO] [发送] 09:25:31.985 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:32] [INFO] [接收-帧] 09:25:32.080 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 B7 7B 56 8F 06 84 73 B8 23 CA CC 9E 07 01 77 B5 E9 39 29 85
+[2026-04-17 09:25:33] [INFO] [发送] 09:25:33.075 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:33] [INFO] [接收-帧] 09:25:33.175 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 4A 5E 8F 32 54 78 90 84 A3 14 72 6A A4 15 34 6F F0 2C 1F F6
+[2026-04-17 09:25:34] [INFO] [发送] 09:25:34.166 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:34] [INFO] [接收-帧] 09:25:34.267 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 B3 28 D1 50 CA 56 23 D9 7F A3 20 68 33 36 4B 31 90 E4 11 83
+[2026-04-17 09:25:35] [INFO] [发送] 09:25:35.260 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:35] [INFO] [接收-帧] 09:25:35.360 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 5B C3 AA 68 62 D1 26 99 E9 98 A0 0E A8 0A 01 6D 90 92 10 C6
+[2026-04-17 09:25:36] [INFO] [发送] 09:25:36.357 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:36] [INFO] [接收-帧] 09:25:36.452 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 EE 61 44 A0 46 C6 33 E9 18 24 8E B7 D7 28 DA C3 5E F9 AE 09
+[2026-04-17 09:25:37] [INFO] [发送] 09:25:37.449 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:37] [INFO] [接收-帧] 09:25:37.548 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 A1 89 FB DA 9F 9D 7D F4 F7 24 4B 9B 1F CF BF 22 42 8C BF 93
+[2026-04-17 09:25:38] [INFO] [发送] 09:25:38.542 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:38] [INFO] [接收-帧] 09:25:38.644 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 BA AA 8C B7 8A 13 45 3B FE 63 50 2E 97 73 66 78 8C B5 D9 65
+[2026-04-17 09:25:39] [INFO] [发送] 09:25:39.635 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:39] [INFO] [接收-帧] 09:25:39.732 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 74 CB EE 59 12 92 80 45 A7 EF 39 80 C9 1D 33 A6 06 23 D0 2A
+[2026-04-17 09:25:40] [INFO] [发送] 09:25:40.728 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:40] [INFO] [接收-帧] 09:25:40.829 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 F2 42 6E 6C 9B 2C D0 F1 83 AA E4 3F 96 85 07 4C 05 07 57 FC
+[2026-04-17 09:25:41] [INFO] [发送] 09:25:41.827 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:41] [INFO] [接收-帧] 09:25:41.924 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 42 E3 96 3E B5 82 0D 3E F3 67 54 AE 96 73 8B 50 71 61 97 07
+[2026-04-17 09:25:42] [INFO] [发送] 09:25:42.922 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:43] [INFO] [接收-帧] 09:25:43.016 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 AD 53 A7 EE 30 3C 1C 47 B7 BC C9 9A AB 89 F6 11 DC 02 CF B8
+[2026-04-17 09:25:44] [INFO] [发送] 09:25:44.010 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:44] [INFO] [接收-帧] 09:25:44.113 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 23 A4 FA 4F 24 FC B1 1F 4B 85 51 5F 0D 2D FF 8F 84 E0 6D 81
+[2026-04-17 09:25:45] [INFO] [发送] 09:25:45.104 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:45] [INFO] [接收-帧] 09:25:45.206 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 BC A9 FE 67 F1 85 7B 85 3D D4 1E 5D E0 60 C9 0B 4A A4 28 0C
+[2026-04-17 09:25:46] [INFO] [发送] 09:25:46.206 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:46] [INFO] [接收-帧] 09:25:46.338 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 00 13 52 8B 3A 58 3C 90 B5 BD F2 FB F5 62 6E 36 95 0E C5 57
+[2026-04-17 09:25:47] [INFO] [发送] 09:25:47.341 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:47] [INFO] [接收-帧] 09:25:47.387 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 23 CB 06 E0 69 D0 24 79 29 92 52 1C 3B 3A F3 1D 81 B5 B9 A6
+[2026-04-17 09:25:48] [INFO] [发送] 09:25:48.385 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:48] [INFO] [接收-帧] 09:25:48.483 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 28 56 A1 94 7E 1B 00 61 7A 25 F4 2D 03 4D 81 9E 3B AC 9D BF
+[2026-04-17 09:25:49] [INFO] [发送] 09:25:49.477 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:49] [INFO] [接收-帧] 09:25:49.577 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 82 4B 21 BA 8B D5 59 CE C4 D4 38 1C B0 50 0E 6D 28 7A 25 E5
+[2026-04-17 09:25:50] [INFO] [发送] 09:25:50.742 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:50] [INFO] [接收-帧] 09:25:50.782 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 B5 A0 77 49 B9 5E 80 63 46 0B B3 1A EC 89 39 FE F3 A7 B8 4F
+[2026-04-17 09:25:51] [INFO] [发送] 09:25:51.775 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:52] [INFO] [接收-帧] 09:25:52.199 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 D2 A2 CF D8 BE 68 86 72 7A C8 41 3D 16 25 F2 D4 2A BA DE 02
+[2026-04-17 09:25:53] [INFO] [发送] 09:25:53.203 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:53] [INFO] [接收-帧] 09:25:53.302 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 24 84 A4 48 51 C6 8A 8B CE F5 D1 8D 58 1B A5 7C 6C DA 3A 2C
+[2026-04-17 09:25:54] [INFO] [发送] 09:25:54.298 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:54] [INFO] [接收-帧] 09:25:54.390 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 AD C6 B2 83 6A 0E 43 03 D0 F0 41 15 D4 23 81 6C F2 01 3F C8
+[2026-04-17 09:25:55] [INFO] [发送] 09:25:55.386 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:55] [INFO] [接收-帧] 09:25:55.486 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 7B 35 28 2B C6 3C 8D 10 F4 74 19 46 CD 05 6F 45 CE 7B 41 29
+[2026-04-17 09:25:56] [INFO] [发送] 09:25:56.480 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:56] [INFO] [接收-帧] 09:25:56.580 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 E6 78 B8 22 24 7C C5 EF CF 5F 75 07 43 1F 56 F5 65 C1 49 15
+[2026-04-17 09:25:57] [INFO] [发送] 09:25:57.578 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:57] [INFO] [接收-帧] 09:25:57.673 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 9D E5 07 E4 00 E6 A8 87 38 1E 07 0D 5B C6 67 95 E2 D4 FD 68
+[2026-04-17 09:25:58] [INFO] [发送] 09:25:58.680 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:58] [INFO] [接收-帧] 09:25:58.765 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 54 C3 20 6C 22 16 30 32 7C 56 72 23 54 01 E6 16 96 CE EA 84
+[2026-04-17 09:25:59] [INFO] [发送] 09:25:59.765 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:25:59] [INFO] [接收-帧] 09:25:59.863 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 D6 58 B0 AF C8 AC 84 AC 3F 7F 14 43 53 55 02 4B 91 8C 53 EA
+[2026-04-17 09:26:00] [INFO] [发送] 09:26:00.852 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:00] [INFO] [接收-帧] 09:26:00.956 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 25 BB 0A A3 40 FB 87 06 E9 CC 67 09 F3 0E 19 0B BC 01 7C D0
+[2026-04-17 09:26:01] [INFO] [发送] 09:26:01.947 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:02] [INFO] [接收-帧] 09:26:02.048 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 B9 A9 1F BF ED 39 81 6F C5 4B 52 80 BE B4 C7 D5 E9 67 F0 08
+[2026-04-17 09:26:03] [INFO] [发送] 09:26:03.047 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:03] [INFO] [接收-帧] 09:26:03.137 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 C3 94 E3 AC 94 74 89 5D 2F 9B 61 F3 F3 D6 C9 9B 55 E9 07 B1
+[2026-04-17 09:26:04] [INFO] [发送] 09:26:04.143 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:04] [INFO] [接收-帧] 09:26:04.234 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 5E 5B 66 1A ED B8 BE E6 DD F5 0D 4B 06 A1 EE 2C 60 FA 95 DC
+[2026-04-17 09:26:05] [INFO] [发送] 09:26:05.234 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:05] [INFO] [接收-帧] 09:26:05.328 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 F7 FE 7A FD 5A 84 44 99 F1 EB 16 47 92 BF 59 97 92 4B 2C CE
+[2026-04-17 09:26:06] [INFO] [发送] 09:26:06.328 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:06] [INFO] [接收-帧] 09:26:06.424 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 06 DF 92 62 AD 59 AD CA EA D7 09 DB E3 62 7A 70 AD 08 BC 45
+[2026-04-17 09:26:07] [INFO] [发送] 09:26:07.425 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:07] [INFO] [接收-帧] 09:26:07.569 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 6E 88 2E 0E B6 C1 B7 7B DE B0 3C E7 6C A6 3F 98 2F E3 57 57
+[2026-04-17 09:26:08] [INFO] [发送] 09:26:08.644 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:08] [INFO] [接收-帧] 09:26:08.716 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 41 00 D3 4E BE B0 BF 55 F2 B1 95 37 6F A7 3A 14 31 77 A0 0E
+[2026-04-17 09:26:09] [INFO] [发送] 09:26:09.728 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:09] [INFO] [接收-帧] 09:26:09.829 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 91 A5 BE D9 07 71 A0 6C DA 4D BD B0 48 17 F9 C1 AB D0 13 40
+[2026-04-17 09:26:10] [INFO] [发送] 09:26:10.821 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:10] [INFO] [接收-帧] 09:26:10.908 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 D5 A9 56 69 8C 9E 09 AC 4F BC EE 14 10 23 96 88 39 6F 1D 73
+[2026-04-17 09:26:11] [INFO] [发送] 09:26:11.909 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:11] [INFO] [接收-帧] 09:26:11.998 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 18 C6 8B 90 E8 AB C6 29 8D 3E 10 E1 1C 6F 6E F1 B1 AC A9 31
+[2026-04-17 09:26:13] [INFO] [发送] 09:26:13.002 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:13] [INFO] [接收-帧] 09:26:13.090 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 A9 C0 E0 65 30 8F B0 B7 E9 92 31 04 54 42 89 14 DA 04 7C 47
+[2026-04-17 09:26:14] [INFO] [发送] 09:26:14.088 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:14] [INFO] [接收-帧] 09:26:14.190 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 9D 0E AB 76 28 E3 2F B7 F3 60 36 9C 16 3B 59 6C 06 2C 6A 1C
+[2026-04-17 09:26:15] [INFO] [发送] 09:26:15.186 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:15] [INFO] [接收-帧] 09:26:15.332 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 44 95 A9 A4 1E 5B 92 CC 77 85 00 37 E6 B2 67 10 DF A6 08 6A
+[2026-04-17 09:26:16] [INFO] [发送] 09:26:16.328 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:16] [INFO] [接收-帧] 09:26:16.378 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 DF 3B 30 C1 E5 63 DB C5 8F 33 92 B6 BB 63 DE 00 F5 6F 5A 0E
+[2026-04-17 09:26:17] [INFO] [发送] 09:26:17.414 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:17] [INFO] [接收-帧] 09:26:17.475 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 C0 A4 2E F2 1E EA B2 06 69 E2 BB F6 5C FA 8B 43 44 81 51 32
+[2026-04-17 09:26:18] [INFO] [发送] 09:26:18.465 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:18] [INFO] [接收-帧] 09:26:18.561 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 EB 53 69 73 0B 91 43 A9 EB F0 5A F1 04 CF 40 CB 4A 49 20 E6
+[2026-04-17 09:26:19] [INFO] [发送] 09:26:19.573 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:19] [INFO] [接收-帧] 09:26:19.656 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 9C 0D 84 22 15 95 C3 B3 47 AB 31 3C 51 41 F8 B8 A8 66 02 23
+[2026-04-17 09:26:20] [INFO] [发送] 09:26:20.652 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:20] [INFO] [接收-帧] 09:26:20.755 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 83 AD DA FB 33 1C 2F 61 F0 F7 8B 1E 0D 98 69 CF 38 0C EF EB
+[2026-04-17 09:26:21] [INFO] [发送] 09:26:21.746 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:21] [INFO] [接收-帧] 09:26:21.863 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 2E E8 C2 20 E1 6C AA C8 ED 58 41 9C 4C 5B 2F 9B D4 F1 36 DA
+[2026-04-17 09:26:22] [INFO] [发送] 09:26:22.943 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:23] [INFO] [接收-帧] 09:26:23.048 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 A6 5C BD 1A B2 60 AF 27 AB CE 90 AD 5D 9F A8 DB D9 AB 8F 54
+[2026-04-17 09:26:24] [INFO] [发送] 09:26:24.059 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:24] [INFO] [接收-帧] 09:26:24.144 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 21 D3 07 5E A9 8B CD C6 BF E7 86 37 26 60 D4 67 75 1E D3 19
+[2026-04-17 09:26:25] [INFO] [发送] 09:26:25.618 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:25] [INFO] [接收-帧] 09:26:25.735 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 22 C1 98 7C 1C FA F2 9C EA 7D 2F 1D E6 8B 60 0C 03 EF 7D C8
+[2026-04-17 09:26:27] [INFO] [发送] 09:26:27.144 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:27] [INFO] [接收-帧] 09:26:27.203 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 2A 06 55 02 B7 5E A9 2E 16 B3 86 05 5A A3 44 F6 24 EA 2B 2F
+[2026-04-17 09:26:28] [INFO] [发送] 09:26:28.236 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:28] [INFO] [接收-帧] 09:26:28.350 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 33 82 E0 A4 A5 4F 50 B9 F7 D7 D0 4E EE 29 1B 44 37 8F 95 A8
+[2026-04-17 09:26:29] [INFO] [发送] 09:26:29.339 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:29] [INFO] [接收-帧] 09:26:29.395 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 1F FC 2A 2C 90 20 47 32 E6 04 8C C7 69 34 BF E5 12 7F 04 E7
+[2026-04-17 09:26:30] [INFO] [发送] 09:26:30.386 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:30] [INFO] [接收-帧] 09:26:30.482 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 52 29 77 68 30 B1 CE 05 66 18 6A F2 50 34 13 91 BA A5 07 F9
+[2026-04-17 09:26:31] [INFO] [发送] 09:26:31.734 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:31] [INFO] [接收-帧] 09:26:31.800 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 22 7A E9 ED B4 9C F1 BA F3 78 20 FD D1 46 97 92 6D 1D C2 CB
+[2026-04-17 09:26:32] [INFO] [发送] 09:26:32.797 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:32] [INFO] [接收-帧] 09:26:32.892 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 09 28 DC 28 8D 8A 78 2E B1 52 EB ED 21 04 30 80 6E 91 FA FB
+[2026-04-17 09:26:33] [INFO] [发送] 09:26:33.891 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:33] [INFO] [接收-帧] 09:26:33.985 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 3E 7B 97 64 3E 15 8D DB A5 5E 1F A6 A9 EB 92 2A 3D D1 9D 49
+[2026-04-17 09:26:35] [INFO] [发送] 09:26:35.071 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:35] [INFO] [接收-帧] 09:26:35.077 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 33 5A 7A 2D 9A 09 4F D2 35 C1 B0 E6 EF 96 59 77 24 34 FA 83
+[2026-04-17 09:26:36] [INFO] [发送] 09:26:36.085 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:36] [INFO] [接收-帧] 09:26:36.169 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 FD 0B CE A0 36 99 35 A9 0A B2 BF A8 00 48 B2 D7 87 C2 94 FD
+[2026-04-17 09:26:37] [INFO] [发送] 09:26:37.183 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:37] [INFO] [接收-帧] 09:26:37.266 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 06 70 0E D4 9F 54 8F 5C 63 06 A0 F9 D9 29 86 5F 97 7E A9 CF
+[2026-04-17 09:26:38] [INFO] [发送] 09:26:38.280 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:38] [INFO] [接收-帧] 09:26:38.359 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 63 B7 2D F7 3B 38 46 E8 4A 99 E3 14 A2 40 94 FB 78 A3 CD AE
+[2026-04-17 09:26:39] [INFO] [发送] 09:26:39.359 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:39] [INFO] [接收-帧] 09:26:39.453 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 5D FE EE 20 56 88 D7 39 96 57 C5 24 07 2E 70 A1 F8 40 2D 86
+[2026-04-17 09:26:40] [INFO] [发送] 09:26:40.468 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:40] [INFO] [接收-帧] 09:26:40.545 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 CA 83 44 48 0F 4C 02 4C 0D 07 32 0A 9C F8 79 C5 5B 9A 50 EE
+[2026-04-17 09:26:41] [INFO] [发送] 09:26:41.604 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:41] [INFO] [接收-帧] 09:26:41.681 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 AC F1 F9 F8 86 A0 F5 6C 36 75 A1 71 CB BE BE 70 A6 D8 36 A4
+[2026-04-17 09:26:42] [INFO] [发送] 09:26:42.688 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:42] [INFO] [接收-帧] 09:26:42.820 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 E5 82 C7 A6 8D C1 29 46 AC E9 EE AF 35 2D 1A BF 8B EF C1 BD
+[2026-04-17 09:26:43] [INFO] [发送] 09:26:43.826 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:43] [INFO] [接收-帧] 09:26:43.937 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 83 A3 93 75 0B 53 4D E7 71 C1 C0 30 CF 08 7D FE 35 61 8C C0
+[2026-04-17 09:26:44] [INFO] [发送] 09:26:44.934 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:45] [INFO] [接收-帧] 09:26:45.031 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 16 9F 5C 5F DD C7 74 73 76 75 F0 00 11 49 F4 38 22 56 5C 06
+[2026-04-17 09:26:46] [INFO] [发送] 09:26:46.028 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:46] [INFO] [接收-帧] 09:26:46.129 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 CF 1C 3A AB B5 ED 83 A9 3F 56 F3 A5 FB 3F CD 04 7D ED C8 60
+[2026-04-17 09:26:47] [INFO] [发送] 09:26:47.125 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:47] [INFO] [接收-帧] 09:26:47.217 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 9B E9 72 B2 B9 9A 4B 2D BC 9A DF AE F7 85 9B FB B8 B6 66 62
+[2026-04-17 09:26:48] [INFO] [发送] 09:26:48.221 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:48] [INFO] [接收-帧] 09:26:48.315 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 71 7A 3D 96 18 5C 6B D1 0C EA 7B 5F B4 60 57 A6 6B CF 53 22
+[2026-04-17 09:26:49] [INFO] [发送] 09:26:49.313 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:49] [INFO] [接收-帧] 09:26:49.406 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 72 D0 10 A1 79 1E F0 B1 CA B0 C9 90 06 C4 23 1F 75 A0 2D 76
+[2026-04-17 09:26:50] [INFO] [发送] 09:26:50.416 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:50] [INFO] [接收-帧] 09:26:50.529 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 60 C4 CE 59 62 BE ED C9 DD CF D2 79 0A 4A 96 08 45 78 97 0F
+[2026-04-17 09:26:51] [INFO] [发送] 09:26:51.527 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:51] [INFO] [接收-帧] 09:26:51.594 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 6D 35 02 38 1B 8B DF 21 62 F0 BE 14 30 69 64 DC CA 03 1B 75
+[2026-04-17 09:26:52] [INFO] [发送] 09:26:52.591 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:52] [INFO] [接收-帧] 09:26:52.687 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 4E FA 1C D7 92 E2 59 AF 27 FF C4 B2 37 94 2A FA FD E2 7E 31
+[2026-04-17 09:26:53] [INFO] [发送] 09:26:53.685 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:53] [INFO] [接收-帧] 09:26:53.780 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 30 37 AD 73 45 7B F5 CB 0D 98 38 FE 5E AE 50 EB E0 FD 5C 4A
+[2026-04-17 09:26:54] [INFO] [发送] 09:26:54.793 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:54] [INFO] [接收-帧] 09:26:54.874 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 19 4C 45 4C 5D E8 09 29 C4 BF 4A 41 A6 0A 15 0A 02 F4 3F 60
+[2026-04-17 09:26:55] [INFO] [发送] 09:26:55.881 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:55] [INFO] [接收-帧] 09:26:55.973 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 5C CD 1D FF 61 D4 F7 F6 51 D1 8F 53 FB 60 7D 64 74 0A 5F F7
+[2026-04-17 09:26:56] [INFO] [发送] 09:26:56.975 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:57] [INFO] [接收-帧] 09:26:57.061 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 8B 53 47 56 A6 20 00 CC 7F F1 CD 0D 29 00 CB 94 3A C6 AF 36
+[2026-04-17 09:26:58] [INFO] [发送] 09:26:58.060 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:58] [INFO] [接收-帧] 09:26:58.154 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 7F 86 B0 64 BA BA D9 D4 39 A4 92 F7 B1 0D B6 F3 DF 25 EE E2
+[2026-04-17 09:26:59] [INFO] [发送] 09:26:59.154 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:26:59] [INFO] [接收-帧] 09:26:59.254 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 3C 4D 34 28 F5 D4 89 4B 9A 79 23 E9 14 47 40 12 88 A5 0D 29
+[2026-04-17 09:27:00] [INFO] [发送] 09:27:00.255 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:00] [INFO] [接收-帧] 09:27:00.344 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 BE 90 31 39 9B AE AD AA 40 D8 C3 F0 73 D9 65 0D BE 9D 6F 73
+[2026-04-17 09:27:01] [INFO] [发送] 09:27:01.348 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:01] [INFO] [接收-帧] 09:27:01.440 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 0E 51 4B CB B0 7D FB 32 57 6E 4C F4 93 83 8E DF 75 07 38 CE
+[2026-04-17 09:27:37] [INFO] [发送] 09:27:37.493 设备ID=12050 module=INITIAL id=ReadVersion uuid=99 sendCount=1/4 timeout=1000ms crc=B1 CD len=8
+frame=01 04 00 18 00 01 B1 CD
+[2026-04-17 09:27:37] [INFO] [接收-帧] 09:27:37.740 设备ID=12050 module=INITIAL id=ReadVersion uuid=99 len=7
+frame=01 04 02 00 00 B9 30
+[2026-04-17 09:27:37] [INFO] [发送] 09:27:37.740 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:37] [INFO] [接收-帧] 09:27:37.815 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 87 4E 89 F6 D5 9C 0A 58 D5 75 DC 2A 7F 31 7E C3 B6 04 4D 02
+[2026-04-17 09:27:38] [INFO] [发送] 09:27:38.811 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:38] [INFO] [接收-帧] 09:27:38.905 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 80 A2 36 01 B1 B9 17 BD 07 79 DF 7F 66 1C DC 6A 23 F7 4C 97
+[2026-04-17 09:27:39] [INFO] [发送] 09:27:39.912 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:40] [INFO] [接收-帧] 09:27:40.004 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 24 68 54 4F E0 53 7E 9C 7B AE 7F C6 E6 3B 8D 23 68 A0 FD 8C
+[2026-04-17 09:27:40] [INFO] [发送] 09:27:40.994 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:41] [INFO] [接收-帧] 09:27:41.096 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 09 A2 1A D6 39 95 DE 8B A4 38 8F 6F E5 B9 36 F2 9E 52 AC 86
+[2026-04-17 09:27:42] [INFO] [发送] 09:27:42.100 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:42] [INFO] [接收-帧] 09:27:42.192 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 E1 DE CF 48 D3 58 08 56 17 BC 6B 73 DD 1E 86 E7 97 E1 EE 36
+[2026-04-17 09:27:43] [INFO] [发送] 09:27:43.185 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:43] [INFO] [接收-帧] 09:27:43.291 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 83 AB D3 75 9A 6D 39 E6 10 1F 09 39 6C 33 82 3E 08 26 02 A9
+[2026-04-17 09:27:44] [INFO] [发送] 09:27:44.297 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:44] [INFO] [接收-帧] 09:27:44.381 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 60 E1 28 78 A4 91 B4 89 EC 65 11 C3 B0 ED 6E 81 29 9E 71 42
+[2026-04-17 09:27:45] [INFO] [发送] 09:27:45.371 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:45] [INFO] [接收-帧] 09:27:45.474 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 46 54 E7 7E 56 83 12 64 B5 43 4B DD 8D A0 2F 7B 2E CC C7 39
+[2026-04-17 09:27:46] [INFO] [发送] 09:27:46.468 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:46] [INFO] [接收-帧] 09:27:46.577 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 DE D5 D4 59 C0 24 2E 78 97 A1 8C 45 14 20 5B 0A 22 CB 7A 04
+[2026-04-17 09:27:47] [INFO] [发送] 09:27:47.576 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:47] [INFO] [接收-帧] 09:27:47.679 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 A6 94 81 DA 2D 47 F6 79 32 99 D3 74 CC 6F BE F4 F9 45 7B 76
+[2026-04-17 09:27:48] [INFO] [发送] 09:27:48.671 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:48] [INFO] [接收-帧] 09:27:48.753 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 98 CD 36 CC D8 F0 14 22 0E 91 5E 4B CF 0B 9E BC 8E 86 7E B0
+[2026-04-17 09:27:49] [INFO] [发送] 09:27:49.743 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:49] [INFO] [接收-帧] 09:27:49.844 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 9D 81 AB 9B BE AA C0 69 99 55 04 17 79 07 E8 E2 E8 B4 CF 59
+[2026-04-17 09:27:50] [INFO] [发送] 09:27:50.837 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:27:50] [INFO] [接收-帧] 09:27:50.942 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 19 40 EE 1D 42 AE 45 2C A8 3C 87 68 DA A9 DE CA AC 63 B2 A5
+[2026-04-17 09:31:34] [INFO] [发送] 09:31:34.145 设备ID=12050 module=INITIAL id=ReadVersion uuid=99 sendCount=1/4 timeout=1000ms crc=B1 CD len=8
+frame=01 04 00 18 00 01 B1 CD
+[2026-04-17 09:31:34] [INFO] [接收-帧] 09:31:34.324 设备ID=12050 module=INITIAL id=ReadVersion uuid=99 len=7
+frame=01 04 02 00 00 B9 30
+[2026-04-17 09:31:34] [INFO] [发送] 09:31:34.324 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:34] [INFO] [接收-帧] 09:31:34.361 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 00 4E 23 E5 C6 D5 DB E0 57 75 80 B2 0E 6E 45 BD 5C 5E 4C 41
+[2026-04-17 09:31:35] [INFO] [发送] 09:31:35.356 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:35] [INFO] [接收-帧] 09:31:35.456 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 AF 91 43 23 96 F2 EB 46 15 4C 0F A4 83 A4 80 30 D3 19 8F 3F
+[2026-04-17 09:31:36] [INFO] [发送] 09:31:36.450 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:36] [INFO] [接收-帧] 09:31:36.545 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 19 A7 0D 48 18 2E 06 7D C0 BD 95 2B B2 BC DC A3 09 9E 02 34
+[2026-04-17 09:31:37] [INFO] [发送] 09:31:37.545 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:37] [INFO] [接收-帧] 09:31:37.751 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 F3 C4 A2 1B 13 47 50 4A 3F ED 7F D9 59 5E 1D 4D 93 AC 96 E0
+[2026-04-17 09:31:38] [INFO] [发送] 09:31:38.746 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:38] [INFO] [接收-帧] 09:31:38.845 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 F1 7D 12 76 A9 59 F9 D4 6A 89 EB C6 24 5B FF 09 13 38 36 C5
+[2026-04-17 09:31:39] [INFO] [发送] 09:31:39.845 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:39] [INFO] [接收-帧] 09:31:39.942 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 36 5E BA 66 8A 6A 71 44 51 11 79 D7 5A 6D 0F 11 5F 46 B3 E2
+[2026-04-17 09:31:40] [INFO] [发送] 09:31:40.930 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:41] [INFO] [接收-帧] 09:31:41.032 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 9E 75 9D 8F 8C 58 79 B9 98 B0 FC 0C 21 4F FF 2F 18 59 C7 54
+[2026-04-17 09:31:42] [INFO] [发送] 09:31:42.036 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:42] [INFO] [接收-帧] 09:31:42.128 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 20 A9 7A 5D 39 3F E9 8D 37 0A F4 F1 FF CD 36 93 21 7B 03 4B
+[2026-04-17 09:31:43] [INFO] [发送] 09:31:43.123 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:43] [INFO] [接收-帧] 09:31:43.219 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 FE 03 42 06 8C 89 82 73 78 45 C5 A0 7A A2 F0 35 96 2B FE 33
+[2026-04-17 09:31:44] [INFO] [发送] 09:31:44.213 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:44] [INFO] [接收-帧] 09:31:44.316 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 CA AB 4B DC 5F AF D4 57 7A 1A B8 75 24 27 35 BC B1 32 A8 98
+[2026-04-17 09:31:45] [INFO] [发送] 09:31:45.313 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:45] [INFO] [接收-帧] 09:31:45.410 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 CA 4D 18 40 66 46 56 56 5C DE 5C 5A 88 B6 CE 5C C0 28 65 8E
+[2026-04-17 09:31:46] [INFO] [发送] 09:31:46.406 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:46] [INFO] [接收-帧] 09:31:46.500 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 6C D8 4C 09 74 72 70 CD 9C 9F D8 29 EF ED 4A 7F D5 FB EA B1
+[2026-04-17 09:31:47] [INFO] [发送] 09:31:47.494 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:47] [INFO] [接收-帧] 09:31:47.597 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 2E 72 9F 35 69 64 20 23 31 0A 5C E8 E6 62 7E A8 94 A1 2E D5
+[2026-04-17 09:31:48] [INFO] [发送] 09:31:48.589 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:48] [INFO] [接收-帧] 09:31:48.688 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 48 42 FC 2B 38 95 05 0F 43 0E 48 8D 41 89 6F B1 81 0A 3B 52
+[2026-04-17 09:31:49] [INFO] [发送] 09:31:49.685 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:49] [INFO] [接收-帧] 09:31:49.783 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 05 9F 76 BF C4 2A 9B 68 DC 96 1A FA 5B FA 4F 33 D2 B7 B0 3B
+[2026-04-17 09:31:50] [INFO] [发送] 09:31:50.780 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:50] [INFO] [接收-帧] 09:31:50.876 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 99 BE D4 37 82 50 B3 DB 80 27 36 7A B4 25 26 77 41 48 34 E3
+[2026-04-17 09:31:51] [INFO] [发送] 09:31:51.875 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:51] [INFO] [接收-帧] 09:31:51.969 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 F1 19 1A F7 CA C3 5A 5E 79 B3 1A 0B 1F 33 5F 77 1C 4C 84 A9
+[2026-04-17 09:31:52] [INFO] [发送] 09:31:52.964 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:53] [INFO] [接收-帧] 09:31:53.068 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 B7 A8 8A CC A1 50 F0 44 7B 41 FC 27 61 8C 3A 35 6A 30 5B 96
+[2026-04-17 09:31:54] [INFO] [发送] 09:31:54.064 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:54] [INFO] [接收-帧] 09:31:54.159 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 1F 35 DC C9 11 9F CB 20 DB 57 59 26 0B FC A3 03 E4 5A CA 98
+[2026-04-17 09:31:55] [INFO] [发送] 09:31:55.154 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:55] [INFO] [接收-帧] 09:31:55.252 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 4C 64 DD C0 09 E9 16 61 BC D9 34 E0 AF 76 A1 6F 92 05 47 1D
+[2026-04-17 09:31:56] [INFO] [发送] 09:31:56.247 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:56] [INFO] [接收-帧] 09:31:56.347 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 B1 FE 0C C9 3C B4 A1 E8 B8 33 0D F4 33 E5 03 62 84 D1 6B 8C
+[2026-04-17 09:31:57] [INFO] [发送] 09:31:57.337 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:57] [INFO] [接收-帧] 09:31:57.443 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 74 3C 50 93 36 9C 2B 4F 5E AA FE 5A 1D 86 A4 BB 2E B3 D0 15
+[2026-04-17 09:31:58] [INFO] [发送] 09:31:58.430 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:58] [INFO] [接收-帧] 09:31:58.536 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 6B 1A 8F 9F 78 00 E0 5A 95 CA A0 EC 33 4C 5A 10 75 E1 DF BF
+[2026-04-17 09:31:59] [INFO] [发送] 09:31:59.530 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:31:59] [INFO] [接收-帧] 09:31:59.626 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 E7 15 08 99 CE 63 9A 05 D1 26 B8 3B FD 33 C9 BC D6 10 D7 97
+[2026-04-17 09:32:00] [INFO] [发送] 09:32:00.627 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:32:00] [INFO] [接收-帧] 09:32:00.724 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 D5 12 1D 3A 75 0D 8B 03 0A 7C C6 29 0B 6D F7 D3 E5 AF 7E 7E
+[2026-04-17 09:32:01] [INFO] [发送] 09:32:01.721 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:32:01] [INFO] [接收-帧] 09:32:01.816 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 D3 AA A6 07 49 5E FA 34 F4 29 7D 27 60 6A 76 44 50 88 13 04
+[2026-04-17 09:32:02] [INFO] [发送] 09:32:02.815 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:32:02] [INFO] [接收-帧] 09:32:02.907 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 79 D5 0E A9 7B F5 1B D7 02 1B FB EE C3 FD DE 36 80 0E 95 D8
+[2026-04-17 09:32:03] [INFO] [发送] 09:32:03.905 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 sendCount=1/1 timeout=1000ms crc=30 0C len=8
+frame=01 04 00 00 00 09 30 0C
+[2026-04-17 09:32:04] [INFO] [接收-帧] 09:32:04.002 设备ID=12050 module=PERIODIC id=ReadFoupStatus uuid=100 len=23
+frame=01 04 12 06 29 70 1E 90 CA D1 BC 0D C7 E0 48 DE 51 1A 53 D9 08 6F 12
