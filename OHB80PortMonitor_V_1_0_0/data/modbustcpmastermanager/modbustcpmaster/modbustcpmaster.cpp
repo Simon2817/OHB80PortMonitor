@@ -1,4 +1,5 @@
 #include "modbustcpmaster.h"
+#include "firmwareupgrader.h"
 #include "loggermanager.h"
 #include "app/applogger.h"
 #include <QDebug>
@@ -19,6 +20,7 @@ ModbusTcpMaster::ModbusTcpMaster(const QString& ip, quint16 port, const QString&
     m_periodicSender = new PeriodicCommandSender(*m_sender, ID, this);
 
     createInitialIssuerIfNeeded();
+    m_firmwareUpgrader = new FirmwareUpgrader(this, this);
 
     connect(m_connector, &ModbusConnecter::statusChanged,
             this, &ModbusTcpMaster::onConnectionStatusChanged);
@@ -65,6 +67,21 @@ PeriodicCommandSender* ModbusTcpMaster::periodicSender() const
 ModbusTcpMaster::State ModbusTcpMaster::currentState() const
 {
     return m_state;
+}
+
+bool ModbusTcpMaster::isConnected() const
+{
+    return m_connector && m_connector->getStatus() == ModbusConnecter::ConnectionStatus::Connected;
+}
+
+QString ModbusTcpMaster::firmwareVersion() const
+{
+    return m_firmwareVersion;
+}
+
+FirmwareUpgrader* ModbusTcpMaster::firmwareUpgrader() const
+{
+    return m_firmwareUpgrader;
 }
 
 void ModbusTcpMaster::onConnectionStatusChanged(ModbusConnecter::ConnectionStatus status, const QString& masterId)

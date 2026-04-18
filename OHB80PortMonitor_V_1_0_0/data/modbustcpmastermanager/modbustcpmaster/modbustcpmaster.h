@@ -11,6 +11,8 @@
 #include "initialcommandissuer.h"
 #include "periodiccommandsender.h"
 
+class FirmwareUpgrader;
+
 // ============================================================
 // ModbusTcpMaster - Modbus TCP 主控对象
 //
@@ -33,6 +35,7 @@ class ModbusTcpMaster : public QObject
     friend class InitialCommandIssuer;
     friend class PeriodicCommandSender;
     friend class ModbusTcpMasterPool;
+    friend class FirmwareUpgrader;
 
 public:
     /**
@@ -123,6 +126,24 @@ public:
      * @return 当前状态
      */
     State currentState() const;
+
+    /**
+     * @brief 判断设备是否已连接
+     * @return 连接成功返回 true
+     */
+    bool isConnected() const;
+
+    /**
+     * @brief 获取固件版本号
+     * @return 固件版本号字符串
+     */
+    QString firmwareVersion() const;
+
+    /**
+     * @brief 获取固件升级器
+     * @return MtcFirmwareUpgrader 指针
+     */
+    FirmwareUpgrader* firmwareUpgrader() const;
 
 signals:
     /**
@@ -219,6 +240,9 @@ private:
     bool m_initialStarted = false;        // 初始下发器是否已启动
     bool m_periodicStarted = false;       // 定时发送器是否已启动
     State m_state = State::Idle;          // 当前状态机状态
+
+    QString m_firmwareVersion;             // 固件版本号
+    FirmwareUpgrader* m_firmwareUpgrader = nullptr; // 固件升级器
 };
 
 #endif // MODBUSTCPMASTER_H

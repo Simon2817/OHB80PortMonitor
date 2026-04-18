@@ -121,3 +121,36 @@ void QtHelper::releaseInstance()
         qDebug() << "[SingleInstance] 共享内存已释放";
     }
 }
+
+int QtHelper::kmpSearch(const QByteArray &buffer, const QByteArray &pattern)
+{
+    const int n = buffer.size();
+    const int m = pattern.size();
+    if (m == 0) return 0;
+    if (n < m)  return -1;
+
+    // ── 构建 failure 函数（部分匹配表）──
+    // fail[i] = pattern[0..i] 最长真前后缀长度
+    QVector<int> fail(m, 0);
+    for (int i = 1; i < m; ++i) {
+        int j = fail[i - 1];
+        while (j > 0 && pattern[i] != pattern[j])
+            j = fail[j - 1];
+        if (pattern[i] == pattern[j])
+            ++j;
+        fail[i] = j;
+    }
+
+    // ── KMP 搜索 ──
+    // j：已匹配的 pattern 字节数
+    int j = 0;
+    for (int i = 0; i < n; ++i) {
+        while (j > 0 && buffer[i] != pattern[j])
+            j = fail[j - 1];          // 回退，不回溯 i
+        if (buffer[i] == pattern[j])
+            ++j;
+        if (j == m)
+            return i - m + 1;         // 完全匹配，返回起始下标
+    }
+    return -1;
+}

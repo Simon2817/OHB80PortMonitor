@@ -1,3 +1,4 @@
+
 HEADERS += \
     $$PWD/modbustcpmaster.h \
     $$PWD/modbusconnecter.h \
@@ -5,7 +6,8 @@ HEADERS += \
     $$PWD/modbuscommandreceiver.h \
     $$PWD/cycliccommandissuer.h \
     $$PWD/initialcommandissuer.h \
-    $$PWD/periodiccommandsender.h
+    $$PWD/periodiccommandsender.h \
+    $$PWD/firmwareupgrader.h
 
 SOURCES += \
     $$PWD/modbustcpmaster.cpp \
@@ -14,4 +16,5 @@ SOURCES += \
     $$PWD/modbuscommandreceiver.cpp \
     $$PWD/cycliccommandissuer.cpp \
     $$PWD/initialcommandissuer.cpp \
-    $$PWD/periodiccommandsender.cpp
+    $$PWD/periodiccommandsender.cpp \
+    $$PWD/firmwareupgrader.cpp

@@ -1,0 +1,5 @@
+[2026-04-18 10:38:08] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12001 TCP 连接失败 - error=套接字操作超时
+[2026-04-18 11:22:27] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12001 TCP 连接失败 - error=套接字操作超时
+[2026-04-18 11:35:24] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12001 TCP 连接失败 - error=套接字操作超时
+[2026-04-18 11:35:30] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12001 TCP 连接失败 - error=套接字操作超时
+[2026-04-18 11:35:36] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12001 TCP 连接失败 - error=套接字操作超时

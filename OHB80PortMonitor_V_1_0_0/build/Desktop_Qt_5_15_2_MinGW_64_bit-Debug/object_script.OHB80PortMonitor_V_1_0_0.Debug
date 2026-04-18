@@ -16,6 +16,7 @@ debug/file_sinks.o
 debug/spdlog.o
 debug/stdout_sinks.o
 debug/qthelper.o
+debug/binfilereader.o
 debug/alarmpage.o
 debug/chartpage.o
 debug/configpage.o
@@ -40,11 +41,14 @@ debug/monitor_data_task.o
 debug/send_command_task.o
 debug/init_check_task.o
 debug/network_status_task.o
+debug/set_firmware_config_task.o
+debug/firmware_upgrade_task.o
 debug/modbustcpmastermanager.o
 debug/modbustcpmasterpool.o
 debug/modbuscommand.o
 debug/commandpool.o
 debug/modbusconfigparser.o
+debug/modbuscrc.o
 debug/modbustcpmaster.o
 debug/modbusconnecter.o
 debug/modbuscommandsender.o
@@ -52,11 +56,13 @@ debug/modbuscommandreceiver.o
 debug/cycliccommandissuer.o
 debug/initialcommandissuer.o
 debug/periodiccommandsender.o
+debug/firmwareupgrader.o
 debug/bayofohbinfo.o
 debug/foupofohbinfo.o
 debug/setofohbinfo.o
 debug/qrc_main.o
 debug/qrc_qss.o
+debug/moc_binfilereader.o
 debug/moc_alarmpage.o
 debug/moc_chartpage.o
 debug/moc_configpage.o
@@ -78,6 +84,8 @@ debug/moc_monitor_data_task.o
 debug/moc_send_command_task.o
 debug/moc_init_check_task.o
 debug/moc_network_status_task.o
+debug/moc_set_firmware_config_task.o
+debug/moc_firmware_upgrade_task.o
 debug/moc_modbustcpmastermanager.o
 debug/moc_modbustcpmasterpool.o
 debug/moc_modbustcpmaster.o
@@ -87,3 +95,4 @@ debug/moc_modbuscommandreceiver.o
 debug/moc_cycliccommandissuer.o
 debug/moc_initialcommandissuer.o
 debug/moc_periodiccommandsender.o
+debug/moc_firmwareupgrader.o

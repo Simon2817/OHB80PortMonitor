@@ -16,6 +16,7 @@ release/file_sinks.o
 release/spdlog.o
 release/stdout_sinks.o
 release/qthelper.o
+release/binfilereader.o
 release/alarmpage.o
 release/chartpage.o
 release/configpage.o
@@ -40,11 +41,14 @@ release/monitor_data_task.o
 release/send_command_task.o
 release/init_check_task.o
 release/network_status_task.o
+release/set_firmware_config_task.o
+release/firmware_upgrade_task.o
 release/modbustcpmastermanager.o
 release/modbustcpmasterpool.o
 release/modbuscommand.o
 release/commandpool.o
 release/modbusconfigparser.o
+release/modbuscrc.o
 release/modbustcpmaster.o
 release/modbusconnecter.o
 release/modbuscommandsender.o
@@ -52,11 +56,13 @@ release/modbuscommandreceiver.o
 release/cycliccommandissuer.o
 release/initialcommandissuer.o
 release/periodiccommandsender.o
+release/firmwareupgrader.o
 release/bayofohbinfo.o
 release/foupofohbinfo.o
 release/setofohbinfo.o
 release/qrc_main.o
 release/qrc_qss.o
+release/moc_binfilereader.o
 release/moc_alarmpage.o
 release/moc_chartpage.o
 release/moc_configpage.o
@@ -78,6 +84,8 @@ release/moc_monitor_data_task.o
 release/moc_send_command_task.o
 release/moc_init_check_task.o
 release/moc_network_status_task.o
+release/moc_set_firmware_config_task.o
+release/moc_firmware_upgrade_task.o
 release/moc_modbustcpmastermanager.o
 release/moc_modbustcpmasterpool.o
 release/moc_modbustcpmaster.o
@@ -87,3 +95,4 @@ release/moc_modbuscommandreceiver.o
 release/moc_cycliccommandissuer.o
 release/moc_initialcommandissuer.o
 release/moc_periodiccommandsender.o
+release/moc_firmwareupgrader.o

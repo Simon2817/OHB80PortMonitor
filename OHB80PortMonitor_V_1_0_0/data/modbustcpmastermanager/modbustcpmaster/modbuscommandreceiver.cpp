@@ -1,4 +1,5 @@
 #include "modbuscommandreceiver.h"
+#include "modbuscrc.h"
 #include "loggermanager.h"
 #include "app/applogger.h"
 #include <QDateTime>
@@ -688,16 +689,5 @@ void ModbusCommandReceiver::clearRingBuffer()
 
 quint16 ModbusCommandReceiver::crc16(const QByteArray& data)
 {
-    quint16 crc = 0xFFFF;
-    for (char byte : data) {
-        crc ^= static_cast<quint8>(byte);
-        for (int i = 0; i < 8; ++i) {
-            if (crc & 0x0001) {
-                crc = static_cast<quint16>((crc >> 1) ^ 0xA001);
-            } else {
-                crc >>= 1;
-            }
-        }
-    }
-    return crc;
+    return ModbusCrc::crc16(data);
 }

@@ -8,6 +8,30 @@
 
 ## 更新日志
 
+### 2026-04-18 11:30 - Simon
+**固件升级任务迁移**
+
+#### 修改内容
+1. **FirmwareUpgradeTask 固件升级任务**
+   - 从旧代码 `old/firmware_upgrade_task.{h,cpp}` 迁移到新架构
+   - 创建 `scheduler/tasks/firmware_upgrade_task.h` 和 `.cpp`
+   - 适配新版 `FirmwareUpgrader` 类（位于 data 层）
+   - 支持多设备并发固件升级
+   - 使用共享 BinFileReader 实例，避免重复读取文件
+   - 遵循项目日志格式规范：`[Scheduler][FirmwareUpgradeTask][方法名]`
+
+2. **主要变更**
+   - 设备标识从 `qrcode` 改为 `deviceId`（与 ModbusTcpMaster 的 ID 字段一致）
+   - FirmwareUpgrader 信号增加 `masterId` 参数，便于多设备场景识别
+   - ModbusTcpMasterManager 访问方式从指针改为引用
+   - 添加详细的迁移说明文档：`scheduler/tasks/FIRMWARE_UPGRADE_MIGRATION.md`
+
+3. **构建配置**
+   - 将新任务添加到 `scheduler/scheduler.pri`
+   - 保留旧代码在 `old/` 目录作为参考
+
+---
+
 ### 2026-04-17 19:30 - Simon
 **调度系统完善与日志格式优化**
 
