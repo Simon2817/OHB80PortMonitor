@@ -1,0 +1,41 @@
+# ====== 构建输出 ======
+OHB80PortMonitor_V_1_0_0/build/
+OHB80PortMonitor_V_1_0_0/bin/x64/
+OHB80PortMonitor_V_1_0_0/bin/x32/
+*.exe
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+*.pdb
+
+# ====== Qt 生成文件 ======
+moc_*.cpp
+moc_*.h
+ui_*.h
+qrc_*.cpp
+Makefile*
+object_script.*
+*.stash
+
+# ====== Qt Creator 用户文件 ======
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.autosave
+CMakeLists.txt.user*
+
+# ====== 日志与截图 ======
+OHB80PortMonitor_V_1_0_0/bin/log/
+
+# ====== IDE ======
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

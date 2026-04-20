@@ -1,4 +1,0 @@
-[2026-04-20 08:44:35] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12074 TCP 连接失败 - error=主机不能访问
-[2026-04-20 08:44:38] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12074 TCP 连接失败 - error=主机不能访问
-[2026-04-20 08:44:42] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12074 TCP 连接失败 - error=主机不能访问
-[2026-04-20 09:00:07] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12074 TCP 连接失败 - error=套接字操作超时
