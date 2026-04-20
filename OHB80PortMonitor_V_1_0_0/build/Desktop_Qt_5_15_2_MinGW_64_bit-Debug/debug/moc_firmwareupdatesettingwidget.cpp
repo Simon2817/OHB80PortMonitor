@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 #include <memory>
-#include "../../../ui/customwidget/debugpage/firmwareupdatesettingwidget.h"
+#include "../../../ui/customwidget/debugsettingwidget/firmwareupdatesettingwidget.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)

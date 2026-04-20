@@ -12,9 +12,9 @@ INCLUDEPATH += $$PWD/overheadcranetrack
 include ($$PWD/settingwidget/settingwidget.pri)
 INCLUDEPATH += $$PWD/settingwidget
 
-# debugpage
-include ($$PWD/debugpage/debugpage.pri)
-INCLUDEPATH += $$PWD/debugpage
+# debugsettingwidget
+include ($$PWD/debugsettingwidget/debugsettingwidget.pri)
+INCLUDEPATH += $$PWD/debugsettingwidget
 
 # loggerwidget
 include ($$PWD/loggerwidget/loggerwidget.pri)

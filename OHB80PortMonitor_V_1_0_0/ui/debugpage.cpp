@@ -1,7 +1,7 @@
 #include "debugpage.h"
 #include "ui_debugpage.h"
-#include "customwidget/debugpage/firmwareupdateconfigsettingwidget.h"
-#include "customwidget/debugpage/firmwareupdatesettingwidget.h"
+#include "customwidget/debugsettingwidget/firmwareupdateconfigsettingwidget.h"
+#include "customwidget/debugsettingwidget/firmwareupdatesettingwidget.h"
 
 DebugPage::DebugPage(QWidget *parent)
     : QWidget(parent)
