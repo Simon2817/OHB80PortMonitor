@@ -27,8 +27,8 @@ public:
     QVBoxLayout *verticalLayout_3;
     QWidget *widgetTop;
     QHBoxLayout *horizontalLayout;
-    QToolButton *btnSetPressure;
-    QPushButton *btnFirmwareConfig;
+    QToolButton *btnFirmwareConfig;
+    QPushButton *btnFirmwareUpdate;
     QSpacerItem *horizontalSpacer;
     QWidget *widgetSettings;
     QVBoxLayout *verticalLayout;
@@ -52,15 +52,15 @@ public:
         horizontalLayout->setSpacing(0);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 12, 0);
-        btnSetPressure = new QToolButton(widgetTop);
-        btnSetPressure->setObjectName(QString::fromUtf8("btnSetPressure"));
-
-        horizontalLayout->addWidget(btnSetPressure);
-
-        btnFirmwareConfig = new QPushButton(widgetTop);
+        btnFirmwareConfig = new QToolButton(widgetTop);
         btnFirmwareConfig->setObjectName(QString::fromUtf8("btnFirmwareConfig"));
 
         horizontalLayout->addWidget(btnFirmwareConfig);
+
+        btnFirmwareUpdate = new QPushButton(widgetTop);
+        btnFirmwareUpdate->setObjectName(QString::fromUtf8("btnFirmwareUpdate"));
+
+        horizontalLayout->addWidget(btnFirmwareUpdate);
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -101,8 +101,8 @@ public:
     void retranslateUi(QWidget *DebugPage)
     {
         DebugPage->setWindowTitle(QCoreApplication::translate("DebugPage", "Form", nullptr));
-        btnSetPressure->setText(QCoreApplication::translate("DebugPage", "Set Pressure", nullptr));
-        btnFirmwareConfig->setText(QCoreApplication::translate("DebugPage", "Firmware", nullptr));
+        btnFirmwareConfig->setText(QCoreApplication::translate("DebugPage", "Firmware Cnf", nullptr));
+        btnFirmwareUpdate->setText(QCoreApplication::translate("DebugPage", "Firmware Up", nullptr));
     } // retranslateUi
 
 };

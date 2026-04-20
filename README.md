@@ -8,6 +8,43 @@
 
 ## 更新日志
 
+### 2026-04-20 14:06 - Simon
+**图配置解析器增强与天车轨道布局优化**
+
+#### 修改内容
+1. **GraphConfigParser 自动设置 SET 节点 uiId**
+   - 在 `GraphConfigParser` 中添加 `m_setNodeIndex` 计数器成员变量
+   - 在构造函数中初始化计数器为 0
+   - 在 `processNode()` 方法中，解析到 SET 节点时按文档顺序自动设置 `SharedData::setOfOHBInfoList` 中对应项的 `uiId`
+   - 添加详细日志记录：`"SET节点文档顺序#{}: 设置 setOfOHBInfoList[{}].uiId = {}"`
+   - 移除 `SharedData` 构造函数中硬编码的 `uiIds` 数组，改为由 XML 解析器动态设置
+
+2. **graph_config.xml 布局调整**
+   - 调整边的偏移值以优化天车轨道布局显示效果
+
+#### 技术细节
+- **SET 节点顺序映射**：按 XML 文档中 SET 节点的出现顺序（从上到下），依次映射到 `setOfOHBInfoList[0]`、`[1]`、`[2]`...
+- **解析时机**：`GraphConfigParser::parse()` 在 `QtConcurrent::run()` 中异步执行，确保在 `SharedData` 初始化之后
+- **线程安全**：`SharedData::setOfOHBInfoList` 在主线程初始化，解析器在工作线程中修改 `uiId`，无并发冲突
+- **日志路径**：使用 `AppLogger::CraneMapLoggerPath()` 记录到 `ui/cranemap` 日志文件
+
+#### 数据流向
+```
+GraphConfigParser::parse()
+  ↓ parseEdges()
+  ↓ processNode(SET节点)
+  ↓ 创建 SetOfOHBNode
+  ↓ SharedData::setOfOHBInfoList[m_setNodeIndex].setUiId(nodeId)
+  ↓ m_setNodeIndex++
+```
+
+#### 影响范围
+- 修改文件：`ui/customwidget/overheadcranetrack/graphconfigparser.h`（添加 `m_setNodeIndex` 成员）
+- 修改文件：`ui/customwidget/overheadcranetrack/graphconfigparser.cpp`（引入 `shareddata.h`，构造函数初始化计数器，`processNode` 中设置 uiId）
+- 修改文件：`bin/config/graph_config.xml`（调整边的偏移值以优化布局显示）
+
+---
+
 ### 2026-04-20 11:05 - Simon
 **日志系统优化与固件升级功能增强**
 

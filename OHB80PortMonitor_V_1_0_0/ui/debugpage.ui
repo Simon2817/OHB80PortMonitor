@@ -54,16 +54,16 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QToolButton" name="btnSetPressure">
+       <widget class="QToolButton" name="btnFirmwareConfig">
         <property name="text">
-         <string>Set Pressure</string>
+         <string>Firmware Cnf</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnFirmwareConfig">
+       <widget class="QPushButton" name="btnFirmwareUpdate">
         <property name="text">
-         <string>Firmware</string>
+         <string>Firmware Up</string>
         </property>
        </widget>
       </item>

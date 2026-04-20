@@ -1,5 +1,6 @@
 #include "graphconfigparser.h"
 #include "app/applogger.h"
+#include "app/shareddata.h"
 
 #include <QFile>
 #include <QFileInfo>
@@ -8,6 +9,7 @@ Graph::GraphConfigParser::GraphConfigParser(const QString& filePath)
     : m_filePath(filePath),
       m_startNodeFound(false),
       m_fixSpacingValue(10.0),
+      m_setNodeIndex(0),
       m_logger(LoggerManager::instance()),
       m_loggerFileName(AppLogger::CraneMapLoggerPath().toStdString()),
       m_stage(ParseStage::NotStarted)
@@ -362,6 +364,15 @@ void Graph::GraphConfigParser::processNode(const QDomElement& nodeEle)
         
         // 创建SET节点对象（带位置参数）
         node = QSharedPointer<SetOfOHBNode>::create(firstFoupQRCode, foupCount, nodeId, position);
+
+        // 按文档顺序将 SET 节点 ID 设置为对应 SetOfOHBInfo 的 uiId
+        if (m_setNodeIndex < SharedData::setOfOHBInfoList.size()) {
+            SharedData::setOfOHBInfoList[m_setNodeIndex].setUiId(nodeId);
+            m_logger.log(m_loggerFileName, Level::INFO,
+                         "{}SET节点文档顺序#{}: 设置 setOfOHBInfoList[{}].uiId = {}",
+                         loggerPre, m_setNodeIndex, m_setNodeIndex, nodeId);
+            m_setNodeIndex++;
+        }
     }
     else if (nodeType == "TRACK")
     {
