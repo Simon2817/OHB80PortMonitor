@@ -165,7 +165,7 @@ QVariantMap MonitorDataTask::parseReadFoupStatusResponse(const ModbusCommand& cm
              | static_cast<quint8>(payload.at(offset + 3));
     };
 
-    // 辅助 lambda：读取大端 2 字节整数（毫秒）
+    // 辅助 lambda：读取大端 2 字节整数（秒）
     auto getU16BE = [&payload](int offset) -> quint16 {
         if (offset + 1 >= payload.size()) return 0;
         return (static_cast<quint8>(payload.at(offset)) << 8)
@@ -196,15 +196,15 @@ QVariantMap MonitorDataTask::parseReadFoupStatusResponse(const ModbusCommand& cm
     result["startTimeSec"] = startTimeSec;
 
     // 5. 充气时间（毫秒）
-    quint16 chargeTimeMs = getU16BE(10);
+    quint16 chargeTimeMs = getU16BE(10) * 1000;
     result["purgeTimeMs"] = chargeTimeMs;
 
     // 6. idle时间（毫秒）
-    quint16 idleTimeMs = getU16BE(12);
+    quint16 idleTimeMs = getU16BE(12) * 1000;
     result["idleTimeMs"] = idleTimeMs;
 
     // 7. FoupIn状态（0或1）
-    quint16 foupInStatus = getU16BE(14);
+    quint16 foupInStatus = getU16BE(14) * 1000;
     result["hasFoup"] = (foupInStatus != 0);
 
     return result;
