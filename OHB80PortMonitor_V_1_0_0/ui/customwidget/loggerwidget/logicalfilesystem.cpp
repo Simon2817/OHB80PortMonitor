@@ -11,6 +11,7 @@ LogicalFileSystem::LogicalFileSystem(QObject *parent)
     qRegisterMetaType<HistoryQuery>("HistoryQuery");
     qRegisterMetaType<HistoryResult>("HistoryResult");
     qRegisterMetaType<QSet<QDate>>("QSet<QDate>");
+    qRegisterMetaType<QVector<QJsonObject>>("QVector<QJsonObject>");
 
     // LogFileSystem 不设 parent，以便 moveToThread 后由 QThread::finished 删除
     m_fs           = new LogFileSystem();
@@ -29,6 +30,8 @@ LogicalFileSystem::LogicalFileSystem(QObject *parent)
             m_fs, &LogFileSystem::requestNextPage);
     connect(this, &LogicalFileSystem::_requestAppendLog,
             m_fs, &LogFileSystem::requestAppendLog);
+    connect(this, &LogicalFileSystem::_requestAppendBatch,
+            m_fs, &LogFileSystem::requestAppendBatch);
     connect(this, &LogicalFileSystem::_requestCleanOldLogs,
             m_fs, &LogFileSystem::requestCleanOldLogs);
     connect(this, &LogicalFileSystem::_requestQueryHistory,
@@ -50,6 +53,12 @@ LogicalFileSystem::LogicalFileSystem(QObject *parent)
 
     m_workerThread->start();
 
+    // 批量写入防抖定时器
+    m_batchTimer = new QTimer(this);
+    m_batchTimer->setSingleShot(true);
+    m_batchTimer->setInterval(50);
+    connect(m_batchTimer, &QTimer::timeout, this, &LogicalFileSystem::flushPendingLogs);
+
     // 午夜日志清理定时器（在主线程中）
     m_midnightTimer = new QTimer(this);
     m_midnightTimer->setSingleShot(true);
@@ -59,6 +68,16 @@ LogicalFileSystem::LogicalFileSystem(QObject *parent)
 
 LogicalFileSystem::~LogicalFileSystem()
 {
+    // 确保缓冲区中残留的日志被写入磁盘
+    m_batchTimer->stop();
+    if (!m_pendingLogs.isEmpty()) {
+        QVector<QJsonObject> batch;
+        batch.swap(m_pendingLogs);
+        // 同步调用（此时 worker thread 仍在运行）
+        QMetaObject::invokeMethod(m_fs, "requestAppendBatch",
+                                  Qt::BlockingQueuedConnection,
+                                  Q_ARG(QVector<QJsonObject>, batch));
+    }
     m_workerThread->quit();
     m_workerThread->wait();
     // m_fs 已由 QThread::finished 信号触发 deleteLater
@@ -95,7 +114,17 @@ void LogicalFileSystem::requestNextPage() { emit _requestNextPage(); }
 
 void LogicalFileSystem::writeLog(const QJsonObject &record)
 {
-    emit _requestAppendLog(record);
+    m_pendingLogs.append(record);
+    // 重置定时器，等待 50ms 无新写入后一次性刷新
+    m_batchTimer->start();
+}
+
+void LogicalFileSystem::flushPendingLogs()
+{
+    if (m_pendingLogs.isEmpty()) return;
+    QVector<QJsonObject> batch;
+    batch.swap(m_pendingLogs);
+    emit _requestAppendBatch(batch);
 }
 
 // -------- 历史查询 --------

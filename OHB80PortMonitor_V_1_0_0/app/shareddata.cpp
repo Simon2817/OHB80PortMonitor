@@ -21,7 +21,10 @@ SharedData::SharedData() {
         QVector<QString> qrCodeInfos = AppConfig::getInstance().getQRCodeConfig().readQRCodeMapping();
         // 索引
         int index = 0;
-        
+
+        // 设置线程池为最大线程数，避免所有 Master 共用一个线程导致事件循环阻塞
+        ModbusTcpMasterManager::instance().setThreadCount(ModbusTcpMasterPool::ThreadCountMode::MaxThreads);
+
         for (int i = 0; i < 20; ++i) {
             SetOfOHBInfo setInfo;
             setInfo.setUiId(uiIds[i]);

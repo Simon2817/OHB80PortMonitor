@@ -30,8 +30,9 @@ void LogItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     painter->save();
 
     // ---- 背景 ----
-    if (opt.state & QStyle::State_Selected) {
-        painter->fillRect(opt.rect, opt.palette.highlight());
+    const bool selected = (opt.state & QStyle::State_Selected);
+    if (selected) {
+        painter->fillRect(opt.rect, QColor(0x30, 0x80, 0xE8));   // 蓝色
     } else if (hasStyle && itemStyle.applyBackground) {
         painter->fillRect(opt.rect, itemStyle.background);
     } else {
@@ -42,10 +43,10 @@ void LogItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
     // ---- 文字 ----
     QColor textColor;
-    if (hasStyle && itemStyle.applyForeground)
+    if (selected)
+        textColor = Qt::white;
+    else if (hasStyle && itemStyle.applyForeground)
         textColor = itemStyle.foreground;
-    else if (opt.state & QStyle::State_Selected)
-        textColor = opt.palette.color(QPalette::HighlightedText);
     else
         textColor = opt.palette.color(QPalette::Text);
 

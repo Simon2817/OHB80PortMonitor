@@ -8,8 +8,6 @@
 #include <QPushButton>
 #include <functional>
 
-class FirmwareUpdateWidget;
-
 class FirmwareUpdateConfigSettingWidget : public SettingWidget
 {
     Q_OBJECT
@@ -20,6 +18,10 @@ public:
     
     // 获取配置的 bin 文件路径
     QString binFilePath() const;
+
+signals:
+    // bin 文件路径变更时发出，由外部（DebugPage）连接到 FirmwareUpdateSettingWidget
+    void binFilePathChanged(const QString &filePath);
 
 private slots:
     void onLoadBinFileBtnClicked();          // 加载 bin 文件按钮点击
@@ -37,7 +39,6 @@ private:
     void initWaitingTimeItem();         // 等待设备就绪项
     void initSendIntervalItem();        // 发送间隔项
     void initTransferTimeoutItem();     // 传输响应超时项
-    void initFirmwareUpdateWidgetItem();     // 固件升级界面项
     
     // 通用任务提交方法
     void submitConfigTask(SettingItemWidget *item,
@@ -59,9 +60,6 @@ private:
     SettingItemWidget *m_waitingTimeItem;
     SettingItemWidget *m_sendIntervalItem;
     SettingItemWidget *m_transferTimeoutItem;
-    
-    // FirmwareUpdateWidget
-    FirmwareUpdateWidget *m_firmwareUpdateWidget;
 };
 
 #endif // FIRMWAREUPDATECONFIGSETTINGWIDGET_H

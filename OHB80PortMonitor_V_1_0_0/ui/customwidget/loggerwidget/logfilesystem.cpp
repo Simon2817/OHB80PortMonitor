@@ -123,6 +123,39 @@ void LogFileSystem::requestAppendLog(const QJsonObject &record)
     emit logAppended(true, pageChanged);
 }
 
+void LogFileSystem::requestAppendBatch(const QVector<QJsonObject> &records)
+{
+    if (records.isEmpty()) return;
+
+    QString path = todayFilePath();
+    bool anyOk = false;
+
+    for (const QJsonObject &record : records) {
+        bool ok = CsvIO::appendRecord(path, m_headers, record);
+        if (ok) anyOk = true;
+    }
+
+    if (!anyOk) {
+        emit logAppended(false, false);
+        return;
+    }
+
+    // 失效旧缓存并重建页表
+    m_pageCache.remove({path, m_currentPage});
+    m_ptCache.remove(path);
+
+    const PageTable *newPt = getPageTable(path);
+    int newPageCount = newPt ? newPt->pageCount() : 0;
+    int lastPage = qMax(0, newPageCount - 1);
+    m_currentFile = path;
+    m_currentPage = lastPage;
+
+    Page page = doReadPage(path, lastPage);
+    emit pageReady(page, false);
+    emitNavigationState(false);
+    emit logAppended(true, true);
+}
+
 void LogFileSystem::requestCleanOldLogs()
 {
     QStringList months = allMonthDirs();

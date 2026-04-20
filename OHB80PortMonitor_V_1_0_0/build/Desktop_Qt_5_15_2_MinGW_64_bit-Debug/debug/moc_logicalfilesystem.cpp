@@ -10,6 +10,7 @@
 #include "../../../ui/customwidget/loggerwidget/logicalfilesystem.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+#include <QtCore/QVector>
 #include <QtCore/QSet>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'logicalfilesystem.h' doesn't include <QObject>."
@@ -23,8 +24,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_LogicalFileSystem_t {
-    QByteArrayData data[36];
-    char stringdata0[443];
+    QByteArrayData data[40];
+    char stringdata0[509];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -60,15 +61,19 @@ QT_MOC_LITERAL(23, 242, 16), // "_requestPrevPage"
 QT_MOC_LITERAL(24, 259, 16), // "_requestNextPage"
 QT_MOC_LITERAL(25, 276, 17), // "_requestAppendLog"
 QT_MOC_LITERAL(26, 294, 6), // "record"
-QT_MOC_LITERAL(27, 301, 20), // "_requestCleanOldLogs"
-QT_MOC_LITERAL(28, 322, 20), // "_requestQueryHistory"
-QT_MOC_LITERAL(29, 343, 12), // "HistoryQuery"
-QT_MOC_LITERAL(30, 356, 5), // "query"
-QT_MOC_LITERAL(31, 362, 22), // "_requestAvailableDates"
-QT_MOC_LITERAL(32, 385, 24), // "onNavigationStateChanged"
-QT_MOC_LITERAL(33, 410, 4), // "file"
-QT_MOC_LITERAL(34, 415, 9), // "pageCount"
-QT_MOC_LITERAL(35, 425, 17) // "onMidnightCleanup"
+QT_MOC_LITERAL(27, 301, 19), // "_requestAppendBatch"
+QT_MOC_LITERAL(28, 321, 20), // "QVector<QJsonObject>"
+QT_MOC_LITERAL(29, 342, 7), // "records"
+QT_MOC_LITERAL(30, 350, 20), // "_requestCleanOldLogs"
+QT_MOC_LITERAL(31, 371, 20), // "_requestQueryHistory"
+QT_MOC_LITERAL(32, 392, 12), // "HistoryQuery"
+QT_MOC_LITERAL(33, 405, 5), // "query"
+QT_MOC_LITERAL(34, 411, 22), // "_requestAvailableDates"
+QT_MOC_LITERAL(35, 434, 24), // "onNavigationStateChanged"
+QT_MOC_LITERAL(36, 459, 4), // "file"
+QT_MOC_LITERAL(37, 464, 9), // "pageCount"
+QT_MOC_LITERAL(38, 474, 17), // "onMidnightCleanup"
+QT_MOC_LITERAL(39, 492, 16) // "flushPendingLogs"
 
     },
     "LogicalFileSystem\0pageReady\0\0Page\0"
@@ -79,11 +84,12 @@ QT_MOC_LITERAL(35, 425, 17) // "onMidnightCleanup"
     "result\0availableDatesReady\0QSet<QDate>\0"
     "dates\0_requestInitialize\0_requestPrevPage\0"
     "_requestNextPage\0_requestAppendLog\0"
-    "record\0_requestCleanOldLogs\0"
-    "_requestQueryHistory\0HistoryQuery\0"
-    "query\0_requestAvailableDates\0"
+    "record\0_requestAppendBatch\0"
+    "QVector<QJsonObject>\0records\0"
+    "_requestCleanOldLogs\0_requestQueryHistory\0"
+    "HistoryQuery\0query\0_requestAvailableDates\0"
     "onNavigationStateChanged\0file\0pageCount\0"
-    "onMidnightCleanup"
+    "onMidnightCleanup\0flushPendingLogs"
 };
 #undef QT_MOC_LITERAL
 
@@ -93,32 +99,34 @@ static const uint qt_meta_data_LogicalFileSystem[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      16,   14, // methods
+      18,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      14,       // signalCount
+      15,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   94,    2, 0x06 /* Public */,
-       6,    1,   99,    2, 0x06 /* Public */,
-       8,    1,  102,    2, 0x06 /* Public */,
-      10,    2,  105,    2, 0x06 /* Public */,
-      13,    2,  110,    2, 0x06 /* Public */,
-      16,    1,  115,    2, 0x06 /* Public */,
-      19,    1,  118,    2, 0x06 /* Public */,
-      22,    0,  121,    2, 0x06 /* Public */,
-      23,    0,  122,    2, 0x06 /* Public */,
-      24,    0,  123,    2, 0x06 /* Public */,
-      25,    1,  124,    2, 0x06 /* Public */,
-      27,    0,  127,    2, 0x06 /* Public */,
-      28,    1,  128,    2, 0x06 /* Public */,
-      31,    0,  131,    2, 0x06 /* Public */,
+       1,    2,  104,    2, 0x06 /* Public */,
+       6,    1,  109,    2, 0x06 /* Public */,
+       8,    1,  112,    2, 0x06 /* Public */,
+      10,    2,  115,    2, 0x06 /* Public */,
+      13,    2,  120,    2, 0x06 /* Public */,
+      16,    1,  125,    2, 0x06 /* Public */,
+      19,    1,  128,    2, 0x06 /* Public */,
+      22,    0,  131,    2, 0x06 /* Public */,
+      23,    0,  132,    2, 0x06 /* Public */,
+      24,    0,  133,    2, 0x06 /* Public */,
+      25,    1,  134,    2, 0x06 /* Public */,
+      27,    1,  137,    2, 0x06 /* Public */,
+      30,    0,  140,    2, 0x06 /* Public */,
+      31,    1,  141,    2, 0x06 /* Public */,
+      34,    0,  144,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      32,    5,  132,    2, 0x08 /* Private */,
-      35,    0,  143,    2, 0x08 /* Private */,
+      35,    5,  145,    2, 0x08 /* Private */,
+      38,    0,  156,    2, 0x08 /* Private */,
+      39,    0,  157,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::Bool,    4,    5,
@@ -132,12 +140,14 @@ static const uint qt_meta_data_LogicalFileSystem[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QJsonObject,   26,
+    QMetaType::Void, 0x80000000 | 28,   29,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 29,   30,
+    QMetaType::Void, 0x80000000 | 32,   33,
     QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Bool, QMetaType::Bool, QMetaType::QString, QMetaType::Int, QMetaType::Int,   14,   15,   33,    4,   34,
+    QMetaType::Void, QMetaType::Bool, QMetaType::Bool, QMetaType::QString, QMetaType::Int, QMetaType::Int,   14,   15,   36,    4,   37,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -160,11 +170,13 @@ void LogicalFileSystem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 8: _t->_requestPrevPage(); break;
         case 9: _t->_requestNextPage(); break;
         case 10: _t->_requestAppendLog((*reinterpret_cast< const QJsonObject(*)>(_a[1]))); break;
-        case 11: _t->_requestCleanOldLogs(); break;
-        case 12: _t->_requestQueryHistory((*reinterpret_cast< const HistoryQuery(*)>(_a[1]))); break;
-        case 13: _t->_requestAvailableDates(); break;
-        case 14: _t->onNavigationStateChanged((*reinterpret_cast< bool(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5]))); break;
-        case 15: _t->onMidnightCleanup(); break;
+        case 11: _t->_requestAppendBatch((*reinterpret_cast< const QVector<QJsonObject>(*)>(_a[1]))); break;
+        case 12: _t->_requestCleanOldLogs(); break;
+        case 13: _t->_requestQueryHistory((*reinterpret_cast< const HistoryQuery(*)>(_a[1]))); break;
+        case 14: _t->_requestAvailableDates(); break;
+        case 15: _t->onNavigationStateChanged((*reinterpret_cast< bool(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5]))); break;
+        case 16: _t->onMidnightCleanup(); break;
+        case 17: _t->flushPendingLogs(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -191,7 +203,14 @@ void LogicalFileSystem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QSet<QDate> >(); break;
             }
             break;
-        case 12:
+        case 11:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<QJsonObject> >(); break;
+            }
+            break;
+        case 13:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -279,23 +298,30 @@ void LogicalFileSystem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
             }
         }
         {
+            using _t = void (LogicalFileSystem::*)(const QVector<QJsonObject> & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&LogicalFileSystem::_requestAppendBatch)) {
+                *result = 11;
+                return;
+            }
+        }
+        {
             using _t = void (LogicalFileSystem::*)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&LogicalFileSystem::_requestCleanOldLogs)) {
-                *result = 11;
+                *result = 12;
                 return;
             }
         }
         {
             using _t = void (LogicalFileSystem::*)(const HistoryQuery & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&LogicalFileSystem::_requestQueryHistory)) {
-                *result = 12;
+                *result = 13;
                 return;
             }
         }
         {
             using _t = void (LogicalFileSystem::*)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&LogicalFileSystem::_requestAvailableDates)) {
-                *result = 13;
+                *result = 14;
                 return;
             }
         }
@@ -331,13 +357,13 @@ int LogicalFileSystem::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 16)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 18;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 16)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 18;
     }
     return _id;
 }
@@ -417,22 +443,29 @@ void LogicalFileSystem::_requestAppendLog(const QJsonObject & _t1)
 }
 
 // SIGNAL 11
-void LogicalFileSystem::_requestCleanOldLogs()
+void LogicalFileSystem::_requestAppendBatch(const QVector<QJsonObject> & _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 11, nullptr);
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 11, _a);
 }
 
 // SIGNAL 12
-void LogicalFileSystem::_requestQueryHistory(const HistoryQuery & _t1)
+void LogicalFileSystem::_requestCleanOldLogs()
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
-    QMetaObject::activate(this, &staticMetaObject, 12, _a);
+    QMetaObject::activate(this, &staticMetaObject, 12, nullptr);
 }
 
 // SIGNAL 13
+void LogicalFileSystem::_requestQueryHistory(const HistoryQuery & _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 13, _a);
+}
+
+// SIGNAL 14
 void LogicalFileSystem::_requestAvailableDates()
 {
-    QMetaObject::activate(this, &staticMetaObject, 13, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 14, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

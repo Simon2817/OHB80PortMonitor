@@ -39,6 +39,7 @@ release/zoomcontroller.o
 release/settingitemwidget.o
 release/settingwidget.o
 release/firmwareupdateconfigsettingwidget.o
+release/firmwareupdatesettingwidget.o
 release/firmwareupdatewidget.o
 release/csvio.o
 release/loadmoreitemwidget.o
@@ -47,6 +48,7 @@ release/loggerwidget.o
 release/logicalfilesystem.o
 release/logitemdelegate.o
 release/logpagemodel.o
+release/highlightcalendar.o
 release/historycalendardialog.o
 release/scheduler.o
 release/monitor_data_task.o
@@ -91,12 +93,14 @@ release/moc_zoomcontroller.o
 release/moc_settingitemwidget.o
 release/moc_settingwidget.o
 release/moc_firmwareupdateconfigsettingwidget.o
+release/moc_firmwareupdatesettingwidget.o
 release/moc_firmwareupdatewidget.o
 release/moc_loadmoreitemwidget.o
 release/moc_logfilesystem.o
 release/moc_loggerwidget.o
 release/moc_logicalfilesystem.o
 release/moc_logpagemodel.o
+release/moc_highlightcalendar.o
 release/moc_historycalendardialog.o
 release/moc_scheduler_task.o
 release/moc_scheduler.o

@@ -8,6 +8,7 @@ class DebugPage;
 }
 
 class FirmwareUpdateConfigSettingWidget;
+class FirmwareUpdateSettingWidget;
 
 class DebugPage : public QWidget
 {
@@ -28,6 +29,7 @@ private slots:
 private:
     Ui::DebugPage *ui;
     FirmwareUpdateConfigSettingWidget *m_firmwareConfigWidget;
+    FirmwareUpdateSettingWidget       *m_firmwareUpdateWidget;
 };
 
 #endif // DEBUGPAGE_H

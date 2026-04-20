@@ -10,6 +10,7 @@
 #include "../../../ui/customwidget/loggerwidget/logfilesystem.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+#include <QtCore/QVector>
 #include <QtCore/QSet>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'logfilesystem.h' doesn't include <QObject>."
@@ -23,8 +24,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_LogFileSystem_t {
-    QByteArrayData data[35];
-    char stringdata0[413];
+    QByteArrayData data[38];
+    char stringdata0[461];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -63,11 +64,14 @@ QT_MOC_LITERAL(26, 276, 15), // "requestPrevPage"
 QT_MOC_LITERAL(27, 292, 15), // "requestNextPage"
 QT_MOC_LITERAL(28, 308, 16), // "requestAppendLog"
 QT_MOC_LITERAL(29, 325, 6), // "record"
-QT_MOC_LITERAL(30, 332, 19), // "requestCleanOldLogs"
-QT_MOC_LITERAL(31, 352, 19), // "requestQueryHistory"
-QT_MOC_LITERAL(32, 372, 12), // "HistoryQuery"
-QT_MOC_LITERAL(33, 385, 5), // "query"
-QT_MOC_LITERAL(34, 391, 21) // "requestAvailableDates"
+QT_MOC_LITERAL(30, 332, 18), // "requestAppendBatch"
+QT_MOC_LITERAL(31, 351, 20), // "QVector<QJsonObject>"
+QT_MOC_LITERAL(32, 372, 7), // "records"
+QT_MOC_LITERAL(33, 380, 19), // "requestCleanOldLogs"
+QT_MOC_LITERAL(34, 400, 19), // "requestQueryHistory"
+QT_MOC_LITERAL(35, 420, 12), // "HistoryQuery"
+QT_MOC_LITERAL(36, 433, 5), // "query"
+QT_MOC_LITERAL(37, 439, 21) // "requestAvailableDates"
 
     },
     "LogFileSystem\0pageReady\0\0Page\0page\0"
@@ -79,9 +83,10 @@ QT_MOC_LITERAL(34, 391, 21) // "requestAvailableDates"
     "availableDatesReady\0QSet<QDate>\0dates\0"
     "requestInitialize\0requestPrevPage\0"
     "requestNextPage\0requestAppendLog\0"
-    "record\0requestCleanOldLogs\0"
-    "requestQueryHistory\0HistoryQuery\0query\0"
-    "requestAvailableDates"
+    "record\0requestAppendBatch\0"
+    "QVector<QJsonObject>\0records\0"
+    "requestCleanOldLogs\0requestQueryHistory\0"
+    "HistoryQuery\0query\0requestAvailableDates"
 };
 #undef QT_MOC_LITERAL
 
@@ -91,7 +96,7 @@ static const uint qt_meta_data_LogFileSystem[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -99,22 +104,23 @@ static const uint qt_meta_data_LogFileSystem[] = {
        7,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   84,    2, 0x06 /* Public */,
-       6,    1,   89,    2, 0x06 /* Public */,
-       8,    1,   92,    2, 0x06 /* Public */,
-      10,    2,   95,    2, 0x06 /* Public */,
-      13,    5,  100,    2, 0x06 /* Public */,
-      19,    1,  111,    2, 0x06 /* Public */,
-      22,    1,  114,    2, 0x06 /* Public */,
+       1,    2,   89,    2, 0x06 /* Public */,
+       6,    1,   94,    2, 0x06 /* Public */,
+       8,    1,   97,    2, 0x06 /* Public */,
+      10,    2,  100,    2, 0x06 /* Public */,
+      13,    5,  105,    2, 0x06 /* Public */,
+      19,    1,  116,    2, 0x06 /* Public */,
+      22,    1,  119,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      25,    0,  117,    2, 0x0a /* Public */,
-      26,    0,  118,    2, 0x0a /* Public */,
-      27,    0,  119,    2, 0x0a /* Public */,
-      28,    1,  120,    2, 0x0a /* Public */,
-      30,    0,  123,    2, 0x0a /* Public */,
-      31,    1,  124,    2, 0x0a /* Public */,
-      34,    0,  127,    2, 0x0a /* Public */,
+      25,    0,  122,    2, 0x0a /* Public */,
+      26,    0,  123,    2, 0x0a /* Public */,
+      27,    0,  124,    2, 0x0a /* Public */,
+      28,    1,  125,    2, 0x0a /* Public */,
+      30,    1,  128,    2, 0x0a /* Public */,
+      33,    0,  131,    2, 0x0a /* Public */,
+      34,    1,  132,    2, 0x0a /* Public */,
+      37,    0,  135,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::Bool,    4,    5,
@@ -130,8 +136,9 @@ static const uint qt_meta_data_LogFileSystem[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QJsonObject,   29,
+    QMetaType::Void, 0x80000000 | 31,   32,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 32,   33,
+    QMetaType::Void, 0x80000000 | 35,   36,
     QMetaType::Void,
 
        0        // eod
@@ -154,9 +161,10 @@ void LogFileSystem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 8: _t->requestPrevPage(); break;
         case 9: _t->requestNextPage(); break;
         case 10: _t->requestAppendLog((*reinterpret_cast< const QJsonObject(*)>(_a[1]))); break;
-        case 11: _t->requestCleanOldLogs(); break;
-        case 12: _t->requestQueryHistory((*reinterpret_cast< const HistoryQuery(*)>(_a[1]))); break;
-        case 13: _t->requestAvailableDates(); break;
+        case 11: _t->requestAppendBatch((*reinterpret_cast< const QVector<QJsonObject>(*)>(_a[1]))); break;
+        case 12: _t->requestCleanOldLogs(); break;
+        case 13: _t->requestQueryHistory((*reinterpret_cast< const HistoryQuery(*)>(_a[1]))); break;
+        case 14: _t->requestAvailableDates(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -183,7 +191,14 @@ void LogFileSystem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QSet<QDate> >(); break;
             }
             break;
-        case 12:
+        case 11:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<QJsonObject> >(); break;
+            }
+            break;
+        case 13:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -274,13 +289,13 @@ int LogFileSystem::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 15;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 15;
     }
     return _id;
 }

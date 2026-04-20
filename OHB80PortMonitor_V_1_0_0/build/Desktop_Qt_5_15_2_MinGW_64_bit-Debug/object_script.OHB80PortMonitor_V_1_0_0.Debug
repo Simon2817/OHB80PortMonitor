@@ -39,6 +39,7 @@ debug/zoomcontroller.o
 debug/settingitemwidget.o
 debug/settingwidget.o
 debug/firmwareupdateconfigsettingwidget.o
+debug/firmwareupdatesettingwidget.o
 debug/firmwareupdatewidget.o
 debug/csvio.o
 debug/loadmoreitemwidget.o
@@ -47,6 +48,7 @@ debug/loggerwidget.o
 debug/logicalfilesystem.o
 debug/logitemdelegate.o
 debug/logpagemodel.o
+debug/highlightcalendar.o
 debug/historycalendardialog.o
 debug/scheduler.o
 debug/monitor_data_task.o
@@ -91,12 +93,14 @@ debug/moc_zoomcontroller.o
 debug/moc_settingitemwidget.o
 debug/moc_settingwidget.o
 debug/moc_firmwareupdateconfigsettingwidget.o
+debug/moc_firmwareupdatesettingwidget.o
 debug/moc_firmwareupdatewidget.o
 debug/moc_loadmoreitemwidget.o
 debug/moc_logfilesystem.o
 debug/moc_loggerwidget.o
 debug/moc_logicalfilesystem.o
 debug/moc_logpagemodel.o
+debug/moc_highlightcalendar.o
 debug/moc_historycalendardialog.o
 debug/moc_scheduler_task.o
 debug/moc_scheduler.o

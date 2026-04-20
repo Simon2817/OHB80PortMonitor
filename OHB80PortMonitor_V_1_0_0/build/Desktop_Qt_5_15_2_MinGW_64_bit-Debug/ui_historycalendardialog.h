@@ -11,7 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QCalendarWidget>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
@@ -19,6 +18,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
+#include "highlightcalendar.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -31,7 +31,7 @@ public:
     QComboBox *comboYear;
     QComboBox *comboMonth;
     QSpacerItem *comboSpacer;
-    QCalendarWidget *calendarWidget;
+    HighlightCalendar *calendarWidget;
     QHBoxLayout *buttonLayout;
     QSpacerItem *buttonSpacer;
     QPushButton *btnCancel;
@@ -81,7 +81,7 @@ public:
 
         mainLayout->addLayout(comboLayout);
 
-        calendarWidget = new QCalendarWidget(HistoryCalendarDialog);
+        calendarWidget = new HighlightCalendar(HistoryCalendarDialog);
         calendarWidget->setObjectName(QString::fromUtf8("calendarWidget"));
         calendarWidget->setMinimumSize(QSize(0, 280));
         calendarWidget->setGridVisible(true);

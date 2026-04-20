@@ -43,6 +43,7 @@ private:
     Ui::HistoryCalendarDialog *ui;
     QSet<QDate> m_availableDates;
     QDate m_lastValidDate;
+    QDate m_selectedDate;
 };
 
 #endif // HISTORYCALENDARDIALOG_H

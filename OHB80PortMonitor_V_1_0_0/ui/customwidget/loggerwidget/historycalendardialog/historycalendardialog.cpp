@@ -1,5 +1,6 @@
 #include "historycalendardialog.h"
 #include "ui_historycalendardialog.h"
+#include "highlightcalendar.h"
 #include <QComboBox>
 #include <QCalendarWidget>
 #include <QTextCharFormat>
@@ -33,16 +34,10 @@ HistoryCalendarDialog::~HistoryCalendarDialog()
 
 void HistoryCalendarDialog::initCalendarStyle()
 {
-    // 设置表头为浅灰色
+    // 表头浅灰色
     QTextCharFormat headerFormat;
     headerFormat.setForeground(QColor(200, 200, 200));
     ui->calendarWidget->setHeaderTextFormat(headerFormat);
-
-    // 设置周末为浅灰色（覆盖默认的红色）
-    QTextCharFormat weekendFormat;
-    weekendFormat.setForeground(QColor(200, 200, 200));
-    ui->calendarWidget->setWeekdayTextFormat(Qt::Saturday, weekendFormat);
-    ui->calendarWidget->setWeekdayTextFormat(Qt::Sunday, weekendFormat);
 }
 
 void HistoryCalendarDialog::connectSignals()
@@ -62,6 +57,7 @@ void HistoryCalendarDialog::connectSignals()
 void HistoryCalendarDialog::setAvailableDates(const QSet<QDate> &dates)
 {
     m_availableDates = dates;
+    ui->calendarWidget->setAvailableDates(dates);
     populateYearCombo();
     populateMonthCombo();
     updateCalendarFormat();
@@ -87,6 +83,8 @@ void HistoryCalendarDialog::setSelectedDate(const QDate &date)
         ui->calendarWidget->setSelectedDate(date);
         if (m_availableDates.contains(date)) {
             m_lastValidDate = date;
+            m_selectedDate = date;
+            ui->calendarWidget->setClickedDate(date);
         }
         updateCalendarFormat();
     }
@@ -145,6 +143,8 @@ void HistoryCalendarDialog::onDateClicked(const QDate &date)
 {
     if (m_availableDates.contains(date)) {
         m_lastValidDate = date;
+        m_selectedDate = date;
+        ui->calendarWidget->setClickedDate(date);
     } else {
         ui->calendarWidget->setSelectedDate(m_lastValidDate);
     }
@@ -194,30 +194,4 @@ void HistoryCalendarDialog::updateCalendarFormat()
     if (year == 0 || month == 0) return;
 
     ui->calendarWidget->setCurrentPage(year, month);
-
-    // 设置所有日期为浅灰色
-    QTextCharFormat defaultFormat;
-    defaultFormat.setForeground(QColor(200, 200, 200));
-
-    // 有历史记录的日期为黑色
-    QTextCharFormat availableFormat;
-    availableFormat.setForeground(QColor(0, 0, 0));
-
-    // 设置整个月份的日期格式
-    int daysInMonth = QDate(year, month, 1).daysInMonth();
-
-    for (int day = 1; day <= daysInMonth; ++day) {
-        QDate date(year, month, day);
-        if (m_availableDates.contains(date)) {
-            ui->calendarWidget->setDateTextFormat(date, availableFormat);
-        } else {
-            ui->calendarWidget->setDateTextFormat(date, defaultFormat);
-        }
-    }
-
-    // 确保周末也是浅灰色（覆盖可能的红色）
-    QTextCharFormat weekendFormat;
-    weekendFormat.setForeground(QColor(200, 200, 200));
-    ui->calendarWidget->setWeekdayTextFormat(Qt::Saturday, weekendFormat);
-    ui->calendarWidget->setWeekdayTextFormat(Qt::Sunday, weekendFormat);
 }

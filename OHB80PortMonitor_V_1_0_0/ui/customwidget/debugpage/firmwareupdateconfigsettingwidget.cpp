@@ -1,5 +1,4 @@
 #include "firmwareupdateconfigsettingwidget.h"
-#include "firmwareupdatewidget.h"
 #include "../settingwidget/settingitemwidget.h"
 #include "loggermanager.h"
 #include "app/applogger.h"
@@ -22,7 +21,6 @@ FirmwareUpdateConfigSettingWidget::FirmwareUpdateConfigSettingWidget(QWidget *pa
     , m_waitingTimeItem(nullptr)
     , m_sendIntervalItem(nullptr)
     , m_transferTimeoutItem(nullptr)
-    , m_firmwareUpdateWidget(nullptr)
 {
     setTitle("Firmware Config");
     initUI();
@@ -56,8 +54,6 @@ void FirmwareUpdateConfigSettingWidget::initUI()
     initSendIntervalItem();
     // 传输响应超时项
     initTransferTimeoutItem();
-    // 固件升级界面项
-    initFirmwareUpdateWidgetItem();
 
     qDebug() << "[ui][FirmwareUpdateConfigSettingWidget][initUI]：固件更新配置UI初始化完成";
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
@@ -174,10 +170,8 @@ void FirmwareUpdateConfigSettingWidget::onLoadBinFileBtnClicked()
     if (!filePath.isEmpty()) {
         m_binFileLineEdit->setText(filePath);
         
-        // 同步路径到 FirmwareUpdateWidget
-        if (m_firmwareUpdateWidget) {
-            m_firmwareUpdateWidget->setFirmwareFilePath(filePath);
-        }
+        // 通知外部（DebugPage）同步到 FirmwareUpdateSettingWidget
+        emit binFilePathChanged(filePath);
         
         qDebug() << "[ui][FirmwareUpdateConfigSettingWidget][onLoadBinFileBtnClicked]：bin 文件已选择:" << filePath;
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
@@ -269,12 +263,3 @@ void FirmwareUpdateConfigSettingWidget::onTransferTimeoutSetBtnClicked()
                      [&fwConfig](int value) { return fwConfig.setTransferResponseTimeoutMs(value); });
 }
 
-void FirmwareUpdateConfigSettingWidget::initFirmwareUpdateWidgetItem()
-{
-    m_firmwareUpdateWidget = new FirmwareUpdateWidget(this);
-    addCustomWidget(m_firmwareUpdateWidget, VerticalLayout);
-    
-    qDebug() << "[ui][FirmwareUpdateConfigSettingWidget][initFirmwareUpdateWidgetItem]：固件升级界面已添加";
-    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
-        "[ui][FirmwareUpdateConfigSettingWidget][initFirmwareUpdateWidgetItem]：固件升级界面已添加");
-}

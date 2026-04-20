@@ -42,6 +42,7 @@ public:
     void requestNextPage();
 
     // -------- 写入日志（JSON，异步，结果通过 logAppended 信号返回）--------
+    // 日志会被缓冲，短时间内的多条写入合并为一次批量操作后统一刷新 UI
     void writeLog(const QJsonObject &record);
 
     // -------- 历史查询（异步，结果通过 historyReady 信号返回）--------
@@ -67,6 +68,7 @@ signals:
     void _requestPrevPage();
     void _requestNextPage();
     void _requestAppendLog(const QJsonObject &record);
+    void _requestAppendBatch(const QVector<QJsonObject> &records);
     void _requestCleanOldLogs();
     void _requestQueryHistory(const HistoryQuery &query);
     void _requestAvailableDates();
@@ -75,6 +77,7 @@ private slots:
     void onNavigationStateChanged(bool hasPrev, bool hasNext,
                                    const QString &file, int page, int pageCount);
     void onMidnightCleanup();
+    void flushPendingLogs();
 
 private:
     void scheduleMidnight();
@@ -82,6 +85,8 @@ private:
     LogFileSystem *m_fs           = nullptr;
     QThread       *m_workerThread = nullptr;
     QTimer        *m_midnightTimer = nullptr;
+    QTimer        *m_batchTimer    = nullptr;
+    QVector<QJsonObject> m_pendingLogs;
 
     // 缓存的导航状态（由 worker thread 异步更新，主线程只读）
     bool    m_hasPrev     = false;

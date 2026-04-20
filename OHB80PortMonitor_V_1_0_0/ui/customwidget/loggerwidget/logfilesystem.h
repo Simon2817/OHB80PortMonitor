@@ -40,6 +40,8 @@ public slots:
     void requestNextPage();
     // 追加一条 JSON 日志到今天的文件
     void requestAppendLog(const QJsonObject &record);
+    // 批量追加日志（仅在全部写完后发出一次 pageReady / navigationState）
+    void requestAppendBatch(const QVector<QJsonObject> &records);
     // 清理超过 6 个月的年月目录
     void requestCleanOldLogs();
     // 查询历史记录

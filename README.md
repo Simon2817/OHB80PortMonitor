@@ -8,6 +8,55 @@
 
 ## 更新日志
 
+### 2026-04-20 10:50 - Simon
+**固件升级功能完善**
+
+#### 修改内容
+1. **添加固件升级功能**
+   - 创建 `FirmwareUpdateWidget` 固件升级界面，支持多设备固件升级
+   - 创建 `FirmwareUpdateConfigSettingWidget` 配置界面，设置升级参数（bin 文件、超时、间隔等）
+   - 创建 `FirmwareUpdateSettingWidget` 容器，用 SettingWidget 封装升级界面
+   - 配置界面和升级界面分离，通过 Qt 信号槽通信
+   - 集成到 DebugPage，提供完整的固件升级工作流
+
+2. **解决多设备固件升级失败问题**
+   - 重构 `FirmwareUpgrader` 类，支持并发多设备固件升级
+   - 使用共享 `BinFileReader` 实例，避免重复读取文件
+   - 优化任务调度，使用 `Scheduler` 管理升级任务
+   - 添加设备状态跟踪和错误处理机制
+   - 实现进度条显示和设备状态实时更新
+
+3. **调整固件升级历史日志样式**
+   - 日志级别统一为 info、warn、error 三种（移除 trace）
+   - 数据帧日志从 trace 改为 info 级别
+   - 移除日志样式中的背景色，仅保留文字颜色（error 红色、warn 橙色）
+   - 优化日志显示效果，选中项使用蓝色背景和白色文字
+   - 实现日志批量写入，减少 UI 刷新频率
+
+4. **添加固件升级截图功能**
+   - 实现 `captureTableWidgetScreenshot()` 方法，捕获升级结果表格
+   - 截图保存路径：`bin/log/firmware_upgrade/capture/`
+   - 文件命名格式：`firmware_update_yyyyMMdd_hhmmss_zzz.png`
+   - 在所有设备升级完成时自动触发截图
+   - 截图前强制 UI 刷新，确保最终状态完整
+
+#### 技术细节
+- **架构分离**：配置界面和升级界面通过信号槽解耦，`binFilePathChanged` 信号同步文件路径
+- **日志级别**：spdlog 级别映射，trace → info，确保日志记录仅使用 info/warn/error
+- **截图时机**：在 `onTaskAllProgress` 中 `completed >= total` 时触发，先 `repaint()` 再截图
+- **批量写入**：使用定时器缓冲日志，100ms 后批量写入磁盘，减少信号发射频率
+
+#### 影响范围
+- 新增文件：`ui/customwidget/debugpage/firmwareupdatesettingwidget.h`、`.cpp`
+- 修改文件：`ui/customwidget/debugpage/firmwareupdateconfigsettingwidget.h`、`.cpp`
+- 修改文件：`ui/customwidget/debugpage/firmwareupdatewidget.cpp`（添加截图调用、日志级别调整）
+- 修改文件：`ui/customwidget/loggerwidget/logfilesystem.h`、`.cpp`（批量写入）
+- 修改文件：`ui/customwidget/loggerwidget/logicalfilesystem.h`、`.cpp`（批量缓冲）
+- 修改文件：`ui/debugpage.h`、`ui/debugpage.cpp`（集成两个 SettingWidget）
+- 修改文件：`ui/customwidget/loggerwidget/logitemdelegate.cpp`（样式调整）
+
+---
+
 ### 2026-04-18 11:30 - Simon
 **固件升级任务迁移**
 

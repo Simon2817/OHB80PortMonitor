@@ -1,11 +1,13 @@
 #include "debugpage.h"
 #include "ui_debugpage.h"
 #include "customwidget/debugpage/firmwareupdateconfigsettingwidget.h"
+#include "customwidget/debugpage/firmwareupdatesettingwidget.h"
 
 DebugPage::DebugPage(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DebugPage)
     , m_firmwareConfigWidget(nullptr)
+    , m_firmwareUpdateWidget(nullptr)
 {
     ui->setupUi(this);
 
@@ -21,9 +23,17 @@ void DebugPage::initUI()
 {
     initNav();
     
-    // 创建并添加固件更新配置控件
+    // 固件更新配置 SettingWidget
     m_firmwareConfigWidget = new FirmwareUpdateConfigSettingWidget(this);
     ui->scrollAreaWidgetContents->layout()->addWidget(m_firmwareConfigWidget);
+
+    // 固件升级 SettingWidget（独立的 SettingWidget，与配置界面平级）
+    m_firmwareUpdateWidget = new FirmwareUpdateSettingWidget(this);
+    ui->scrollAreaWidgetContents->layout()->addWidget(m_firmwareUpdateWidget);
+
+    // 配置界面选择 bin 文件后 → 同步到升级界面
+    connect(m_firmwareConfigWidget, &FirmwareUpdateConfigSettingWidget::binFilePathChanged,
+            m_firmwareUpdateWidget, &FirmwareUpdateSettingWidget::setFirmwareFilePath);
     
     ui->scrollAreaWidgetContents->layout()->addItem(
         new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding)

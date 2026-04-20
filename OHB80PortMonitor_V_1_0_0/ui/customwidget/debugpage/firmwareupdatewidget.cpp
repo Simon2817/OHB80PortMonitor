@@ -118,12 +118,8 @@ void FirmwareUpdateWidget::initLoggerWidget()
         const QString &level = record.value(0);
         if (level == QStringLiteral("error")) {
             style.setForeground(QColor(255, 80,  80));
-            style.setBackground(QColor(60,  10,  10));
         } else if (level == QStringLiteral("warn")) {
             style.setForeground(QColor(255, 165,  0));
-            style.setBackground(QColor(50,  35,   0));
-        } else if (level == QStringLiteral("trace")) {
-            style.setForeground(QColor(128, 128, 128));
         }
     });
 
@@ -569,7 +565,7 @@ void FirmwareUpdateWidget::onTaskDeviceStateLog(const QString &qrcode,
                 if (i > offset) hex += ' ';
                 hex += QString::number(static_cast<quint8>(frame[i]), 16).rightJustified(2, '0').toUpper();
             }
-            writeLog("trace", qrcode, QStringLiteral("数据帧"), hex);
+            writeLog("info", qrcode, QStringLiteral("数据帧"), hex);
         }
     }
 }
@@ -608,6 +604,10 @@ void FirmwareUpdateWidget::onTaskAllProgress(int completed, int total)
     updateProgressBar();
 
     if (completed >= total && total > 0) {
+        // 先把表格最终状态渲染出来，再截图
+        ui->tableWidgetSelectedDevices->viewport()->repaint();
+        captureTableWidgetScreenshot();
+
         QString summary;
         summary += QString("Firmware update finished.\n\n");
         summary += QString("Total:   %1 device(s)\n").arg(total);
