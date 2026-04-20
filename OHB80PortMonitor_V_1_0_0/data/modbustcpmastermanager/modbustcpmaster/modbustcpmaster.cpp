@@ -89,7 +89,12 @@ void ModbusTcpMaster::onConnectionStatusChanged(ModbusConnecter::ConnectionStatu
     switch (status) {
         case ModbusConnecter::ConnectionStatus::Connected:
             qDebug() << "ModbusTcpMaster: [设备ID=" << ID << "] 设备连接成功，准备启动指令发送器";
-            resumeChildren();
+            // 固件升级期间不恢复子模块，避免 receiver 重新连接 socket 抢读升级响应数据
+            if (m_firmwareUpgrader && m_firmwareUpgrader->isRunning()) {
+                qDebug() << "ModbusTcpMaster: [设备ID=" << ID << "] 固件升级进行中，跳过 resumeChildren";
+            } else {
+                resumeChildren();
+            }
             break;
         case ModbusConnecter::ConnectionStatus::Disconnected:
             qDebug() << "ModbusTcpMaster: [设备ID=" << ID << "] 连接断开，暂停发送器和定时发送器（不干预连接器重连）";
@@ -236,11 +241,17 @@ void ModbusTcpMaster::pauseChildren()
 
     if (m_sender) {
         m_sender->stop();
+        if (m_sender->receiver()) {
+            m_sender->receiver()->disconnectSocketSignalSlots();
+        }
     }
 }
 
 void ModbusTcpMaster::resumeChildren()
 {
+    if (m_sender && m_sender->receiver()) {
+        m_sender->receiver()->reconnectSocketSignalSlots();
+    }
     startSender();
     startInitialIssuer();
     if (!m_initialIssuer || m_initialStarted == true) {

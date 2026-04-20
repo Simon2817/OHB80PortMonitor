@@ -74,9 +74,7 @@ void FirmwareUpgradeTask::stop()
     for (auto it = m_upgraderMap.constBegin(); it != m_upgraderMap.constEnd(); ++it) {
         FirmwareUpgrader *upgrader = it.value();
         if (upgrader && upgrader->isRunning()) {
-            QMetaObject::invokeMethod(upgrader, [upgrader]() {
-                upgrader->stop();
-            }, Qt::QueuedConnection);
+            upgrader->stop();  // FirmwareUpgrader::stop() 已内置线程分派
         }
     }
 
@@ -145,15 +143,12 @@ void FirmwareUpgradeTask::startUpgrading()
                 this, &FirmwareUpgradeTask::onUpgraderFinished,
                 Qt::QueuedConnection);
 
-        // upgrader 属于 worker 线程，必须通过 QueuedConnection 在其线程中调用 start()
-        QString filePath = m_binFilePath;
-        QMetaObject::invokeMethod(upgrader, [upgrader, filePath]() {
-            upgrader->start(filePath);
-        }, Qt::QueuedConnection);
+        // FirmwareUpgrader::start() 已内置线程分派，直接调用即可
+        upgrader->start(m_binFilePath);
 
-        qDebug() << "[Scheduler][FirmwareUpgradeTask][startUpgrading] 启动设备升级:" << deviceId;
-        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, 
-            QString("[Scheduler][FirmwareUpgradeTask][startUpgrading] 启动设备升级: %1").arg(deviceId).toStdString());
+        qDebug() << "[Scheduler][FirmwareUpgradeTask][startUpgrading] 启动设备升级:" << deviceId << "信号已连接";
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+            QString("[Scheduler][FirmwareUpgradeTask][startUpgrading] 启动设备升级: %1 (信号已连接)").arg(deviceId).toStdString());
     }
 
     if (m_totalCount == 0) {
@@ -174,6 +169,8 @@ void FirmwareUpgradeTask::onUpgraderStateChanged(const QString &masterId,
                                                   const QString &logMessage,
                                                   const QByteArray &frame)
 {
+    qDebug() << "[Scheduler][FirmwareUpgradeTask][onUpgraderStateChanged] 设备:" << masterId
+             << "状态:" << static_cast<int>(state) << "消息:" << logMessage;
     emit deviceStateLog(masterId, state, logMessage, frame);
 }
 
@@ -189,6 +186,9 @@ void FirmwareUpgradeTask::onUpgraderFinished(const QString &masterId,
 {
     if (m_stopped) return;
 
+    qDebug() << "[Scheduler][FirmwareUpgradeTask][onUpgraderFinished] 接收设备完成信号:" << masterId
+             << "成功:" << success << "错误:" << errorMessage;
+
     FirmwareUpgrader *upgrader = m_upgraderMap.value(masterId, nullptr);
     if (!upgrader) return;
 
@@ -199,16 +199,17 @@ void FirmwareUpgradeTask::onUpgraderFinished(const QString &masterId,
         ? QString("[%1] 固件升级成功").arg(masterId)
         : QString("[%1] 固件升级失败: %2").arg(masterId, errorMessage);
 
-    qDebug() << "[Scheduler][FirmwareUpgradeTask][onUpgraderFinished]" << resultMsg;
-    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), 
+    qDebug() << "[Scheduler][FirmwareUpgradeTask][onUpgraderFinished] 发送 deviceFinished 信号:" << resultMsg;
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(),
         success ? Level::INFO : Level::ERROR,
         QString("[Scheduler][FirmwareUpgradeTask][onUpgraderFinished] %1").arg(resultMsg).toStdString());
 
     emit deviceFinished(masterId, success, resultMsg);
 
     m_finishedCount++;
+    qDebug() << "[Scheduler][FirmwareUpgradeTask][onUpgraderFinished] 进度:" << m_finishedCount << "/" << m_totalCount;
     emit allProgress(m_finishedCount, m_totalCount);
-    
+
     int overallPercent = (m_totalCount > 0) ? (m_finishedCount * 100 / m_totalCount) : 0;
     emit progress(overallPercent,
                   QString("已完成 %1/%2").arg(m_finishedCount).arg(m_totalCount));
@@ -216,8 +217,8 @@ void FirmwareUpgradeTask::onUpgraderFinished(const QString &masterId,
     if (m_finishedCount >= m_totalCount) {
         setState(Finished);
         QString msg = QString("固件升级全部完成，共 %1 台设备").arg(m_totalCount);
-        qDebug() << "[Scheduler][FirmwareUpgradeTask][onUpgraderFinished]" << msg;
-        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, 
+        qDebug() << "[Scheduler][FirmwareUpgradeTask][onUpgraderFinished] 所有设备完成，发送 finished 信号";
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
             QString("[Scheduler][FirmwareUpgradeTask][onUpgraderFinished] %1").arg(msg).toStdString());
         emit finished(true, msg);
     }

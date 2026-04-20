@@ -105,10 +105,20 @@ signals:
 private slots:
     /**
      * @brief 重连定时器槽函数
-     * @details 由重连定时器触发，执行重新连接逻辑
+     * @details 由重连定时器触发，执行非阻塞重新连接逻辑
      */
     void onReconnectTimer();
     
+    /**
+     * @brief 异步重连成功槽函数
+     */
+    void onAsyncReconnectConnected();
+
+    /**
+     * @brief 异步重连超时槽函数
+     */
+    void onAsyncReconnectTimeout();
+
     /**
      * @brief 连接检查定时器槽函数
      * @details 定期检查连接状态，连接丢失时触发重连
@@ -125,15 +135,19 @@ private:
     bool performConnection();                               // 执行连接操作
     QString getErrorString(QAbstractSocket::SocketError errorCode) const; // 获取错误描述字符串
 
+    void cleanupAsyncReconnect();                    // 清理异步重连临时连接
+
     QTcpSocket* m_socket = nullptr;         // 外部传入的 Socket（不拥有）
     QString m_host;                        // 目标主机地址
     quint16 m_port = 0;                    // 目标端口
     QString& m_masterId;                   // Master 设备 ID（引用）
     ConnectionStatus m_status;             // 当前连接状态
     bool m_autoReconnectEnabled;           // 自动重连启用标志
+    bool m_asyncReconnecting = false;      // 是否正在异步重连中
     int m_retryCount;                      // 当前重试次数
     QString m_lastError;                   // 最近一次错误信息
     QTimer* m_reconnectTimer;             // 重连定时器
+    QTimer* m_reconnectTimeoutTimer = nullptr; // 异步重连超时定时器
     QTimer* m_connectionCheckTimer = nullptr;       // 连接检查定时器 
 };
 

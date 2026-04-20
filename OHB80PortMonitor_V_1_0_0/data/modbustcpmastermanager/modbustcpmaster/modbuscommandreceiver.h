@@ -50,6 +50,17 @@ public:
      */
     bool hasPendingCommand() const;
 
+    /**
+     * @brief 断开 socket 的 readyRead/disconnected 信号与本对象槽的连接
+     * @details 固件升级期间需要独占 socket，调用此方法避免 receiver 抢读数据
+     */
+    void disconnectSocketSignalSlots();
+
+    /**
+     * @brief 重新连接 socket 的 readyRead/disconnected 信号到本对象槽
+     */
+    void reconnectSocketSignalSlots();
+
 signals:
     /**
      * @brief 指令成功信号

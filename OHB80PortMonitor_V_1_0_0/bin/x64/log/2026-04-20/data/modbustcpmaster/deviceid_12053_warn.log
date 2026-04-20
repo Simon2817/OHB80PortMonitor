@@ -1,0 +1,7 @@
+[2026-04-20 08:44:35] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12053 TCP 连接失败 - error=主机不能访问
+[2026-04-20 08:44:38] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12053 TCP 连接失败 - error=主机不能访问
+[2026-04-20 08:44:41] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12053 TCP 连接失败 - error=主机不能访问
+[2026-04-20 08:45:17] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12053 TCP 连接失败 - error=套接字操作超时
+[2026-04-20 08:46:43] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12053 TCP 连接失败 - error=套接字操作超时
+[2026-04-20 08:59:03] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12053 TCP 连接失败 - error=套接字操作超时
+[2026-04-20 09:04:30] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12053 TCP 连接失败 - error=套接字操作超时

@@ -7,6 +7,8 @@ namespace Ui {
 class DebugPage;
 }
 
+class FirmwareUpdateConfigSettingWidget;
+
 class DebugPage : public QWidget
 {
     Q_OBJECT
@@ -15,8 +17,17 @@ public:
     explicit DebugPage(QWidget *parent = nullptr);
     ~DebugPage();
 
+    void initUI();
+
+    // 导航栏
+    void initNav();
+
+private slots:
+    void navBtnClicked();
+
 private:
     Ui::DebugPage *ui;
+    FirmwareUpdateConfigSettingWidget *m_firmwareConfigWidget;
 };
 
 #endif // DEBUGPAGE_H

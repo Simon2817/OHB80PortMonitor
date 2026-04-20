@@ -5,7 +5,6 @@
 #include <QTimer>
 #include <QByteArray>
 #include <QString>
-#include <string>
 
 class QTcpSocket;
 class BinFileReader;
@@ -37,8 +36,7 @@ public:
     explicit FirmwareUpgrader(ModbusTcpMaster *master, QObject *parent = nullptr);
     ~FirmwareUpgrader();
 
-    void setLogFile(const std::string &logFile)  { m_logFile = logFile; }
-    void setLogPrefix(const std::string &prefix) { m_logPrefix = prefix; }
+    // 日志路径自动通过 AppLogger::ModbusMasterLoggerPath(m_master->ID) 获取
 
     // ======== 公开方法 ========
 
@@ -152,9 +150,9 @@ private:
     int m_sendInterval    = 160;    // 分包发送间隔(ms)
     int m_transferTimeout = 3000;   // 数据传输响应超时(ms)
 
-    // 定时器
-    QTimer m_timeoutTimer;    // 通用超时定时器（准备/传输/版本指令共用）
-    QTimer m_sendTimer;       // 分包发送定时器
+    // 定时器（指针成员，以 this 为父对象，确保 moveToThread 时跟随迁移）
+    QTimer *m_timeoutTimer;   // 通用超时定时器（准备/传输/版本指令共用）
+    QTimer *m_sendTimer;      // 分包发送定时器
 
     // 升级过程状态数据
     QString    m_targetVersion;         // 从文件名解析的目标版本号
@@ -164,9 +162,6 @@ private:
     int        m_fileTotalSize      = 0;
     QByteArray m_fileCrc;              // 预计算的文件 CRC（2字节）
     QByteArray m_lastSentFrame;        // 最后发送的指令帧（用于超时时反馈）
-
-    std::string m_logFile;
-    std::string m_logPrefix;
 };
 
 #endif // FIRMWARE_UPGRADER_H

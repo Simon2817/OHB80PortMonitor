@@ -1,0 +1,1565 @@
+[2026-04-20 08:44:35] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:35] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:36] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:36] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:37] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:37] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:38] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:38] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:39] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:39] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:40] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:40] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:41] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:41] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:42] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:42] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:43] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:43] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:44] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:44] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:45] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:45] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:46] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:46] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:47] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:44:47] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:44:47] [INFO] [CraneMapWidget::handleSetDeviceDoubleClicked]Set设备双击: uiId=2, firstFoupQrCode=12001
+[2026-04-20 08:44:47] [INFO] [CraneMapWidget::handleSetDeviceDoubleClicked]找到目标设备键: 200
+[2026-04-20 08:44:47] [INFO] [CraneMapWidget::scrollToDevice()]滚动到设备: key=200
+[2026-04-20 08:44:48] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:48] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:44:49] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:49] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:44:50] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:50] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:44:51] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:51] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:44:52] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:52] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:44:53] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:53] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:44:54] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:54] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:44:55] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:55] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:44:56] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:56] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:44:57] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:57] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:44:58] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:58] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:44:59] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:44:59] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:00] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:00] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:01] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:01] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:02] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:02] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:03] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:03] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:04] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:04] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:05] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:05] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:06] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:06] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:07] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:07] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:08] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:09] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:09] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:10] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:10] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:11] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:11] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:12] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:12] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:13] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:13] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:14] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:14] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:15] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:15] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:16] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:16] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:17] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:17] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:18] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:18] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:19] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:45:19] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:45:20] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:20] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:21] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:21] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:22] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:22] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:46] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:45:46] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:45:47] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:45:47] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:45:48] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:48] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:49] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:49] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:50] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:50] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:51] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:51] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:52] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:52] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:53] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:53] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:54] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:54] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:55] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:55] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:56] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:56] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:57] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:57] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:58] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:58] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:45:59] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:45:59] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:00] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:00] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:01] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:01] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:02] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:02] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:03] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:03] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:04] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:04] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:05] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:05] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:06] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:06] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:07] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:07] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:08] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:09] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:09] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:10] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:10] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:11] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:11] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:12] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:12] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:13] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:13] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:14] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:14] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:15] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:15] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:16] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:16] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:17] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:17] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:18] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:18] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:19] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:19] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:20] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:20] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:21] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:21] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:22] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:22] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:23] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:23] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:24] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:24] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:25] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:25] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:26] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:27] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:27] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:27] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:28] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:29] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:29] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:30] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:30] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:31] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:31] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:32] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:32] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:33] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:33] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:34] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:34] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:35] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:35] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:36] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:36] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:36] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:37] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:37] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:38] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:38] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:39] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:39] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:40] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:40] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:41] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:41] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:42] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:42] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:43] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:43] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:44] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:44] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:45] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:45] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:47] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:47] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:47] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:47] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:48] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:48] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:49] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:49] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:50] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:50] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:51] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:51] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:52] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:52] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:53] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:53] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:54] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:54] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:55] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:55] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:56] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:56] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:57] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:57] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:58] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:58] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:46:59] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:46:59] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:00] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:00] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:01] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:01] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:02] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:02] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:03] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:03] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:04] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:04] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:05] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:06] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:06] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:07] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:07] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:08] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:09] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:09] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:10] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:10] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:11] [INFO] BinFileReader 构造完成, 默认分包大小: 256
+[2026-04-20 08:47:11] [INFO] setPacketSize(QVector) 自定义分包规则, 规则数: 2, 默认尾帧大小: 256
+[2026-04-20 08:47:11] [INFO] readBinFile 开始读取文件: C:/Users/Lenovo/Desktop/OHB/OHB_V_1_0_APP.bin
+[2026-04-20 08:47:11] [INFO] 文件大小: 31884 字节
+[2026-04-20 08:47:11] [INFO] 文件读取完毕, 共读取 31884 字节
+[2026-04-20 08:47:11] [INFO] splitData 开始分包, 数据总大小: 31884 字节, 自定义规则数: 2, 默认帧大小: 256
+[2026-04-20 08:47:11] [INFO] splitData 分包完成, 总帧数: 125
+[2026-04-20 08:47:11] [INFO] 状态变更为 ReadComplete, 分包数: 125
+[2026-04-20 08:47:11] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:11] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:12] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:12] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:13] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:13] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:14] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:15] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:15] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:16] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:16] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:17] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:17] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:18] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:18] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:19] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:19] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:20] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:20] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:21] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:21] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:22] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:22] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:23] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:23] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:23] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:24] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:25] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:25] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:26] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:26] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:27] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:27] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:28] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:28] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:28] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:29] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:29] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:30] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:30] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:31] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:31] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:32] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:32] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:33] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:33] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:47:34] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:47:34] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:07] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:58:07] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:58:08] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:58:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:58:09] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:58:09] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:58:10] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:58:10] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:58:11] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 08:58:11] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 08:58:12] [INFO] [CraneMapWidget::handleSetDeviceDoubleClicked]Set设备双击: uiId=2, firstFoupQrCode=12001
+[2026-04-20 08:58:12] [INFO] [CraneMapWidget::handleSetDeviceDoubleClicked]找到目标设备键: 200
+[2026-04-20 08:58:12] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:12] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:12] [INFO] [CraneMapWidget::scrollToDevice()]滚动到设备: key=200
+[2026-04-20 08:58:13] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:13] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:14] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:14] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:15] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:15] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:16] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:16] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:17] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:17] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:18] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:18] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:19] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:19] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:20] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:20] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:21] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:21] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:22] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:22] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:23] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:23] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:24] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:24] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:25] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:25] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:26] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:26] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:27] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:27] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:28] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:28] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:29] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:29] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:31] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:31] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:31] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:31] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:32] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:32] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:33] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:33] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:34] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:34] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:35] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:35] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:36] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:36] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:37] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:37] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:38] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:38] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:39] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:39] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:40] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:40] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:41] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:41] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:42] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:42] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:43] [INFO] BinFileReader 构造完成, 默认分包大小: 256
+[2026-04-20 08:58:43] [INFO] setPacketSize(QVector) 自定义分包规则, 规则数: 2, 默认尾帧大小: 256
+[2026-04-20 08:58:43] [INFO] readBinFile 开始读取文件: C:/Users/Lenovo/Desktop/OHB/OHB_V_1_0_APP.bin
+[2026-04-20 08:58:43] [INFO] 文件大小: 31884 字节
+[2026-04-20 08:58:43] [INFO] 文件读取完毕, 共读取 31884 字节
+[2026-04-20 08:58:43] [INFO] splitData 开始分包, 数据总大小: 31884 字节, 自定义规则数: 2, 默认帧大小: 256
+[2026-04-20 08:58:43] [INFO] 状态变更为 ReadComplete, 分包数: 125
+[2026-04-20 08:58:43] [INFO] splitData 分包完成, 总帧数: 125
+[2026-04-20 08:58:43] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:43] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:44] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:44] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:45] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:45] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:46] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:46] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:47] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:47] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:48] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:48] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:49] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:49] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:50] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:50] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:51] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:51] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:52] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:52] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:53] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:53] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:54] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:54] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:55] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:55] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:56] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:56] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:57] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:57] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:58] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:58] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:58:59] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:58:59] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:00] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:00] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:01] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:01] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:02] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:02] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:03] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:03] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:04] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:04] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:05] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:05] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:06] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:06] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:07] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:07] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:08] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:09] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:09] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:10] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:10] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:11] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:11] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:12] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:12] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:13] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:13] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:14] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:14] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:15] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:15] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:16] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:16] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:17] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:17] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:18] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:18] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:19] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:19] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:20] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:20] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:21] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:21] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:22] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:22] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:23] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:23] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:24] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:24] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:25] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:25] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:26] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:26] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:27] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:27] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:28] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:28] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:29] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:29] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:30] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:30] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:31] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:31] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:32] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:32] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:33] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:33] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:34] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:34] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:35] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:35] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:36] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:36] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:37] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:37] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:38] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:38] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:39] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:39] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:40] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:40] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:41] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:41] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:42] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:42] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:43] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:43] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:44] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:44] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:45] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:45] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:46] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:46] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:47] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:47] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:48] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:48] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:49] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:49] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:50] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:50] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:51] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:51] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:52] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:52] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:53] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:53] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:54] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:54] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:55] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:55] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:56] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:56] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:57] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:57] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:58] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:58] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 08:59:59] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 08:59:59] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:00] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:00] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:01] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:01] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:02] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:02] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:03] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:03] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:04] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:04] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:05] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:05] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:06] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:06] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:07] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:07] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:08] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:09] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:09] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:10] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:10] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:11] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:11] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:12] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:12] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:13] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:13] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:14] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:14] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:15] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:15] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:16] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:16] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:17] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:17] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:18] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:18] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:19] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:19] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:20] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:20] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:21] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:21] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:22] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:22] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:23] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:23] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:24] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:24] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:25] [DEBUG] getAllBytes 返回原始数据引用 31884 字节
+[2026-04-20 09:00:25] [DEBUG] getAllBytes 返回原始数据引用 31884 字节
+[2026-04-20 09:00:25] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:25] [DEBUG] getAllBytes 返回原始数据引用 31884 字节
+[2026-04-20 09:00:25] [DEBUG] getAllBytes 返回原始数据引用 31884 字节
+[2026-04-20 09:00:25] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:26] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:26] [DEBUG] packetAt index=0, 帧大小=248 字节
+[2026-04-20 09:00:26] [DEBUG] isLastPacket index=0, packetCount=125, isLast=0
+[2026-04-20 09:00:26] [DEBUG] packetAt index=0, 帧大小=248 字节
+[2026-04-20 09:00:26] [DEBUG] isLastPacket index=0, packetCount=125, isLast=0
+[2026-04-20 09:00:26] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:26] [DEBUG] isLastPacket index=1, packetCount=125, isLast=0
+[2026-04-20 09:00:26] [DEBUG] packetAt index=1, 帧大小=256 字节
+[2026-04-20 09:00:26] [DEBUG] isLastPacket index=1, packetCount=125, isLast=0
+[2026-04-20 09:00:26] [DEBUG] packetAt index=1, 帧大小=256 字节
+[2026-04-20 09:00:26] [DEBUG] isLastPacket index=2, packetCount=125, isLast=0
+[2026-04-20 09:00:26] [DEBUG] packetAt index=2, 帧大小=256 字节
+[2026-04-20 09:00:27] [DEBUG] isLastPacket index=2, packetCount=125, isLast=0
+[2026-04-20 09:00:27] [DEBUG] packetAt index=2, 帧大小=256 字节
+[2026-04-20 09:00:27] [DEBUG] isLastPacket index=3, packetCount=125, isLast=0
+[2026-04-20 09:00:27] [DEBUG] packetAt index=3, 帧大小=256 字节
+[2026-04-20 09:00:27] [DEBUG] isLastPacket index=3, packetCount=125, isLast=0
+[2026-04-20 09:00:27] [DEBUG] packetAt index=3, 帧大小=256 字节
+[2026-04-20 09:00:27] [DEBUG] packetAt index=4, 帧大小=256 字节
+[2026-04-20 09:00:27] [DEBUG] isLastPacket index=4, packetCount=125, isLast=0
+[2026-04-20 09:00:27] [DEBUG] isLastPacket index=4, packetCount=125, isLast=0
+[2026-04-20 09:00:27] [DEBUG] packetAt index=4, 帧大小=256 字节
+[2026-04-20 09:00:27] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:27] [DEBUG] isLastPacket index=5, packetCount=125, isLast=0
+[2026-04-20 09:00:27] [DEBUG] packetAt index=5, 帧大小=256 字节
+[2026-04-20 09:00:27] [DEBUG] isLastPacket index=5, packetCount=125, isLast=0
+[2026-04-20 09:00:27] [DEBUG] packetAt index=5, 帧大小=256 字节
+[2026-04-20 09:00:27] [DEBUG] isLastPacket index=6, packetCount=125, isLast=0
+[2026-04-20 09:00:27] [DEBUG] packetAt index=6, 帧大小=256 字节
+[2026-04-20 09:00:27] [DEBUG] isLastPacket index=6, packetCount=125, isLast=0
+[2026-04-20 09:00:27] [DEBUG] packetAt index=6, 帧大小=256 字节
+[2026-04-20 09:00:27] [DEBUG] isLastPacket index=7, packetCount=125, isLast=0
+[2026-04-20 09:00:27] [DEBUG] packetAt index=7, 帧大小=256 字节
+[2026-04-20 09:00:27] [DEBUG] isLastPacket index=7, packetCount=125, isLast=0
+[2026-04-20 09:00:27] [DEBUG] packetAt index=7, 帧大小=256 字节
+[2026-04-20 09:00:27] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=8, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=8, 帧大小=256 字节
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=8, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=8, 帧大小=256 字节
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=9, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=9, 帧大小=256 字节
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=9, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=9, 帧大小=256 字节
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=10, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=10, 帧大小=256 字节
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=10, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=10, 帧大小=256 字节
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=11, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=11, 帧大小=256 字节
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=11, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=11, 帧大小=256 字节
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=12, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=12, 帧大小=256 字节
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=12, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=12, 帧大小=256 字节
+[2026-04-20 09:00:28] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=13, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=13, 帧大小=256 字节
+[2026-04-20 09:00:28] [DEBUG] isLastPacket index=13, packetCount=125, isLast=0
+[2026-04-20 09:00:28] [DEBUG] packetAt index=13, 帧大小=256 字节
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=14, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=14, 帧大小=256 字节
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=14, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=14, 帧大小=256 字节
+[2026-04-20 09:00:29] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=15, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=15, 帧大小=256 字节
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=15, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=15, 帧大小=256 字节
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=16, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=16, 帧大小=256 字节
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=16, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=16, 帧大小=256 字节
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=17, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=17, 帧大小=256 字节
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=17, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=17, 帧大小=256 字节
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=18, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=18, 帧大小=256 字节
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=18, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=18, 帧大小=256 字节
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=19, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=19, 帧大小=256 字节
+[2026-04-20 09:00:29] [DEBUG] isLastPacket index=19, packetCount=125, isLast=0
+[2026-04-20 09:00:29] [DEBUG] packetAt index=19, 帧大小=256 字节
+[2026-04-20 09:00:30] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=20, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] packetAt index=20, 帧大小=256 字节
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=20, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] packetAt index=20, 帧大小=256 字节
+[2026-04-20 09:00:30] [DEBUG] packetAt index=21, 帧大小=256 字节
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=21, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=21, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] packetAt index=21, 帧大小=256 字节
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=22, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] packetAt index=22, 帧大小=256 字节
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=22, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] packetAt index=22, 帧大小=256 字节
+[2026-04-20 09:00:30] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=23, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] packetAt index=23, 帧大小=256 字节
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=23, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] packetAt index=23, 帧大小=256 字节
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=24, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] packetAt index=24, 帧大小=256 字节
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=24, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] packetAt index=24, 帧大小=256 字节
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=25, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] packetAt index=25, 帧大小=256 字节
+[2026-04-20 09:00:30] [DEBUG] isLastPacket index=25, packetCount=125, isLast=0
+[2026-04-20 09:00:30] [DEBUG] packetAt index=25, 帧大小=256 字节
+[2026-04-20 09:00:31] [DEBUG] isLastPacket index=26, packetCount=125, isLast=0
+[2026-04-20 09:00:31] [DEBUG] packetAt index=26, 帧大小=256 字节
+[2026-04-20 09:00:31] [DEBUG] isLastPacket index=26, packetCount=125, isLast=0
+[2026-04-20 09:00:31] [DEBUG] packetAt index=26, 帧大小=256 字节
+[2026-04-20 09:00:31] [DEBUG] isLastPacket index=27, packetCount=125, isLast=0
+[2026-04-20 09:00:31] [DEBUG] packetAt index=27, 帧大小=256 字节
+[2026-04-20 09:00:31] [DEBUG] isLastPacket index=27, packetCount=125, isLast=0
+[2026-04-20 09:00:31] [DEBUG] packetAt index=27, 帧大小=256 字节
+[2026-04-20 09:00:31] [DEBUG] isLastPacket index=28, packetCount=125, isLast=0
+[2026-04-20 09:00:31] [DEBUG] packetAt index=28, 帧大小=256 字节
+[2026-04-20 09:00:31] [DEBUG] isLastPacket index=28, packetCount=125, isLast=0
+[2026-04-20 09:00:31] [DEBUG] packetAt index=28, 帧大小=256 字节
+[2026-04-20 09:00:31] [DEBUG] isLastPacket index=29, packetCount=125, isLast=0
+[2026-04-20 09:00:31] [DEBUG] packetAt index=29, 帧大小=256 字节
+[2026-04-20 09:00:31] [DEBUG] isLastPacket index=29, packetCount=125, isLast=0
+[2026-04-20 09:00:31] [DEBUG] packetAt index=29, 帧大小=256 字节
+[2026-04-20 09:00:31] [DEBUG] isLastPacket index=30, packetCount=125, isLast=0
+[2026-04-20 09:00:31] [DEBUG] packetAt index=30, 帧大小=256 字节
+[2026-04-20 09:00:31] [DEBUG] isLastPacket index=30, packetCount=125, isLast=0
+[2026-04-20 09:00:31] [DEBUG] packetAt index=30, 帧大小=256 字节
+[2026-04-20 09:00:31] [DEBUG] isLastPacket index=31, packetCount=125, isLast=0
+[2026-04-20 09:00:31] [DEBUG] packetAt index=31, 帧大小=256 字节
+[2026-04-20 09:00:32] [DEBUG] isLastPacket index=31, packetCount=125, isLast=0
+[2026-04-20 09:00:32] [DEBUG] packetAt index=31, 帧大小=256 字节
+[2026-04-20 09:00:32] [DEBUG] isLastPacket index=32, packetCount=125, isLast=0
+[2026-04-20 09:00:32] [DEBUG] packetAt index=32, 帧大小=256 字节
+[2026-04-20 09:00:32] [DEBUG] isLastPacket index=32, packetCount=125, isLast=0
+[2026-04-20 09:00:32] [DEBUG] packetAt index=32, 帧大小=256 字节
+[2026-04-20 09:00:32] [DEBUG] isLastPacket index=33, packetCount=125, isLast=0
+[2026-04-20 09:00:32] [DEBUG] packetAt index=33, 帧大小=256 字节
+[2026-04-20 09:00:32] [DEBUG] isLastPacket index=33, packetCount=125, isLast=0
+[2026-04-20 09:00:32] [DEBUG] packetAt index=33, 帧大小=256 字节
+[2026-04-20 09:00:32] [DEBUG] isLastPacket index=34, packetCount=125, isLast=0
+[2026-04-20 09:00:32] [DEBUG] packetAt index=34, 帧大小=256 字节
+[2026-04-20 09:00:32] [DEBUG] isLastPacket index=34, packetCount=125, isLast=0
+[2026-04-20 09:00:32] [DEBUG] packetAt index=34, 帧大小=256 字节
+[2026-04-20 09:00:32] [DEBUG] isLastPacket index=35, packetCount=125, isLast=0
+[2026-04-20 09:00:32] [DEBUG] packetAt index=35, 帧大小=256 字节
+[2026-04-20 09:00:32] [DEBUG] isLastPacket index=35, packetCount=125, isLast=0
+[2026-04-20 09:00:32] [DEBUG] packetAt index=35, 帧大小=256 字节
+[2026-04-20 09:00:32] [DEBUG] isLastPacket index=36, packetCount=125, isLast=0
+[2026-04-20 09:00:32] [DEBUG] packetAt index=36, 帧大小=256 字节
+[2026-04-20 09:00:32] [DEBUG] isLastPacket index=36, packetCount=125, isLast=0
+[2026-04-20 09:00:32] [DEBUG] packetAt index=36, 帧大小=256 字节
+[2026-04-20 09:00:32] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=37, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=37, 帧大小=256 字节
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=37, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=37, 帧大小=256 字节
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=38, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=38, 帧大小=256 字节
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=38, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=38, 帧大小=256 字节
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=39, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=39, 帧大小=256 字节
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=39, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=39, 帧大小=256 字节
+[2026-04-20 09:00:33] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=40, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=40, 帧大小=256 字节
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=40, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=40, 帧大小=256 字节
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=41, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=41, 帧大小=256 字节
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=41, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=41, 帧大小=256 字节
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=42, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=42, 帧大小=256 字节
+[2026-04-20 09:00:33] [DEBUG] isLastPacket index=42, packetCount=125, isLast=0
+[2026-04-20 09:00:33] [DEBUG] packetAt index=42, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=43, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=43, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=43, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=43, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=44, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=44, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=44, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=44, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=45, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=45, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=45, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=45, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=46, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=46, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=46, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=46, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=47, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=47, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=47, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=47, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=48, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=48, 帧大小=256 字节
+[2026-04-20 09:00:34] [DEBUG] isLastPacket index=48, packetCount=125, isLast=0
+[2026-04-20 09:00:34] [DEBUG] packetAt index=48, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=49, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] packetAt index=49, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=49, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] packetAt index=49, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=50, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] packetAt index=50, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=50, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] packetAt index=50, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] packetAt index=51, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=51, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=51, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] packetAt index=51, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=52, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] packetAt index=52, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=52, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] packetAt index=52, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=53, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] packetAt index=53, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=53, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] packetAt index=53, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=54, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] packetAt index=54, 帧大小=256 字节
+[2026-04-20 09:00:35] [DEBUG] isLastPacket index=54, packetCount=125, isLast=0
+[2026-04-20 09:00:35] [DEBUG] packetAt index=54, 帧大小=256 字节
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=55, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=55, 帧大小=256 字节
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=55, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=55, 帧大小=256 字节
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=56, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=56, 帧大小=256 字节
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=56, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=56, 帧大小=256 字节
+[2026-04-20 09:00:36] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=57, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=57, 帧大小=256 字节
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=57, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=57, 帧大小=256 字节
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=58, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=58, 帧大小=256 字节
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=58, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=58, 帧大小=256 字节
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=59, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=59, 帧大小=256 字节
+[2026-04-20 09:00:36] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=59, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=59, 帧大小=256 字节
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=60, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=60, 帧大小=256 字节
+[2026-04-20 09:00:36] [DEBUG] isLastPacket index=60, packetCount=125, isLast=0
+[2026-04-20 09:00:36] [DEBUG] packetAt index=60, 帧大小=256 字节
+[2026-04-20 09:00:37] [DEBUG] isLastPacket index=61, packetCount=125, isLast=0
+[2026-04-20 09:00:37] [DEBUG] packetAt index=61, 帧大小=256 字节
+[2026-04-20 09:00:37] [DEBUG] isLastPacket index=61, packetCount=125, isLast=0
+[2026-04-20 09:00:37] [DEBUG] packetAt index=61, 帧大小=256 字节
+[2026-04-20 09:00:37] [DEBUG] isLastPacket index=62, packetCount=125, isLast=0
+[2026-04-20 09:00:37] [DEBUG] packetAt index=62, 帧大小=256 字节
+[2026-04-20 09:00:37] [DEBUG] isLastPacket index=62, packetCount=125, isLast=0
+[2026-04-20 09:00:37] [DEBUG] packetAt index=62, 帧大小=256 字节
+[2026-04-20 09:00:37] [DEBUG] isLastPacket index=63, packetCount=125, isLast=0
+[2026-04-20 09:00:37] [DEBUG] packetAt index=63, 帧大小=256 字节
+[2026-04-20 09:00:37] [DEBUG] isLastPacket index=63, packetCount=125, isLast=0
+[2026-04-20 09:00:37] [DEBUG] packetAt index=63, 帧大小=256 字节
+[2026-04-20 09:00:37] [DEBUG] isLastPacket index=64, packetCount=125, isLast=0
+[2026-04-20 09:00:37] [DEBUG] packetAt index=64, 帧大小=256 字节
+[2026-04-20 09:00:37] [DEBUG] isLastPacket index=64, packetCount=125, isLast=0
+[2026-04-20 09:00:37] [DEBUG] packetAt index=64, 帧大小=256 字节
+[2026-04-20 09:00:37] [DEBUG] isLastPacket index=65, packetCount=125, isLast=0
+[2026-04-20 09:00:37] [DEBUG] packetAt index=65, 帧大小=256 字节
+[2026-04-20 09:00:37] [DEBUG] isLastPacket index=65, packetCount=125, isLast=0
+[2026-04-20 09:00:37] [DEBUG] packetAt index=65, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=66, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=66, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=66, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=66, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=67, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=67, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=67, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=67, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=68, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=68, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=68, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=68, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=69, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=69, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=69, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=69, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=70, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=70, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=70, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=70, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=71, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=71, 帧大小=256 字节
+[2026-04-20 09:00:38] [DEBUG] isLastPacket index=71, packetCount=125, isLast=0
+[2026-04-20 09:00:38] [DEBUG] packetAt index=71, 帧大小=256 字节
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=72, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=72, 帧大小=256 字节
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=72, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=72, 帧大小=256 字节
+[2026-04-20 09:00:39] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=73, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=73, 帧大小=256 字节
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=73, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=73, 帧大小=256 字节
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=74, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=74, 帧大小=256 字节
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=74, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=74, 帧大小=256 字节
+[2026-04-20 09:00:39] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=75, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=75, 帧大小=256 字节
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=75, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=75, 帧大小=256 字节
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=76, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=76, 帧大小=256 字节
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=76, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=76, 帧大小=256 字节
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=77, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=77, 帧大小=256 字节
+[2026-04-20 09:00:39] [DEBUG] isLastPacket index=77, packetCount=125, isLast=0
+[2026-04-20 09:00:39] [DEBUG] packetAt index=77, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=78, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] packetAt index=78, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=78, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] packetAt index=78, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=79, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] packetAt index=79, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=79, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] packetAt index=79, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=80, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] packetAt index=80, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=80, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] packetAt index=80, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=81, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] packetAt index=81, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=81, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] packetAt index=81, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] packetAt index=82, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=82, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=82, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] packetAt index=82, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=83, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] packetAt index=83, 帧大小=256 字节
+[2026-04-20 09:00:40] [DEBUG] isLastPacket index=83, packetCount=125, isLast=0
+[2026-04-20 09:00:40] [DEBUG] packetAt index=83, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=84, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=84, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=84, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=84, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=85, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=85, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=85, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=85, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=86, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=86, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=86, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=86, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=87, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=87, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=87, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=87, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=88, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=88, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=88, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=88, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=89, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=89, 帧大小=256 字节
+[2026-04-20 09:00:41] [DEBUG] isLastPacket index=89, packetCount=125, isLast=0
+[2026-04-20 09:00:41] [DEBUG] packetAt index=89, 帧大小=256 字节
+[2026-04-20 09:00:42] [DEBUG] isLastPacket index=90, packetCount=125, isLast=0
+[2026-04-20 09:00:42] [DEBUG] packetAt index=90, 帧大小=256 字节
+[2026-04-20 09:00:42] [DEBUG] isLastPacket index=90, packetCount=125, isLast=0
+[2026-04-20 09:00:42] [DEBUG] packetAt index=90, 帧大小=256 字节
+[2026-04-20 09:00:42] [DEBUG] isLastPacket index=91, packetCount=125, isLast=0
+[2026-04-20 09:00:42] [DEBUG] packetAt index=91, 帧大小=256 字节
+[2026-04-20 09:00:42] [DEBUG] isLastPacket index=91, packetCount=125, isLast=0
+[2026-04-20 09:00:42] [DEBUG] packetAt index=91, 帧大小=256 字节
+[2026-04-20 09:00:42] [DEBUG] isLastPacket index=92, packetCount=125, isLast=0
+[2026-04-20 09:00:42] [DEBUG] packetAt index=92, 帧大小=256 字节
+[2026-04-20 09:00:42] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:42] [DEBUG] isLastPacket index=92, packetCount=125, isLast=0
+[2026-04-20 09:00:42] [DEBUG] packetAt index=92, 帧大小=256 字节
+[2026-04-20 09:00:42] [DEBUG] isLastPacket index=93, packetCount=125, isLast=0
+[2026-04-20 09:00:42] [DEBUG] packetAt index=93, 帧大小=256 字节
+[2026-04-20 09:00:42] [DEBUG] isLastPacket index=93, packetCount=125, isLast=0
+[2026-04-20 09:00:42] [DEBUG] packetAt index=93, 帧大小=256 字节
+[2026-04-20 09:00:42] [DEBUG] isLastPacket index=94, packetCount=125, isLast=0
+[2026-04-20 09:00:42] [DEBUG] packetAt index=94, 帧大小=256 字节
+[2026-04-20 09:00:42] [DEBUG] isLastPacket index=94, packetCount=125, isLast=0
+[2026-04-20 09:00:42] [DEBUG] packetAt index=94, 帧大小=256 字节
+[2026-04-20 09:00:42] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:42] [DEBUG] isLastPacket index=95, packetCount=125, isLast=0
+[2026-04-20 09:00:42] [DEBUG] packetAt index=95, 帧大小=256 字节
+[2026-04-20 09:00:43] [DEBUG] isLastPacket index=95, packetCount=125, isLast=0
+[2026-04-20 09:00:43] [DEBUG] packetAt index=95, 帧大小=256 字节
+[2026-04-20 09:00:43] [DEBUG] isLastPacket index=96, packetCount=125, isLast=0
+[2026-04-20 09:00:43] [DEBUG] packetAt index=96, 帧大小=256 字节
+[2026-04-20 09:00:43] [DEBUG] isLastPacket index=96, packetCount=125, isLast=0
+[2026-04-20 09:00:43] [DEBUG] packetAt index=96, 帧大小=256 字节
+[2026-04-20 09:00:43] [DEBUG] isLastPacket index=97, packetCount=125, isLast=0
+[2026-04-20 09:00:43] [DEBUG] packetAt index=97, 帧大小=256 字节
+[2026-04-20 09:00:43] [DEBUG] isLastPacket index=97, packetCount=125, isLast=0
+[2026-04-20 09:00:43] [DEBUG] packetAt index=97, 帧大小=256 字节
+[2026-04-20 09:00:43] [DEBUG] isLastPacket index=98, packetCount=125, isLast=0
+[2026-04-20 09:00:43] [DEBUG] packetAt index=98, 帧大小=256 字节
+[2026-04-20 09:00:43] [DEBUG] isLastPacket index=98, packetCount=125, isLast=0
+[2026-04-20 09:00:43] [DEBUG] packetAt index=98, 帧大小=256 字节
+[2026-04-20 09:00:43] [DEBUG] isLastPacket index=99, packetCount=125, isLast=0
+[2026-04-20 09:00:43] [DEBUG] packetAt index=99, 帧大小=256 字节
+[2026-04-20 09:00:43] [DEBUG] isLastPacket index=99, packetCount=125, isLast=0
+[2026-04-20 09:00:43] [DEBUG] packetAt index=99, 帧大小=256 字节
+[2026-04-20 09:00:43] [DEBUG] isLastPacket index=100, packetCount=125, isLast=0
+[2026-04-20 09:00:43] [DEBUG] packetAt index=100, 帧大小=256 字节
+[2026-04-20 09:00:43] [DEBUG] isLastPacket index=100, packetCount=125, isLast=0
+[2026-04-20 09:00:43] [DEBUG] packetAt index=100, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=101, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=101, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=101, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=101, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=102, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=102, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=102, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=102, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=103, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=103, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=103, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=103, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=104, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=104, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=104, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=104, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=105, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=105, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=105, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=105, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=106, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=106, 帧大小=256 字节
+[2026-04-20 09:00:44] [DEBUG] isLastPacket index=106, packetCount=125, isLast=0
+[2026-04-20 09:00:44] [DEBUG] packetAt index=106, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=107, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=107, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=107, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=107, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=108, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=108, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=108, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=108, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=109, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=109, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=109, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=109, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=110, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=110, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=110, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=110, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=111, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=111, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=111, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=111, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=112, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=112, 帧大小=256 字节
+[2026-04-20 09:00:45] [DEBUG] isLastPacket index=112, packetCount=125, isLast=0
+[2026-04-20 09:00:45] [DEBUG] packetAt index=112, 帧大小=256 字节
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=113, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=113, 帧大小=256 字节
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=113, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=113, 帧大小=256 字节
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=114, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=114, 帧大小=256 字节
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=114, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=114, 帧大小=256 字节
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=115, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=115, 帧大小=256 字节
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=115, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=115, 帧大小=256 字节
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=116, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=116, 帧大小=256 字节
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=116, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=116, 帧大小=256 字节
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=117, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=117, 帧大小=256 字节
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=117, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=117, 帧大小=256 字节
+[2026-04-20 09:00:46] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=118, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=118, 帧大小=256 字节
+[2026-04-20 09:00:46] [DEBUG] isLastPacket index=118, packetCount=125, isLast=0
+[2026-04-20 09:00:46] [DEBUG] packetAt index=118, 帧大小=256 字节
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=119, packetCount=125, isLast=0
+[2026-04-20 09:00:47] [DEBUG] packetAt index=119, 帧大小=256 字节
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=119, packetCount=125, isLast=0
+[2026-04-20 09:00:47] [DEBUG] packetAt index=119, 帧大小=256 字节
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=120, packetCount=125, isLast=0
+[2026-04-20 09:00:47] [DEBUG] packetAt index=120, 帧大小=256 字节
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=120, packetCount=125, isLast=0
+[2026-04-20 09:00:47] [DEBUG] packetAt index=120, 帧大小=256 字节
+[2026-04-20 09:00:47] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:47] [DEBUG] packetAt index=121, 帧大小=256 字节
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=121, packetCount=125, isLast=0
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=121, packetCount=125, isLast=0
+[2026-04-20 09:00:47] [DEBUG] packetAt index=121, 帧大小=256 字节
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=122, packetCount=125, isLast=0
+[2026-04-20 09:00:47] [DEBUG] packetAt index=122, 帧大小=256 字节
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=122, packetCount=125, isLast=0
+[2026-04-20 09:00:47] [DEBUG] packetAt index=122, 帧大小=256 字节
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=123, packetCount=125, isLast=0
+[2026-04-20 09:00:47] [DEBUG] packetAt index=123, 帧大小=256 字节
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=123, packetCount=125, isLast=0
+[2026-04-20 09:00:47] [DEBUG] packetAt index=123, 帧大小=256 字节
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=124, packetCount=125, isLast=1
+[2026-04-20 09:00:47] [DEBUG] packetAt index=124, 帧大小=148 字节
+[2026-04-20 09:00:47] [DEBUG] isLastPacket index=124, packetCount=125, isLast=1
+[2026-04-20 09:00:47] [DEBUG] packetAt index=124, 帧大小=148 字节
+[2026-04-20 09:00:49] [INFO] BinFileReader 析构开始
+[2026-04-20 09:00:49] [INFO] clean 清理读取器, 释放原始数据 31884 字节, 分包数 125
+[2026-04-20 09:00:49] [INFO] BinFileReader 析构完成
+[2026-04-20 09:00:51] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:52] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:58] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:58] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:00:59] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:00:59] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:00] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:00] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:01] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:01] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:02] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:02] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:03] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:03] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:04] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:04] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:05] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:05] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:06] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:06] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:07] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:07] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:08] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:09] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:09] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:10] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:10] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:11] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:11] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:12] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:12] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:13] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:13] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:14] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:14] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:15] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:15] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:16] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:16] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:17] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:17] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:18] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:18] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:19] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:19] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:20] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:20] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:21] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:21] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:22] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:22] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:23] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:23] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:24] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:24] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:25] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:25] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:26] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:26] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:27] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:27] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:28] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:28] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:29] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:29] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:30] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:30] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:31] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:31] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:32] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:32] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:33] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:33] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:34] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:34] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:35] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:35] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:36] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:36] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:37] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:37] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:38] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:38] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:39] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:39] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:40] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:40] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:41] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:41] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:42] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:42] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:43] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:43] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:44] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:44] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:45] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:45] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:46] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:46] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:47] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:47] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:48] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:48] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:49] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:49] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:50] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:50] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:51] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:51] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:52] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:52] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:53] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:53] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:54] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:54] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:55] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:55] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:56] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:56] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:57] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:57] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:58] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:58] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:01:59] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:01:59] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:00] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:00] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:01] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:01] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:02] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:02] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:03] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:03] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:04] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:04] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:05] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:06] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:06] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:06] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:07] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:08] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:09] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:09] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:10] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:11] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:11] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:12] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:12] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:13] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:13] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:14] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:14] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:15] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:15] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:16] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:16] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:17] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:17] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:18] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:18] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:18] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:19] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:20] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:20] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:21] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:21] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:21] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:22] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:22] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:23] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:24] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:24] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:24] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:25] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:25] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:26] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:26] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:27] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:27] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:28] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:28] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:29] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:29] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:30] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:30] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:31] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:31] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:32] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:32] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:33] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:33] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:34] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:34] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:35] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:35] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:36] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:36] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:37] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:37] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:38] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:38] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:39] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:39] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:40] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:40] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:41] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:41] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:42] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:42] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:02:43] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: FoupLevel, device count: 80
+[2026-04-20 09:02:43] [INFO] [CraneMapWidget::refreshDeviceData]Updated 80 devices
+[2026-04-20 09:03:34] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:34] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:35] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:35] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:36] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:36] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:37] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:37] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:38] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:38] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:39] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:39] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:40] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:40] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:41] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:41] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:42] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:42] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:43] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:43] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:44] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:44] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:45] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:45] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:46] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:46] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:47] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:47] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:48] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:48] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:49] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:49] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:50] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:50] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:51] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:51] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:52] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:52] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:53] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:53] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:54] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:54] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:55] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:55] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:56] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:56] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:57] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:57] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:58] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:58] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:03:59] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:03:59] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:00] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:00] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:01] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:01] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:02] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:02] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:03] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:03] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:04] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:04] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:05] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:05] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:06] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:06] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:07] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:07] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:08] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:09] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:09] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:10] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:10] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:11] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:11] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:12] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:12] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:13] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:13] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:14] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:14] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:15] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:15] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:16] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:16] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:17] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:17] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:18] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:18] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:19] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:19] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:20] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:20] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:21] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:21] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:22] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:22] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:23] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:23] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:24] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:24] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:25] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:25] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:26] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:26] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:27] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:27] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:28] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:28] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:29] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:29] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:30] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:30] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:31] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:31] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:32] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:32] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:33] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:33] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:34] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:34] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:35] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:35] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:36] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:36] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:37] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:37] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:38] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:38] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:39] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:39] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:40] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:40] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:41] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:41] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:42] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:42] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:43] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:43] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:44] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:44] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:45] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:45] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:46] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:46] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:47] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:47] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:48] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:48] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:49] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:49] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:50] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:50] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:51] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:51] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:52] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:52] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:53] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:53] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:54] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:54] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:55] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:55] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:56] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:56] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:57] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:57] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:58] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:58] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:04:59] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:04:59] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:00] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:00] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:01] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:01] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:02] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:02] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:03] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:03] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:04] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:04] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:05] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:05] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:06] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:06] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:07] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:07] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:08] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:08] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:09] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:09] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:10] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:10] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:11] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:11] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:12] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:12] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:13] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:13] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:14] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:14] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:15] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:15] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:16] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:16] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:17] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:17] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:18] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:18] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices
+[2026-04-20 09:05:19] [INFO] [CraneMapWidget::refreshDeviceData]Called, current map level: SetLevel, device count: 20
+[2026-04-20 09:05:19] [INFO] [CraneMapWidget::refreshDeviceData]Updated 20 devices

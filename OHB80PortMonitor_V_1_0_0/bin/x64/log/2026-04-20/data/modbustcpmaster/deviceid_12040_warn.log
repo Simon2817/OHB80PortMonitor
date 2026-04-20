@@ -1,0 +1,4 @@
+[2026-04-20 08:44:34] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12040 TCP 连接失败 - error=主机不能访问
+[2026-04-20 08:44:38] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12040 TCP 连接失败 - error=主机不能访问
+[2026-04-20 08:44:41] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12040 TCP 连接失败 - error=主机不能访问
+[2026-04-20 08:44:44] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12040 TCP 连接失败 - error=主机不能访问

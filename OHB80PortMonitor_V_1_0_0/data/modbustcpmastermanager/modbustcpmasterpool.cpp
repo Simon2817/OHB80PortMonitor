@@ -1,6 +1,10 @@
 #include "modbustcpmasterpool.h"
 #include "modbustcpmaster.h"
+#include "modbustcpmaster/firmwareupgrader.h"
 #include "modbusconfigparser.h"
+#include "app/applogger.h"
+#include "loggermanager.h"
+#include "app/firmwareconfig.h"
 #include "initialcommandissuer.h"
 #include "periodiccommandsender.h"
 #include "cycliccommandissuer.h"
@@ -273,6 +277,26 @@ void ModbusTcpMasterPool::initializeMaster(ModbusTcpMaster* master)
                  << "超时=" << periodicConfig.timeout
                  << "重试=" << periodicConfig.retryCount;
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterPool] 已配置 PeriodicCommandSender: 指令数=%1 间隔=%2 超时=%3 重试=%4").arg(periodicQueue.size()).arg(periodicConfig.interval).arg(periodicConfig.timeout).arg(periodicConfig.retryCount).toStdString());
+    }
+
+    // 初始化固件升级模块
+    auto upgrader = master->firmwareUpgrader();
+    if (upgrader) {
+        FirmwareConfig &fwConfig = FirmwareConfig::getInstance();
+        upgrader->setPrepareTimeout(fwConfig.prepareCmdTimeoutMs());
+        upgrader->setWaitingTime(fwConfig.waitingForEquipmentReadyMs());
+        upgrader->setSendInterval(fwConfig.sendIntervalForDataMs());
+        upgrader->setTransferTimeout(fwConfig.transferResponseTimeoutMs());
+        
+        qDebug() << "[data][ModbusTcpMasterPool] 已配置 FirmwareUpgrader:"
+                 << "PrepareTimeout=" << fwConfig.prepareCmdTimeoutMs() << "ms"
+                 << "WaitingTime=" << fwConfig.waitingForEquipmentReadyMs() << "ms"
+                 << "SendInterval=" << fwConfig.sendIntervalForDataMs() << "ms"
+                 << "TransferTimeout=" << fwConfig.transferResponseTimeoutMs() << "ms";
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+            QString("[data][ModbusTcpMasterPool] 已配置 FirmwareUpgrader: PrepareTimeout=%1ms WaitingTime=%2ms SendInterval=%3ms TransferTimeout=%4ms")
+                .arg(fwConfig.prepareCmdTimeoutMs()).arg(fwConfig.waitingForEquipmentReadyMs())
+                .arg(fwConfig.sendIntervalForDataMs()).arg(fwConfig.transferResponseTimeoutMs()).toStdString());
     }
 }
 

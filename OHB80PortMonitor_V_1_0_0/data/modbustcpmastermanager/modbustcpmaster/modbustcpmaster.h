@@ -198,12 +198,12 @@ private:
     void createInitialIssuerIfNeeded();
 
     /**
-     * @brief 暂停子控件
+     * @brief 暂停子控件（含断开 receiver 的 socket 信号槽）
      */
     void pauseChildren();
 
     /**
-     * @brief 恢复子控件
+     * @brief 恢复子控件（含重连 receiver 的 socket 信号槽）
      */
     void resumeChildren();
 

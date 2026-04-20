@@ -65,6 +65,25 @@ bool ModbusCommandReceiver::hasPendingCommand() const
     return m_hasPendingCommand;
 }
 
+void ModbusCommandReceiver::disconnectSocketSignalSlots()
+{
+    if (m_socket) {
+        cancelPending();
+        disconnect(m_socket, &QTcpSocket::readyRead, this, &ModbusCommandReceiver::onReadyRead);
+        disconnect(m_socket, &QTcpSocket::disconnected, this, &ModbusCommandReceiver::onSocketDisconnected);
+        qDebug() << "[ModbusCommandReceiver] [设备ID=" << m_masterId << "] disconnectSocketSignalSlots: receiver 已断开 socket 信号";
+    }
+}
+
+void ModbusCommandReceiver::reconnectSocketSignalSlots()
+{
+    if (m_socket) {
+        connect(m_socket, &QTcpSocket::readyRead, this, &ModbusCommandReceiver::onReadyRead, Qt::UniqueConnection);
+        connect(m_socket, &QTcpSocket::disconnected, this, &ModbusCommandReceiver::onSocketDisconnected, Qt::UniqueConnection);
+        qDebug() << "[ModbusCommandReceiver] [设备ID=" << m_masterId << "] reconnectSocketSignalSlots: receiver 已重连 socket 信号";
+    }
+}
+
 void ModbusCommandReceiver::onReadyRead()
 {
     if (!m_socket) {

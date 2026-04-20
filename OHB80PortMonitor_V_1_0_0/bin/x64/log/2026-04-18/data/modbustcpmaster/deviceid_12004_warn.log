@@ -1,2 +1,0 @@
-[2026-04-18 11:22:36] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12004 TCP 连接失败 - error=套接字操作超时
-[2026-04-18 11:35:42] [WARN] [data][ModbusConnecter][performConnection]：设备ID=12004 TCP 连接失败 - error=套接字操作超时

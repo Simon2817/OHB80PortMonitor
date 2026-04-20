@@ -43,7 +43,7 @@ void PeriodicCommandSender::onRoundComplete(QList<ModbusCommand> failedCommands)
         LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, disconnectMsg.toStdString());
         stop();
         m_consecutiveFailRounds = 0;
-        emit disconnectDevice();
+        // emit disconnectDevice();
     }
 }
 

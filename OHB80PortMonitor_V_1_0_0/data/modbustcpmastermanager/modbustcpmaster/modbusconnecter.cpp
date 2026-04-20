@@ -19,8 +19,30 @@ ModbusConnecter::ModbusConnecter(QTcpSocket& socket, const QString& host, quint1
     m_reconnectTimer->setSingleShot(true);
     connect(m_reconnectTimer, &QTimer::timeout, this, &ModbusConnecter::onReconnectTimer);
 
+    m_reconnectTimeoutTimer = new QTimer(this);
+    m_reconnectTimeoutTimer->setSingleShot(true);
+    m_reconnectTimeoutTimer->setInterval(3000);
+    connect(m_reconnectTimeoutTimer, &QTimer::timeout, this, &ModbusConnecter::onAsyncReconnectTimeout);
+
     m_connectionCheckTimer->setInterval(30000);
     connect(m_connectionCheckTimer, &QTimer::timeout, this, &ModbusConnecter::checkConnection);
+
+    // 异步重连成功信号
+    connect(m_socket, &QTcpSocket::connected, this, &ModbusConnecter::onAsyncReconnectConnected);
+
+    // 异步重连失败信号 — 连接错误时快速触发下次重试
+    connect(m_socket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),
+            this, [this](QAbstractSocket::SocketError) {
+        if (!m_asyncReconnecting) return;
+        // 连接失败，立即清理并安排下次重试
+        cleanupAsyncReconnect();
+        setStatus(ConnectionStatus::Error);
+        m_lastError = m_socket->errorString();
+        emit connectionError(m_lastError);
+        if (m_autoReconnectEnabled) {
+            m_reconnectTimer->start();
+        }
+    });
 
     connect(m_socket, &QTcpSocket::disconnected, this, [this]() {
         if (m_status != ConnectionStatus::Connected) {
@@ -63,12 +85,10 @@ bool ModbusConnecter::connectDevice(ConnectionMode mode)
         m_autoReconnectEnabled = false;
         stopAutoReconnect();
     }
-    
-    setStatus(ConnectionStatus::Connecting);
 
-    if (performConnection()) {
+    // 如果已经连接，直接返回
+    if (m_socket->state() == QAbstractSocket::ConnectedState) {
         setStatus(ConnectionStatus::Connected);
-
         if (m_autoReconnectEnabled) {
             QTimer::singleShot(10000, this, [this]() {
                 if (m_status == ConnectionStatus::Connected) {
@@ -77,16 +97,25 @@ bool ModbusConnecter::connectDevice(ConnectionMode mode)
             });
         }
         return true;
-    } else {
-        setStatus(ConnectionStatus::Error);
-        emit connectionError(m_lastError);
-
-        if (m_autoReconnectEnabled) {
-            startAutoReconnect();
-        }
-
-        return false;
     }
+
+    // 非阻塞连接：发起 connectToHost 后立即返回，不阻塞事件循环
+    // 连接结果通过 connected/error 信号异步通知
+    setStatus(ConnectionStatus::Connecting);
+
+    if (m_socket->state() != QAbstractSocket::UnconnectedState) {
+        m_socket->abort();
+    }
+
+    QString logMsg = QString("设备ID=%1 正在尝试连接服务器 %2:%3（非阻塞）").arg(m_masterId).arg(m_host).arg(m_port);
+    qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] " << logMsg;
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][connectDevice]：%1").arg(logMsg).toStdString());
+
+    m_asyncReconnecting = true;
+    m_socket->connectToHost(m_host, m_port);
+    m_reconnectTimeoutTimer->start(); // 3秒超时
+
+    return true; // 请求已接受，结果异步通知
 }
 
 bool ModbusConnecter::disconnectDevice(ConnectionMode mode)
@@ -220,7 +249,12 @@ void ModbusConnecter::stopAutoReconnect()
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Stopped auto-reconnect";
         LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][stopAutoReconnect]：设备ID=%1 停止自动重连").arg(m_masterId).toStdString());
     }
-    
+
+    // 清理异步重连状态
+    if (m_asyncReconnecting) {
+        cleanupAsyncReconnect();
+    }
+
     m_autoReconnectEnabled = false;
 }
 
@@ -248,27 +282,70 @@ void ModbusConnecter::onReconnectTimer()
         return;
     }
 
+    // 如果已经在异步重连中，跳过
+    if (m_asyncReconnecting) {
+        return;
+    }
+
     m_retryCount++;
-    QString logMsg = QString("设备ID=%1 第 %2 次重连尝试").arg(m_masterId).arg(m_retryCount);
+    QString logMsg = QString("设备ID=%1 第 %2 次重连尝试（非阻塞）").arg(m_masterId).arg(m_retryCount);
     qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] " << logMsg;
     LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][onReconnectTimer]：%1").arg(logMsg).toStdString());
 
-    if (performConnection()) {
-        setStatus(ConnectionStatus::Connected);
-        m_retryCount = 0;
+    // 非阻塞重连：发起 connectToHost 后立即返回，不阻塞事件循环
+    if (m_socket->state() != QAbstractSocket::UnconnectedState) {
+        m_socket->abort();
+    }
 
-        QTimer::singleShot(10000, this, [this]() {
-            if (m_status == ConnectionStatus::Connected) {
-                startConnectionCheck();
-            }
-        });
-        qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Reconnection successful";
-        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][onReconnectTimer]：设备ID=%1 重连成功").arg(m_masterId).toStdString());
-    } else {
-        setStatus(ConnectionStatus::Error);
-        emit connectionError(m_lastError);
+    m_asyncReconnecting = true;
+    setStatus(ConnectionStatus::Connecting);
+    m_socket->connectToHost(m_host, m_port);
+    m_reconnectTimeoutTimer->start(); // 3秒超时
+}
+
+void ModbusConnecter::onAsyncReconnectConnected()
+{
+    // 仅在异步重连过程中处理
+    if (!m_asyncReconnecting) {
+        return;
+    }
+
+    cleanupAsyncReconnect();
+    setStatus(ConnectionStatus::Connected);
+    m_retryCount = 0;
+
+    QTimer::singleShot(10000, this, [this]() {
+        if (m_status == ConnectionStatus::Connected) {
+            startConnectionCheck();
+        }
+    });
+    qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Reconnection successful (非阻塞)";
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][onAsyncReconnectConnected]：设备ID=%1 重连成功").arg(m_masterId).toStdString());
+}
+
+void ModbusConnecter::onAsyncReconnectTimeout()
+{
+    if (!m_asyncReconnecting) {
+        return;
+    }
+
+    // 超时：中止连接尝试
+    m_socket->abort();
+    cleanupAsyncReconnect();
+    setStatus(ConnectionStatus::Error);
+    m_lastError = "Connection timeout (non-blocking)";
+    emit connectionError(m_lastError);
+
+    // 安排下次重连
+    if (m_autoReconnectEnabled) {
         m_reconnectTimer->start();
     }
+}
+
+void ModbusConnecter::cleanupAsyncReconnect()
+{
+    m_asyncReconnecting = false;
+    m_reconnectTimeoutTimer->stop();
 }
 
 void ModbusConnecter::checkConnection()

@@ -1,3 +1,0 @@
-[2026-04-18 11:36:16] [INFO] [data][ModbusTcpMaster][enterState]：设备ID=12016 状态切换: 空闲 -> 连接中
-[2026-04-18 11:36:16] [INFO] [data][ModbusConnecter][setStatus]：设备ID=12016 状态转变：已断开 -> 连接中
-[2026-04-18 11:36:16] [INFO] [data][ModbusConnecter][performConnection]：设备ID=12016 正在尝试连接服务器 127.0.0.1:515

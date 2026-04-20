@@ -44,29 +44,29 @@ void CyclicCommandIssuer::setExecutionCount(int count)
 
 void CyclicCommandIssuer::start()
 {
-    if (m_commandQueue.isEmpty()) {
-        qDebug() << "[CyclicCommandIssuer] 指令队列为空，无法启动";
-        emit logMessage("[CyclicCommandIssuer] 指令队列为空，无法启动");
-        return;
-    }
+    // if (m_commandQueue.isEmpty()) {
+    //     qDebug() << "[CyclicCommandIssuer] 指令队列为空，无法启动";
+    //     emit logMessage("[CyclicCommandIssuer] 指令队列为空，无法启动");
+    //     return;
+    // }
 
-    m_running = true;
-    m_completedRounds = 0;
-    m_failedCommands.clear();
-    m_currentIndex = 0;
-    m_pendingCount = 0;
-    m_waitingForBusy = false;
+    // m_running = true;
+    // m_completedRounds = 0;
+    // m_failedCommands.clear();
+    // m_currentIndex = 0;
+    // m_pendingCount = 0;
+    // m_waitingForBusy = false;
 
-    qDebug() << "[CyclicCommandIssuer] 启动循环下发"
-             << "指令数:" << m_commandQueue.size()
-             << "轮数:" << (m_executionCount == 0 ? "无限" : QString::number(m_executionCount))
-             << "间隔:" << m_intervalMs << "ms";
-    emit logMessage(QString("[CyclicCommandIssuer] 启动循环下发 指令数:%1 轮数:%2 间隔:%3ms")
-                    .arg(m_commandQueue.size())
-                    .arg(m_executionCount == 0 ? "无限" : QString::number(m_executionCount))
-                    .arg(m_intervalMs));
+    // qDebug() << "[CyclicCommandIssuer] 启动循环下发"
+    //          << "指令数:" << m_commandQueue.size()
+    //          << "轮数:" << (m_executionCount == 0 ? "无限" : QString::number(m_executionCount))
+    //          << "间隔:" << m_intervalMs << "ms";
+    // emit logMessage(QString("[CyclicCommandIssuer] 启动循环下发 指令数:%1 轮数:%2 间隔:%3ms")
+    //                 .arg(m_commandQueue.size())
+    //                 .arg(m_executionCount == 0 ? "无限" : QString::number(m_executionCount))
+    //                 .arg(m_intervalMs));
 
-    sendCurrentCommand();
+    // sendCurrentCommand();
 }
 
 void CyclicCommandIssuer::stop()

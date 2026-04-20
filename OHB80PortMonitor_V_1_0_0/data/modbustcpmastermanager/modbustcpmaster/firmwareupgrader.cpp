@@ -2,12 +2,14 @@
 #include "modbustcpmaster.h"
 #include "modbuscrc.h"
 #include "loggermanager.h"
+#include "applogger.h"
 #include "binfilereader.h"
 #include "qthelper.h"
 
 #include <QTcpSocket>
 #include <QRegularExpression>
 #include <QFileInfo>
+#include <QThread>
 
 // ======== 固定指令帧定义 ========
 const QByteArray FirmwareUpgrader::PREPARE_CMD       = QByteArray::fromHex("010600AA0000A9EA");
@@ -23,12 +25,14 @@ FirmwareUpgrader::FirmwareUpgrader(ModbusTcpMaster *master, QObject *parent)
     , m_socket(master->m_socket)
     , m_firmwareVersion(master->m_firmwareVersion)
 {
-    m_timeoutTimer.setSingleShot(true);
-    m_sendTimer.setSingleShot(false);
+    m_timeoutTimer = new QTimer(this);
+    m_sendTimer    = new QTimer(this);
+    m_timeoutTimer->setSingleShot(true);
+    m_sendTimer->setSingleShot(false);
 
-    connect(&m_timeoutTimer, &QTimer::timeout,
+    connect(m_timeoutTimer, &QTimer::timeout,
             this, &FirmwareUpgrader::onTimeout);
-    connect(&m_sendTimer, &QTimer::timeout,
+    connect(m_sendTimer, &QTimer::timeout,
             this, &FirmwareUpgrader::onSendTimer);
 }
 
@@ -62,7 +66,8 @@ void FirmwareUpgrader::emitState(UpgradeState state, const QString &msg, const Q
 {
     m_state = state;
     emit stateChanged(m_master->ID, state, msg, frame);
-    LoggerManager::instance().log(m_logFile, Level::INFO, "{}{}", m_logPrefix, msg.toStdString());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+        QString("[data][FirmwareUpgrader][emitState]：%1").arg(msg).toStdString());
 }
 
 // ======================================================
@@ -70,14 +75,35 @@ void FirmwareUpgrader::emitState(UpgradeState state, const QString &msg, const Q
 // ======================================================
 void FirmwareUpgrader::start(const QString &binFilePath)
 {
+    // 跨线程安全：若调用线程非所属线程，转发到所属线程执行
+    if (QThread::currentThread() != thread()) {
+        qDebug() << "[FirmwareUpgrader][start] 设备ID=" << m_master->ID
+                 << "跨线程调用, 当前线程=" << QThread::currentThread()
+                 << "目标线程=" << thread()
+                 << "目标线程运行中=" << thread()->isRunning();
+        bool ok = QMetaObject::invokeMethod(this, [this, binFilePath]() {
+            qDebug() << "[FirmwareUpgrader][start] 设备ID=" << m_master->ID
+                     << "lambda 已在 worker 线程执行, 线程=" << QThread::currentThread();
+            start(binFilePath);
+        }, Qt::QueuedConnection);
+        qDebug() << "[FirmwareUpgrader][start] 设备ID=" << m_master->ID
+                 << "invokeMethod 结果=" << ok;
+        return;
+    }
+
+    qDebug() << "[FirmwareUpgrader][start] 设备ID=" << m_master->ID
+             << "进入 start() 主体, 线程=" << QThread::currentThread();
+
     if (m_running) {
-        LoggerManager::instance().log(m_logFile, Level::WARN,
-            "{}[固件升级] 升级器已在运行中，忽略重复启动", m_logPrefix);
+        qDebug() << "[FirmwareUpgrader][start] 设备ID=" << m_master->ID << "已在运行中，忽略";
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+            QString("[data][FirmwareUpgrader][start]：设备ID=%1 升级器已在运行中，忽略重复启动").arg(m_master->ID).toStdString());
         return;
     }
 
     // 检查 master 连接状态
     if (!m_master || !m_master->isConnected()) {
+        qDebug() << "[FirmwareUpgrader][start] 设备ID=" << m_master->ID << "设备未连接";
         finishWithResult(false, UpgradeState::Preparing,
                          "[固件升级] 执行状态: Preparing - 设备未连接，无法开始固件升级");
         return;
@@ -98,8 +124,8 @@ void FirmwareUpgrader::start(const QString &binFilePath)
                          QString("[固件升级] 执行状态: Preparing - 无法从文件名解析版本号: %1").arg(binFilePath));
         return;
     }
-    LoggerManager::instance().log(m_logFile, Level::INFO,
-        "{}[固件升级] 目标版本号: {}", m_logPrefix, m_targetVersion.toStdString());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+        QString("[data][FirmwareUpgrader][start]：设备ID=%1 目标版本号: %2").arg(m_master->ID).arg(m_targetVersion).toStdString());
 
     // ============================================================================
     // 3. 检查 BinFileReader（必须由外部预先设置）
@@ -133,8 +159,8 @@ void FirmwareUpgrader::start(const QString &binFilePath)
         return;
     }
     
-    LoggerManager::instance().log(m_logFile, Level::INFO,
-        "{}[固件升级] 使用预设的 BinFileReader（已读取完成）", m_logPrefix);
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+        QString("[data][FirmwareUpgrader][start]：设备ID=%1 使用预设的 BinFileReader（已读取完成）").arg(m_master->ID).toStdString());
 
     m_totalPackets  = m_binFileReader->packetCount();
     m_fileTotalSize = m_binFileReader->getAllBytes().size();
@@ -157,12 +183,11 @@ void FirmwareUpgrader::start(const QString &binFilePath)
         m_fileCrc = ModbusCrc::modbusCRC16(crcInput);
     }
 
-    LoggerManager::instance().log(m_logFile, Level::INFO,
-        "{}[固件升级] 文件大小: {} 字节，分包数: {}，CRC: {}",
-        m_logPrefix, m_fileTotalSize, m_totalPackets,
-        m_fileCrc.toHex(' ').toUpper().toStdString());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+        QString("[data][FirmwareUpgrader][start]：设备ID=%1 文件大小: %2 字节，分包数: %3，CRC: %4")
+            .arg(m_master->ID).arg(m_fileTotalSize).arg(m_totalPackets).arg(QString(m_fileCrc.toHex(' ').toUpper())).toStdString());
 
-    // 5. 暂停 master 普通收发子模块，防止干扰固件升级期间的 socket 通信
+    // 5. 暂停 master 普通收发子模块（含断开 receiver 的 socket 信号槽），防止干扰固件升级期间的 socket 通信
     m_master->pauseChildren();
     m_masterSubModulesPaused = true;
 
@@ -171,9 +196,9 @@ void FirmwareUpgrader::start(const QString &binFilePath)
     // 不清除会在下一次 readyRead 时被 readAll() 一并读入 m_receiveBuffer，
     // 导致准备升级响应校验失败（"准备升级指令响应异常"）
     if (m_socket && m_socket->bytesAvailable() > 0) {
-        LoggerManager::instance().log(m_logFile, Level::WARN,
-            "{}[固件升级] 排空 socket 残留数据 {} 字节",
-            m_logPrefix, m_socket->bytesAvailable());
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+            QString("[data][FirmwareUpgrader][start]：设备ID=%1 排空 socket 残留数据 %2 字节")
+                .arg(m_master->ID).arg(m_socket->bytesAvailable()).toStdString());
         m_socket->readAll();
     }
 
@@ -189,10 +214,18 @@ void FirmwareUpgrader::start(const QString &binFilePath)
 // ======================================================
 void FirmwareUpgrader::stop()
 {
+    // 跨线程安全：若调用线程非所属线程，转发到所属线程执行
+    if (QThread::currentThread() != thread()) {
+        QMetaObject::invokeMethod(this, [this]() {
+            stop();
+        }, Qt::QueuedConnection);
+        return;
+    }
+
     if (!m_running) return;
 
-    LoggerManager::instance().log(m_logFile, Level::INFO,
-        "{}[固件升级] 升级流程被取消", m_logPrefix);
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+        QString("[data][FirmwareUpgrader][stop]：设备ID=%1 升级流程被取消").arg(m_master->ID).toStdString());
 
     stopAllTimers();
     disconnectSocketSignals();
@@ -234,9 +267,20 @@ void FirmwareUpgrader::sendPrepareCommand()
                   .arg(QString(PREPARE_CMD.toHex(' ').toUpper())),
               PREPARE_CMD);
 
-    m_socket->write(PREPARE_CMD);
-    m_socket->flush();
-    m_timeoutTimer.start(m_commandTimeout);
+    qDebug() << "[FirmwareUpgrader] [设备ID=" << m_master->ID << "] sendPrepareCommand:"
+             << "socketState=" << m_socket->state()
+             << "socketValid=" << (m_socket != nullptr)
+             << "thread=" << QThread::currentThread()
+             << "socketThread=" << m_socket->thread();
+
+    const qint64 written = m_socket->write(PREPARE_CMD);
+    const bool flushed = m_socket->flush();
+    qDebug() << "[FirmwareUpgrader] [设备ID=" << m_master->ID << "] sendPrepareCommand:"
+             << "written=" << written << "/" << PREPARE_CMD.size()
+             << "flushed=" << flushed
+             << "bytesToWrite=" << m_socket->bytesToWrite();
+
+    m_timeoutTimer->start(m_commandTimeout);
 }
 
 // ======================================================
@@ -308,7 +352,7 @@ void FirmwareUpgrader::startDataTransfer()
         m_socket->write(firstFrame);
         m_socket->flush();
         emit progress(m_master->ID, 100);
-        m_timeoutTimer.start(m_transferTimeout);
+        m_timeoutTimer->start(m_transferTimeout);
     } else {
         emitState(UpgradeState::DataTransferStarted,
                   QString("[固件升级] 发送第一帧（%1 字节，数据区 %2 字节）")
@@ -320,8 +364,8 @@ void FirmwareUpgrader::startDataTransfer()
         emit progress(m_master->ID, (1 * 100) / qMax(1, m_totalPackets));
 
         m_currentPacketIndex = 1;
-        m_sendTimer.setInterval(m_sendInterval);
-        m_sendTimer.start();
+        m_sendTimer->setInterval(m_sendInterval);
+        m_sendTimer->start();
     }
 }
 
@@ -333,7 +377,7 @@ void FirmwareUpgrader::startDataTransfer()
 void FirmwareUpgrader::onSendTimer()
 {
     if (!m_binFileReader || m_currentPacketIndex >= m_totalPackets) {
-        m_sendTimer.stop();
+        m_sendTimer->stop();
         return;
     }
 
@@ -351,7 +395,7 @@ void FirmwareUpgrader::onSendTimer()
         emit progress(m_master->ID, ((m_currentPacketIndex + 1) * 100) / qMax(1, m_totalPackets));
         m_currentPacketIndex++;
     } else {
-        m_sendTimer.stop();
+        m_sendTimer->stop();
 
         QByteArray lastFrame = pkt;
         lastFrame.append(m_fileCrc);
@@ -367,7 +411,7 @@ void FirmwareUpgrader::onSendTimer()
         emit progress(m_master->ID, 100);
         m_currentPacketIndex++;
 
-        m_timeoutTimer.start(m_transferTimeout);
+        m_timeoutTimer->start(m_transferTimeout);
     }
 }
 
@@ -393,7 +437,7 @@ void FirmwareUpgrader::sendVersionCommand()
 
     m_socket->write(frame);
     m_socket->flush();
-    m_timeoutTimer.start(m_commandTimeout);
+    m_timeoutTimer->start(m_commandTimeout);
 }
 
 // ======================================================
@@ -405,12 +449,13 @@ void FirmwareUpgrader::onSocketReadyRead()
     QByteArray incoming = m_socket->readAll();
     m_receiveBuffer.append(incoming);
 
-    LoggerManager::instance().log(m_logFile, Level::INFO,
-        "{}[固件升级] readyRead: state={}, incoming={}, bufTotal={}",
-        m_logPrefix,
-        static_cast<int>(m_state),
-        incoming.size(),
-        m_receiveBuffer.size());
+    qDebug() << "[FirmwareUpgrader] [设备ID=" << m_master->ID << "] onSocketReadyRead:"
+             << "incoming=" << incoming.size() << "bufTotal=" << m_receiveBuffer.size()
+             << "raw=" << incoming.toHex(' ').toUpper();
+
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+        QString("[data][FirmwareUpgrader][onSocketReadyRead]：设备ID=%1 readyRead: state=%2, incoming=%3, bufTotal=%4")
+            .arg(m_master->ID).arg(static_cast<int>(m_state)).arg(incoming.size()).arg(m_receiveBuffer.size()).toStdString());
 
     bool shouldClearBuffer = false;
 
@@ -437,12 +482,12 @@ bool FirmwareUpgrader::handlePrepareResponse()
     int foundPos = QtHelper::kmpSearch(m_receiveBuffer, PREPARE_RESP);
     if (foundPos < 0) return false;
 
-    m_timeoutTimer.stop();
+    m_timeoutTimer->stop();
 
     if (foundPos > 0) {
-        LoggerManager::instance().log(m_logFile, Level::WARN,
-            "{}[固件升级] 跳过缓冲区头部 {} 字节残留帧，找到准备升级响应",
-            m_logPrefix, foundPos);
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+            QString("[data][FirmwareUpgrader][handlePrepareResponse]：设备ID=%1 跳过缓冲区头部 %2 字节残留帧，找到准备升级响应")
+                .arg(m_master->ID).arg(foundPos).toStdString());
     }
 
     QByteArray resp = m_receiveBuffer.mid(foundPos, PREPARE_RESP.size());
@@ -470,11 +515,9 @@ bool FirmwareUpgrader::handlePrepareResponse()
 // ======================================================
 bool FirmwareUpgrader::handleTransferResponse()
 {
-    LoggerManager::instance().log(m_logFile, Level::INFO,
-        "{}[固件升级] SendingLastFrame readyRead: buf({}) = {}",
-        m_logPrefix,
-        m_receiveBuffer.size(),
-        m_receiveBuffer.toHex(' ').toUpper().toStdString());
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+        QString("[data][FirmwareUpgrader][handleTransferResponse]：设备ID=%1 SendingLastFrame readyRead: buf(%2) = %3")
+            .arg(m_master->ID).arg(m_receiveBuffer.size()).arg(QString(m_receiveBuffer.toHex(' ').toUpper())).toStdString());
 
     struct { const QByteArray *pattern; int pos; } candidates[] = {
         { &TRANSFER_OK_RESP,   QtHelper::kmpSearch(m_receiveBuffer, TRANSFER_OK_RESP)   },
@@ -493,12 +536,12 @@ bool FirmwareUpgrader::handleTransferResponse()
     }
     if (foundPos < 0) return false;
 
-    m_timeoutTimer.stop();
+    m_timeoutTimer->stop();
 
     if (foundPos > 0) {
-        LoggerManager::instance().log(m_logFile, Level::WARN,
-            "{}[固件升级] SendingLastFrame: 跳过缓冲区头部 {} 字节残留帧",
-            m_logPrefix, foundPos);
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+            QString("[data][FirmwareUpgrader][handleTransferResponse]：设备ID=%1 SendingLastFrame: 跳过缓冲区头部 %2 字节残留帧")
+                .arg(m_master->ID).arg(foundPos).toStdString());
     }
 
     QByteArray resp = m_receiveBuffer.mid(foundPos, matchedPattern->size());
@@ -553,7 +596,7 @@ bool FirmwareUpgrader::handleVersionResponse()
     }
     if (startPos < 0 || m_receiveBuffer.size() < startPos + 9) return false;
 
-    m_timeoutTimer.stop();
+    m_timeoutTimer->stop();
     QByteArray resp = m_receiveBuffer.mid(startPos, 9);
 
     emitState(UpgradeState::VersionCmdFinished,
@@ -603,14 +646,16 @@ void FirmwareUpgrader::finishWithResult(bool success, UpgradeState state, const 
         m_master->resumeChildren();
     }
 
+    QString logMsg;
     if (success) {
-        LoggerManager::instance().log(m_logFile, Level::INFO,
-            "{}[固件升级] 成功完成", m_logPrefix);
+        logMsg = QString("[data][FirmwareUpgrader][finishWithResult]：设备ID=%1 固件升级成功完成").arg(m_master->ID);
     } else {
-        LoggerManager::instance().log(m_logFile, Level::ERROR,
-            "{}[固件升级] 失败终止（状态 {}）：{}",
-            m_logPrefix, static_cast<int>(state), errorMsg.toStdString());
+        logMsg = QString("[data][FirmwareUpgrader][finishWithResult]：设备ID=%1 固件升级失败终止（状态 %2）：%3")
+                     .arg(m_master->ID).arg(static_cast<int>(state)).arg(errorMsg);
     }
+
+    qDebug() << logMsg;
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO, logMsg.toStdString());
 
     emit finished(m_master->ID, success, state, errorMsg);
 }
@@ -620,19 +665,23 @@ void FirmwareUpgrader::finishWithResult(bool success, UpgradeState state, const 
 // ======================================================
 void FirmwareUpgrader::stopAllTimers()
 {
-    m_timeoutTimer.stop();
-    m_sendTimer.stop();
+    m_timeoutTimer->stop();
+    m_sendTimer->stop();
 }
 
 void FirmwareUpgrader::connectSocketSignals()
 {
     if (m_socket) {
-        connect(m_socket, &QIODevice::readyRead,
+        bool c1 = connect(m_socket, &QIODevice::readyRead,
                 this, &FirmwareUpgrader::onSocketReadyRead,
                 Qt::UniqueConnection);
-        connect(m_socket, &QAbstractSocket::disconnected,
+        bool c2 = connect(m_socket, &QAbstractSocket::disconnected,
                 this, &FirmwareUpgrader::onSocketDisconnected,
                 Qt::UniqueConnection);
+        qDebug() << "[FirmwareUpgrader] [设备ID=" << m_master->ID << "] connectSocketSignals:"
+                 << "readyRead连接=" << c1 << "disconnected连接=" << c2;
+    } else {
+        qDebug() << "[FirmwareUpgrader] [设备ID=" << m_master->ID << "] connectSocketSignals: m_socket 为空!";
     }
 }
 
@@ -655,8 +704,9 @@ void FirmwareUpgrader::onSocketDisconnected()
 
     const QString errMsg = QString("[固件升级] TCP 连接断开（升级阶段: %1）")
                                .arg(static_cast<int>(m_state));
-    LoggerManager::instance().log(m_logFile, Level::ERROR,
-        "{}{}", m_logPrefix, errMsg.toStdString());
+    QString logMsg = QString("[data][FirmwareUpgrader][onSocketDisconnected]：设备ID=%1 %2").arg(m_master->ID).arg(errMsg);
+    qDebug() << logMsg;
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO, logMsg.toStdString());
 
     finishWithResult(false, m_state, errMsg);
 }

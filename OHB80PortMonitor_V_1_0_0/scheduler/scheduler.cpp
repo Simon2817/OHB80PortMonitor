@@ -2,6 +2,7 @@
 #include "app/applogger.h"
 #include "loggermanager.h"
 #include <QDebug>
+#include <QTimer>
 
 Scheduler* Scheduler::s_instance = nullptr;
 
@@ -200,26 +201,28 @@ void Scheduler::onTaskFinished(bool success, const QString &msg)
 {
     SchedulerTask *task = qobject_cast<SchedulerTask*>(sender());
     if (!task) return;
-    
+
     QString taskId = task->taskId();
-    
-    qDebug() << "[Scheduler][onTaskFinished] 任务完成:" << task->taskType() 
-             << "taskId:" << taskId 
+
+    qDebug() << "[Scheduler][onTaskFinished] 任务完成:" << task->taskType()
+             << "taskId:" << taskId
              << "成功:" << success << msg;
-    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), 
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(),
         success ? Level::INFO : Level::WARN,
         QString("[Scheduler][onTaskFinished] 任务完成: %1 taskId: %2 成功: %3 %4").arg(task->taskType()).arg(taskId).arg(success).arg(msg).toStdString());
-    
+
     emit taskFinished(taskId, success, msg);
-    
-    // 清理
+
+    // 清理：从运行列表和任务表中移除
     QMutexLocker locker(&m_mutex);
     m_runningTasks.remove(task);
     m_tasks.remove(taskId);
-    task->deleteLater();
-    
     locker.unlock();
-    
+
+    // 延迟删除 task，确保 UI 线程有时间处理已排队的信号
+    // 避免因 task 被过早销毁导致跨线程信号丢失
+    QTimer::singleShot(100, task, &QObject::deleteLater);
+
     // 调度下一个任务
     scheduleNext();
 }
