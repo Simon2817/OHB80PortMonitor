@@ -221,12 +221,17 @@ QString CommLogFileSystem::extractTime(const QStringList &record, int timeCol) c
 bool CommLogFileSystem::matchesSubQuery(const QStringList &record,
                                          const CommHistoryQuery &query) const
 {
-    if (!query.likePattern.isEmpty()) {
-        for (const QString &field : record) {
-            if (field.contains(query.likePattern, Qt::CaseInsensitive))
-                return true;
-        }
-        return false;
+    // qrcode 精确匹配（列名 "qrcode"）
+    if (!query.qrcodeFilter.isEmpty()) {
+        int col = m_headers.indexOf(QStringLiteral("qrcode"));
+        if (col < 0 || col >= record.size()) return false;
+        if (record[col] != query.qrcodeFilter) return false;
+    }
+    // CommandId 精确匹配（列名 "CommandId"）
+    if (!query.commandIdFilter.isEmpty()) {
+        int col = m_headers.indexOf(QStringLiteral("CommandId"));
+        if (col < 0 || col >= record.size()) return false;
+        if (record[col] != query.commandIdFilter) return false;
     }
     return true;
 }
@@ -255,14 +260,16 @@ void CommLogFileSystem::requestQueryHistory(const CommHistoryQuery &query)
                     && m_qcTimeCol   == query.timeColumnIndex
                     && m_qcTimeFrom  == query.timeFrom
                     && m_qcTimeTo    == query.timeTo
-                    && m_qcLike      == query.likePattern
+                    && m_qcQrcode    == query.qrcodeFilter
+                    && m_qcCmdId     == query.commandIdFilter
                     && m_qcFiles     == fileSig;
 
     if (!cacheHit) {
         bool hasTimeRange = query.timeColumnIndex >= 0
                             && !query.timeFrom.isEmpty()
                             && !query.timeTo.isEmpty();
-        bool hasSubQuery  = !query.likePattern.isEmpty();
+        bool hasSubQuery  = !query.qrcodeFilter.isEmpty()
+                            || !query.commandIdFilter.isEmpty();
 
         // ---- 3a. 按文件名时间戳剪枝，直接跳过完全不在范围内的分片 ----
         QStringList filesToRead = hasTimeRange
@@ -312,7 +319,8 @@ void CommLogFileSystem::requestQueryHistory(const CommHistoryQuery &query)
         m_qcTimeCol         = query.timeColumnIndex;
         m_qcTimeFrom        = query.timeFrom;
         m_qcTimeTo          = query.timeTo;
-        m_qcLike            = query.likePattern;
+        m_qcQrcode          = query.qrcodeFilter;
+        m_qcCmdId           = query.commandIdFilter;
         m_qcFiles           = fileSig;
         m_qcSource          = std::move(source);
         m_qcMatchedIndices  = std::move(matchedIndices);
@@ -321,11 +329,12 @@ void CommLogFileSystem::requestQueryHistory(const CommHistoryQuery &query)
 
     // ---- 4. 从缓存做分页切片（热路径：翻页走这里） ----
     // 核心：分页以"结果集"为基准
-    //   - 有 like 过滤时：结果集 = source[matchedIndices]，共 matchedIndices.size() 条
-    //   - 无 like 过滤时：结果集 = source，共 source.size() 条
+    //   - 有子查询过滤时：结果集 = source[matchedIndices]，共 matchedIndices.size() 条
+    //   - 无子查询过滤时：结果集 = source，共 source.size() 条
     const QVector<QStringList> &source  = m_qcSource;
     const QVector<int>         &matched = m_qcMatchedIndices;
-    bool hasSubQuery = !query.likePattern.isEmpty();
+    bool hasSubQuery = !query.qrcodeFilter.isEmpty()
+                       || !query.commandIdFilter.isEmpty();
 
     int viewSize = hasSubQuery ? matched.size() : source.size();
 

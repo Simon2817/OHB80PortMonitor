@@ -84,14 +84,15 @@ private:
     CommLRUCache<QString,     CommPageTable> m_ptCache{5};
 
     // ---- 历史查询 1 项缓存（仅在查询专用 worker 上使用） ----
-    // 缓存 "过滤后的整天记录集 + 子匹配索引"，相同 (date,timeRange,likePattern) 只读盘一次；
+    // 缓存 "过滤后的整天记录集 + 子匹配索引"，相同 (date,timeRange,qrcode,cmdId) 只读盘一次；
     // 翻页只是对缓存做切片，避免每次重读整天 CSV。
     // 缓存键还包含当天所有文件的 (路径, 大小)，保证今天的文件被 append 后自动失效。
     QDate                         m_qcDate;
     int                           m_qcTimeCol = -2;   // -2 = 未初始化
     QString                       m_qcTimeFrom;
     QString                       m_qcTimeTo;
-    QString                       m_qcLike;
+    QString                       m_qcQrcode;
+    QString                       m_qcCmdId;
     QVector<QPair<QString,qint64>> m_qcFiles;         // 文件路径 + 大小
     QVector<QStringList>          m_qcSource;         // 经时间过滤后的完整记录集
     QVector<int>                  m_qcMatchedIndices; // 经子查询过滤的 source 内下标

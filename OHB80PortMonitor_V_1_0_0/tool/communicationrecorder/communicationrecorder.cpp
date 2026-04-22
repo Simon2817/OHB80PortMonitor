@@ -35,6 +35,9 @@ void CommunicationRecorder::submitCommand(const ModbusCommand& cmd, const QStrin
 {
     if (masterId.isEmpty()) return;
 
+    // 检查响应时间差值必须大于0
+    if (cmd.responseMs - cmd.sentMs <= 0) return;
+
     // 仅存储最新指令；确保计数器存在
     m_latestCmd[masterId] = cmd;
     if (!m_counterMs.contains(masterId)) {

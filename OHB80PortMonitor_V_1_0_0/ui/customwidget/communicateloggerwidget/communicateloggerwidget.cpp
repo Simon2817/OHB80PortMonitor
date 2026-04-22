@@ -8,6 +8,9 @@
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QHeaderView>
+#include <QSpinBox>
+#include <QComboBox>
+#include <climits>
 #include "historycalendardialog.h"
 
 // =====================================================================
@@ -183,6 +186,28 @@ void CommunicateLoggerWidget::initQrcodeList(const QStringList &qrcodes)
         m_liveRecords.append(row);
     }
     m_liveModel->setRecords(m_liveRecords);
+
+    // 同步更新历史查询的 qrcode 范围：取数值化后的最小/最大值
+    int minV = INT_MAX, maxV = INT_MIN;
+    for (const QString &q : qrcodes) {
+        bool ok = false;
+        int v = q.toInt(&ok);
+        if (!ok) continue;
+        minV = qMin(minV, v);
+        maxV = qMax(maxV, v);
+    }
+    if (minV == INT_MAX) { minV = 0; maxV = 0; }
+    ui->qrcodeSpinBox->setRange(minV, maxV);
+    ui->qrcodeSpinBox->setValue(minV);
+}
+
+void CommunicateLoggerWidget::setCommandIds(const QStringList &ids)
+{
+    ui->cmdIdCombo->clear();
+    ui->cmdIdCombo->addItem(tr("(All)"), QString()); // 首项：不过滤
+    for (const QString &id : ids)
+        ui->cmdIdCombo->addItem(id, id);
+    ui->cmdIdCombo->setCurrentIndex(0);
 }
 
 // -------- 写入日志 --------
@@ -263,7 +288,11 @@ void CommunicateLoggerWidget::onSearchClicked()
                       .arg(ui->timeToSecond->value(), 2, 10, QLatin1Char('0'));
     }
 
-    q.likePattern = ui->likeEdit->text().trimmed();
+    // QRCode 精确过滤（spinbox 总有值 → 总是过滤）
+    q.qrcodeFilter = QString::number(ui->qrcodeSpinBox->value());
+
+    // CommandId 过滤：首项为空→不过滤
+    q.commandIdFilter = ui->cmdIdCombo->currentData().toString();
 
     m_lastQuery = q;
     m_histIsNewSearch = true;
@@ -278,7 +307,8 @@ void CommunicateLoggerWidget::onHistoryReady(const CommHistoryResult &result)
     ui->searchBtn->setEnabled(true);
     ui->searchBtn->setText(tr("Search"));
 
-    bool doFilter = !m_lastQuery.likePattern.isEmpty();
+    bool doFilter = !m_lastQuery.qrcodeFilter.isEmpty()
+                    || !m_lastQuery.commandIdFilter.isEmpty();
 
     if (m_histIsNewSearch) {
         bool noRecords = (result.totalRecords == 0);
@@ -288,6 +318,10 @@ void CommunicateLoggerWidget::onHistoryReady(const CommHistoryResult &result)
                 noRecords ? tr("No records match the query")
                           : tr("No records match the keyword"));
             if (noRecords) return;
+        } else {
+            // 查找成功，显示找到的记录数量
+            QMessageBox::information(this, tr("Search Result"),
+                tr("Found %1 records").arg(result.totalRecords));
         }
     }
 

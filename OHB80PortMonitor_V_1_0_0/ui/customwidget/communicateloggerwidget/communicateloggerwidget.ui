@@ -100,6 +100,12 @@
          </item>
          <item>
           <widget class="QLineEdit" name="dateEdit">
+           <property name="maximumSize">
+            <size>
+             <width>310</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -138,6 +144,22 @@
             <string>Time Range:</string>
            </property>
           </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
          <item>
           <widget class="QSpinBox" name="timeFromHour">
@@ -270,16 +292,52 @@
        <item>
         <layout class="QHBoxLayout" name="searchLayout">
          <item>
-          <widget class="QLabel" name="labelLike">
+          <widget class="QLabel" name="labelQrcode">
            <property name="text">
-            <string>Keyword:</string>
+            <string>QRCode:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="likeEdit">
-           <property name="placeholderText">
-            <string>Leave empty for no keyword filter</string>
+          <widget class="QSpinBox" name="qrcodeSpinBox">
+           <property name="minimum">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelCmdId">
+           <property name="text">
+            <string>Command ID:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmdIdCombo">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>0</height>
+            </size>
            </property>
           </widget>
          </item>

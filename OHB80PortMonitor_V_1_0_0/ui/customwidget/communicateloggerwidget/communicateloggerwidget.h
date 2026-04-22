@@ -34,7 +34,8 @@ public:
     void setItemStyler(std::function<void(const QStringList &record, CommItemStyle &style)> fn);  // 样式回调
 
     // 实时表格
-    void initQrcodeList(const QStringList &qrcodes); // 预填充 qrcode 列表
+    void initQrcodeList(const QStringList &qrcodes); // 预填充 qrcode 列表（同时设置 qrcode 过滤框范围）
+    void setCommandIds(const QStringList &ids);      // 填充 CommandId 下拉框（首项为空：不过滤）
     void writeLog(const QJsonObject &record);        // 写入日志
 
     // 初始化

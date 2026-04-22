@@ -3,6 +3,8 @@
 #include "ui_communicatepage.h"
 #include "app/shareddata.h"
 #include "scheduler/tasks/monitor_data_task.h"
+#include "modbustcpmastermanager/modbustcpmastermanager.h"
+#include "modbustcpmastermanager/modbuscommand/commandpool.h"
 
 #include <QJsonObject>
 #include <QDateTime>
@@ -39,8 +41,13 @@ void CommunicatePage::initCommLoggerWidget()
     // 值越小：分片越多，读取越并行，但小文件数量增加；5MB 为经验折中
     ui->commLoggerWidget->setMaxFileBytes(5 * 1024 * 1024);
 
-    // 预填充实时表格（每个 qrCode 一行）
+    // 预填充实时表格（每个 qrCode 一行），同时设置 qrcode 查询范围
     ui->commLoggerWidget->initQrcodeList(SharedData::getAllQrcodes());
+
+    // 填充 CommandId 下拉框（用于历史查询）
+    if (CommandPool *pool = ModbusTcpMasterManager::instance().commandPool()) {
+        ui->commLoggerWidget->setCommandIds(pool->ids());
+    }
 
     ui->commLoggerWidget->initialize();
 }

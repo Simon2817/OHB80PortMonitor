@@ -10,7 +10,8 @@ struct CommHistoryQuery {
     int     timeColumnIndex = -1;
     QString timeFrom;
     QString timeTo;
-    QString likePattern;
+    QString qrcodeFilter;     // 精确匹配 qrcode 列（空=不过滤）
+    QString commandIdFilter;  // 精确匹配 CommandId 列（空=不过滤）
     int     pageSize  = 50;
     int     pageIndex = 0;
 };
