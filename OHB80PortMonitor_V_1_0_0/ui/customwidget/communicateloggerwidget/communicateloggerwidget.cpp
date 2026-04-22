@@ -17,10 +17,10 @@
 // 固定列头（qrcode 为第 0 列，用于行索引）
 // =====================================================================
 const QStringList CommunicateLoggerWidget::kLiveHeaders = {
-    QStringLiteral("qrcode"),
+    QStringLiteral("QRCode"),
     QStringLiteral("Time"),
-    QStringLiteral("CommandId"),
-    QStringLiteral("DurationMs"),
+    QStringLiteral("Command ID"),
+    QStringLiteral("Duration Ms"),
     QStringLiteral("Request"),
     QStringLiteral("Response")
 };
@@ -212,19 +212,24 @@ void CommunicateLoggerWidget::setCommandIds(const QStringList &ids)
 
 // -------- 写入日志 --------
 
-void CommunicateLoggerWidget::writeLog(const QJsonObject &record)
+void CommunicateLoggerWidget::writeLog(const QString &qrcode, const QString &time,
+                                       const QString &commandId, const QString &durationMs,
+                                       const QString &request, const QString &response)
 {
     // 持久化（异步，通过 LFS 写入磁盘）
-    m_lfs->writeLog(record);
+    m_lfs->writeLog(qrcode, time, commandId, durationMs, request, response);
 
     // 按 qrcode 更新实时表格对应行
-    QString qrcode = record.value(QStringLiteral("qrcode")).toString();
     auto it = m_qrcodeRow.constFind(qrcode);
     if (it == m_qrcodeRow.constEnd()) return;
 
     int row = it.value();
-    for (int col = 0; col < kLiveHeaders.size(); ++col)
-        m_liveRecords[row][col] = record.value(kLiveHeaders[col]).toString();
+    m_liveRecords[row][0] = qrcode;
+    m_liveRecords[row][1] = time;
+    m_liveRecords[row][2] = commandId;
+    m_liveRecords[row][3] = durationMs;
+    m_liveRecords[row][4] = request;
+    m_liveRecords[row][5] = response;
 
     m_liveModel->setRecords(m_liveRecords);
 }

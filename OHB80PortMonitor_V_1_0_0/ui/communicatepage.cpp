@@ -69,13 +69,7 @@ void CommunicatePage::onCommunicationCompleted(ModbusCommand cmd, QString master
         ? QDateTime::fromMSecsSinceEpoch(cmd.sentMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))
         : QStringLiteral("-");
 
-    // 写入日志（key 必须匹配 CommunicateLoggerWidget::kLiveHeaders）
-    ui->commLoggerWidget->writeLog(QJsonObject{
-        {QStringLiteral("qrcode"),     masterId},
-        {QStringLiteral("Time"),       sentTimeStr},
-        {QStringLiteral("CommandId"),  cmd.id},
-        {QStringLiteral("DurationMs"), QString::number(responseTimeMs)},
-        {QStringLiteral("Request"),    sendFrameHex},
-        {QStringLiteral("Response"),   recvFrameHex}
-    });
+    // 写入日志（参数顺序对应 CommunicateLoggerWidget::kLiveHeaders）
+    ui->commLoggerWidget->writeLog(masterId, sentTimeStr, cmd.id,
+                                   QString::number(responseTimeMs), sendFrameHex, recvFrameHex);
 }

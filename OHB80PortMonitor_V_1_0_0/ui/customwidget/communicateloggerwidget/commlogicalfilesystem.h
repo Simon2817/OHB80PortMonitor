@@ -30,7 +30,8 @@ public:
     void requestPrevPage();
     void requestNextPage();
 
-    void writeLog(const QJsonObject &record);
+    void writeLog(const QString &qrcode, const QString &time, const QString &commandId,
+                  const QString &durationMs, const QString &request, const QString &response);
     void queryHistory(const CommHistoryQuery &query);
     void requestAvailableDates();
 
@@ -46,7 +47,8 @@ signals:
     void _requestInitialize();
     void _requestPrevPage();
     void _requestNextPage();
-    void _requestAppendLog(const QJsonObject &record);
+    void _requestAppendLog(const QString &qrcode, const QString &time, const QString &commandId,
+                           const QString &durationMs, const QString &request, const QString &response);
     void _requestCleanOldLogs();
     void _requestQueryHistory(const CommHistoryQuery &query);
     void _requestAvailableDates();

@@ -112,9 +112,11 @@ int     CommLogicalFileSystem::currentPageCount() const { return m_pageCount; }
 void CommLogicalFileSystem::requestPrevPage()      { emit _requestPrevPage(); }
 void CommLogicalFileSystem::requestNextPage()      { emit _requestNextPage(); }
 
-void CommLogicalFileSystem::writeLog(const QJsonObject &record)
+void CommLogicalFileSystem::writeLog(const QString &qrcode, const QString &time,
+                                      const QString &commandId, const QString &durationMs,
+                                      const QString &request, const QString &response)
 {
-    emit _requestAppendLog(record);
+    emit _requestAppendLog(qrcode, time, commandId, durationMs, request, response);
 }
 
 void CommLogicalFileSystem::queryHistory(const CommHistoryQuery &query)

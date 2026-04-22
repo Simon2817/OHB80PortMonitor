@@ -87,8 +87,18 @@ void CommLogFileSystem::requestNextPage()
     emitNavigationState(false);
 }
 
-void CommLogFileSystem::requestAppendLog(const QJsonObject &record)
+void CommLogFileSystem::requestAppendLog(const QString &qrcode, const QString &time,
+                                         const QString &commandId, const QString &durationMs,
+                                         const QString &request, const QString &response)
 {
+    QJsonObject record;
+    record[QStringLiteral("QRCode")] = qrcode;
+    record[QStringLiteral("Time")] = time;
+    record[QStringLiteral("Command ID")] = commandId;
+    record[QStringLiteral("Duration Ms")] = durationMs;
+    record[QStringLiteral("Request")] = request;
+    record[QStringLiteral("Response")] = response;
+
     QString path = todayFilePath();
     const CommPageTable *oldPt = getPageTable(path);
     int oldPageCount = oldPt ? oldPt->pageCount() : 0;
@@ -221,15 +231,15 @@ QString CommLogFileSystem::extractTime(const QStringList &record, int timeCol) c
 bool CommLogFileSystem::matchesSubQuery(const QStringList &record,
                                          const CommHistoryQuery &query) const
 {
-    // qrcode 精确匹配（列名 "qrcode"）
+    // QRCode 精确匹配（列名 "QRCode"）
     if (!query.qrcodeFilter.isEmpty()) {
-        int col = m_headers.indexOf(QStringLiteral("qrcode"));
+        int col = m_headers.indexOf(QStringLiteral("QRCode"));
         if (col < 0 || col >= record.size()) return false;
         if (record[col] != query.qrcodeFilter) return false;
     }
-    // CommandId 精确匹配（列名 "CommandId"）
+    // Command ID 精确匹配（列名 "Command ID"）
     if (!query.commandIdFilter.isEmpty()) {
-        int col = m_headers.indexOf(QStringLiteral("CommandId"));
+        int col = m_headers.indexOf(QStringLiteral("Command ID"));
         if (col < 0 || col >= record.size()) return false;
         if (record[col] != query.commandIdFilter) return false;
     }

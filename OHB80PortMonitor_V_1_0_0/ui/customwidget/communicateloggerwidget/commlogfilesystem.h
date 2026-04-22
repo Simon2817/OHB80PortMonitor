@@ -31,7 +31,8 @@ public slots:
     void requestInitialize();
     void requestPrevPage();
     void requestNextPage();
-    void requestAppendLog(const QJsonObject &record);
+    void requestAppendLog(const QString &qrcode, const QString &time, const QString &commandId,
+                          const QString &durationMs, const QString &request, const QString &response);
     void requestCleanOldLogs();
     void requestQueryHistory(const CommHistoryQuery &query);
     void requestAvailableDates();

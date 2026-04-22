@@ -36,7 +36,8 @@ public:
     // 实时表格
     void initQrcodeList(const QStringList &qrcodes); // 预填充 qrcode 列表（同时设置 qrcode 过滤框范围）
     void setCommandIds(const QStringList &ids);      // 填充 CommandId 下拉框（首项为空：不过滤）
-    void writeLog(const QJsonObject &record);        // 写入日志
+    void writeLog(const QString &qrcode, const QString &time, const QString &commandId,
+                  const QString &durationMs, const QString &request, const QString &response);  // 写入日志
 
     // 初始化
     void initialize();                               // 配置完成后调用
