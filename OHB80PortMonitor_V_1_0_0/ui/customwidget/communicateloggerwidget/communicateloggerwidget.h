@@ -56,8 +56,6 @@ private slots:
     void onHistoryPageClicked(int pageIndex);
     void onSelectDateClicked();
     void onAvailableDatesReady(const QSet<QDate> &dates);
-    void onFindPrev();
-    void onFindNext();
 
 private:
     // 初始化
@@ -68,9 +66,6 @@ private:
 
     // 历史查询辅助
     void rebuildHistoryPageBar();
-    void navigateToGlobalIndex(int globalIdx);
-    void updateFindButtons();
-    int  getFilteredRow(int originalRow, const QVector<bool> &highlighted) const;
     QDate selectedDate() const;
     void  setSelectedDate(const QDate &d);
 
@@ -93,9 +88,6 @@ private:
     CommHistoryQuery  m_lastQuery;                    // 上次查询
     CommHistoryResult m_lastResult;                   // 上次结果
     bool          m_histIsNewSearch      = false;
-    QVector<int>  m_histMatchIndices;                 // 匹配索引
-    int           m_histCurrentMatchPos  = -1;
-    int           m_histPendingScrollRow = -1;
 
     // 常量
     static const QStringList kLiveHeaders;           // 列头

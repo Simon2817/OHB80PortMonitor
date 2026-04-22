@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="liveTab">
       <attribute name="title">
@@ -291,24 +291,17 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="findPrevBtn">
-           <property name="enabled">
-            <bool>false</bool>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-           <property name="text">
-            <string>Find Prev</string>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="findNextBtn">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Find Next</string>
-           </property>
-          </widget>
+          </spacer>
          </item>
         </layout>
        </item>

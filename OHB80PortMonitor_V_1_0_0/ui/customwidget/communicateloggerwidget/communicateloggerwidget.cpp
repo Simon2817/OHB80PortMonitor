@@ -64,8 +64,6 @@ void CommunicateLoggerWidget::setupConnections()
 
     // ---- 历史查询按钮 ----
     connect(ui->searchBtn,     &QPushButton::clicked, this, &CommunicateLoggerWidget::onSearchClicked);
-    connect(ui->findPrevBtn,   &QPushButton::clicked, this, &CommunicateLoggerWidget::onFindPrev);
-    connect(ui->findNextBtn,   &QPushButton::clicked, this, &CommunicateLoggerWidget::onFindNext);
     connect(ui->selectDateBtn, &QPushButton::clicked, this, &CommunicateLoggerWidget::onSelectDateClicked);
 }
 
@@ -269,24 +267,9 @@ void CommunicateLoggerWidget::onSearchClicked()
 
     m_lastQuery = q;
     m_histIsNewSearch = true;
-    m_histCurrentMatchPos = -1;
-    m_histMatchIndices.clear();
-    m_histPendingScrollRow = -1;
     ui->searchBtn->setEnabled(false);
     ui->searchBtn->setText(tr("Searching..."));
     m_lfs->queryHistory(q);
-}
-
-int CommunicateLoggerWidget::getFilteredRow(int originalRow,
-                                             const QVector<bool> &highlighted) const
-{
-    if (m_lastQuery.likePattern.isEmpty() || highlighted.isEmpty())
-        return originalRow;
-    int filteredRow = 0;
-    for (int i = 0; i < originalRow && i < highlighted.size(); ++i) {
-        if (highlighted[i]) ++filteredRow;
-    }
-    return filteredRow;
 }
 
 void CommunicateLoggerWidget::onHistoryReady(const CommHistoryResult &result)
@@ -301,8 +284,6 @@ void CommunicateLoggerWidget::onHistoryReady(const CommHistoryResult &result)
         bool noRecords = (result.totalRecords == 0);
         bool likeEmpty = (doFilter && result.matchedGlobalIndices.isEmpty());
         if (noRecords || likeEmpty) {
-            ui->findPrevBtn->setEnabled(false);
-            ui->findNextBtn->setEnabled(false);
             QMessageBox::information(this, tr("Search Result"),
                 noRecords ? tr("No records match the query")
                           : tr("No records match the keyword"));
@@ -323,37 +304,6 @@ void CommunicateLoggerWidget::onHistoryReady(const CommHistoryResult &result)
         m_histModel->setHighlightMask(result.highlighted);
     }
 
-    if (m_histIsNewSearch) {
-        m_histMatchIndices = result.matchedGlobalIndices;
-        if (!m_histMatchIndices.isEmpty()) {
-            m_histCurrentMatchPos = 0;
-            int globalIdx  = m_histMatchIndices[0];
-            int targetPage = globalIdx / m_lastQuery.pageSize;
-            int targetRow  = globalIdx % m_lastQuery.pageSize;
-            if (targetPage == result.currentPage) {
-                int filteredRow = getFilteredRow(targetRow, result.highlighted);
-                QModelIndex idx = m_histModel->index(filteredRow, 0);
-                ui->histtableView->scrollTo(idx, QAbstractItemView::PositionAtCenter);
-                ui->histtableView->setCurrentIndex(idx);
-            } else {
-                m_histPendingScrollRow = targetRow;
-                onHistoryPageClicked(targetPage);
-                return;
-            }
-        }
-    }
-
-    if (m_histPendingScrollRow >= 0 && m_histPendingScrollRow < result.records.size()) {
-        int filteredRow = getFilteredRow(m_histPendingScrollRow, result.highlighted);
-        if (filteredRow < m_histModel->rowCount()) {
-            QModelIndex idx = m_histModel->index(filteredRow, 0);
-            ui->histtableView->scrollTo(idx, QAbstractItemView::PositionAtCenter);
-            ui->histtableView->setCurrentIndex(idx);
-        }
-        m_histPendingScrollRow = -1;
-    }
-
-    updateFindButtons();
     rebuildHistoryPageBar();
 }
 
@@ -454,43 +404,3 @@ void CommunicateLoggerWidget::onAvailableDatesReady(const QSet<QDate> &dates)
     m_calendarDlg->exec();
 }
 
-void CommunicateLoggerWidget::onFindPrev()
-{
-    if (m_histMatchIndices.isEmpty()) return;
-    if (m_histCurrentMatchPos > 0) --m_histCurrentMatchPos;
-    else m_histCurrentMatchPos = m_histMatchIndices.size() - 1;
-    navigateToGlobalIndex(m_histMatchIndices[m_histCurrentMatchPos]);
-    updateFindButtons();
-}
-
-void CommunicateLoggerWidget::onFindNext()
-{
-    if (m_histMatchIndices.isEmpty()) return;
-    if (m_histCurrentMatchPos < m_histMatchIndices.size() - 1) ++m_histCurrentMatchPos;
-    else m_histCurrentMatchPos = 0;
-    navigateToGlobalIndex(m_histMatchIndices[m_histCurrentMatchPos]);
-    updateFindButtons();
-}
-
-void CommunicateLoggerWidget::navigateToGlobalIndex(int globalIdx)
-{
-    int targetPage = globalIdx / m_lastQuery.pageSize;
-    int targetRow  = globalIdx % m_lastQuery.pageSize;
-
-    if (targetPage == m_lastResult.currentPage) {
-        int filteredRow = getFilteredRow(targetRow, m_lastResult.highlighted);
-        QModelIndex idx = m_histModel->index(filteredRow, 0);
-        ui->histtableView->scrollTo(idx, QAbstractItemView::PositionAtCenter);
-        ui->histtableView->setCurrentIndex(idx);
-    } else {
-        m_histPendingScrollRow = targetRow;
-        onHistoryPageClicked(targetPage);
-    }
-}
-
-void CommunicateLoggerWidget::updateFindButtons()
-{
-    bool hasMatches = !m_histMatchIndices.isEmpty();
-    ui->findPrevBtn->setEnabled(hasMatches);
-    ui->findNextBtn->setEnabled(hasMatches);
-}
