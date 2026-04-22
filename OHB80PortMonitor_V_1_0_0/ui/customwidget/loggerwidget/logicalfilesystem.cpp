@@ -1,4 +1,5 @@
 #include "logicalfilesystem.h"
+#include <QCoreApplication>
 #include <QDateTime>
 
 // =====================================================================
@@ -68,12 +69,15 @@ LogicalFileSystem::LogicalFileSystem(QObject *parent)
 
 LogicalFileSystem::~LogicalFileSystem()
 {
-    // 确保缓冲区中残留的日志被写入磁盘
     m_batchTimer->stop();
+    // 断开所有发往 m_fs 的信号，阻止新事件入队
+    disconnect(this, nullptr, m_fs, nullptr);
+    // 清除工作线程事件队列中已积压的待处理事件
+    QCoreApplication::removePostedEvents(m_fs);
+    // 确保缓冲区中残留的日志被写入磁盘（队列已清空，此调用不会长时间阻塞）
     if (!m_pendingLogs.isEmpty()) {
         QVector<QJsonObject> batch;
         batch.swap(m_pendingLogs);
-        // 同步调用（此时 worker thread 仍在运行）
         QMetaObject::invokeMethod(m_fs, "requestAppendBatch",
                                   Qt::BlockingQueuedConnection,
                                   Q_ARG(QVector<QJsonObject>, batch));

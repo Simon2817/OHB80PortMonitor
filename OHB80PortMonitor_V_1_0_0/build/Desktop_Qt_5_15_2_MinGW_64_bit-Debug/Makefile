@@ -229,16 +229,20 @@ Makefile: ../../OHB80PortMonitor_V_1_0_0.pro C:/Qt/5.15.2/mingw81_64/mkspecs/win
 		C:/Qt/5.15.2/mingw81_64/mkspecs/features/default_pre.prf \
 		C:/Qt/5.15.2/mingw81_64/mkspecs/features/win32/default_pre.prf \
 		../../app/app.pri \
+		../../config/config.pri \
 		../../tool/loggermananger/spdlog/spdlog.pri \
 		../../tool/loggermananger/loggermananger.pri \
 		../../tool/qthelper/qthelper.pri \
 		../../tool/binfilereader/binfilereader.pri \
+		../../tool/communicationrecorder/communicationrecorder.pri \
 		../../tool/tool.pri \
 		../../ui/customwidget/overheadcranetrack/overheadcranetrack.pri \
 		../../ui/customwidget/settingwidget/settingwidget.pri \
 		../../ui/customwidget/debugsettingwidget/debugsettingwidget.pri \
-		../../ui/customwidget/loggerwidget/historycalendardialog/historycalendardialog.pri \
 		../../ui/customwidget/loggerwidget/loggerwidget.pri \
+		../../ui/customwidget/alarmloggerwidget/alarmloggerwidget.pri \
+		../../ui/customwidget/historycalendardialog/historycalendardialog.pri \
+		../../ui/customwidget/communicateloggerwidget/communicateloggerwidget.pri \
 		../../ui/customwidget/customwidget.pri \
 		../../ui/ui.pri \
 		../../scheduler/scheduler.pri \
@@ -440,16 +444,20 @@ C:/Qt/5.15.2/mingw81_64/mkspecs/features/toolchain.prf:
 C:/Qt/5.15.2/mingw81_64/mkspecs/features/default_pre.prf:
 C:/Qt/5.15.2/mingw81_64/mkspecs/features/win32/default_pre.prf:
 ../../app/app.pri:
+../../config/config.pri:
 ../../tool/loggermananger/spdlog/spdlog.pri:
 ../../tool/loggermananger/loggermananger.pri:
 ../../tool/qthelper/qthelper.pri:
 ../../tool/binfilereader/binfilereader.pri:
+../../tool/communicationrecorder/communicationrecorder.pri:
 ../../tool/tool.pri:
 ../../ui/customwidget/overheadcranetrack/overheadcranetrack.pri:
 ../../ui/customwidget/settingwidget/settingwidget.pri:
 ../../ui/customwidget/debugsettingwidget/debugsettingwidget.pri:
-../../ui/customwidget/loggerwidget/historycalendardialog/historycalendardialog.pri:
 ../../ui/customwidget/loggerwidget/loggerwidget.pri:
+../../ui/customwidget/alarmloggerwidget/alarmloggerwidget.pri:
+../../ui/customwidget/historycalendardialog/historycalendardialog.pri:
+../../ui/customwidget/communicateloggerwidget/communicateloggerwidget.pri:
 ../../ui/customwidget/customwidget.pri:
 ../../ui/ui.pri:
 ../../scheduler/scheduler.pri:

@@ -12,8 +12,8 @@ LoadMoreItemWidget::LoadMoreItemWidget(Position pos, QWidget *parent)
 
     m_btn = new QPushButton(
         pos == Position::Top
-            ? tr("↑ 加载上一页")
-            : tr("↓ 加载下一页"), this);
+            ? tr("↑ Load Previous")
+            : tr("↓ Load Next"), this);
     m_btn->setCursor(Qt::PointingHandCursor);
 
     m_progress = new QProgressBar(this);
@@ -40,7 +40,7 @@ LoadMoreItemWidget::LoadMoreItemWidget(Position pos, QWidget *parent)
 void LoadMoreItemWidget::setIdle()
 {
     m_btn->setEnabled(true);
-    m_btn->setText(m_pos == Position::Top ? tr("↑ 加载上一页") : tr("↓ 加载下一页"));
+    m_btn->setText(m_pos == Position::Top ? tr("↑ Load Previous") : tr("↓ Load Next"));
     m_progress->hide();
     m_label->hide();
 }
@@ -48,7 +48,7 @@ void LoadMoreItemWidget::setIdle()
 void LoadMoreItemWidget::setLoading()
 {
     m_btn->setEnabled(false);
-    m_btn->setText(tr("加载中..."));
+    m_btn->setText(tr("Loading..."));
     m_progress->setValue(0);
     m_progress->show();
     m_label->hide();

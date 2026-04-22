@@ -44,12 +44,13 @@ void UIDemo6::initForm()
     ui->btnHome->setProperty("icoName", "homepage");
     ui->btnSetting->setProperty("icoName", "configpage");
     ui->btnChart->setProperty("icoName", "chartpage");
+    ui->btnCommunicate->setProperty("icoName", "communicatepage");
     ui->btnAlarm->setProperty("icoName", "alarmpage");
     ui->btnDebug->setProperty("icoName", "debugpage");
 
     // ui->btnDebug->hide();
-    // ui->btnChart->hide();
-    // ui->btnMenu_Max->hide();
+    ui->btnChart->hide();
+    ui->btnMenu_Max->hide();
 
     QList<QToolButton *> btns = ui->widgetLeft->findChildren<QToolButton *>();
     foreach (QToolButton *btn, btns) {
@@ -97,10 +98,12 @@ void UIDemo6::buttonClick()
                 ui->stackedWidget->setCurrentIndex(1);
             else if (icoName == "chartpage")
                 ui->stackedWidget->setCurrentIndex(2);
-            else if (icoName == "alarmpage")
+            else if (icoName == "communicatepage")
                 ui->stackedWidget->setCurrentIndex(3);
-            else if (icoName == "debugpage")
+            else if (icoName == "alarmpage")
                 ui->stackedWidget->setCurrentIndex(4);
+            else if (icoName == "debugpage")
+                ui->stackedWidget->setCurrentIndex(5);
         }
     }
 }

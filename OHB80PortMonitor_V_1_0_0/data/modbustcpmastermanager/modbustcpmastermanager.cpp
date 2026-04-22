@@ -27,11 +27,26 @@ ModbusTcpMasterManager::ModbusTcpMasterManager(QObject* parent)
 ModbusTcpMasterManager::~ModbusTcpMasterManager()
 {
     qDebug() << "[data][ModbusTcpMasterManager] 析构管理器";
-    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterManager] 析构管理器").toStdString());
+    // 兜底：如果未主动 shutdown()，此处尝试清理（可能已处于静态析构阶段，但总比不做强）
+    shutdown();
 
-    delete m_configParser;
-    delete m_commandPool;
-    // m_masterPool 的父对象是 this，会自动删除
+    delete m_configParser;  m_configParser = nullptr;
+    delete m_commandPool;   m_commandPool  = nullptr;
+}
+
+void ModbusTcpMasterManager::shutdown()
+{
+    if (!m_masterPool) return; // 已清理，幂等返回
+
+    qDebug() << "[data][ModbusTcpMasterManager] shutdown: 销毁 Master 池及工作线程";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+        "[data][ModbusTcpMasterManager] shutdown: 销毁 Master 池及工作线程");
+
+    // 主动销毁 Pool，触发 ~ModbusTcpMasterPool()：
+    //   stopAllMasters() -> clear() -> quit/wait/delete 每个 QThread
+    // 必须在 QApplication 仍活时执行，跨线程调用才可靠。
+    delete m_masterPool;
+    m_masterPool = nullptr;
 }
 
 bool ModbusTcpMasterManager::loadConfig(const QString& xmlFilePath)

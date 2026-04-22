@@ -1,10 +1,10 @@
 #include "firmwareupdateconfigsettingwidget.h"
 #include "../settingwidget/settingitemwidget.h"
 #include "loggermanager.h"
-#include "app/applogger.h"
+#include "applogger.h"
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/set_firmware_config_task.h"
-#include "app/firmwareconfig.h"
+#include "firmwareconfig.h"
 
 #include <QFileDialog>
 #include <QMessageBox>

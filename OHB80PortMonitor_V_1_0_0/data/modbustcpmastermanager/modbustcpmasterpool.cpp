@@ -4,10 +4,9 @@
 #include "modbusconfigparser.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
-#include "app/firmwareconfig.h"
+#include "firmwareconfig.h"
 #include "initialcommandissuer.h"
 #include "periodiccommandsender.h"
-#include "cycliccommandissuer.h"
 #include <QMetaObject>
 #include <QDebug>
 #include "loggermanager.h"

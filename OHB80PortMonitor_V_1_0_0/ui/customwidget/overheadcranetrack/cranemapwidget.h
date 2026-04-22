@@ -164,6 +164,9 @@ private:
     // 内容尺寸（用于滚动区域）
     QSize m_contentSize;
     
+    // 当缩放后内容小于可视区域时的居中偏移
+    QPointF m_centerOffset;
+    
     // 鼠标拖动相关
     bool m_isDragging;
     QPoint m_lastMousePos;
@@ -193,6 +196,7 @@ private:
     void updateScrollBars();
     void saveBaseGeometry();
     void applyZoom();
+    void updateCenterOffset();
 };
 
 #endif // CRANEMAPWIDGET_H

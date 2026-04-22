@@ -8,6 +8,36 @@
 
 ## 更新日志
 
+### 2026-04-22 11:43 - Simon
+**CommunicatePage 模块完成**
+
+#### 修改内容
+1. **UI字符串本地化**
+   - 将 `communicateloggerwidget.ui` 中所有UI标签、按钮文本翻译为英文
+   - 将 `communicateloggerwidget.cpp` 中列头（kLiveHeaders）和用户可见消息翻译为英文
+   - 更新 `communicatepage.cpp` 中 JSON 键以匹配新的英文列头
+   - 翻译 `commloadmoreitemwidget.cpp` 中加载更多小部件的文本
+   - 翻译 `commlogfilesystem.cpp` 中错误消息
+   - 修复 `commlogpagemodel.cpp` 中用户可见格式中的冒号
+
+2. **时间格式优化**
+   - 将日志时间格式从 `yyyy-MM-dd HH:mm:ss.zzz` 改为 `yyyy-MM-dd HH:mm:ss`
+   - 不再显示毫秒部分
+
+3. **表格列宽比例设置**
+   - 实时表格和历史表格列宽比例设置为 1:2:2.5:1:3.5:6
+   - qrcode: 80px, Time: 160px, CommandId: 200px, DurationMs: 80px, Request: 280px, Response: 480px
+
+#### 影响范围
+- 修改文件：`ui/customwidget/communicateloggerwidget/communicateloggerwidget.ui`
+- 修改文件：`ui/customwidget/communicateloggerwidget/communicateloggerwidget.cpp`
+- 修改文件：`ui/communicatepage.cpp`
+- 修改文件：`ui/customwidget/communicateloggerwidget/commloadmoreitemwidget.cpp`
+- 修改文件：`ui/customwidget/communicateloggerwidget/commlogfilesystem.cpp`
+- 修改文件：`ui/customwidget/communicateloggerwidget/commlogpagemodel.cpp`
+
+---
+
 ### 2026-04-20 14:28 - Simon
 **MonitorDataTask 数据解析修正**
 

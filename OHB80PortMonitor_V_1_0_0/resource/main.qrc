@@ -55,5 +55,7 @@
         <file>image/debugpage.png</file>
         <file>image/debugpage_focus.png</file>
         <file>image/logo.jpg</file>
+        <file>image/communicatepage.png</file>
+        <file>image/communicatepage_focus.png</file>
     </qresource>
 </RCC>

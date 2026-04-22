@@ -3,11 +3,16 @@
 #include "networkconfig.h"
 #include "qrcodeconfig.h"
 #include "modbustcpmastermanager/modbustcpmastermanager.h"
+#include "scheduler/scheduler.h"
+#include "scheduler/tasks/network_status_task.h"
+#include "scheduler/tasks/monitor_data_task.h"
 #include <QDebug>
 #include <QHash>
 
 QVector<SetOfOHBInfo> SharedData::setOfOHBInfoList;
 bool SharedData::s_modbusManagerInitialized = false;
+NetworkStatusTask* SharedData::s_networkStatusTask = nullptr;
+MonitorDataTask* SharedData::s_monitorDataTask = nullptr;
 
 SharedData::SharedData() {
 
@@ -79,6 +84,19 @@ QSharedPointer<SetOfOHBInfo> SharedData::getSetOfOHBInfoByUiId(int uiId)
     return QSharedPointer<SetOfOHBInfo>(nullptr);
 }
 
+QStringList SharedData::getAllQrcodes()
+{
+    QStringList qrcodes;
+    for (const SetOfOHBInfo& setInfo : setOfOHBInfoList) {
+        for (const FoupOfOHBInfo& foup : setInfo.getFoups()) {
+            if (!foup.qrCode.isEmpty()) {
+                qrcodes << foup.qrCode;
+            }
+        }
+    }
+    return qrcodes;
+}
+
 FoupOfOHBInfo* SharedData::getFoupByQRCode(const QString& qrCode)
 {
     // 遍历所有 SetOfOHBInfo，查找匹配的 qrCode
@@ -95,4 +113,38 @@ FoupOfOHBInfo* SharedData::getFoupByQRCode(const QString& qrCode)
     
     // 未找到时返回空指针
     return nullptr;
+}
+
+void SharedData::initScheduler()
+{
+    // 启动调度器
+    Scheduler* scheduler = Scheduler::instance();
+    scheduler->start();
+
+    // 提交网络状态监控任务（长驻任务）
+    // NetworkStatusTask 内部会在设备启动前先创建并管理 InitCheckTask
+    if (!s_networkStatusTask) {
+        s_networkStatusTask = new NetworkStatusTask();
+        scheduler->submitTask(s_networkStatusTask);
+        qDebug() << "[SharedData] 已提交网络状态监控任务";
+    }
+
+    // 创建并提交监控数据任务（长驻任务）
+    if (!s_monitorDataTask) {
+        s_monitorDataTask = new MonitorDataTask();
+        QString monitorTaskId = scheduler->submitTask(s_monitorDataTask);
+        qDebug() << "[SharedData] 已提交监控数据任务, TaskID:" << monitorTaskId;
+    }
+
+    qDebug() << "[SharedData] 调度器已启动，所有常驻任务已提交";
+}
+
+NetworkStatusTask* SharedData::getNetworkStatusTask()
+{
+    return s_networkStatusTask;
+}
+
+MonitorDataTask* SharedData::getMonitorDataTask()
+{
+    return s_monitorDataTask;
 }

@@ -33,6 +33,10 @@ HEADERS += \
 include ($$PWD/app/app.pri)
 INCLUDEPATH += $$PWD/app
 
+#config
+include ($$PWD/config/config.pri)
+INCLUDEPATH += $$PWD/config
+
 #tool
 include ($$PWD/tool/tool.pri)
 INCLUDEPATH += $$PWD/tool
@@ -52,7 +56,6 @@ INCLUDEPATH += $$PWD/data
 #classes，存放一些数据类对象
 include ($$PWD/classes/classes.pri)
 INCLUDEPATH += $$PWD/classes
-
 
 #resources
 RESOURCES += \

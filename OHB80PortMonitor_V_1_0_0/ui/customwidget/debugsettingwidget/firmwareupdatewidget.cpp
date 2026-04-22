@@ -557,8 +557,8 @@ void FirmwareUpdateWidget::onTaskDeviceStateLog(const QString &qrcode,
          state == S::SendingLastFrame))
     {
         const int total = frame.size();
-        for (int offset = 0; offset < total; offset += 32) {
-            const int end = qMin(offset + 32, total);
+        for (int offset = 0; offset < total; offset += 128) {
+            const int end = qMin(offset + 128, total);
             QString hex;
             hex.reserve((end - offset) * 3);
             for (int i = offset; i < end; ++i) {

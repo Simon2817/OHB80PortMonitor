@@ -1,6 +1,4 @@
 #include "homepage.h"
-#include "scheduler.h"
-#include "tasks/monitor_data_task.h"
 #include "ui_homepage.h"
 #include "app.h"
 #include <QVBoxLayout>
@@ -17,8 +15,6 @@ HomePage::HomePage(QWidget *parent)
     ui->setupUi(this);
 
     initUI();
-
-    initScheduler();
 }
 
 HomePage::~HomePage()
@@ -43,14 +39,6 @@ void HomePage::initUI()
 
     // 初始化 overheadCranesWidget（天车提示控件）
     initOverheadCranesWidget();
-}
-
-void HomePage::initScheduler()
-{
-    // 创建并提交监控数据任务（长驻任务）
-    MonitorDataTask* monitorTask = new MonitorDataTask();
-    QString monitorTaskId = Scheduler::instance()->submitTask(monitorTask);
-    qDebug() << "[HomePage] 已提交监控数据任务, TaskID:" << monitorTaskId;
 }
 
 void HomePage::initDeviceMonitorWidget()

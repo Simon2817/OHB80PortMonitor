@@ -118,10 +118,10 @@ public:
 
     void retranslateUi(QDialog *HistoryCalendarDialog)
     {
-        HistoryCalendarDialog->setWindowTitle(QCoreApplication::translate("HistoryCalendarDialog", "\351\200\211\346\213\251\346\227\245\346\234\237", nullptr));
-        labelTitle->setText(QCoreApplication::translate("HistoryCalendarDialog", "\351\200\211\346\213\251\345\217\221\351\200\201\346\227\245\346\234\237", nullptr));
-        btnCancel->setText(QCoreApplication::translate("HistoryCalendarDialog", "\345\217\226\346\266\210", nullptr));
-        btnConfirm->setText(QCoreApplication::translate("HistoryCalendarDialog", "\347\241\256\345\256\232", nullptr));
+        HistoryCalendarDialog->setWindowTitle(QCoreApplication::translate("HistoryCalendarDialog", "Select Date", nullptr));
+        labelTitle->setText(QCoreApplication::translate("HistoryCalendarDialog", "Select Date", nullptr));
+        btnCancel->setText(QCoreApplication::translate("HistoryCalendarDialog", "Cancel", nullptr));
+        btnConfirm->setText(QCoreApplication::translate("HistoryCalendarDialog", "OK", nullptr));
     } // retranslateUi
 
 };

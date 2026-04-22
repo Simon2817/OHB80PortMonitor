@@ -8,6 +8,8 @@
 #include <QString>
 #include <QVariantMap>
 
+class CommunicationRecorder;
+
 class MonitorDataTask : public SchedulerTask
 {
     Q_OBJECT
@@ -20,6 +22,14 @@ public:
     Q_INVOKABLE void stop() override;
     QString taskType() const override { return "MonitorDataTask"; }
     bool isPersistent() const override { return true; }
+
+signals:
+    /**
+     * @brief 通讯完成信号（每条指令完成后发射，包含成功/失败/超时）
+     * @param cmd 指令对象（含请求帧、响应帧、发送/响应时间等）
+     * @param masterId 对应的 Master ID（qrCode）
+     */
+    void communicationCompleted(ModbusCommand cmd, QString masterId);
 
 private slots:
     // 接收 PeriodicCommandSender 的 commandCompleted 信号
@@ -35,6 +45,9 @@ private:
 
     int m_totalCount = 0;
     bool m_stopped = false;
+
+    // 通讯记录采集器（节流 UI 通讯日志的上报频率）
+    CommunicationRecorder* m_recorder = nullptr;
 };
 
 #endif // MONITOR_DATA_TASK_H

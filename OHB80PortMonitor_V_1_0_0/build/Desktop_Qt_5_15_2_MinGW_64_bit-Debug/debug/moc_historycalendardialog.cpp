@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 #include <memory>
-#include "../../../ui/customwidget/loggerwidget/historycalendardialog/historycalendardialog.h"
+#include "../../../ui/customwidget/historycalendardialog/historycalendardialog.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)

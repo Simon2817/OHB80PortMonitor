@@ -1,0 +1,72 @@
+#pragma once
+#include <QHash>
+#include <QLinkedList>
+#include <QPair>
+#include <functional>
+
+template<typename Key, typename Value>
+class CommLRUCache
+{
+public:
+    explicit CommLRUCache(int capacity) : m_capacity(capacity) {}
+
+    bool contains(const Key &key) const { return m_map.contains(key); }
+    int  size()     const { return m_map.size(); }
+    int  capacity() const { return m_capacity; }
+
+    bool get(const Key &key, Value &out)
+    {
+        auto it = m_map.find(key);
+        if (it == m_map.end()) return false;
+        QPair<Key, Value> pair = *it.value();
+        m_list.erase(it.value());
+        m_list.prepend(pair);
+        m_map[key] = m_list.begin();
+        out = pair.second;
+        return true;
+    }
+
+    bool put(const Key &key, const Value &value,
+             Key *evictedKey = nullptr, Value *evictedValue = nullptr)
+    {
+        auto it = m_map.find(key);
+        if (it != m_map.end()) {
+            m_list.erase(it.value());
+            m_map.remove(key);
+        }
+        bool evicted = false;
+        if (m_map.size() >= m_capacity) {
+            auto last = m_list.end(); --last;
+            if (evictedKey)   *evictedKey   = last->first;
+            if (evictedValue) *evictedValue = last->second;
+            m_map.remove(last->first);
+            m_list.erase(last);
+            evicted = true;
+        }
+        m_list.prepend(qMakePair(key, value));
+        m_map.insert(key, m_list.begin());
+        return evicted;
+    }
+
+    bool remove(const Key &key)
+    {
+        auto it = m_map.find(key);
+        if (it == m_map.end()) return false;
+        m_list.erase(it.value());
+        m_map.erase(it);
+        return true;
+    }
+
+    QList<Key> keys() const
+    {
+        QList<Key> result;
+        for (auto &p : m_list) result.append(p.first);
+        return result;
+    }
+
+private:
+    int m_capacity;
+    using ListType = QLinkedList<QPair<Key, Value>>;
+    ListType m_list;
+    QHash<Key, typename ListType::iterator> m_map;
+};

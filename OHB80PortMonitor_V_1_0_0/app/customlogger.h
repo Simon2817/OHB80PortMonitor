@@ -21,6 +21,9 @@ public:
 
     // 获取固件升级截图目录路径: bin/log/firmware_upgrade/capture
     static QString FirmwareUpgradeCapturePath();
+
+    // 获取通讯日志目录路径: bin/log/communication
+    static QString CommunicationLoggerPath();
 };
 
 #endif // CUSTOMLOGGER_H

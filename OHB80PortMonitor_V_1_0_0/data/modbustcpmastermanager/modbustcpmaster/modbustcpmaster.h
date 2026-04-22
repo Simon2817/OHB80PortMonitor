@@ -145,6 +145,18 @@ public:
      */
     FirmwareUpgrader* firmwareUpgrader() const;
 
+    /**
+     * @brief 获取设备 IP 地址
+     * @return IP 地址字符串
+     */
+    QString ip() const { return m_ip; }
+
+    /**
+     * @brief 获取设备端口
+     * @return 端口号
+     */
+    quint16 port() const { return m_port; }
+
 signals:
     /**
      * @brief 错误信号

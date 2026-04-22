@@ -22,7 +22,3 @@ SOURCES += \
     $$PWD/logicalfilesystem.cpp \
     $$PWD/logitemdelegate.cpp \
     $$PWD/logpagemodel.cpp
-
-# historycalendardialog
-include($$PWD/historycalendardialog/historycalendardialog.pri)
-INCLUDEPATH += $$PWD/historycalendardialog

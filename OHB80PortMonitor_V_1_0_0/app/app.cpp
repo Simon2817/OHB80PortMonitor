@@ -6,8 +6,6 @@
 #include "metatypes.h"
 #include "modbustcpmastermanager/modbustcpmastermanager.h"
 #include "scheduler/scheduler.h"
-#include "scheduler/tasks/init_check_task.h"
-#include "scheduler/tasks/network_status_task.h"
 #include <qdir>
 #include <qstandardpaths>
 #include <qdebug>
@@ -74,7 +72,11 @@ bool App::initialize()
 void App::cleanup()
 {
     qDebug() << "Cleaning up application...";
-    
+
+    // 优雅关闭 Modbus 主控池（停止所有 Master、quit/wait 工作线程）
+    // 必须在 QApplication 销毁前、日志关闭前执行
+    ModbusTcpMasterManager::instance().shutdown();
+
     // 关闭日志系统
     if (s_logger) {
         s_logger->shutdown();
@@ -140,19 +142,16 @@ void App::getSharedData()
 
 void App::initScheduler()
 {
-    // 启动调度器
-    Scheduler* scheduler = Scheduler::instance();
-    scheduler->start();
-
-    // 提交网络状态监控任务（长驻任务）
-    // NetworkStatusTask 内部会在设备启动前先创建并管理 InitCheckTask
-    NetworkStatusTask* networkStatusTask = new NetworkStatusTask();
-    scheduler->submitTask(networkStatusTask);
-
-    qDebug() << "调度器已启动，已提交网络状态监控任务";
+    // 调用 SharedData 的调度器初始化方法
+    SharedData::initScheduler();
 }
 
 void App::onAboutToQuit()
 {
-    cleanup();
+    // 此处只负责停后台任务（aboutToQuit 触发时 a.exec() 尚未返回，widgets 还未销毁）
+    // 必须在 UI 析构前完成，防止信号发往已销毁的控件
+    // 日志系统此时仍可用，stop() 内部的日志调用是安全的
+    // ⚠ 禁止在此调用 App::cleanup()：会过早销毁 spdlog 线程池，
+    //    导致 Scheduler::stop() 及后续 widget 析构里的日志调用 use-after-free
+    Scheduler::instance()->stop();
 }

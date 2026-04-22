@@ -110,6 +110,15 @@ public:
      */
     CommandPool* commandPool() const;
 
+    /**
+     * @brief 优雅关闭：停止所有 Master、销毁工作线程
+     * @details 必须在 QApplication 仍存活时调用（例如 App::cleanup() 中）。
+     *          若不主动调用，待静态析构阶段再销毁 Pool，QApplication 已消亡，
+     *          其中的 QMetaObject::invokeMethod / QThread::quit+wait 会崩溃。
+     *          可重复调用，第二次是 no-op。
+     */
+    void shutdown();
+
 private:
     explicit ModbusTcpMasterManager(QObject* parent = nullptr);
     ~ModbusTcpMasterManager();

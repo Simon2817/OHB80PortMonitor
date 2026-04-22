@@ -23,6 +23,7 @@
 #include <QtWidgets/QWidget>
 #include "alarmpage.h"
 #include "chartpage.h"
+#include "communicatepage.h"
 #include "configpage.h"
 #include "debugpage.h"
 #include "homepage.h"
@@ -50,6 +51,7 @@ public:
     QToolButton *btnHome;
     QToolButton *btnSetting;
     QToolButton *btnChart;
+    QToolButton *btnCommunicate;
     QToolButton *btnAlarm;
     QToolButton *btnDebug;
     QSpacerItem *verticalSpacer;
@@ -59,6 +61,7 @@ public:
     HomePage *homepage;
     ConfigPage *configpage;
     ChartPage *chartpage;
+    CommunicatePage *communicatepage;
     AlarmPage *alarmpage;
     DebugPage *debugpage;
 
@@ -296,13 +299,25 @@ public:
 
         verticalLayout_2->addWidget(btnChart);
 
+        btnCommunicate = new QToolButton(widgetLeft);
+        btnCommunicate->setObjectName(QString::fromUtf8("btnCommunicate"));
+        sizePolicy5.setHeightForWidth(btnCommunicate->sizePolicy().hasHeightForWidth());
+        btnCommunicate->setSizePolicy(sizePolicy5);
+        QIcon icon7;
+        icon7.addFile(QString::fromUtf8(":/image/communicatepage.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnCommunicate->setIcon(icon7);
+        btnCommunicate->setIconSize(QSize(50, 50));
+        btnCommunicate->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+        verticalLayout_2->addWidget(btnCommunicate);
+
         btnAlarm = new QToolButton(widgetLeft);
         btnAlarm->setObjectName(QString::fromUtf8("btnAlarm"));
         sizePolicy5.setHeightForWidth(btnAlarm->sizePolicy().hasHeightForWidth());
         btnAlarm->setSizePolicy(sizePolicy5);
-        QIcon icon7;
-        icon7.addFile(QString::fromUtf8(":/image/alarmpage.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnAlarm->setIcon(icon7);
+        QIcon icon8;
+        icon8.addFile(QString::fromUtf8(":/image/alarmpage.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnAlarm->setIcon(icon8);
         btnAlarm->setIconSize(QSize(50, 50));
         btnAlarm->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
@@ -312,9 +327,9 @@ public:
         btnDebug->setObjectName(QString::fromUtf8("btnDebug"));
         sizePolicy5.setHeightForWidth(btnDebug->sizePolicy().hasHeightForWidth());
         btnDebug->setSizePolicy(sizePolicy5);
-        QIcon icon8;
-        icon8.addFile(QString::fromUtf8(":/image/debugpage.png"), QSize(), QIcon::Normal, QIcon::Off);
-        btnDebug->setIcon(icon8);
+        QIcon icon9;
+        icon9.addFile(QString::fromUtf8(":/image/debugpage.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnDebug->setIcon(icon9);
         btnDebug->setIconSize(QSize(50, 50));
         btnDebug->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
@@ -347,6 +362,9 @@ public:
         chartpage = new ChartPage();
         chartpage->setObjectName(QString::fromUtf8("chartpage"));
         stackedWidget->addWidget(chartpage);
+        communicatepage = new CommunicatePage();
+        communicatepage->setObjectName(QString::fromUtf8("communicatepage"));
+        stackedWidget->addWidget(communicatepage);
         alarmpage = new AlarmPage();
         alarmpage->setObjectName(QString::fromUtf8("alarmpage"));
         stackedWidget->addWidget(alarmpage);
@@ -392,6 +410,7 @@ public:
         btnHome->setText(QCoreApplication::translate("UIDemo6", "Home", nullptr));
         btnSetting->setText(QCoreApplication::translate("UIDemo6", "Config", nullptr));
         btnChart->setText(QCoreApplication::translate("UIDemo6", "Chart", nullptr));
+        btnCommunicate->setText(QCoreApplication::translate("UIDemo6", " Comm. ", nullptr));
         btnAlarm->setText(QCoreApplication::translate("UIDemo6", "Alarm", nullptr));
         btnDebug->setText(QCoreApplication::translate("UIDemo6", "Debug", nullptr));
     } // retranslateUi

@@ -81,7 +81,7 @@ void LoggerWidget::setupLiveTab()
     connect(m_bottomWidget, &LoadMoreItemWidget::clicked,
             this, &LoggerWidget::onBottomLoadMoreClicked);
 
-    m_jumpToLatestBtn = new QPushButton(tr("⇣ 回到最新"), ui->liveTab);
+    m_jumpToLatestBtn = new QPushButton(tr("⇣ Jump to Latest"), ui->liveTab);
     m_jumpToLatestBtn->setCursor(Qt::PointingHandCursor);
     m_jumpToLatestBtn->hide();
     connect(m_jumpToLatestBtn, &QPushButton::clicked,
@@ -365,7 +365,7 @@ void LoggerWidget::onSearchClicked()
     m_histMatchIndices.clear();
     m_histPendingScrollRow = -1;
     ui->searchBtn->setEnabled(false);
-    ui->searchBtn->setText(tr("查询中..."));
+    ui->searchBtn->setText(tr("Searching..."));
     m_lfs->queryHistory(q);
 }
 
@@ -373,7 +373,7 @@ void LoggerWidget::onHistoryReady(const HistoryResult &result)
 {
     m_lastResult = result;
     ui->searchBtn->setEnabled(true);
-    ui->searchBtn->setText(tr("查询"));
+    ui->searchBtn->setText(tr("Search"));
 
     if (m_histIsNewSearch) {
         bool noRecords = (result.totalRecords == 0);
@@ -383,9 +383,9 @@ void LoggerWidget::onHistoryReady(const HistoryResult &result)
             ui->findPrevBtn->setEnabled(false);
             ui->findNextBtn->setEnabled(false);
             if (noRecords)
-                QMessageBox::information(this, tr("查询结果"), tr("未查询到符合条件的记录"));
+                QMessageBox::information(this, tr("Search Result"), tr("No matching records found"));
             else
-                QMessageBox::information(this, tr("查询结果"), tr("模糊匹配未找到符合条件的记录"));
+                QMessageBox::information(this, tr("Search Result"), tr("No fuzzy match records found"));
             if (noRecords) return;
         }
     }
@@ -432,7 +432,7 @@ void LoggerWidget::onHistoryPageClicked(int pageIndex)
     m_lastQuery.pageIndex = pageIndex;
     m_histIsNewSearch = false;
     ui->searchBtn->setEnabled(false);
-    ui->searchBtn->setText(tr("查询中..."));
+    ui->searchBtn->setText(tr("Searching..."));
     m_lfs->queryHistory(m_lastQuery);
 }
 
@@ -478,8 +478,8 @@ void LoggerWidget::rebuildHistoryPageBar()
         dots->setCursor(Qt::PointingHandCursor);
         connect(dots, &QPushButton::clicked, this, [this, leftPage, rightPage]() {
             bool ok = false;
-            int page = QInputDialog::getInt(this, tr("跳转页码"),
-                           tr("请输入页码 (%1-%2)：").arg(leftPage + 1).arg(rightPage + 1),
+            int page = QInputDialog::getInt(this, tr("Go to Page"),
+                           tr("Enter page number (%1-%2):").arg(leftPage + 1).arg(rightPage + 1),
                            m_lastResult.currentPage + 1,
                            leftPage + 1, rightPage + 1, 1, &ok);
             if (ok) onHistoryPageClicked(page - 1);
@@ -511,7 +511,7 @@ void LoggerWidget::rebuildHistoryPageBar()
     bar->addWidget(makeBtn(tr(">"), cur < total - 1, cur + 1));
 
     // 页信息标签
-    QLabel *info = new QLabel(tr("第 %1/%2 页，共 %3 条")
+    QLabel *info = new QLabel(tr("Page %1/%2, Total %3 records")
                               .arg(cur + 1).arg(total).arg(m_lastResult.totalRecords));
     bar->addWidget(info);
     bar->addStretch();
@@ -520,14 +520,14 @@ void LoggerWidget::rebuildHistoryPageBar()
 void LoggerWidget::onSelectDateClicked()
 {
     ui->selectDateBtn->setEnabled(false);
-    ui->selectDateBtn->setText(tr("加载中..."));
+    ui->selectDateBtn->setText(tr("Loading..."));
     m_lfs->requestAvailableDates();
 }
 
 void LoggerWidget::onAvailableDatesReady(const QSet<QDate> &dates)
 {
     ui->selectDateBtn->setEnabled(true);
-    ui->selectDateBtn->setText(tr("选择日期"));
+    ui->selectDateBtn->setText(tr("Select Date"));
 
     m_calendarDlg->setAvailableDates(dates);
     m_calendarDlg->setSelectedDate(selectedDate());

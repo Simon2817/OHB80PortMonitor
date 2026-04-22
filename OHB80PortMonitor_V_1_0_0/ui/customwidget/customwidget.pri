@@ -20,4 +20,16 @@ INCLUDEPATH += $$PWD/debugsettingwidget
 include ($$PWD/loggerwidget/loggerwidget.pri)
 INCLUDEPATH += $$PWD/loggerwidget
 
+# alarmloggerwidget
+include ($$PWD/alarmloggerwidget/alarmloggerwidget.pri)
+INCLUDEPATH += $$PWD/alarmloggerwidget
+
+# historycalendardialog
+include($$PWD/historycalendardialog/historycalendardialog.pri)
+INCLUDEPATH += $$PWD/historycalendardialog
+
+# communicateloggerwidget
+include($$PWD/communicateloggerwidget/communicateloggerwidget.pri)
+INCLUDEPATH += $$PWD/communicateloggerwidget
+
 FORMS +=

@@ -1,6 +1,7 @@
 FORMS += \
     $$PWD/alarmpage.ui \
     $$PWD/chartpage.ui \
+    $$PWD/communicatepage.ui \
     $$PWD/configpage.ui \
     $$PWD/debugpage.ui \
     $$PWD/homepage.ui \
@@ -9,6 +10,7 @@ FORMS += \
 HEADERS += \
     $$PWD/alarmpage.h \
     $$PWD/chartpage.h \
+    $$PWD/communicatepage.h \
     $$PWD/configpage.h \
     $$PWD/debugpage.h \
     $$PWD/homepage.h \
@@ -17,6 +19,7 @@ HEADERS += \
 SOURCES += \
     $$PWD/alarmpage.cpp \
     $$PWD/chartpage.cpp \
+    $$PWD/communicatepage.cpp \
     $$PWD/configpage.cpp \
     $$PWD/debugpage.cpp \
     $$PWD/homepage.cpp \

@@ -27,3 +27,16 @@ QString CustomLogger::FirmwareUpgradeCapturePath()
 
     return captureDir;
 }
+
+QString CustomLogger::CommunicationLoggerPath()
+{
+    AppConfig &config = AppConfig::getInstance();
+    QString logDir = config.getRootDir() + "/log/communicate_log";
+
+    QDir dir(logDir);
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+
+    return logDir;
+}

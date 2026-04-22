@@ -92,6 +92,7 @@ public:
         tabWidget->addTab(liveTab, QString());
         historyTab = new QWidget();
         historyTab->setObjectName(QString::fromUtf8("historyTab"));
+        historyTab->setAutoFillBackground(true);
         histLayout = new QVBoxLayout(historyTab);
         histLayout->setSpacing(4);
         histLayout->setObjectName(QString::fromUtf8("histLayout"));
@@ -271,7 +272,7 @@ public:
         QObject::connect(timeCheck, SIGNAL(toggled(bool)), timeToMinute, SLOT(setEnabled(bool)));
         QObject::connect(timeCheck, SIGNAL(toggled(bool)), timeToSecond, SLOT(setEnabled(bool)));
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(LoggerWidget);
@@ -279,21 +280,21 @@ public:
 
     void retranslateUi(QWidget *LoggerWidget)
     {
-        tabWidget->setTabText(tabWidget->indexOf(liveTab), QCoreApplication::translate("LoggerWidget", "\345\256\236\346\227\266\346\227\245\345\277\227", nullptr));
-        labelDate->setText(QCoreApplication::translate("LoggerWidget", "\346\227\245\346\234\237\357\274\232", nullptr));
-        selectDateBtn->setText(QCoreApplication::translate("LoggerWidget", "\351\200\211\346\213\251\346\227\245\346\234\237", nullptr));
-        timeCheck->setText(QCoreApplication::translate("LoggerWidget", "\346\227\266\351\227\264\345\214\272\351\227\264\357\274\232", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(liveTab), QCoreApplication::translate("LoggerWidget", "Live Log", nullptr));
+        labelDate->setText(QCoreApplication::translate("LoggerWidget", "Date:", nullptr));
+        selectDateBtn->setText(QCoreApplication::translate("LoggerWidget", "Select Date", nullptr));
+        timeCheck->setText(QCoreApplication::translate("LoggerWidget", "Time Range:", nullptr));
         labelTimeFrom->setText(QCoreApplication::translate("LoggerWidget", ":", nullptr));
         labelTimeFrom2->setText(QCoreApplication::translate("LoggerWidget", ":", nullptr));
-        labelTimeTo->setText(QCoreApplication::translate("LoggerWidget", "\350\207\263", nullptr));
+        labelTimeTo->setText(QCoreApplication::translate("LoggerWidget", "To", nullptr));
         labelTimeTo2->setText(QCoreApplication::translate("LoggerWidget", ":", nullptr));
         labelTimeTo3->setText(QCoreApplication::translate("LoggerWidget", ":", nullptr));
-        labelLike->setText(QCoreApplication::translate("LoggerWidget", "\346\250\241\347\263\212\345\214\271\351\205\215\357\274\232", nullptr));
-        likeEdit->setPlaceholderText(QCoreApplication::translate("LoggerWidget", "\347\225\231\347\251\272\345\210\231\344\270\215\345\201\232\346\250\241\347\263\212\345\214\271\351\205\215", nullptr));
-        searchBtn->setText(QCoreApplication::translate("LoggerWidget", "\346\237\245\350\257\242", nullptr));
-        findPrevBtn->setText(QCoreApplication::translate("LoggerWidget", "\346\237\245\346\211\276\345\211\215\344\270\200\344\270\252", nullptr));
-        findNextBtn->setText(QCoreApplication::translate("LoggerWidget", "\346\237\245\346\211\276\345\220\216\344\270\200\344\270\252", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(historyTab), QCoreApplication::translate("LoggerWidget", "\345\216\206\345\217\262\346\237\245\350\257\242", nullptr));
+        labelLike->setText(QCoreApplication::translate("LoggerWidget", "Fuzzy Match:", nullptr));
+        likeEdit->setPlaceholderText(QCoreApplication::translate("LoggerWidget", "Leave empty to skip fuzzy match", nullptr));
+        searchBtn->setText(QCoreApplication::translate("LoggerWidget", "Search", nullptr));
+        findPrevBtn->setText(QCoreApplication::translate("LoggerWidget", "Find Prev", nullptr));
+        findNextBtn->setText(QCoreApplication::translate("LoggerWidget", "Find Next", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(historyTab), QCoreApplication::translate("LoggerWidget", "History", nullptr));
         (void)LoggerWidget;
     } // retranslateUi
 

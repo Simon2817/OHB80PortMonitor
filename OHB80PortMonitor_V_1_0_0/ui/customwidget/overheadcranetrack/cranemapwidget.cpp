@@ -422,9 +422,46 @@ void CraneMapWidget::centerMap(int marginTop, int marginBottom, int marginLeft, 
     // 计算当前地图的边界
     QRectF bounds = calculateMapBounds();
     
-    // 计算偏移量，使地图左上角从 (marginLeft, marginTop) 开始
+    // 内容实际宽高（含边距）
+    qreal contentWidth = bounds.width() + marginLeft + marginRight;
+    qreal contentHeight = bounds.height() + marginTop + marginBottom;
+    
+    // 获取可用空间：取自身尺寸与父控件尺寸中较大的值
+    QSize selfSize = size();
+    QSize parentSize = parentWidget() ? parentWidget()->size() : selfSize;
+    QSize availableSize(qMax(selfSize.width(), parentSize.width()),
+                        qMax(selfSize.height(), parentSize.height()));
+    
+    qDebug() << "[CraneMapWidget::centerMap] bounds:" << bounds
+             << "contentSize:" << contentWidth << "x" << contentHeight
+             << "selfSize:" << selfSize
+             << "parentSize:" << parentSize
+             << "availableSize:" << availableSize;
+    
+    // 基础偏移：将内容左上角对齐到边距位置
     qreal offsetX = marginLeft - bounds.left();
     qreal offsetY = marginTop - bounds.top();
+    
+    // 如果内容比可用空间小，增加额外偏移量实现居中
+    if (contentWidth < availableSize.width()) {
+        offsetX += (availableSize.width() - contentWidth) / 2.0;
+    }
+    if (contentHeight < availableSize.height()) {
+        offsetY += (availableSize.height() - contentHeight) / 2.0;
+    }
+    
+    // 计算需要通过滚动来居中的偏移量（内容 > 可视区域时）
+    int scrollToX = 0;
+    int scrollToY = 0;
+    if (contentWidth >= availableSize.width()) {
+        scrollToX = (contentWidth - availableSize.width()) / 2.0;
+    }
+    if (contentHeight >= availableSize.height()) {
+        scrollToY = (contentHeight - availableSize.height()) / 2.0;
+    }
+    
+    qDebug() << "[CraneMapWidget::centerMap] offsetX:" << offsetX << "offsetY:" << offsetY
+             << "scrollToX:" << scrollToX << "scrollToY:" << scrollToY;
     
     // 更新所有绘制指令的坐标
     for (auto& cmd : m_drawCommands) {
@@ -450,14 +487,22 @@ void CraneMapWidget::centerMap(int marginTop, int marginBottom, int marginLeft, 
         }
     }
     
-    // 内容尺寸 = 地图宽高 + 左右/上下边距
-    int contentWidth = bounds.width() + marginLeft + marginRight;
-    int contentHeight = bounds.height() + marginTop + marginBottom;
-    m_contentSize = QSize(contentWidth, contentHeight);
+    // 内容尺寸取内容区域和可用空间的较大值，确保控件填满父区域
+    m_contentSize = QSize(qMax((int)contentWidth, availableSize.width()),
+                          qMax((int)contentHeight, availableSize.height()));
     updateGeometry();
     
     // 保存基准几何信息（用于缩放）
     saveBaseGeometry();
+    
+    // 更新滚动条范围，然后设置初始滚动位置居中
+    updateScrollBars();
+    if (scrollToX > 0 || scrollToY > 0) {
+        QScrollBar* hBar = m_scrollController->horizontalScrollBar();
+        QScrollBar* vBar = m_scrollController->verticalScrollBar();
+        if (hBar && scrollToX > 0) hBar->setValue(scrollToX);
+        if (vBar && scrollToY > 0) vBar->setValue(scrollToY);
+    }
     
     update();
 }
@@ -517,9 +562,9 @@ void CraneMapWidget::syncDevicePositions()
         
         const auto& baseGeom = baseGeometry[deviceKey];
         
-        // 只更新位置（减去滚动偏移）
-        device->move(baseGeom.pos.x() * scale - scrollOffset.x(), 
-                     baseGeom.pos.y() * scale - scrollOffset.y());
+        // 只更新位置（减去滚动偏移 + 居中偏移）
+        device->move(baseGeom.pos.x() * scale - scrollOffset.x() + m_centerOffset.x(), 
+                     baseGeom.pos.y() * scale - scrollOffset.y() + m_centerOffset.y());
     }
 }
 
@@ -547,7 +592,39 @@ void CraneMapWidget::applyZoom()
     // 更新滚动条
     updateScrollBars();
     
+    // 动态计算居中偏移并应用到设备控件
+    updateCenterOffset();
+    
     update();
+}
+
+void CraneMapWidget::updateCenterOffset()
+{
+    QSize scaledContent = m_zoomController->getScaledContentSize();
+    QSize viewport = size();
+    
+    qreal cx = scaledContent.width() < viewport.width()
+               ? (viewport.width() - scaledContent.width()) / 2.0 : 0;
+    qreal cy = scaledContent.height() < viewport.height()
+               ? (viewport.height() - scaledContent.height()) / 2.0 : 0;
+    m_centerOffset = QPointF(cx, cy);
+    
+    // 将居中偏移应用到所有设备控件位置
+    if (cx > 0 || cy > 0) {
+        const auto& baseGeometry = m_zoomController->baseDeviceGeometry();
+        QPoint scrollOffset = m_scrollController->scrollOffset();
+        double scale = m_zoomController->scaleFactor();
+        
+        for (auto it = m_frameDeviceMap.constBegin(); it != m_frameDeviceMap.constEnd(); ++it) {
+            int deviceKey = it.key();
+            QSharedPointer<FrameDevice> device = it.value();
+            if (!device || !baseGeometry.contains(deviceKey)) continue;
+            
+            const auto& baseGeom = baseGeometry[deviceKey];
+            device->move(baseGeom.pos.x() * scale - scrollOffset.x() + cx,
+                         baseGeom.pos.y() * scale - scrollOffset.y() + cy);
+        }
+    }
 }
 
 void CraneMapWidget::mousePressEvent(QMouseEvent *event)
@@ -604,9 +681,9 @@ void CraneMapWidget::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     
-    // 应用滚动偏移
+    // 应用滚动偏移 + 居中偏移
     QPoint offset = m_scrollController->scrollOffset();
-    painter.translate(-offset.x(), -offset.y());
+    painter.translate(-offset.x() + m_centerOffset.x(), -offset.y() + m_centerOffset.y());
     
     // 应用缩放
     double scale = m_zoomController->scaleFactor();
@@ -656,43 +733,52 @@ void CraneMapWidget::paintEvent(QPaintEvent *event)
 
 void CraneMapWidget::refreshDeviceData()
 {
-    qDebug() << "[DIAG] refreshDeviceData ENTER, deviceCount=" << m_frameDeviceMap.size();
     std::string loggerPre = "[CraneMapWidget::refreshDeviceData]";
     std::string mapLevelStr = (m_currentMapLevel == MapLevel::FoupLevel) ? "FoupLevel" : "SetLevel";
-    m_logger.log(m_loggerFileName, Level::INFO, "{}Called, current map level: {}, device count: {}",
-                 loggerPre, mapLevelStr, m_frameDeviceMap.size());
     
     // 安全检查：如果设备映射为空，直接返回
     if (m_frameDeviceMap.isEmpty()) {
-        qDebug() << "[DIAG] refreshDeviceData EXIT, no devices";
+        m_logger.log(m_loggerFileName, Level::WARN, loggerPre + "No devices in map, returning");
         return;
     }
-    
+
     int updatedCount = 0;
-    
+
     // 刷新所有 FrameDevice 控件的显示
+    int skippedNull = 0;
     for (auto it = m_frameDeviceMap.begin(); it != m_frameDeviceMap.end(); ++it) {
+        int key = it.key();
         QSharedPointer<FrameDevice> frameDevice = it.value();
-        
+
         // 严格的空指针检查
         if (!frameDevice || frameDevice.isNull()) {
+            skippedNull++;
+            m_logger.log(m_loggerFileName, Level::WARN, loggerPre + "Skipped null device, key=" + std::to_string(key));
             continue;
         }
-        
+
         // 根据当前地图级别调用相应的更新方法
-        if (m_currentMapLevel == MapLevel::FoupLevel) {
-            // FoupLevel 视图：更新 Foup 数据
-            frameDevice->updateFoupInfo();
-            updatedCount++;
-        } else if (m_currentMapLevel == MapLevel::SetLevel) {
-            // SetLevel 视图：更新 Set 数据
-            frameDevice->updateSetInfo();
-            updatedCount++;
+        try {
+            if (m_currentMapLevel == MapLevel::FoupLevel) {
+                // FoupLevel 视图：更新 Foup 数据
+                frameDevice->updateFoupInfo();
+                updatedCount++;
+            } else if (m_currentMapLevel == MapLevel::SetLevel) {
+                // SetLevel 视图：更新 Set 数据
+                frameDevice->updateSetInfo();
+                updatedCount++;
+            }
+        } catch (const std::exception& e) {
+            m_logger.log(m_loggerFileName, Level::ERROR, loggerPre + "Exception at key=" + std::to_string(key) + ", error=" + e.what());
+        } catch (...) {
+            m_logger.log(m_loggerFileName, Level::ERROR, loggerPre + "Unknown exception at key=" + std::to_string(key));
         }
     }
-    
-    qDebug() << "[DIAG] refreshDeviceData EXIT, updated=" << updatedCount;
-    m_logger.log(m_loggerFileName, Level::INFO, "{}Updated {} devices", loggerPre, updatedCount);
+    if (skippedNull > 0) {
+        m_logger.log(m_loggerFileName, Level::WARN, loggerPre + "Skipped " + std::to_string(skippedNull) + " null devices total");
+    }
+
+    m_logger.log(m_loggerFileName, Level::INFO, loggerPre + "Updated " + std::to_string(updatedCount) + " devices");
 }
 
 void CraneMapWidget::selectFirstSet()
@@ -715,6 +801,7 @@ void CraneMapWidget::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
     updateScrollBars();
+    updateCenterOffset();
 }
 
 void CraneMapWidget::updateScrollBars()
@@ -838,8 +925,7 @@ void CraneMapWidget::handleDeviceClicked(FrameDevice::DeviceType deviceType, int
 void CraneMapWidget::handleSetDeviceDoubleClicked(int uiId, const QString& firstFoupQrCode)
 {
     std::string loggerPre = "[CraneMapWidget::handleSetDeviceDoubleClicked]";
-    m_logger.log(m_loggerFileName, Level::INFO, "{}Set设备双击: uiId={}, firstFoupQrCode={}",
-                 loggerPre, uiId, firstFoupQrCode.toStdString());
+    m_logger.log(m_loggerFileName, Level::INFO, loggerPre + "Set设备双击: uiId=" + std::to_string(uiId) + ", firstFoupQrCode=" + firstFoupQrCode.toStdString());
     
     // 重置拖动状态，避免切换视图后鼠标仍处于拖动模式
     m_isDragging = false;
@@ -874,7 +960,7 @@ void CraneMapWidget::handleSetDeviceDoubleClicked(int uiId, const QString& first
     }
     
     if (targetDeviceKey >= 0) {
-        m_logger.log(m_loggerFileName, Level::INFO, "{}找到目标设备键: {}", loggerPre, targetDeviceKey);
+        m_logger.log(m_loggerFileName, Level::INFO, loggerPre + "找到目标设备键: " + std::to_string(targetDeviceKey));
         
         // 高亮该 Set 下所有 Foup 控件（键格式：nodeKey * 100 + foupIndex）
         for (auto it = m_frameDeviceMap.begin(); it != m_frameDeviceMap.end(); ++it) {
@@ -889,7 +975,7 @@ void CraneMapWidget::handleSetDeviceDoubleClicked(int uiId, const QString& first
             scrollToDevice(targetDeviceKey, 10);
         });
     } else {
-        m_logger.log(m_loggerFileName, Level::WARN, "{}未找到 uiId={} 对应的 Foup 设备", loggerPre, uiId);
+        m_logger.log(m_loggerFileName, Level::WARN, loggerPre + "未找到 uiId=" + std::to_string(uiId) + " 对应的 Foup 设备");
     }
 }
 
@@ -905,7 +991,7 @@ void CraneMapWidget::scrollToDevice(int deviceKey, int offsetPixels)
     qDebug() << "[DIAG] scrollToDevice: key=" << deviceKey
              << "devicePos=(" << device->pos().x() << "," << device->pos().y() << ")";
     
-    m_logger.log(m_loggerFileName, Level::INFO, "{}滚动到设备: key={}", loggerPre, deviceKey);
+    m_logger.log(m_loggerFileName, Level::INFO, loggerPre + "滚动到设备: key=" + std::to_string(deviceKey));
     
     // 委托给 ScrollController 处理滚动
     m_scrollController->scrollToDevice(device, size(), offsetPixels);
@@ -917,8 +1003,8 @@ void CraneMapWidget::onConfigLoadFinished()
     bool success = m_configLoadWatcher->result();
     
     if (success) {
-        // 保存控件基础几何信息（用于缩放）
-        saveBaseGeometry();
+        // 居中布局（计算偏移并保存基准几何信息）
+        centerMap();
         
         // 连接 FrameDevice 信号
         connectFrameDeviceSignals();

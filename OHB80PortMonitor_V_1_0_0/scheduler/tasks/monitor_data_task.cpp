@@ -1,4 +1,5 @@
 #include "monitor_data_task.h"
+#include "communicationrecorder.h"
 #include "modbustcpmastermanager/modbustcpmastermanager.h"
 #include "modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h"
 #include "modbustcpmastermanager/modbustcpmaster/modbusconnecter.h"
@@ -13,10 +14,15 @@
 
 MonitorDataTask::MonitorDataTask(QObject *parent)
     : SchedulerTask(parent)
+    , m_recorder(new CommunicationRecorder(this))
 {
     qDebug() << "=============================MonitorDataTask 调度任务开始=============================";
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
         "=============================MonitorDataTask 调度任务开始=============================");
+
+    // 采集器的 shouldEmit 信号转发为 MonitorDataTask 的 communicationCompleted 信号
+    connect(m_recorder, &CommunicationRecorder::shouldEmit,
+            this, &MonitorDataTask::communicationCompleted);
 }
 
 MonitorDataTask::~MonitorDataTask()
@@ -31,6 +37,11 @@ void MonitorDataTask::start()
     setState(Running);
     m_stopped = false;
     m_totalCount = 0;
+
+    // 启动采集器
+    if (m_recorder) {
+        m_recorder->start();
+    }
 
     ModbusTcpMasterManager& manager = ModbusTcpMasterManager::instance();
     QStringList ids = manager.masterIds();
@@ -64,6 +75,11 @@ void MonitorDataTask::stop()
 {
     m_stopped = true;
 
+    // 停止采集器
+    if (m_recorder) {
+        m_recorder->stop();
+    }
+
     ModbusTcpMasterManager& manager = ModbusTcpMasterManager::instance();
     QStringList ids = manager.masterIds();
     for (const QString& id : ids) {
@@ -85,6 +101,11 @@ void MonitorDataTask::stop()
 void MonitorDataTask::onCommandCompleted(ModbusCommand cmd, const QString& masterId)
 {
     if (m_stopped) return;
+
+    // 提交给采集器进行节流（采集器会在达到阈值时通过 shouldEmit 回调发射 communicationCompleted）
+    if (m_recorder) {
+        m_recorder->submitCommand(cmd, masterId);
+    }
 
     // 只处理 ReadFoupStatus 指令的成功响应
     if (cmd.id != "ReadFoupStatus") return;
@@ -196,15 +217,15 @@ QVariantMap MonitorDataTask::parseReadFoupStatusResponse(const ModbusCommand& cm
     result["startTimeSec"] = startTimeSec;
 
     // 5. 充气时间（毫秒）
-    quint16 chargeTimeMs = getU16BE(10) * 1000;
+    int chargeTimeMs = getU16BE(10) * 1000;
     result["purgeTimeMs"] = chargeTimeMs;
 
     // 6. idle时间（毫秒）
-    quint16 idleTimeMs = getU16BE(12) * 1000;
+    int idleTimeMs = getU16BE(12) * 1000;
     result["idleTimeMs"] = idleTimeMs;
 
     // 7. FoupIn状态（0或1）
-    quint16 foupInStatus = getU16BE(14) * 1000;
+    quint16 foupInStatus = getU16BE(14);
     result["hasFoup"] = (foupInStatus != 0);
 
     return result;

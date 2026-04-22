@@ -44,21 +44,28 @@ void NetworkStatusTask::start()
 
     // 启动所有 ModbusTcpMaster
     for (const QString &id : ids) {
+        ModbusTcpMaster *master = manager.getMaster(id);
+        QString ipPortStr;
+        if (master) {
+            ipPortStr = QString("%1:%2").arg(master->ip()).arg(master->port());
+        }
         manager.startMaster(id, ModbusConnecter::ConnectionMode::AutoReconnect);
-        qDebug() << "[Scheduler][NetworkStatusTask] 设备" << id << "已启动自动重连";
+        qDebug() << "[Scheduler][NetworkStatusTask] 设备" << id << "(" << ipPortStr << ") 已启动自动重连";
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
-            QString("[Scheduler][NetworkStatusTask] 设备 %1 已启动自动重连").arg(id).toStdString());
+            QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 已启动自动重连").arg(id).arg(ipPortStr).toStdString());
     }
 
     for (const QString &id : ids) {
         ModbusTcpMaster *master = manager.getMaster(id);
         if (!master) continue;
 
+        QString ipPortStr = QString("%1:%2").arg(master->ip()).arg(master->port());
+
         ModbusConnecter *connecter = master->connector();
         if (!connecter) {
-            qWarning() << "[Scheduler][NetworkStatusTask] 设备" << id << "的 ModbusConnecter 为空，跳过";
+            qWarning() << "[Scheduler][NetworkStatusTask] 设备" << id << "(" << ipPortStr << ") 的 ModbusConnecter 为空，跳过";
             LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
-                QString("[Scheduler][NetworkStatusTask] 设备 %1 的 ModbusConnecter 为空，跳过").arg(id).toStdString());
+                QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 的 ModbusConnecter 为空，跳过").arg(id).arg(ipPortStr).toStdString());
             continue;
         }
 
@@ -72,11 +79,11 @@ void NetworkStatusTask::start()
             if (currentStatus == ModbusConnecter::ConnectionStatus::Connected) {
                 foup->hasAlarm = false;
                 foup->alarmId.clear();
-                qDebug() << "[Scheduler][NetworkStatusTask] 设备" << id << "初始状态已连接，告警已清除";
+                qDebug() << "[Scheduler][NetworkStatusTask] 设备" << id << "(" << ipPortStr << ") 初始状态已连接，告警已清除";
             } else {
                 foup->hasAlarm = true;
                 foup->alarmId = "111";
-                qDebug() << "[Scheduler][NetworkStatusTask] 设备" << id << "初始状态未连接，设置告警";
+                qDebug() << "[Scheduler][NetworkStatusTask] 设备" << id << "(" << ipPortStr << ") 初始状态未连接，设置告警";
             }
         }
 
@@ -132,16 +139,24 @@ void NetworkStatusTask::onStatusChanged(ModbusConnecter::ConnectionStatus status
         case ModbusConnecter::ConnectionStatus::Error:        statusStr = "错误";   break;
     }
 
-    qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "连接状态变更:" << statusStr;
+    // 获取 IP 和端口信息
+    ModbusTcpMasterManager &manager = ModbusTcpMasterManager::instance();
+    ModbusTcpMaster *master = manager.getMaster(masterId);
+    QString ipPortStr;
+    if (master) {
+        ipPortStr = QString("%1:%2").arg(master->ip()).arg(master->port());
+    }
+
+    qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "(" << ipPortStr << ") 连接状态变更:" << statusStr;
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
-        QString("[Scheduler][NetworkStatusTask] 设备 %1 连接状态变更: %2").arg(masterId).arg(statusStr).toStdString());
+        QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接状态变更: %3").arg(masterId).arg(ipPortStr).arg(statusStr).toStdString());
 
     // 当连接断开或出错时，设置告警
     FoupOfOHBInfo* foup = SharedData::getFoupByQRCode(masterId);
     if (!foup) {
-        qWarning() << "[Scheduler][NetworkStatusTask] 未找到设备" << masterId << "对应的 FoupOfOHBInfo";
+        qWarning() << "[Scheduler][NetworkStatusTask] 未找到设备" << masterId << "(" << ipPortStr << ") 对应的 FoupOfOHBInfo";
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
-            QString("[Scheduler][NetworkStatusTask] 未找到设备 %1 对应的 FoupOfOHBInfo").arg(masterId).toStdString());
+            QString("[Scheduler][NetworkStatusTask] 未找到设备 %1 (%2) 对应的 FoupOfOHBInfo").arg(masterId).arg(ipPortStr).toStdString());
         return;
     }
 
@@ -149,16 +164,16 @@ void NetworkStatusTask::onStatusChanged(ModbusConnecter::ConnectionStatus status
         // 连接成功：清除告警
         foup->hasAlarm = false;
         foup->alarmId.clear();
-        qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "连接成功，告警已清除";
+        qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "(" << ipPortStr << ") 连接成功，告警已清除";
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
-            QString("[Scheduler][NetworkStatusTask] 设备 %1 连接成功，告警已清除").arg(masterId).toStdString());
+            QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接成功，告警已清除").arg(masterId).arg(ipPortStr).toStdString());
     } else {
         // 断开或出错：设置告警
         foup->hasAlarm = true;
         foup->alarmId = "111";
-        qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "连接异常，已设置告警 alarmId=111";
+        qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "(" << ipPortStr << ") 连接异常，已设置告警 alarmId=111";
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
-            QString("[Scheduler][NetworkStatusTask] 设备 %1 连接异常，已设置告警 alarmId=111").arg(masterId).toStdString());
+            QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接异常，已设置告警 alarmId=111").arg(masterId).arg(ipPortStr).toStdString());
     }
 }
 
