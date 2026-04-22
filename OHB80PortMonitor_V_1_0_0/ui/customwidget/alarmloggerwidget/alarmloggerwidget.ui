@@ -32,14 +32,14 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabLive">
       <property name="autoFillBackground">
        <bool>true</bool>
       </property>
       <attribute name="title">
-       <string>实时警报信息</string>
+       <string>Live Alarms</string>
       </attribute>
       <layout class="QVBoxLayout" name="tabLiveLayout">
        <property name="spacing">
@@ -76,12 +76,12 @@
          </property>
          <column>
           <property name="text">
-           <string>警报级别</string>
+           <string>Alarm Level</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>发送时间</string>
+           <string>Send Time</string>
           </property>
          </column>
          <column>
@@ -91,22 +91,22 @@
          </column>
          <column>
           <property name="text">
-           <string>警报ID</string>
+           <string>Alarm ID</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>是否解决</string>
+           <string>Resolved</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>解决时间</string>
+           <string>Resolve Time</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>具体信息</string>
+           <string>Message</string>
           </property>
          </column>
         </widget>
@@ -118,7 +118,7 @@
        <bool>true</bool>
       </property>
       <attribute name="title">
-       <string>历史记录</string>
+       <string>History</string>
       </attribute>
       <layout class="QVBoxLayout" name="tabHistoryLayout">
        <property name="spacing">
@@ -153,14 +153,14 @@
             <bool>true</bool>
            </property>
            <property name="placeholderText">
-            <string>请选择日期以加载日志文件...</string>
+            <string>Please select a date to load log file...</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="histSelectDateBtn">
            <property name="text">
-            <string>选择日期</string>
+            <string>Select Date</string>
            </property>
           </widget>
          </item>
@@ -187,14 +187,14 @@
          <item>
           <widget class="QCheckBox" name="histTimeRangeCheck">
            <property name="text">
-            <string>时间区间</string>
+            <string>Time Range</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QLabel" name="labelHistStart">
            <property name="text">
-            <string>起始：</string>
+            <string>Start:</string>
            </property>
           </widget>
          </item>
@@ -204,7 +204,7 @@
             <bool>false</bool>
            </property>
            <property name="suffix">
-            <string> 时</string>
+            <string> h</string>
            </property>
            <property name="minimum">
             <number>0</number>
@@ -220,7 +220,7 @@
             <bool>false</bool>
            </property>
            <property name="suffix">
-            <string> 分</string>
+            <string> m</string>
            </property>
            <property name="minimum">
             <number>0</number>
@@ -236,7 +236,7 @@
             <bool>false</bool>
            </property>
            <property name="suffix">
-            <string> 秒</string>
+            <string> s</string>
            </property>
            <property name="minimum">
             <number>0</number>
@@ -249,7 +249,7 @@
          <item>
           <widget class="QLabel" name="labelHistEnd">
            <property name="text">
-            <string>结束：</string>
+            <string>End:</string>
            </property>
           </widget>
          </item>
@@ -259,7 +259,7 @@
             <bool>false</bool>
            </property>
            <property name="suffix">
-            <string> 时</string>
+            <string> h</string>
            </property>
            <property name="minimum">
             <number>0</number>
@@ -278,7 +278,7 @@
             <bool>false</bool>
            </property>
            <property name="suffix">
-            <string> 分</string>
+            <string> m</string>
            </property>
            <property name="minimum">
             <number>0</number>
@@ -297,7 +297,7 @@
             <bool>false</bool>
            </property>
            <property name="suffix">
-            <string> 秒</string>
+            <string> s</string>
            </property>
            <property name="minimum">
             <number>0</number>
@@ -333,14 +333,14 @@
          <item>
           <widget class="QLineEdit" name="histSearchEdit">
            <property name="placeholderText">
-            <string>输入关键字进行 Like 搜索...</string>
+            <string>Enter keyword to search...</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="histSearchBtn">
            <property name="text">
-            <string>搜索</string>
+            <string>Search</string>
            </property>
           </widget>
          </item>
@@ -350,7 +350,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>上一个</string>
+            <string>Previous</string>
            </property>
           </widget>
          </item>
@@ -360,7 +360,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>下一个</string>
+            <string>Next</string>
            </property>
           </widget>
          </item>
@@ -429,6 +429,9 @@
           <spacer name="histPageLeftSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>

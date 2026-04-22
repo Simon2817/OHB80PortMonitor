@@ -250,36 +250,38 @@ void CommLogFileSystem::requestQueryHistory(const CommHistoryQuery &query)
 {
     CommHistoryResult result;
 
-    // ---- 1. 收集当天文件列表 + 大小，用于缓存键 ----
-    QStringList files = filePathsForDate(query.date);
-    QVector<QPair<QString,qint64>> fileSig;
-    fileSig.reserve(files.size());
-    for (const QString &fp : files)
-        fileSig.append({fp, QFileInfo(fp).size()});
+    // ---- 1. 构造缓存键并查询 LRU（不含文件大小，保证翻页命中） ----
+    CommQueryKey key;
+    key.date     = query.date;
+    key.timeCol  = query.timeColumnIndex;
+    key.timeFrom = query.timeFrom;
+    key.timeTo   = query.timeTo;
+    key.qrcode   = query.qrcodeFilter;
+    key.cmdId    = query.commandIdFilter;
 
-    if (files.isEmpty()) {
-        // 清掉缓存并返回空
-        m_qcValid = false;
-        emit historyReady(result);
-        return;
+    // forceRefresh 时（Search 按钮）：主动淘汰该 key，强制重算以反映最新写入数据
+    if (query.forceRefresh) m_queryCache.remove(key);
+
+    CommQueryValue cached;
+    bool cacheHit = m_queryCache.get(key, cached);
+
+    // ---- 2. 仅在 miss 时才读盘 ----
+    QStringList files;
+    if (!cacheHit) {
+        files = filePathsForDate(query.date);
+        if (files.isEmpty()) {
+            emit historyReady(result);
+            return;
+        }
     }
 
-    // ---- 2. 检查缓存是否命中 ----
-    bool cacheHit = m_qcValid
-                    && m_qcDate      == query.date
-                    && m_qcTimeCol   == query.timeColumnIndex
-                    && m_qcTimeFrom  == query.timeFrom
-                    && m_qcTimeTo    == query.timeTo
-                    && m_qcQrcode    == query.qrcodeFilter
-                    && m_qcCmdId     == query.commandIdFilter
-                    && m_qcFiles     == fileSig;
+    const bool hasSubQuery = !query.qrcodeFilter.isEmpty()
+                             || !query.commandIdFilter.isEmpty();
 
     if (!cacheHit) {
-        bool hasTimeRange = query.timeColumnIndex >= 0
-                            && !query.timeFrom.isEmpty()
-                            && !query.timeTo.isEmpty();
-        bool hasSubQuery  = !query.qrcodeFilter.isEmpty()
-                            || !query.commandIdFilter.isEmpty();
+        const bool hasTimeRange = query.timeColumnIndex >= 0
+                                  && !query.timeFrom.isEmpty()
+                                  && !query.timeTo.isEmpty();
 
         // ---- 3a. 按文件名时间戳剪枝，直接跳过完全不在范围内的分片 ----
         QStringList filesToRead = hasTimeRange
@@ -324,56 +326,45 @@ void CommLogFileSystem::requestQueryHistory(const CommHistoryQuery &query)
             }
         }
 
-        // 写入缓存
-        m_qcDate            = query.date;
-        m_qcTimeCol         = query.timeColumnIndex;
-        m_qcTimeFrom        = query.timeFrom;
-        m_qcTimeTo          = query.timeTo;
-        m_qcQrcode          = query.qrcodeFilter;
-        m_qcCmdId           = query.commandIdFilter;
-        m_qcFiles           = fileSig;
-        m_qcSource          = std::move(source);
-        m_qcMatchedIndices  = std::move(matchedIndices);
-        m_qcValid           = true;
+        cached.source         = std::move(source);
+        cached.matchedIndices = std::move(matchedIndices);
+        m_queryCache.put(key, cached);
     }
 
     // ---- 4. 从缓存做分页切片（热路径：翻页走这里） ----
     // 核心：分页以"结果集"为基准
     //   - 有子查询过滤时：结果集 = source[matchedIndices]，共 matchedIndices.size() 条
     //   - 无子查询过滤时：结果集 = source，共 source.size() 条
-    const QVector<QStringList> &source  = m_qcSource;
-    const QVector<int>         &matched = m_qcMatchedIndices;
-    bool hasSubQuery = !query.qrcodeFilter.isEmpty()
-                       || !query.commandIdFilter.isEmpty();
+    const QVector<QStringList> &source  = cached.source;
+    const QVector<int>         &matched = cached.matchedIndices;
 
-    int viewSize = hasSubQuery ? matched.size() : source.size();
+    const int viewSize = hasSubQuery ? matched.size() : source.size();
 
     result.totalRecords = viewSize;
     result.totalPages   = viewSize == 0 ? 0
                           : (viewSize + query.pageSize - 1) / query.pageSize;
     result.currentPage  = qBound(0, query.pageIndex, qMax(0, result.totalPages - 1));
 
-    int from = result.currentPage * query.pageSize;
-    int to   = qMin(from + query.pageSize, viewSize);
+    const int from = result.currentPage * query.pageSize;
+    const int to   = qMin(from + query.pageSize, viewSize);
     result.records.reserve(to - from);
     result.highlighted.reserve(to - from);
     for (int i = from; i < to; ++i) {
         if (hasSubQuery) {
-            // 只取命中 like 的那些行
             result.records.append(source[matched[i]]);
-            result.highlighted.append(true); // 结果集内每行都是匹配
+            result.highlighted.append(true);
         } else {
             result.records.append(source[i]);
             result.highlighted.append(false);
         }
     }
 
-    // matchedGlobalIndices 语义：相对结果集（view）的全局行下标。
-    //   - 有 like 时：每行都是匹配 → [0, 1, ..., viewSize-1]，用于 widget 的"跳到首个匹配"逻辑（落在第 0 行第 0 页）
-    //   - 无 like 时：不存在"匹配"概念 → 置空
-    if (hasSubQuery) {
-        result.matchedGlobalIndices.resize(viewSize);
-        for (int i = 0; i < viewSize; ++i) result.matchedGlobalIndices[i] = i;
+    // matchedGlobalIndices 仅用于 widget 的"新搜索判空"逻辑（isEmpty 即可），
+    // 翻页时传任意非空标记即可；这里只在首次搜索（pageIndex==0）且有命中时填充一个哨兵元素，
+    // 避免每次翻页都 O(N) 构造 [0..viewSize-1]。
+    if (hasSubQuery && viewSize > 0) {
+        result.matchedGlobalIndices.resize(1);
+        result.matchedGlobalIndices[0] = 0;
     } else {
         result.matchedGlobalIndices.clear();
     }

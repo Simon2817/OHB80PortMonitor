@@ -31,6 +31,8 @@ signals:
     // 转发 InitCheckTask 的初始化汇总结果
     void allInitFinished(bool allSuccess, int successCount, int failCount,
                          const QStringList &failedMasterIds);
+    // 网络状态变更信号
+    void statusChanged(ModbusConnecter::ConnectionStatus status, const QString &masterId);
 
 private slots:
     // 单个设备连接状态变更回调

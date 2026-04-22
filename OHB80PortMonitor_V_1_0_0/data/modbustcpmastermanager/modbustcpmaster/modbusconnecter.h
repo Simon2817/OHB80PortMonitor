@@ -18,6 +18,7 @@ public:
         SingleConnection,    // 单次连接，不启用自动重连
         AutoReconnect       // 启用自动重连
     };
+    Q_ENUM(ConnectionMode)
 
     /**
      * @brief 连接状态枚举
@@ -29,6 +30,7 @@ public:
         Connected,           // 已连接
         Error                // 错误状态
     };
+    Q_ENUM(ConnectionStatus)
 
     /**
      * @brief 构造函数
@@ -148,9 +150,7 @@ private:
     QString m_lastError;                   // 最近一次错误信息
     QTimer* m_reconnectTimer;             // 重连定时器
     QTimer* m_reconnectTimeoutTimer = nullptr; // 异步重连超时定时器
-    QTimer* m_connectionCheckTimer = nullptr;       // 连接检查定时器 
+    QTimer* m_connectionCheckTimer = nullptr;       // 连接检查定时器
 };
-
-Q_DECLARE_METATYPE(ModbusConnecter::ConnectionStatus)
 
 #endif // MODBUSCONNECTER_H

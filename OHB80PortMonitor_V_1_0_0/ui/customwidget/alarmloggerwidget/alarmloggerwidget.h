@@ -20,7 +20,7 @@ QT_END_NAMESPACE
 // AlarmLoggerWidget — 警报日志控件
 //
 // 用法：
-//   qint64 id = makeAlarmId(AlarmLevel::Warn, 12001, AlarmCode::GlobalOverHumidity);
+//   qint64 id = makeAlarmId(12001, AlarmCode::GeneralOverHumidity);
 //   widget->submitAlarm(AlarmLevel::Warn, "12001", id, "超湿报警已触发");
 //   widget->submitResolve(id);
 //
@@ -50,6 +50,9 @@ public:
     // 判断指定的警报是否处于活跃状态
     bool isActive(qint64 alarmId) const;
 
+    // 设置每次清理周期最多清理的已解决行数（默认：40）
+    void setResolvedPurgeBatchSize(int size);
+
 signals:
     // 转发 AlarmLogicSystem 的 alarmPublished 信号
     void alarmPublished(const AlarmInfo &info);
@@ -63,6 +66,9 @@ private:
     // 仅由 AlarmLogicSystem 信号驱动，外部不直接调用
     void writeRecord(const AlarmInfo &info);
     void resolveRecord(qint64 alarmId);
+
+    // 从实时表中清理已解决的行
+    void purgeResolvedRows();
 
     // 设定凌晨自动重置定时器
     void scheduleMidnightReset();
@@ -91,6 +97,11 @@ private:
     QHash<qint64, QList<int>> m_idRowMap;
     AlarmHeaderConfig         m_headerConfig;
     QTimer                   *m_midnightTimer = nullptr;
+
+    // 已解决行清理
+    QList<int>                m_resolvedRows;
+    QTimer                   *m_purgeTimer = nullptr;
+    int                       m_purgeBatchSize = 40;
 
     QWidget           *m_histPageBar = nullptr;  // 分页栏容器，仅多页时显示
 

@@ -32,6 +32,9 @@ CMakeLists.txt.user*
 # ====== 日志与截图 ======
 OHB80PortMonitor_V_1_0_0/bin/log/
 
+# ====== 大文件压缩包 ======
+*.zip
+
 # ====== IDE ======
 .vscode/
 .idea/

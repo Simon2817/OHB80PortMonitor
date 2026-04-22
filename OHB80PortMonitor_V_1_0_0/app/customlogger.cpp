@@ -40,3 +40,16 @@ QString CustomLogger::CommunicationLoggerPath()
 
     return logDir;
 }
+
+QString CustomLogger::AlarmLoggerPath()
+{
+    AppConfig &config = AppConfig::getInstance();
+    QString logDir = config.getRootDir() + "/log/alarms";
+
+    QDir dir(logDir);
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+
+    return logDir;
+}

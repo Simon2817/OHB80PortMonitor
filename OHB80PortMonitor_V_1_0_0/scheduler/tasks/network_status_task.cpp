@@ -131,6 +131,9 @@ void NetworkStatusTask::onStatusChanged(ModbusConnecter::ConnectionStatus status
     // 状态未改变则跳过
     if (status == lastStatus) return;
 
+    // 发射状态变更信号供外部使用
+    emit statusChanged(status, masterId);
+
     QString statusStr;
     switch (status) {
         case ModbusConnecter::ConnectionStatus::Disconnected: statusStr = "已断开"; break;

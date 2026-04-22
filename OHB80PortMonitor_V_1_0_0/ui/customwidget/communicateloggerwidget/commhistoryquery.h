@@ -8,6 +8,9 @@
 struct CommHistoryQuery {
     QDate   date;
     int     timeColumnIndex = -1;
+    // 强制刷新缓存：Search 按钮触发时置 true；翻页按钮触发时保持 false，
+    // 以便命中 LRU 缓存而不受"今天 CSV 仍在 append"的影响。
+    bool    forceRefresh = false;
     QString timeFrom;
     QString timeTo;
     QString qrcodeFilter;     // 精确匹配 qrcode 列（空=不过滤）

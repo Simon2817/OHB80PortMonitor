@@ -8,6 +8,95 @@
 
 ## 更新日志
 
+### 2026-04-22 19:16 - Simon
+**通讯日志历史查询性能优化（翻页 1021ms → 4ms）**
+
+#### 问题背景
+用户反馈通讯日志（`CommunicateLoggerWidget`）历史 Tab 点击分页按钮非常慢（约 1 秒），即使数据已缓存。
+
+#### 根因分析
+通过插入 `QElapsedTimer` 计时日志定位瓶颈：
+- 每次翻页 **cache MISS**，worker 线程每次重读 74 万行 CSV（约 1015ms）
+- 原缓存键包含 `fileSig`（文件路径 + 大小），当天 CSV 文件在持续 `append` 实时日志，大小不断变化，导致缓存**永远失效**
+
+#### 修改内容
+1. **查询缓存从"单项"升级为 LRU（容量 5）**
+   - 原 `m_qc*` 系列字段（单项缓存）替换为 `CommLRUCache<CommQueryKey, CommQueryValue> m_queryCache{5}`
+   - 切换查询条件（日期/时间段/qrcode/commandId）也能命中历史缓存
+
+2. **缓存键移除文件大小依赖**
+   - `CommQueryKey` 删除 `files` 字段（原为 `QVector<QPair<QString,qint64>>`）
+   - 今天 CSV 持续 append 不再让翻页缓存失效
+
+3. **显式刷新机制**
+   - `CommHistoryQuery` 新增 `bool forceRefresh = false`
+   - Search 按钮 → `forceRefresh=true`，worker 主动 `m_queryCache.remove(key)` 重算最新数据
+   - 翻页按钮 → `forceRefresh=false`，O(1) 命中缓存做切片
+
+4. **`matchedGlobalIndices` O(N) → O(1)**
+   - 原每次翻页都 `resize(viewSize)` 并填充 `[0..viewSize-1]`（8179 条时跨线程传输量大）
+   - 改为只在有命中时填 1 个哨兵元素（widget 只用 `isEmpty()` 判断）
+
+5. **Miss 时才读盘**
+   - 缓存命中时完全跳过 `filePathsForDate` 和 `QtConcurrent::blockingMapped`
+
+#### 性能对比
+| 指标 | 优化前 | 优化后 |
+|---|---|---|
+| 翻页总耗时 | 1021 ms | **4 ms** |
+| 缓存命中 | MISS（每次） | HIT |
+| Worker 计算 | 1015 ms | 0 ms |
+| 数据量 | 745597 行 source / 8179 匹配 | 相同 |
+
+#### 影响范围
+- 修改文件：`ui/customwidget/communicateloggerwidget/commhistoryquery.h`（新增 `forceRefresh`）
+- 修改文件：`ui/customwidget/communicateloggerwidget/commlogfilesystem.h`（`CommQueryKey`/`CommQueryValue`/LRU 定义）
+- 修改文件：`ui/customwidget/communicateloggerwidget/commlogfilesystem.cpp`（`requestQueryHistory` 重写）
+- 修改文件：`ui/customwidget/communicateloggerwidget/communicateloggerwidget.cpp`（Search / 翻页设置 `forceRefresh`）
+
+---
+
+### 2026-04-22 18:00 - Simon
+**AlarmLoggerWidget 警报日志模块完善**
+
+#### 修改内容
+1. **UI 字符串本地化**
+   - `alarmpage.cpp`、`alarmloggerwidget.ui`、`alarmloggerwidget.cpp` 中所有中文 UI 字符串统一为英文
+   - 移除不需要的按钮（findPrevBtn、findNextBtn）及相关逻辑
+   - `labelLike`、`likeEdit` 替换为 `QRCode SpinBox` 和 `CommandId ComboBox`
+   - 查找成功/失败均通过 `QMessageBox` 提示
+
+2. **已解决告警行清理机制**
+   - `AlarmLoggerWidget` 新增 `QList<int> m_resolvedRows` 记录已解决行索引
+   - 新增 `QTimer m_purgeTimer`，每 3 秒触发 `purgeResolvedRows()` 按 FIFO 清理
+   - 新增 `setResolvedPurgeBatchSize(int)` 接口，默认批次 40 条
+   - 清理后自动重建内部行索引映射
+   - 日期翻页（`onDayRollover`）时清空 `m_resolvedRows`
+
+3. **表格列宽比例配置**
+   - 实时表格与历史表格统一使用 `5:8:5:5:5:8:5` 列宽比例
+   - `Message` 列左对齐，其余列居中（`Request`/`Response` 除外）
+   - 分页按钮增大尺寸（宽度、字体）方便点击
+
+4. **警报日志根目录配置**
+   - `AlarmPage` 初始化时通过 `setRootDir(CustomLogger::AlarmLoggerPath())` 设置根目录为 `bin/log/alarms/`
+   - 警报日志按 `年月/日_HHmmss.csv` 结构存储，保留 6 个月
+
+5. **网络状态联动**
+   - `AlarmPage::onNetworkStatusChanged` 在断连时自动上报 `SoftwareConnectionLost` 告警
+   - 重连成功时自动提交告警解决
+
+6. **注释统一**
+   - `alarmloggerwidget.h` / `.cpp` 中的英文注释统一改回中文，保持项目注释风格一致
+
+#### 影响范围
+- 修改文件：`ui/alarmpage.cpp`
+- 修改文件：`ui/customwidget/alarmloggerwidget/alarmloggerwidget.ui`
+- 修改文件：`ui/customwidget/alarmloggerwidget/alarmloggerwidget.h`
+- 修改文件：`ui/customwidget/alarmloggerwidget/alarmloggerwidget.cpp`
+
+---
+
 ### 2026-04-22 11:43 - Simon
 **CommunicatePage 模块完成**
 

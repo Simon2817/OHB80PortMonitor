@@ -24,6 +24,9 @@ public:
 
     // 获取通讯日志目录路径: bin/log/communication
     static QString CommunicationLoggerPath();
+
+    // 获取警报日志目录路径: bin/log/alarms
+    static QString AlarmLoggerPath();
 };
 
 #endif // CUSTOMLOGGER_H

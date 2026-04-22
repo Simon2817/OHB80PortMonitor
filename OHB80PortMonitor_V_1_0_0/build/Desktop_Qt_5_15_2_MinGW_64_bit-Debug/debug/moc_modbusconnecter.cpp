@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ModbusConnecter_t {
-    QByteArrayData data[12];
-    char stringdata0[176];
+    QByteArrayData data[19];
+    char stringdata0[262];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,14 +43,24 @@ QT_MOC_LITERAL(7, 80, 12), // "errorMessage"
 QT_MOC_LITERAL(8, 93, 16), // "onReconnectTimer"
 QT_MOC_LITERAL(9, 110, 25), // "onAsyncReconnectConnected"
 QT_MOC_LITERAL(10, 136, 23), // "onAsyncReconnectTimeout"
-QT_MOC_LITERAL(11, 160, 15) // "checkConnection"
+QT_MOC_LITERAL(11, 160, 15), // "checkConnection"
+QT_MOC_LITERAL(12, 176, 14), // "ConnectionMode"
+QT_MOC_LITERAL(13, 191, 16), // "SingleConnection"
+QT_MOC_LITERAL(14, 208, 13), // "AutoReconnect"
+QT_MOC_LITERAL(15, 222, 12), // "Disconnected"
+QT_MOC_LITERAL(16, 235, 10), // "Connecting"
+QT_MOC_LITERAL(17, 246, 9), // "Connected"
+QT_MOC_LITERAL(18, 256, 5) // "Error"
 
     },
     "ModbusConnecter\0statusChanged\0\0"
     "ConnectionStatus\0status\0masterId\0"
     "connectionError\0errorMessage\0"
     "onReconnectTimer\0onAsyncReconnectConnected\0"
-    "onAsyncReconnectTimeout\0checkConnection"
+    "onAsyncReconnectTimeout\0checkConnection\0"
+    "ConnectionMode\0SingleConnection\0"
+    "AutoReconnect\0Disconnected\0Connecting\0"
+    "Connected\0Error"
 };
 #undef QT_MOC_LITERAL
 
@@ -62,7 +72,7 @@ static const uint qt_meta_data_ModbusConnecter[] = {
        0,    0, // classinfo
        6,   14, // methods
        0,    0, // properties
-       0,    0, // enums/sets
+       2,   56, // enums/sets
        0,    0, // constructors
        0,       // flags
        2,       // signalCount
@@ -86,6 +96,18 @@ static const uint qt_meta_data_ModbusConnecter[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+
+ // enums: name, alias, flags, count, data
+      12,   12, 0x2,    2,   66,
+       3,    3, 0x2,    4,   70,
+
+ // enum data: key, value
+      13, uint(ModbusConnecter::ConnectionMode::SingleConnection),
+      14, uint(ModbusConnecter::ConnectionMode::AutoReconnect),
+      15, uint(ModbusConnecter::ConnectionStatus::Disconnected),
+      16, uint(ModbusConnecter::ConnectionStatus::Connecting),
+      17, uint(ModbusConnecter::ConnectionStatus::Connected),
+      18, uint(ModbusConnecter::ConnectionStatus::Error),
 
        0        // eod
 };

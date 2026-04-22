@@ -4,10 +4,43 @@
 #include <QStringList>
 #include <QJsonObject>
 #include <QSet>
+#include <QDate>
+#include <QHash>
 #include "commlrucache.h"
 #include "commpagetable.h"
 #include "commcsvio.h"
 #include "commhistoryquery.h"
+
+// 历史查询缓存键：(date, timeRange, qrcode, cmdId) 完全决定命中
+// 不含文件大小——今天的 CSV 持续 append 不应让翻页缓存失效；
+// 用户若要刷新，点 Search 按钮将触发 forceRefresh，由 worker 主动清除该 key。
+struct CommQueryKey {
+    QDate   date;
+    int     timeCol = -2;
+    QString timeFrom;
+    QString timeTo;
+    QString qrcode;
+    QString cmdId;
+
+    bool operator==(const CommQueryKey &o) const {
+        return date == o.date && timeCol == o.timeCol
+            && timeFrom == o.timeFrom && timeTo == o.timeTo
+            && qrcode == o.qrcode && cmdId == o.cmdId;
+    }
+};
+
+inline uint qHash(const CommQueryKey &k, uint seed = 0) Q_DECL_NOTHROW {
+    uint h = qHash(k.date, seed);
+    h ^= qHash(k.timeCol) ^ qHash(k.timeFrom) ^ qHash(k.timeTo)
+       ^ qHash(k.qrcode) ^ qHash(k.cmdId);
+    return h;
+}
+
+// 历史查询缓存值：经时间过滤的整天记录集 + 子查询命中索引
+struct CommQueryValue {
+    QVector<QStringList> source;
+    QVector<int>         matchedIndices;
+};
 
 class CommLogFileSystem : public QObject
 {
@@ -84,18 +117,9 @@ private:
     CommLRUCache<CommPageKey, CommPage>      m_pageCache{3};
     CommLRUCache<QString,     CommPageTable> m_ptCache{5};
 
-    // ---- 历史查询 1 项缓存（仅在查询专用 worker 上使用） ----
-    // 缓存 "过滤后的整天记录集 + 子匹配索引"，相同 (date,timeRange,qrcode,cmdId) 只读盘一次；
-    // 翻页只是对缓存做切片，避免每次重读整天 CSV。
-    // 缓存键还包含当天所有文件的 (路径, 大小)，保证今天的文件被 append 后自动失效。
-    QDate                         m_qcDate;
-    int                           m_qcTimeCol = -2;   // -2 = 未初始化
-    QString                       m_qcTimeFrom;
-    QString                       m_qcTimeTo;
-    QString                       m_qcQrcode;
-    QString                       m_qcCmdId;
-    QVector<QPair<QString,qint64>> m_qcFiles;         // 文件路径 + 大小
-    QVector<QStringList>          m_qcSource;         // 经时间过滤后的完整记录集
-    QVector<int>                  m_qcMatchedIndices; // 经子查询过滤的 source 内下标
-    bool                          m_qcValid = false;
+    // ---- 历史查询 LRU 缓存（仅在查询专用 worker 上使用） ----
+    // 缓存 "过滤后的整天记录集 + 子匹配索引"，Key 包含 (date,timeRange,qrcode,cmdId,fileSig)；
+    // 翻页只是对命中项做切片，切换查询条件也能命中（容量 5）。
+    // Key 的 files 字段保证今天的文件被 append 后自动失效。
+    CommLRUCache<CommQueryKey, CommQueryValue> m_queryCache{5};
 };

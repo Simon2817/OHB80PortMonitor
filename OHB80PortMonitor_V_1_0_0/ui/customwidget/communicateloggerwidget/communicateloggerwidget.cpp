@@ -299,6 +299,9 @@ void CommunicateLoggerWidget::onSearchClicked()
     // CommandId 过滤：首项为空→不过滤
     q.commandIdFilter = ui->cmdIdCombo->currentData().toString();
 
+    // Search 按钮强制刷新缓存（翻页按钮则复用缓存）
+    q.forceRefresh = true;
+
     m_lastQuery = q;
     m_histIsNewSearch = true;
     ui->searchBtn->setEnabled(false);
@@ -349,6 +352,7 @@ void CommunicateLoggerWidget::onHistoryReady(const CommHistoryResult &result)
 void CommunicateLoggerWidget::onHistoryPageClicked(int pageIndex)
 {
     m_lastQuery.pageIndex = pageIndex;
+    m_lastQuery.forceRefresh = false;   // 翻页命中缓存
     m_histIsNewSearch = false;
     ui->searchBtn->setEnabled(false);
     ui->searchBtn->setText(tr("Searching..."));

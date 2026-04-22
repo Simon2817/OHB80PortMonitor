@@ -3,6 +3,7 @@
 #include "alarmlogicsystem.h"
 #include "alarminfo.h"
 #include "historycalendardialog/historycalendardialog.h"
+#include <algorithm>
 #include <QDate>
 #include <QDateTime>
 #include <QDir>
@@ -20,6 +21,7 @@ AlarmLoggerWidget::AlarmLoggerWidget(QWidget *parent)
     , ui(new Ui::AlarmLoggerWidget)
     , m_headerConfig()
 {
+    // 初始化 UI、逻辑系统、定时器
     ui->setupUi(this);
     m_table = ui->tableAlarm;
 
@@ -40,6 +42,11 @@ AlarmLoggerWidget::AlarmLoggerWidget(QWidget *parent)
     initTable();
     initHistoryTab();
     scheduleMidnightReset();
+
+    m_purgeTimer = new QTimer(this);
+    m_purgeTimer->setInterval(3000);
+    connect(m_purgeTimer, &QTimer::timeout, this, &AlarmLoggerWidget::purgeResolvedRows);
+    m_purgeTimer->start();
 }
 
 AlarmLoggerWidget::AlarmLoggerWidget(const AlarmHeaderConfig &config, QWidget *parent)
@@ -47,6 +54,7 @@ AlarmLoggerWidget::AlarmLoggerWidget(const AlarmHeaderConfig &config, QWidget *p
     , ui(new Ui::AlarmLoggerWidget)
     , m_headerConfig(config)
 {
+    // 使用自定义表头配置初始化 UI、逻辑系统、定时器
     ui->setupUi(this);
     m_table = ui->tableAlarm;
 
@@ -67,6 +75,11 @@ AlarmLoggerWidget::AlarmLoggerWidget(const AlarmHeaderConfig &config, QWidget *p
     initTable();
     initHistoryTab();
     scheduleMidnightReset();
+
+    m_purgeTimer = new QTimer(this);
+    m_purgeTimer->setInterval(3000);
+    connect(m_purgeTimer, &QTimer::timeout, this, &AlarmLoggerWidget::purgeResolvedRows);
+    m_purgeTimer->start();
 }
 
 AlarmLoggerWidget::~AlarmLoggerWidget()
@@ -124,6 +137,7 @@ void AlarmLoggerWidget::onDayRollover()
 {
     m_table->setRowCount(0);
     m_idRowMap.clear();
+    m_resolvedRows.clear();
     m_logic->clearActive();
     m_logic->purgeOldLogsAsync();  // 异步清理超过 6 个月的历史目录
 
@@ -140,13 +154,26 @@ void AlarmLoggerWidget::initTable()
     m_table->verticalHeader()->setVisible(false);
 
     auto *hh = m_table->horizontalHeader();
-    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[0]), QHeaderView::ResizeToContents);
-    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[1]), QHeaderView::ResizeToContents);
-    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[2]), QHeaderView::ResizeToContents);
-    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[3]), QHeaderView::ResizeToContents);
-    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[4]), QHeaderView::ResizeToContents);
-    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[5]), QHeaderView::ResizeToContents);
+    // 设置列宽比例：5:5:5:5:5:5:5（均等分配）
+    const int totalWidth = 7 * 5;
+    const int tableWidth = m_table->width();
+    const double unitWidth = tableWidth / totalWidth;
+
+    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[0]), QHeaderView::Interactive);
+    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[1]), QHeaderView::Interactive);
+    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[2]), QHeaderView::Interactive);
+    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[3]), QHeaderView::Interactive);
+    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[4]), QHeaderView::Interactive);
+    hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[5]), QHeaderView::Interactive);
     hh->setSectionResizeMode(headerToColumn(m_headerConfig.headers[6]), QHeaderView::Stretch);
+
+    hh->resizeSection(headerToColumn(m_headerConfig.headers[0]), static_cast<int>(unitWidth * 5));
+    hh->resizeSection(headerToColumn(m_headerConfig.headers[1]), static_cast<int>(unitWidth * 8));
+    hh->resizeSection(headerToColumn(m_headerConfig.headers[2]), static_cast<int>(unitWidth * 5));
+    hh->resizeSection(headerToColumn(m_headerConfig.headers[3]), static_cast<int>(unitWidth * 5));
+    hh->resizeSection(headerToColumn(m_headerConfig.headers[4]), static_cast<int>(unitWidth * 5));
+    hh->resizeSection(headerToColumn(m_headerConfig.headers[5]), static_cast<int>(unitWidth * 8));
+    hh->resizeSection(headerToColumn(m_headerConfig.headers[6]), static_cast<int>(unitWidth * 5));
 }
 
 void AlarmLoggerWidget::writeRecord(const AlarmInfo &info)
@@ -191,7 +218,9 @@ void AlarmLoggerWidget::writeRecord(const AlarmInfo &info)
     m_table->setItem(row, headerToColumn(m_headerConfig.headers[5]), rtItem);
 
     // ---- 
-    m_table->setItem(row, headerToColumn(m_headerConfig.headers[6]), new QTableWidgetItem(info.message()));
+    auto *msgItem = new QTableWidgetItem(info.message());
+    msgItem->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    m_table->setItem(row, headerToColumn(m_headerConfig.headers[6]), msgItem);
 
     m_idRowMap[info.alarmId()].append(row);
     m_table->scrollToBottom();
@@ -212,6 +241,45 @@ void AlarmLoggerWidget::resolveRecord(qint64 alarmId)
             continue;
         setResolvedCell(row, true);
         m_table->item(row, headerToColumn(m_headerConfig.headers[5]))->setText(resolveTime);
+        m_resolvedRows.append(row);
+    }
+}
+
+void AlarmLoggerWidget::setResolvedPurgeBatchSize(int size)
+{
+    m_purgeBatchSize = qMax(1, size);
+}
+
+void AlarmLoggerWidget::purgeResolvedRows()
+{
+    if (m_resolvedRows.isEmpty()) return;
+
+    // Sort descending so removing from bottom doesn't shift upper indices
+    const int count = qMin(m_purgeBatchSize, m_resolvedRows.size());
+    QList<int> toRemove = m_resolvedRows.mid(0, count);
+    std::sort(toRemove.begin(), toRemove.end(), std::greater<int>());
+
+    for (int row : toRemove) {
+        if (row >= m_table->rowCount()) continue;
+        m_table->removeRow(row);
+    }
+    m_resolvedRows.erase(m_resolvedRows.begin(), m_resolvedRows.begin() + count);
+
+    // Rebuild m_idRowMap and m_resolvedRows indices after row removal
+    m_idRowMap.clear();
+    m_resolvedRows.clear();
+    const int colId       = headerToColumn(m_headerConfig.headers[3]);
+    const int colResolved = headerToColumn(m_headerConfig.headers[4]);
+    for (int r = 0; r < m_table->rowCount(); ++r) {
+        auto *idItem = m_table->item(r, colId);
+        if (idItem) {
+            qint64 aid = idItem->data(Qt::UserRole).toLongLong();
+            m_idRowMap[aid].append(r);
+        }
+        auto *resItem = m_table->item(r, colResolved);
+        if (resItem && resItem->text() == QStringLiteral("✓")) {
+            m_resolvedRows.append(r);
+        }
     }
 }
 
@@ -304,15 +372,33 @@ void AlarmLoggerWidget::initHistoryTab()
     ui->histTable->setHorizontalHeaderLabels(m_headerConfig.headers);
     ui->histTable->verticalHeader()->setVisible(false);
     auto *hh = ui->histTable->horizontalHeader();
-    for (int i = 0; i < colCount - 1; ++i)
-        hh->setSectionResizeMode(i, QHeaderView::ResizeToContents);
-    hh->setSectionResizeMode(colCount - 1, QHeaderView::Stretch);
+    
+    // 设置列宽比例：5:8:5:5:5:8:5（与实时表格一致）
+    const double totalWidth = 5 + 8 + 5 + 5 + 5 + 8 + 5;
+    const int tableWidth = ui->histTable->width();
+    const double unitWidth = tableWidth / totalWidth;
+    
+    hh->setSectionResizeMode(0, QHeaderView::Interactive);
+    hh->setSectionResizeMode(1, QHeaderView::Interactive);
+    hh->setSectionResizeMode(2, QHeaderView::Interactive);
+    hh->setSectionResizeMode(3, QHeaderView::Interactive);
+    hh->setSectionResizeMode(4, QHeaderView::Interactive);
+    hh->setSectionResizeMode(5, QHeaderView::Interactive);
+    hh->setSectionResizeMode(6, QHeaderView::Stretch);
+    
+    hh->resizeSection(0, static_cast<int>(unitWidth * 5));
+    hh->resizeSection(1, static_cast<int>(unitWidth * 8));
+    hh->resizeSection(2, static_cast<int>(unitWidth * 5));
+    hh->resizeSection(3, static_cast<int>(unitWidth * 5));
+    hh->resizeSection(4, static_cast<int>(unitWidth * 5));
+    hh->resizeSection(5, static_cast<int>(unitWidth * 8));
+    hh->resizeSection(6, static_cast<int>(unitWidth * 5));
 }
 
 void AlarmLoggerWidget::onSelectDateClicked()
 {
     ui->histSelectDateBtn->setEnabled(false);
-    m_logic->availableDatesAsync();  // 异步扫描，结果在 availableDatesReady 信号里处理
+    m_logic->availableDatesAsync();  // 异步扫描，结果在 availableDatesReady 信号中处理
 }
 
 void AlarmLoggerWidget::onHistoryDateSelected(const QDate &date)
@@ -344,7 +430,7 @@ void AlarmLoggerWidget::onHistoryDateSelected(const QDate &date)
     ui->histFileEdit->setText(date.toString(QStringLiteral("yyyy-MM-dd")));
     ui->histTable->setRowCount(0);  // 清空旧表，等待异步结果
     ui->histSelectDateBtn->setEnabled(false);
-    m_logic->readDateAsync(date);   // 异步读取，结果在 readDateFinished 信号里处理
+    m_logic->readDateAsync(date);   // 异步读取，结果在 readDateFinished 信号中处理
 }
 
 void AlarmLoggerWidget::applyTimeFilter()
@@ -461,8 +547,12 @@ void AlarmLoggerWidget::updatePagination()
     for (int p : seq) {
         if (p == -1) {
             auto *btn = new QPushButton(QStringLiteral("..."));
-            btn->setMaximumWidth(35);
+            btn->setMaximumWidth(50);
+            btn->setMinimumHeight(32);
             btn->setFlat(true);
+            QFont font = btn->font();
+            font.setPointSize(10);
+            btn->setFont(font);
             connect(btn, &QPushButton::clicked, this, [this, pages]() {
                 bool ok;
                 const int pg = QInputDialog::getInt(
@@ -473,10 +563,14 @@ void AlarmLoggerWidget::updatePagination()
             layout->addWidget(btn);
         } else {
             auto *btn = new QPushButton(QString::number(p));
-            btn->setMaximumWidth(35);
+            btn->setMaximumWidth(50);
+            btn->setMinimumHeight(32);
             btn->setCheckable(true);
             btn->setChecked(p == current);
             btn->setEnabled(p != current);
+            QFont font = btn->font();
+            font.setPointSize(10);
+            btn->setFont(font);
             if (p != current) {
                 connect(btn, &QPushButton::clicked, this, [this, p]() {
                     goToPage(p - 1);
