@@ -31,6 +31,8 @@ public:
     void setDoubleClickMaximize(bool enabled);
     // 获取是否允许双击标题栏最大化/还原
     bool getDoubleClickMaximize() const;
+    // 注册控件权限（需要在 UIDemo6 构造后调用）
+    void registerWidgetPermissions();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

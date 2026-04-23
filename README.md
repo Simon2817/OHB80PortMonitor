@@ -8,6 +8,22 @@
 
 ## 更新日志
 
+### 2026-04-23 16:20 - Simon
+**UI 权限注册集成**
+
+#### 修改内容
+- **UIDemo6**：添加 `registerWidgetPermissions()` 方法
+  - 通过 `UserManager::registerWidget()` 注册 UI 控件权限
+  - `btnDebug` → `UserPermission::Root` (4)
+  - `btnCommunicate` → `UserPermission::Debug` (2)
+  - `btnSetting` → `UserPermission::Normal` (1)（普通用户可查看）
+  - 在 `initForm()` 中调用权限注册方法
+
+#### 影响范围
+- 修改文件：`ui/uidemo6.h`、`ui/uidemo6.cpp`
+
+---
+
 ### 2026-04-23 16:00 - Simon
 **新增运行日志模块和用户管理模块**
 

@@ -4,6 +4,7 @@
 #include "homepage.h"
 #include "alarmpage.h"
 #include "app.h"
+#include "usermanager.h"
 
 UIDemo6::UIDemo6(QWidget *parent) :
     QDialog(parent),
@@ -60,10 +61,13 @@ void UIDemo6::initForm()
     }
 
     ui->btnHome->click();
-    
+
     // 为 widgetTitle 安装事件过滤器以处理双击事件
     ui->widgetTitle->installEventFilter(this);
-    
+
+    // 注册控件权限
+    registerWidgetPermissions();
+
     // 启动时全屏显示
     this->showFullScreen();
 }
@@ -131,4 +135,23 @@ void UIDemo6::setDoubleClickMaximize(bool enabled)
 bool UIDemo6::getDoubleClickMaximize() const
 {
     return this->doubleClickMaximize;
+}
+
+void UIDemo6::registerWidgetPermissions()
+{
+    UserManager* mgr = UserManager::instance();
+    if (!mgr) return;
+
+    // Root (4): btnDebug
+    mgr->registerWidget(ui->btnDebug, UserPermission::Root);
+
+    // Debug (2): btnCommunicate
+    mgr->registerWidget(ui->btnCommunicate, UserPermission::Debug);
+
+    // Normal (1): btnSetting, btnHome, btnAlarm, btnChart (普通用户可查看)
+    mgr->registerWidget(ui->btnSetting, UserPermission::Normal);
+    // 其他按钮默认所有用户可见，可省略注册
+    // mgr->registerWidget(ui->btnHome, UserPermission::Normal);
+    // mgr->registerWidget(ui->btnAlarm, UserPermission::Normal);
+    // mgr->registerWidget(ui->btnChart, UserPermission::Normal);
 }
