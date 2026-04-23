@@ -1,0 +1,289 @@
+#include "runningloggerwidget.h"
+
+#include <QVBoxLayout>
+#include <QDateTime>
+#include <QFontMetrics>
+
+// =====================================================================
+// 构造 / 析构
+// =====================================================================
+
+RunningLoggerWidget::RunningLoggerWidget(QWidget *parent)
+    : QWidget(parent)
+{
+    // ---- 按钮 ----
+    m_btn = new QPushButton(tr("暂无日志"), this);
+    m_btn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    m_btn->setMinimumHeight(36);
+    m_btn->setCursor(Qt::PointingHandCursor);
+
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->addWidget(m_btn);
+
+    // ---- LoggerWidget（parent 为 this，生命周期跟随本控件）----
+    m_loggerWidget = new LoggerWidget(this);
+    m_loggerWidget->setVisible(false);
+
+    // ---- 模态对话框（不拥有 LoggerWidget 的生命周期）----
+    m_dialog = new QDialog(this);
+    m_dialog->setWindowTitle(tr("日志查看器"));
+    m_dialog->resize(900, 620);
+    QVBoxLayout *dlgLayout = new QVBoxLayout(m_dialog);
+    dlgLayout->setContentsMargins(0, 0, 0, 0);
+
+    // ---- 跑马灯定时器 ----
+    m_scrollTimer = new QTimer(this);
+    m_scrollTimer->setInterval(150);
+    connect(m_scrollTimer, &QTimer::timeout,
+            this, &RunningLoggerWidget::onScrollTick);
+
+    // ---- 警报轮播定时器 ----
+    m_alarmCycleTimer = new QTimer(this);
+    m_alarmCycleTimer->setInterval(3000);
+    connect(m_alarmCycleTimer, &QTimer::timeout,
+            this, &RunningLoggerWidget::onAlarmCycleTick);
+
+    // ---- 按钮点击 ----
+    connect(m_btn, &QPushButton::clicked,
+            this, &RunningLoggerWidget::onBtnClicked);
+}
+
+RunningLoggerWidget::~RunningLoggerWidget()
+{
+    // m_loggerWidget 和 m_dialog 均由 this 管理
+}
+
+// =====================================================================
+// 配置
+// =====================================================================
+
+void RunningLoggerWidget::setRootPath(const QString &path)
+{
+    m_rootPath = path;
+}
+
+void RunningLoggerWidget::setPageSize(int size)
+{
+    m_pageSize = qMax(1, size);
+}
+
+// =====================================================================
+// 初始化
+// =====================================================================
+
+void RunningLoggerWidget::initialize()
+{
+    // 1. 设置表头
+    QStringList headers = {
+        QStringLiteral("消息类型"),
+        QStringLiteral("发送时间"),
+        QStringLiteral("QRCode"),
+        QStringLiteral("警报ID"),
+        QStringLiteral("是否解决"),
+        QStringLiteral("解决时间"),
+        QStringLiteral("具体消息")
+    };
+    m_loggerWidget->setHeaders(headers);
+
+    // 2. 设置 list view 显示格式
+    //    除了"具体消息"格式为 ": 具体消息"，其他字段都用 [] 包裹
+    m_loggerWidget->setFormat(
+        QStringLiteral("[{}][{}][{}][{}][{}][{}]: {}"),
+        {QStringLiteral("消息类型"),
+         QStringLiteral("发送时间"),
+         QStringLiteral("QRCode"),
+         QStringLiteral("警报ID"),
+         QStringLiteral("是否解决"),
+         QStringLiteral("解决时间"),
+         QStringLiteral("具体消息")}
+    );
+
+    // 3. 设置三种消息类型的字体颜色样式
+    m_loggerWidget->setItemStyler(
+        [](const QStringList &record, ItemStyle &style) {
+            if (record.isEmpty()) return;
+            const QString &type = record[0];
+            if (type == QStringLiteral("Message")) {
+                style.setForeground(QColor(Qt::black));
+            } else if (type == QStringLiteral("Warn")) {
+                style.setForeground(QColor("#DAA520"));   // 警报黄色（金菊色）
+            } else if (type == QStringLiteral("Error")) {
+                style.setForeground(QColor("#DC143C"));   // 警报红色（深红色）
+            }
+        }
+    );
+
+    // 4. 设置根目录 / 页大小并初始化
+    m_loggerWidget->setRootPath(m_rootPath);
+    m_loggerWidget->setPageSize(m_pageSize);
+    m_loggerWidget->initialize();
+
+    // 启动跑马灯定时器
+    m_scrollTimer->start();
+}
+
+// =====================================================================
+// 写入一条记录
+// =====================================================================
+
+void RunningLoggerWidget::writeRecord(RunningLoggerWidget::MsgType type,
+                                       const QString &qrCode,
+                                       const QString &alarmId,
+                                       const QString &message)
+{
+    bool isAlarm = (type == MsgType::Warn || type == MsgType::Error);
+
+    // 若为警报记录且 alarmId 已在待处理队列中，直接忽略
+    if (isAlarm && !alarmId.isEmpty()) {
+        for (const PendingAlarm &pa : m_pendingAlarms) {
+            if (pa.alarmId == alarmId)
+                return;
+        }
+    }
+
+    // 通过 LoggerWidget 写入日志
+    m_loggerWidget->writeRecord(type, qrCode, alarmId, message);
+
+    // 若为警报记录，加入待处理警报队列
+    if (isAlarm && !alarmId.isEmpty()) {
+        PendingAlarm pa;
+        pa.alarmId  = alarmId;
+        pa.type     = type;
+        pa.qrCode   = qrCode;
+        pa.message  = message;
+        pa.sendTime = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+        m_pendingAlarms.append(pa);
+
+        // 启动轮播定时器（若尚未启动）
+        if (!m_alarmCycleTimer->isActive())
+            m_alarmCycleTimer->start();
+    }
+
+    // 若为 Message，更新最新消息文本
+    if (type == MsgType::Message) {
+        m_latestMessageText = QString("[Message] %1").arg(message);
+    }
+
+    refreshDisplayText();
+}
+
+// =====================================================================
+// 解决一条警报
+// =====================================================================
+
+void RunningLoggerWidget::resolveAlarm(RunningLoggerWidget::MsgType type,
+                                        const QString &qrCode,
+                                        const QString &alarmId,
+                                        const QString &message)
+{
+    // 在待处理队列中查找并移除
+    int idx = -1;
+    for (int i = 0; i < m_pendingAlarms.size(); ++i) {
+        if (m_pendingAlarms[i].alarmId == alarmId) {
+            idx = i;
+            break;
+        }
+    }
+    if (idx >= 0)
+        m_pendingAlarms.removeAt(idx);
+
+    // 通过 LoggerWidget 写入"已解决"记录
+    m_loggerWidget->writeResolveRecord(type, qrCode, alarmId, message);
+
+    // 调整轮播索引
+    if (m_pendingAlarms.isEmpty()) {
+        m_alarmCycleTimer->stop();
+        m_currentAlarmIdx = 0;
+    } else if (m_currentAlarmIdx >= m_pendingAlarms.size()) {
+        m_currentAlarmIdx = 0;
+    }
+
+    refreshDisplayText();
+}
+
+// =====================================================================
+// 私有槽
+// =====================================================================
+
+void RunningLoggerWidget::onBtnClicked()
+{
+    // 临时将 LoggerWidget 放入对话框布局中显示
+    m_dialog->layout()->addWidget(m_loggerWidget);
+    m_loggerWidget->show();
+    m_dialog->exec();
+    // 对话框关闭后，将 LoggerWidget 收回，恢复 parent 为 this
+    m_dialog->layout()->removeWidget(m_loggerWidget);
+    m_loggerWidget->setParent(this);
+    m_loggerWidget->hide();
+}
+
+void RunningLoggerWidget::onScrollTick()
+{
+    if (m_fullDisplayText.isEmpty()) {
+        m_btn->setText(tr("暂无日志"));
+        return;
+    }
+
+    QFontMetrics fm = m_btn->fontMetrics();
+    int btnWidth  = m_btn->width() - 24;   // 留出左右内边距
+    int textWidth = fm.horizontalAdvance(m_fullDisplayText);
+
+    // 文本能完整显示时，不滚动
+    if (textWidth <= btnWidth) {
+        m_btn->setText(m_fullDisplayText);
+        return;
+    }
+
+    // 跑马灯：在文本后加 4 个空格作为间隔，循环拼接
+    QString padded  = m_fullDisplayText + QStringLiteral("    ");
+    int totalLen    = padded.length();
+    QString doubled = padded + m_fullDisplayText;
+
+    // 计算按钮可见字符数（近似）
+    int avgCharW     = qMax(1, fm.averageCharWidth());
+    int visibleChars = btnWidth / avgCharW;
+
+    QString visible = doubled.mid(m_scrollOffset, visibleChars);
+    m_btn->setText(visible);
+
+    m_scrollOffset++;
+    if (m_scrollOffset >= totalLen)
+        m_scrollOffset = 0;
+}
+
+void RunningLoggerWidget::onAlarmCycleTick()
+{
+    if (m_pendingAlarms.isEmpty()) {
+        m_alarmCycleTimer->stop();
+        return;
+    }
+    m_currentAlarmIdx = (m_currentAlarmIdx + 1) % m_pendingAlarms.size();
+    refreshDisplayText();
+}
+
+// =====================================================================
+// 内部方法
+// =====================================================================
+
+void RunningLoggerWidget::refreshDisplayText()
+{
+    if (!m_pendingAlarms.isEmpty()) {
+        // 显示当前轮播的警报消息
+        if (m_currentAlarmIdx >= m_pendingAlarms.size())
+            m_currentAlarmIdx = 0;
+        const PendingAlarm &alarm = m_pendingAlarms[m_currentAlarmIdx];
+        m_fullDisplayText = QString("[%1] %2")
+                                .arg(LoggerWidget::msgTypeToString(alarm.type))
+                                .arg(alarm.message);
+    } else {
+        // 无警报时显示最新 Message
+        m_fullDisplayText = m_latestMessageText.isEmpty()
+                                ? tr("暂无日志")
+                                : m_latestMessageText;
+    }
+
+    // 重置跑马灯偏移
+    m_scrollOffset = 0;
+}
+

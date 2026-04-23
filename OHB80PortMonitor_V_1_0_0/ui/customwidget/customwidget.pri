@@ -32,4 +32,8 @@ INCLUDEPATH += $$PWD/historycalendardialog
 include($$PWD/communicateloggerwidget/communicateloggerwidget.pri)
 INCLUDEPATH += $$PWD/communicateloggerwidget
 
+# runningloggerwidget
+include($$PWD/runningloggerwidget/runningloggerwidget.pri)
+INCLUDEPATH += $$PWD/runningloggerwidget
+
 FORMS +=
