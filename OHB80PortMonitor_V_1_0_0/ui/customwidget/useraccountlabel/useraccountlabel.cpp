@@ -1,5 +1,6 @@
 #include "useraccountlabel.h"
 #include "logindialog.h"
+#include "changepassworddialog.h"
 #include "usermanager.h"
 
 #include <QPixmap>
@@ -77,16 +78,45 @@ void UserAccountLabel::showContextMenu()
     m_contextMenu = new QMenu(this);
     m_contextMenu->setAttribute(Qt::WA_DeleteOnClose);
 
+    // 设置菜单项高度，便于触屏点击
+    m_contextMenu->setStyleSheet("QMenu { font-size: 14px; } QMenu::item { height: 40px; padding: 8px 20px; }");
+
+    UserManager* mgr = UserManager::instance();
+
     if (m_loginState == LoginState::NotLoggedIn) {
-        // 未登录状态：只有"登录账号"选项
-        QAction* loginAction = m_contextMenu->addAction(QStringLiteral("登录账号"));
+        // 未登录状态：显示当前账号级别和登录账号选项
+        QAction* permissionAction = m_contextMenu->addAction(
+            QStringLiteral("Level:  ") + UserManager::permissionToString(mgr->currentPermission())
+        );
+        permissionAction->setEnabled(false);  // 禁用点击
+
+        m_contextMenu->addSeparator();
+
+        QAction* loginAction = m_contextMenu->addAction(QStringLiteral("Login"));
         connect(loginAction, &QAction::triggered, this, &UserAccountLabel::onLoginRequested);
     } else {
-        // 已登录状态：有"登录新账号"和"登出账号"选项
-        QAction* loginNewAction = m_contextMenu->addAction(QStringLiteral("登录新账号"));
+        // 已登录状态：显示当前用户名、账号级别，以及修改密码、登录新账号、退出登录选项
+        QAction* userAction = m_contextMenu->addAction(
+            QStringLiteral("Current User:  ") + m_currentUser
+        );
+        userAction->setEnabled(false);
+
+        QAction* permissionAction = m_contextMenu->addAction(
+            QStringLiteral("Level:  ") + UserManager::permissionToString(mgr->currentPermission())
+        );
+        permissionAction->setEnabled(false);
+
+        m_contextMenu->addSeparator();
+
+        QAction* changePasswordAction = m_contextMenu->addAction(QStringLiteral("Change Password"));
+        connect(changePasswordAction, &QAction::triggered, this, &UserAccountLabel::onChangePasswordRequested);
+
+        QAction* loginNewAction = m_contextMenu->addAction(QStringLiteral("Login New Account"));
         connect(loginNewAction, &QAction::triggered, this, &UserAccountLabel::onLoginNewRequested);
 
-        QAction* logoutAction = m_contextMenu->addAction(QStringLiteral("登出账号"));
+        m_contextMenu->addSeparator();
+
+        QAction* logoutAction = m_contextMenu->addAction(QStringLiteral("Logout"));
         connect(logoutAction, &QAction::triggered, this, &UserAccountLabel::onLogoutRequested);
     }
 
@@ -95,9 +125,13 @@ void UserAccountLabel::showContextMenu()
         m_contextMenu = nullptr;
     });
 
-    // 在 label 的右下角弹出菜单
-    QPoint pos = mapToGlobal(QPoint(width(), height()));
+    // 在 label 的正下方弹出菜单，菜单中心与 label 中心对齐
+    QPoint pos = mapToGlobal(QPoint(0, height()));
     m_contextMenu->popup(pos);
+    // 调整菜单位置，使其中心与 label 中心对齐
+    int menuWidth = m_contextMenu->width();
+    pos.setX(pos.x() + (width() - menuWidth) / 2);
+    m_contextMenu->move(pos);
 }
 
 void UserAccountLabel::closeContextMenu()
@@ -122,6 +156,12 @@ void UserAccountLabel::onLoginNewRequested()
 void UserAccountLabel::onLogoutRequested()
 {
     UserManager::instance()->logout();
+}
+
+void UserAccountLabel::onChangePasswordRequested()
+{
+    ChangePasswordDialog dlg(this);
+    dlg.exec();
 }
 
 void UserAccountLabel::updateDisplay()

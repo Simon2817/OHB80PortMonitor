@@ -29,6 +29,7 @@ debug/debugpage.o
 debug/homepage.o
 debug/uidemo6.o
 debug/logindialog.o
+debug/changepassworddialog.o
 debug/quiwidget.o
 debug/cranemapwidget.o
 debug/devicemonitorwidget.o
@@ -106,6 +107,7 @@ debug/moc_debugpage.o
 debug/moc_homepage.o
 debug/moc_uidemo6.o
 debug/moc_logindialog.o
+debug/moc_changepassworddialog.o
 debug/moc_quiwidget.o
 debug/moc_cranemapwidget.o
 debug/moc_devicemonitorwidget.o

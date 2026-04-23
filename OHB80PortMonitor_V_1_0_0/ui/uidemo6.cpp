@@ -143,13 +143,14 @@ void UIDemo6::registerWidgetPermissions()
     if (!mgr) return;
 
     // Root (4): btnDebug
-    mgr->registerWidget(ui->btnDebug, UserPermission::Root);
+    mgr->registerWidget(ui->btnDebug, UserPermission::Engineer);
 
     // Debug (2): btnCommunicate
-    mgr->registerWidget(ui->btnCommunicate, UserPermission::Debug);
+    mgr->registerWidget(ui->btnDebug, UserPermission::Debug);
 
-    // Normal (1): btnSetting, btnHome, btnAlarm, btnChart (普通用户可查看)
+    // Normal (1): btnSetting, btnHome, btnAlarm ,btnCommunicate(普通用户可查看)
     mgr->registerWidget(ui->btnSetting, UserPermission::Normal);
+    mgr->registerWidget(ui->btnCommunicate, UserPermission::Normal);
     // 其他按钮默认所有用户可见，可省略注册
     // mgr->registerWidget(ui->btnHome, UserPermission::Normal);
     // mgr->registerWidget(ui->btnAlarm, UserPermission::Normal);

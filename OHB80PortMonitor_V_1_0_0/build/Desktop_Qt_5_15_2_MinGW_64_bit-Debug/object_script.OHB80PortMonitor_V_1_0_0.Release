@@ -29,6 +29,7 @@ release/debugpage.o
 release/homepage.o
 release/uidemo6.o
 release/logindialog.o
+release/changepassworddialog.o
 release/quiwidget.o
 release/cranemapwidget.o
 release/devicemonitorwidget.o
@@ -106,6 +107,7 @@ release/moc_debugpage.o
 release/moc_homepage.o
 release/moc_uidemo6.o
 release/moc_logindialog.o
+release/moc_changepassworddialog.o
 release/moc_quiwidget.o
 release/moc_cranemapwidget.o
 release/moc_devicemonitorwidget.o

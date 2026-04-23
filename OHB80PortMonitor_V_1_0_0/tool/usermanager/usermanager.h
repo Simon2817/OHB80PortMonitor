@@ -57,6 +57,9 @@ public:
     // 返回指定用户的权限级别（用户不存在返回 Guest）
     UserPermission userPermission(const QString& username) const;
 
+    // 将权限枚举转换为字符串
+    static QString permissionToString(UserPermission perm);
+
 signals:
     void permissionChanged(UserPermission permission);
     void loginSuccess(const QString& username, UserPermission permission);

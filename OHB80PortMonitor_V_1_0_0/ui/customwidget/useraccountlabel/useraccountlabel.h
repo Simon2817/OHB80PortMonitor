@@ -45,6 +45,7 @@ private slots:
     void onLoginRequested();
     void onLoginNewRequested();
     void onLogoutRequested();
+    void onChangePasswordRequested();
 
 private:
     void showContextMenu();

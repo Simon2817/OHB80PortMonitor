@@ -8,6 +8,33 @@
 
 ## 更新日志
 
+### 2026-04-23 17:00 - Simon
+**UserAccountLabel 菜单功能增强**
+
+#### 修改内容
+- **UserAccountLabel**：菜单功能增强
+  - 未登录状态：显示当前账号级别（Level）、登录账号（Login）
+  - 已登录状态：显示当前用户名（Current User）、账号级别（Level）、修改密码（Change Password）、登录新账号（Login New Account）、退出登录（Logout）
+  - 菜单项高度增加至 40px，便于触屏点击
+  - 菜单位置调整至 label 正下方，中心对齐
+  - 所有菜单字符串改为英文
+
+- **ChangePasswordDialog**：新增修改密码对话框
+  - 需要输入旧密码验证身份
+  - 输入新密码并确认
+  - 密码无长度限制，只需非空
+  - 所有界面字符串改为英文
+
+- **UserManager**：权限字符串转换方法
+  - 新增静态方法 `permissionToString()` 将权限枚举转换为英文字符串
+  - 从 UserAccountLabel 移至 UserManager，避免代码重复
+
+#### 影响范围
+- 新增文件：`ui/changepassworddialog.h`、`ui/changepassworddialog.cpp`
+- 修改文件：`ui/customwidget/useraccountlabel/useraccountlabel.h`、`ui/customwidget/useraccountlabel/useraccountlabel.cpp`、`tool/usermanager/usermanager.h`、`tool/usermanager/usermanager.cpp`、`ui/logindialog.cpp`、`ui/ui.pri`
+
+---
+
 ### 2026-04-23 16:20 - Simon
 **UI 权限注册集成**
 

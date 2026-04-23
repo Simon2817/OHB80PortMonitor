@@ -4,6 +4,8 @@
 #include <QSettings>
 #include <QCoreApplication>
 #include <QFile>
+#include <QDir>
+#include <QFileInfo>
 #include <QDebug>
 
 UserManager* UserManager::m_instance = nullptr;
@@ -29,16 +31,22 @@ void UserManager::initDefaultConfig()
     const QString path = configFilePath();
     if (QFile::exists(path)) return;
 
+    // 确保目录存在
+    const QDir dir = QFileInfo(path).absoluteDir();
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+
     QSettings s(path, QSettings::IniFormat);
     s.setIniCodec("UTF-8");
 
-    s.beginGroup("engineer1");
-    s.setValue("password",   "eng123");
+    s.beginGroup("cytc");
+    s.setValue("password",   "cytc");
     s.setValue("permission", static_cast<int>(UserPermission::Engineer));
     s.endGroup();
 
-    s.beginGroup("debug1");
-    s.setValue("password",   "dbg123");
+    s.beginGroup("debug");
+    s.setValue("password",   "debug");
     s.setValue("permission", static_cast<int>(UserPermission::Debug));
     s.endGroup();
 
@@ -46,6 +54,9 @@ void UserManager::initDefaultConfig()
     s.setValue("password",   "user123");
     s.setValue("permission", static_cast<int>(UserPermission::Normal));
     s.endGroup();
+
+    // 显式同步确保数据写入磁盘
+    s.sync();
 }
 
 void UserManager::registerWidget(QWidget* widget, UserPermission minPermission)
@@ -262,4 +273,16 @@ bool UserManager::hasPermission(UserPermission required) const
 QString UserManager::configFilePath() const
 {
     return AppConfig::getInstance().getUserInfoConfigPath();
+}
+
+QString UserManager::permissionToString(UserPermission perm)
+{
+    switch (perm) {
+        case UserPermission::Guest:    return QStringLiteral("Guest");
+        case UserPermission::Normal:   return QStringLiteral("Normal");
+        case UserPermission::Debug:    return QStringLiteral("Debug");
+        case UserPermission::Engineer: return QStringLiteral("Engineer");
+        case UserPermission::Root:     return QStringLiteral("Root");
+        default:                       return QStringLiteral("Unknown");
+    }
 }

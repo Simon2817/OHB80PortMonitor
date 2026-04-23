@@ -41,6 +41,7 @@ public:
     QLabel *labIco;
     QLabel *labTitle;
     RunningLoggerWidget *runningLoggerWidget;
+    QSpacerItem *horizontalSpacer;
     UserAccountLabel *useraccountLab;
     QWidget *widgetMenu;
     QHBoxLayout *horizontalLayout;
@@ -143,6 +144,10 @@ public:
         runningLoggerWidget->setMaximumSize(QSize(500, 16777215));
 
         horizontalLayout_2->addWidget(runningLoggerWidget);
+
+        horizontalSpacer = new QSpacerItem(20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer);
 
         useraccountLab = new UserAccountLabel(widgetTitle);
         useraccountLab->setObjectName(QString::fromUtf8("useraccountLab"));

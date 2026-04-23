@@ -15,7 +15,8 @@ HEADERS += \
     $$PWD/debugpage.h \
     $$PWD/homepage.h \
     $$PWD/uidemo6.h \
-    $$PWD/logindialog.h
+    $$PWD/logindialog.h \
+    $$PWD/changepassworddialog.h
 
 SOURCES += \
     $$PWD/alarmpage.cpp \
@@ -25,7 +26,8 @@ SOURCES += \
     $$PWD/debugpage.cpp \
     $$PWD/homepage.cpp \
     $$PWD/uidemo6.cpp \
-    $$PWD/logindialog.cpp
+    $$PWD/logindialog.cpp \
+    $$PWD/changepassworddialog.cpp
 
 #customwidget
 include ($$PWD/customwidget/customwidget.pri)

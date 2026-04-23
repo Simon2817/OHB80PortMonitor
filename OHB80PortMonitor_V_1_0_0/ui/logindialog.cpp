@@ -9,7 +9,7 @@
 LoginDialog::LoginDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle(QStringLiteral("用户登录"));
+    setWindowTitle(QStringLiteral("User Login"));
     setModal(true);
     setMinimumWidth(300);
 
@@ -25,13 +25,13 @@ void LoginDialog::setupUI()
     QFormLayout *formLayout = new QFormLayout;
 
     m_usernameEdit = new QLineEdit;
-    m_usernameEdit->setPlaceholderText(QStringLiteral("请输入用户名"));
-    formLayout->addRow(QStringLiteral("用户名："), m_usernameEdit);
+    m_usernameEdit->setPlaceholderText(QStringLiteral("Enter username"));
+    formLayout->addRow(QStringLiteral("Username:"), m_usernameEdit);
 
     m_passwordEdit = new QLineEdit;
-    m_passwordEdit->setPlaceholderText(QStringLiteral("请输入密码"));
+    m_passwordEdit->setPlaceholderText(QStringLiteral("Enter password"));
     m_passwordEdit->setEchoMode(QLineEdit::Password);
-    formLayout->addRow(QStringLiteral("密码："), m_passwordEdit);
+    formLayout->addRow(QStringLiteral("Password:"), m_passwordEdit);
 
     mainLayout->addLayout(formLayout);
 
@@ -43,8 +43,8 @@ void LoginDialog::setupUI()
 
     // 按钮布局
     QHBoxLayout *btnLayout = new QHBoxLayout;
-    m_loginBtn = new QPushButton(QStringLiteral("登录"));
-    m_cancelBtn = new QPushButton(QStringLiteral("取消"));
+    m_loginBtn = new QPushButton(QStringLiteral("Login"));
+    m_cancelBtn = new QPushButton(QStringLiteral("Cancel"));
     btnLayout->addStretch();
     btnLayout->addWidget(m_loginBtn);
     btnLayout->addWidget(m_cancelBtn);
@@ -65,13 +65,13 @@ void LoginDialog::onLoginClicked()
     QString pwd = m_passwordEdit->text();
 
     if (user.isEmpty()) {
-        m_errorLabel->setText(QStringLiteral("用户名不能为空"));
+        m_errorLabel->setText(QStringLiteral("Username cannot be empty"));
         m_errorLabel->setVisible(true);
         return;
     }
 
     if (pwd.isEmpty()) {
-        m_errorLabel->setText(QStringLiteral("密码不能为空"));
+        m_errorLabel->setText(QStringLiteral("Password cannot be empty"));
         m_errorLabel->setVisible(true);
         return;
     }
@@ -81,7 +81,7 @@ void LoginDialog::onLoginClicked()
     if (mgr->login(user, pwd)) {
         accept();  // 登录成功，关闭对话框
     } else {
-        m_errorLabel->setText(QStringLiteral("用户名或密码错误"));
+        m_errorLabel->setText(QStringLiteral("Username or password is incorrect"));
         m_errorLabel->setVisible(true);
         m_passwordEdit->clear();
     }
