@@ -36,7 +36,15 @@ AlarmLoggerWidget::AlarmLoggerWidget(QWidget *parent)
     connect(m_logic, &AlarmLogicSystem::alarmResolved,
             this, [this](const AlarmInfo &info) {
                 resolveRecord(info.alarmId());
-                emit alarmResolved(info);
+
+                // 如果是 SoftwareConnectionLost 警报，修改 message
+                AlarmInfo emitInfo = info;
+                if (alarmIdCode(info.alarmId()) == AlarmCode::SoftwareConnectionLost) {
+                    QString qrCode = info.qrCode();
+                    emitInfo.setMessage(QString("Device %1 connection resolved").arg(qrCode));
+                }
+
+                emit alarmResolved(emitInfo);
             });
 
     initTable();
@@ -69,7 +77,15 @@ AlarmLoggerWidget::AlarmLoggerWidget(const AlarmHeaderConfig &config, QWidget *p
     connect(m_logic, &AlarmLogicSystem::alarmResolved,
             this, [this](const AlarmInfo &info) {
                 resolveRecord(info.alarmId());
-                emit alarmResolved(info);
+
+                // 如果是 SoftwareConnectionLost 警报，修改 message
+                AlarmInfo emitInfo = info;
+                if (alarmIdCode(info.alarmId()) == AlarmCode::SoftwareConnectionLost) {
+                    QString qrCode = info.qrCode();
+                    emitInfo.setMessage(QString("Device %1 connection resolved").arg(qrCode));
+                }
+
+                emit alarmResolved(emitInfo);
             });
 
     initTable();
@@ -259,10 +275,13 @@ void AlarmLoggerWidget::purgeResolvedRows()
     QList<int> toRemove = m_resolvedRows.mid(0, count);
     std::sort(toRemove.begin(), toRemove.end(), std::greater<int>());
 
+    // 禁用 UI 更新，避免每次 removeRow 触发布局重算
+    m_table->setUpdatesEnabled(false);
     for (int row : toRemove) {
         if (row >= m_table->rowCount()) continue;
         m_table->removeRow(row);
     }
+    m_table->setUpdatesEnabled(true);
     m_resolvedRows.erase(m_resolvedRows.begin(), m_resolvedRows.begin() + count);
 
     // Rebuild m_idRowMap and m_resolvedRows indices after row removal

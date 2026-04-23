@@ -8,6 +8,38 @@
 
 ## 更新日志
 
+### 2026-04-23 19:30 - Simon
+**报警直连运行日志与界面卡顿优化**
+
+#### 修改内容
+- **AlarmLoggerWidget → RunningLoggerWidget 直连**
+  - `RunningLoggerWidget` 新增 `onAlarmPublished(const AlarmInfo&)` 与 `onAlarmResolved(const AlarmInfo&)` 槽
+  - 在 `UIDemo6::initForm()` 中将 `ui->alarmpage->alarmLogger()` 的 `alarmPublished/alarmResolved` 信号直接连接到运行日志控件
+  - `onAlarmResolved` 固定按 `Message` 级别写入运行日志
+
+- **AlarmPage/AlarmLoggerWidget 文案与消息增强**
+  - 断连告警文案改为动态设备号：`Device {masterId} connection lost`
+  - `SoftwareConnectionLost` 解决时文案统一为：`Device {qrCode} connection resolved`
+  - `AlarmInfo` 新增 `setMessage(const QString&)`，支持在转发前按场景改写 message
+  - 修复默认构造 `AlarmLoggerWidget(QWidget*)` 下未应用上述解决文案的问题
+
+- **性能优化（缓解界面卡顿）**
+  - `RunningLoggerWidget` 跑马灯改为缓存拼接字符串（`m_scrollDoubled/m_scrollTotalLen`），避免每 150ms 重复字符串分配
+  - `AlarmLoggerWidget::purgeResolvedRows()` 批量删行时禁用表格更新，减少重复布局重算
+  - `RunningLoggerCollector::onFlushTick()` 增加空队列快速返回，减少无效锁与 swap 开销
+
+#### 影响范围
+- 修改文件：`ui/customwidget/runningloggerwidget/runningloggerwidget.h`
+- 修改文件：`ui/customwidget/runningloggerwidget/runningloggerwidget.cpp`
+- 修改文件：`ui/customwidget/runningloggerwidget/runningloggercollector.cpp`
+- 修改文件：`ui/customwidget/alarmloggerwidget/alarminfo.h`
+- 修改文件：`ui/customwidget/alarmloggerwidget/alarmloggerwidget.cpp`
+- 修改文件：`ui/alarmpage.h`
+- 修改文件：`ui/alarmpage.cpp`
+- 修改文件：`ui/uidemo6.cpp`
+
+---
+
 ### 2026-04-23 18:30 - Simon
 **新增 RunningLoggerCollector 运行日志采集器**
 
@@ -33,7 +65,7 @@
 - **日志调用点**（均为 Message 级别）
   - `logindialog.cpp`：记录登录成功/失败
   - `changepassworddialog.cpp`：记录密码修改成功/失败
-  - `useraccountlabel.cpp`：记录用户退出登录
+  - `useraccountlabel.cpp`：记录用户退出登录、"Login New Account" 时先退出再登录
 
 #### 影响范围
 - 新增文件：`ui/customwidget/runningloggerwidget/runningloggercollector.h`、`ui/customwidget/runningloggerwidget/runningloggercollector.cpp`

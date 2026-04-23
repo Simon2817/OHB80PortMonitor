@@ -58,6 +58,12 @@ void RunningLoggerCollector::onFlushTick()
 {
     if (!m_target) return;
 
+    // 队列为空时快速返回，避免不必要的 swap 开销
+    {
+        QMutexLocker locker(&m_queueMutex);
+        if (m_queue.isEmpty()) return;
+    }
+
     // 每次最多提交一批，避免单帧阻塞 UI
     QQueue<LogEntry> localQueue;
     {

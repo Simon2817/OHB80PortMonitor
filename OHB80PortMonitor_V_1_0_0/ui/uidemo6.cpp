@@ -5,6 +5,8 @@
 #include "alarmpage.h"
 #include "app.h"
 #include "usermanager.h"
+#include "runningloggerwidget.h"
+#include "alarmloggerwidget.h"
 
 UIDemo6::UIDemo6(QWidget *parent) :
     QDialog(parent),
@@ -67,6 +69,12 @@ void UIDemo6::initForm()
 
     // 初始化运行日志控件（根目录已在构造函数中自动设置）
     ui->runningLoggerWidget->initialize();
+
+    // 将 AlarmPage 的警报信号直接投递到运行日志控件
+    connect(ui->alarmpage->alarmLogger(), &AlarmLoggerWidget::alarmPublished,
+            ui->runningLoggerWidget, &RunningLoggerWidget::onAlarmPublished);
+    connect(ui->alarmpage->alarmLogger(), &AlarmLoggerWidget::alarmResolved,
+            ui->runningLoggerWidget, &RunningLoggerWidget::onAlarmResolved);
 
     // 注册控件权限
     registerWidgetPermissions();

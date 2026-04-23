@@ -8,6 +8,7 @@
 #include <QList>
 
 #include "loggerwidget.h"
+#include "alarminfo.h"
 
 // ====================================================================
 // RunningLoggerWidget —— 运行日志控件
@@ -75,6 +76,10 @@ public:
                       const QString &alarmId,
                       const QString &message);
 
+    // -------- 接收 AlarmLoggerWidget 信号（直接投递到运行日志）--------
+    void onAlarmPublished(const AlarmInfo &info);
+    void onAlarmResolved(const AlarmInfo &info);
+
 signals:
     void logWritten(bool success);
 
@@ -103,6 +108,8 @@ private:
 
     // ---- 按钮跑马灯状态 ----
     QString m_fullDisplayText;    // 当前应显示的完整文本
+    QString m_scrollDoubled;      // 缓存的跑马灯拼接字符串
+    int     m_scrollTotalLen = 0; // 缓存的跑马灯总长度
     QTimer *m_scrollTimer    = nullptr;
     int     m_scrollOffset   = 0;
 

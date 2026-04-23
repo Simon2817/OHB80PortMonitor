@@ -1,6 +1,7 @@
 #include "runningloggerwidget.h"
 #include "runningloggercollector.h"
 #include "customlogger.h"
+#include "alarmid.h"
 
 #include <QVBoxLayout>
 #include <QDateTime>
@@ -10,13 +11,13 @@
 // 静态常量
 // =====================================================================
 const QStringList RunningLoggerWidget::kHeaders = {
-    QStringLiteral("消息类型"),
-    QStringLiteral("发送时间"),
+    QStringLiteral("Type"),
+    QStringLiteral("Time"),
     QStringLiteral("QRCode"),
-    QStringLiteral("警报ID"),
-    QStringLiteral("是否解决"),
-    QStringLiteral("解决时间"),
-    QStringLiteral("具体消息")
+    QStringLiteral("Alarm ID"),
+    QStringLiteral("Resolved"),
+    QStringLiteral("Resolve Time"),
+    QStringLiteral("Message")
 };
 
 // =====================================================================
@@ -110,7 +111,7 @@ void RunningLoggerWidget::initialize()
     m_loggerWidget->setHeaders(kHeaders);
 
     // 2. 设置 list view 显示格式
-    //    除了"具体消息"格式为 ": 具体消息"，其他字段都用 [] 包裹
+    //    除了 "Message" 格式为 ": message"，其他字段都用 [] 包裹
     m_loggerWidget->setFormat(
         QStringLiteral("[{}][{}][{}][{}][{}][{}]: {}"),
         kHeaders
@@ -172,7 +173,7 @@ void RunningLoggerWidget::writeRecord(RunningLoggerWidget::MsgType type,
         {kHeaders[1], sendTime},
         {kHeaders[2], qrCode},
         {kHeaders[3], alarmId},
-        {kHeaders[4], QStringLiteral("否")},
+        {kHeaders[4], isAlarm ? QStringLiteral("No") : QString()},
         {kHeaders[5], QString()},
         {kHeaders[6], message}
     };
@@ -199,6 +200,34 @@ void RunningLoggerWidget::writeRecord(RunningLoggerWidget::MsgType type,
     }
 
     refreshDisplayText();
+}
+
+// =====================================================================
+// 接收 AlarmLoggerWidget 信号
+// =====================================================================
+
+static RunningLoggerWidget::MsgType alarmLevelToMsgType(AlarmLevel level)
+{
+    switch (level) {
+    case AlarmLevel::Error: return RunningLoggerWidget::MsgType::Error;
+    default:                return RunningLoggerWidget::MsgType::Warn;
+    }
+}
+
+void RunningLoggerWidget::onAlarmPublished(const AlarmInfo &info)
+{
+    writeRecord(alarmLevelToMsgType(info.level()),
+                info.qrCode(),
+                alarmIdToString(info.alarmId()),
+                info.message());
+}
+
+void RunningLoggerWidget::onAlarmResolved(const AlarmInfo &info)
+{
+    resolveAlarm(MsgType::Message,
+                 info.qrCode(),
+                 alarmIdToString(info.alarmId()),
+                 info.message());
 }
 
 // =====================================================================
@@ -235,7 +264,7 @@ void RunningLoggerWidget::resolveAlarm(RunningLoggerWidget::MsgType type,
         {kHeaders[1], sendTime},
         {kHeaders[2], qrCode},
         {kHeaders[3], alarmId},
-        {kHeaders[4], QStringLiteral("是")},
+        {kHeaders[4], QStringLiteral("Yes")},
         {kHeaders[5], resolveTime},
         {kHeaders[6], message}
     };
@@ -285,20 +314,15 @@ void RunningLoggerWidget::onScrollTick()
         return;
     }
 
-    // 跑马灯：在文本后加 4 个空格作为间隔，循环拼接
-    QString padded  = m_fullDisplayText + QStringLiteral("    ");
-    int totalLen    = padded.length();
-    QString doubled = padded + m_fullDisplayText;
-
-    // 计算按钮可见字符数（近似）
+    // 跑马灯：使用缓存的拼接字符串，避免每 tick 重新分配
     int avgCharW     = qMax(1, fm.averageCharWidth());
     int visibleChars = btnWidth / avgCharW;
 
-    QString visible = doubled.mid(m_scrollOffset, visibleChars);
+    QString visible = m_scrollDoubled.mid(m_scrollOffset, visibleChars);
     m_btn->setText(visible);
 
     m_scrollOffset++;
-    if (m_scrollOffset >= totalLen)
+    if (m_scrollOffset >= m_scrollTotalLen)
         m_scrollOffset = 0;
 }
 
@@ -332,6 +356,11 @@ void RunningLoggerWidget::refreshDisplayText()
                                 ? tr("暂无日志")
                                 : m_latestMessageText;
     }
+
+    // 缓存跑马灯拼接字符串，避免每 tick 重新分配
+    QString padded   = m_fullDisplayText + QStringLiteral("    ");
+    m_scrollTotalLen = padded.length();
+    m_scrollDoubled  = padded + m_fullDisplayText;
 
     // 重置跑马灯偏移，并立即刷新按钮文字
     m_scrollOffset = 0;

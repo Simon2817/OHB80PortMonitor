@@ -78,9 +78,44 @@ void UserAccountLabel::showContextMenu()
 
     m_contextMenu = new QMenu(this);
     m_contextMenu->setAttribute(Qt::WA_DeleteOnClose);
+    m_contextMenu->setWindowFlag(Qt::FramelessWindowHint);
+    m_contextMenu->setAttribute(Qt::WA_TranslucentBackground);
 
-    // 设置菜单项高度，便于触屏点击
-    m_contextMenu->setStyleSheet("QMenu { font-size: 14px; } QMenu::item { height: 40px; padding: 8px 20px; }");
+    // 与 QUIWidget LightBlue 主题协调：浅蓝背景、深蓝文字、青色 hover
+    static const QString kMenuStyle = QStringLiteral(R"(
+        QMenu {
+            background-color: #EAF7FF;
+            border: 1px solid #C0DCF2;
+            border-radius: 8px;
+            padding: 6px 0px;
+            font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+            font-size: 13px;
+            color: #386487;
+        }
+        QMenu::item {
+            padding: 8px 24px;
+            margin: 2px 6px;
+            border-radius: 6px;
+            min-width: 180px;
+            min-height: 24px;
+            background-color: transparent;
+        }
+        QMenu::item:selected {
+            background-color: #00BB9E;
+            color: #FFFFFF;
+        }
+        QMenu::item:disabled {
+            color: #7A9BB8;
+            background-color: transparent;
+            font-weight: bold;
+        }
+        QMenu::separator {
+            height: 1px;
+            background-color: #C0DCF2;
+            margin: 6px 12px;
+        }
+    )");
+    m_contextMenu->setStyleSheet(kMenuStyle);
 
     UserManager* mgr = UserManager::instance();
 
@@ -150,6 +185,15 @@ void UserAccountLabel::onLoginRequested()
 
 void UserAccountLabel::onLoginNewRequested()
 {
+    // 如果已登录，先退出当前账号并记录日志
+    if (m_loginState == LoginState::LoggedIn && !m_currentUser.isEmpty()) {
+        const QString user = UserManager::instance()->currentUser();
+        UserManager::instance()->logout();
+        RunningLoggerCollector::instance()->logMessage(
+            QStringLiteral("User logout: ") + user);
+    }
+
+    // 显示登录对话框
     LoginDialog dlg(this);
     dlg.exec();
 }

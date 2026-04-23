@@ -37,6 +37,7 @@ public:
 
     void setResolved(bool v)              { m_resolved = v; }
     void setResolveTime(const QString &t) { m_resolveTime = t; }
+    void setMessage(const QString &msg)   { m_message = msg; }
 
     // 转 CSV 行，列顺序与 AlarmFileSystem::kHeaders 严格对应
     QStringList toStringList() const

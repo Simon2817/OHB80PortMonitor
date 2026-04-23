@@ -29,6 +29,11 @@ AlarmPage::~AlarmPage()
     delete ui;
 }
 
+AlarmLoggerWidget* AlarmPage::alarmLogger() const
+{
+    return ui->alarmLoggerWidget;
+}
+
 void AlarmPage::onNetworkStatusChanged(ModbusConnecter::ConnectionStatus status, const QString &masterId)
 {
     qint64 alarmId = makeAlarmId(masterId.toInt(), AlarmCode::SoftwareConnectionLost);
@@ -38,6 +43,6 @@ void AlarmPage::onNetworkStatusChanged(ModbusConnecter::ConnectionStatus status,
         ui->alarmLoggerWidget->submitResolve(alarmId);
     } else {
         // Connection failed or disconnected: report SoftwareConnectionLost alarm
-        ui->alarmLoggerWidget->submitAlarm(AlarmLevel::Error, masterId, alarmId, "Connection Lost");
+        ui->alarmLoggerWidget->submitAlarm(AlarmLevel::Error, masterId, alarmId, QString("Device %1 connection lost").arg(masterId));
     }
 }
