@@ -1,5 +1,6 @@
 #include "changepassworddialog.h"
 #include "usermanager.h"
+#include "runningloggercollector.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -113,9 +114,13 @@ void ChangePasswordDialog::onChangePasswordClicked()
 
     // 修改密码
     if (mgr->modifyUser(username, newPassword)) {
+        RunningLoggerCollector::instance()->logMessage(
+            QStringLiteral("Password changed: ") + username);
         QMessageBox::information(this, QStringLiteral("Success"), QStringLiteral("Password changed successfully"));
         accept();
     } else {
+        RunningLoggerCollector::instance()->logMessage(
+            QStringLiteral("Password change failed: ") + username);
         m_errorLabel->setText(QStringLiteral("Failed to change password"));
         m_errorLabel->setVisible(true);
     }

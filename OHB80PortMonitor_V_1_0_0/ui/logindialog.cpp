@@ -1,5 +1,6 @@
 #include "logindialog.h"
 #include "usermanager.h"
+#include "runningloggercollector.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -79,8 +80,12 @@ void LoginDialog::onLoginClicked()
     // 调用 UserManager 进行登录验证
     UserManager* mgr = UserManager::instance();
     if (mgr->login(user, pwd)) {
+        RunningLoggerCollector::instance()->logMessage(
+            QStringLiteral("User login success: ") + user);
         accept();  // 登录成功，关闭对话框
     } else {
+        RunningLoggerCollector::instance()->logMessage(
+            QStringLiteral("User login failed: ") + user);
         m_errorLabel->setText(QStringLiteral("Username or password is incorrect"));
         m_errorLabel->setVisible(true);
         m_passwordEdit->clear();

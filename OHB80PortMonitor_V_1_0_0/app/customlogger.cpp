@@ -53,3 +53,16 @@ QString CustomLogger::AlarmLoggerPath()
 
     return logDir;
 }
+
+QString CustomLogger::RunningLoggerPath()
+{
+    AppConfig &config = AppConfig::getInstance();
+    QString logDir = config.getRootDir() + "/log/runningLog";
+
+    QDir dir(logDir);
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+
+    return logDir;
+}

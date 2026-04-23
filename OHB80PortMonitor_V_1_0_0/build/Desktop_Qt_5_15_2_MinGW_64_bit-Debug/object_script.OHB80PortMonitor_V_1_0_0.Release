@@ -69,6 +69,7 @@ release/commlogpagetablemodel.o
 release/commlogtableitemdelegate.o
 release/communicateloggerwidget.o
 release/runningloggerwidget.o
+release/runningloggercollector.o
 release/useraccountlabel.o
 release/scheduler.o
 release/monitor_data_task.o
@@ -136,6 +137,7 @@ release/moc_commlogpagemodel.o
 release/moc_commlogpagetablemodel.o
 release/moc_communicateloggerwidget.o
 release/moc_runningloggerwidget.o
+release/moc_runningloggercollector.o
 release/moc_useraccountlabel.o
 release/moc_scheduler_task.o
 release/moc_scheduler.o

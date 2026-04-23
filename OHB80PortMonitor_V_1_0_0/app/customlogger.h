@@ -27,6 +27,9 @@ public:
 
     // 获取警报日志目录路径: bin/log/alarms
     static QString AlarmLoggerPath();
+
+    // 获取运行日志目录路径: bin/log/runningLog
+    static QString RunningLoggerPath();
 };
 
 #endif // CUSTOMLOGGER_H

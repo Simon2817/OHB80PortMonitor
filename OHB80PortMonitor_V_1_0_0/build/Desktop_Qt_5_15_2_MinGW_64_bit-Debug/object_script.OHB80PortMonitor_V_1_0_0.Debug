@@ -69,6 +69,7 @@ debug/commlogpagetablemodel.o
 debug/commlogtableitemdelegate.o
 debug/communicateloggerwidget.o
 debug/runningloggerwidget.o
+debug/runningloggercollector.o
 debug/useraccountlabel.o
 debug/scheduler.o
 debug/monitor_data_task.o
@@ -136,6 +137,7 @@ debug/moc_commlogpagemodel.o
 debug/moc_commlogpagetablemodel.o
 debug/moc_communicateloggerwidget.o
 debug/moc_runningloggerwidget.o
+debug/moc_runningloggercollector.o
 debug/moc_useraccountlabel.o
 debug/moc_scheduler_task.o
 debug/moc_scheduler.o

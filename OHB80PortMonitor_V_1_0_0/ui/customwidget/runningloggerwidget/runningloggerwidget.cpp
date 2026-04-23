@@ -1,4 +1,6 @@
 #include "runningloggerwidget.h"
+#include "runningloggercollector.h"
+#include "customlogger.h"
 
 #include <QVBoxLayout>
 #include <QDateTime>
@@ -37,6 +39,9 @@ QString RunningLoggerWidget::msgTypeToString(MsgType type)
 RunningLoggerWidget::RunningLoggerWidget(QWidget *parent)
     : QWidget(parent)
 {
+    // 自动设置日志根目录为运行日志路径
+    m_rootPath = CustomLogger::RunningLoggerPath();
+
     // ---- 按钮 ----
     m_btn = new QPushButton(tr("暂无日志"), this);
     m_btn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -58,11 +63,12 @@ RunningLoggerWidget::RunningLoggerWidget(QWidget *parent)
     QVBoxLayout *dlgLayout = new QVBoxLayout(m_dialog);
     dlgLayout->setContentsMargins(0, 0, 0, 0);
 
-    // ---- 跑马灯定时器 ----
+    // ---- 跑马灯定时器（构造时即启动，无需等待 initialize）----
     m_scrollTimer = new QTimer(this);
     m_scrollTimer->setInterval(150);
     connect(m_scrollTimer, &QTimer::timeout,
             this, &RunningLoggerWidget::onScrollTick);
+    m_scrollTimer->start();
 
     // ---- 警报轮播定时器 ----
     m_alarmCycleTimer = new QTimer(this);
@@ -130,8 +136,8 @@ void RunningLoggerWidget::initialize()
     m_loggerWidget->setPageSize(m_pageSize);
     m_loggerWidget->initialize();
 
-    // 启动跑马灯定时器
-    m_scrollTimer->start();
+    // 将自身注册到日志采集器，此后任意线程的 logMessage() 将提交到本控件
+    RunningLoggerCollector::instance()->setTarget(this);
 }
 
 // =====================================================================
@@ -327,7 +333,8 @@ void RunningLoggerWidget::refreshDisplayText()
                                 : m_latestMessageText;
     }
 
-    // 重置跑马灯偏移
+    // 重置跑马灯偏移，并立即刷新按钮文字
     m_scrollOffset = 0;
+    m_btn->setText(m_fullDisplayText);
 }
 

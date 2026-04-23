@@ -65,6 +65,9 @@ void UIDemo6::initForm()
     // 为 widgetTitle 安装事件过滤器以处理双击事件
     ui->widgetTitle->installEventFilter(this);
 
+    // 初始化运行日志控件（根目录已在构造函数中自动设置）
+    ui->runningLoggerWidget->initialize();
+
     // 注册控件权限
     registerWidgetPermissions();
 

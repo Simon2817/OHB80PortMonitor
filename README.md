@@ -8,6 +8,39 @@
 
 ## 更新日志
 
+### 2026-04-23 18:30 - Simon
+**新增 RunningLoggerCollector 运行日志采集器**
+
+#### 修改内容
+- **RunningLoggerCollector**：新增跨线程全局日志采集单例
+  - 基于 Producer-Consumer 模式，任意线程可调用 `logMessage()` 提交日志
+  - 内部使用 `QQueue<LogEntry>` + `QMutex` 缓冲，主线程定时器（50ms）异步提交
+  - 每帧最多提交 20 条（`kMaxFlushPerTick`），防止队列积压时 UI 卡顿
+  - 使用 `Q_GLOBAL_STATIC` 管理单例生命周期，`QPointer<RunningLoggerWidget>` 自动处理 Widget 销毁
+
+- **RunningLoggerWidget**：优化日志控件初始化
+  - 构造函数自动设置日志根目录为 `CustomLogger::RunningLoggerPath()`
+  - `initialize()` 时自动注册到 `RunningLoggerCollector::setTarget(this)`
+  - 滚动定时器移至构造函数启动，不依赖 `initialize()`
+  - `refreshDisplayText()` 中立即更新按钮文字，无需等待定时器 tick
+
+- **CustomLogger**：新增运行日志路径
+  - 新增静态方法 `RunningLoggerPath()`，返回 `bin/log/runningLog`
+
+- **UIDemo6**：初始化运行日志控件
+  - `initForm()` 中调用 `ui->runningLoggerWidget->initialize()`
+
+- **日志调用点**（均为 Message 级别）
+  - `logindialog.cpp`：记录登录成功/失败
+  - `changepassworddialog.cpp`：记录密码修改成功/失败
+  - `useraccountlabel.cpp`：记录用户退出登录
+
+#### 影响范围
+- 新增文件：`ui/customwidget/runningloggerwidget/runningloggercollector.h`、`ui/customwidget/runningloggerwidget/runningloggercollector.cpp`
+- 修改文件：`ui/customwidget/runningloggerwidget/runningloggerwidget.h`、`ui/customwidget/runningloggerwidget/runningloggerwidget.cpp`、`ui/customwidget/runningloggerwidget/runningloggerwidget.pri`、`app/customlogger.h`、`app/customlogger.cpp`、`ui/uidemo6.cpp`、`ui/logindialog.cpp`、`ui/changepassworddialog.cpp`、`ui/customwidget/useraccountlabel/useraccountlabel.cpp`
+
+---
+
 ### 2026-04-23 17:00 - Simon
 **UserAccountLabel 菜单功能增强**
 

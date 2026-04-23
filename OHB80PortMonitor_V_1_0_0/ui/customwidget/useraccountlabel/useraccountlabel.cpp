@@ -2,6 +2,7 @@
 #include "logindialog.h"
 #include "changepassworddialog.h"
 #include "usermanager.h"
+#include "runningloggercollector.h"
 
 #include <QPixmap>
 #include <QMenu>
@@ -155,7 +156,10 @@ void UserAccountLabel::onLoginNewRequested()
 
 void UserAccountLabel::onLogoutRequested()
 {
+    const QString user = UserManager::instance()->currentUser();
     UserManager::instance()->logout();
+    RunningLoggerCollector::instance()->logMessage(
+        QStringLiteral("User logout: ") + user);
 }
 
 void UserAccountLabel::onChangePasswordRequested()
