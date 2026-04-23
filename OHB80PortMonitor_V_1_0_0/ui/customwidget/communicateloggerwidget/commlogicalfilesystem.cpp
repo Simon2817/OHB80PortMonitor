@@ -46,6 +46,8 @@ CommLogicalFileSystem::CommLogicalFileSystem(QObject *parent)
             m_queryFs, &CommLogFileSystem::requestQueryHistory);
     connect(this, &CommLogicalFileSystem::_requestAvailableDates,
             m_queryFs, &CommLogFileSystem::requestAvailableDates);
+    connect(this, &CommLogicalFileSystem::_requestClearQueryCache,
+            m_queryFs, &CommLogFileSystem::requestClearQueryCache);
 
     connect(m_queryFs, &CommLogFileSystem::historyReady,
             this, &CommLogicalFileSystem::historyReady);
@@ -127,6 +129,11 @@ void CommLogicalFileSystem::queryHistory(const CommHistoryQuery &query)
 void CommLogicalFileSystem::requestAvailableDates()
 {
     emit _requestAvailableDates();
+}
+
+void CommLogicalFileSystem::clearQueryCache()
+{
+    emit _requestClearQueryCache();
 }
 
 void CommLogicalFileSystem::onNavigationStateChanged(bool hasPrev, bool hasNext,

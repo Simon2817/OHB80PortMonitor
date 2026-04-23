@@ -17,7 +17,7 @@
         <CommandTimeout>1000</CommandTimeout>
         <RetryCount>0</RetryCount>
         <CommandSet>
-            <Command ref="ReadFoupStatus"/>
+            <Command ref="ReadGeneralStatus"/>
         </CommandSet>
     </PeriodicCommands>
 
@@ -69,28 +69,6 @@
                 <Function>04</Function>
                 <ByteCount>12</ByteCount>
                 <RegisterValue>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</RegisterValue>
-            </respond>
-        </Command>
-
-        <!-- ========================================
-             3. 功能码 06 — 写单个保持寄存器
-             写入 MFC 控制值
-             请求帧: 01 06 00 00 XX XX
-             响应帧: 01 06 00 00 XX XX（镜像）
-             ======================================== -->
-        <Command id="WriteMFC">
-            <request>
-                <SlaveAddr>01</SlaveAddr>
-                <Function>06</Function>
-                <StartAddr>00 00</StartAddr>
-                <!-- 写入值，固定2字节 -->
-                <RegisterValue>00 00</RegisterValue>
-            </request>
-            <respond>
-                <SlaveAddr>01</SlaveAddr>
-                <Function>06</Function>
-                <StartAddr>00 00</StartAddr>
-                <RegisterValue>00 00</RegisterValue>
             </respond>
         </Command>
 
@@ -159,6 +137,156 @@
                 <Function>10</Function>
                 <StartAddr>00 12</StartAddr>
                 <RegisterCount>00 02</RegisterCount>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             5. 功能码 04 — 读输入寄存器（多寄存器）
+             读取通用状态，9个输入寄存器
+             请求帧: 01 04 00 00 00 09 30 0c
+             响应帧: 01 04 12 XX×18
+             ======================================== -->
+        <Command id="ReadGeneralStatus">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <StartAddr>00 00</StartAddr>
+                <RegisterCount>00 09</RegisterCount>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <ByteCount>12</ByteCount>
+                <RegisterValue>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             6. 功能码 04 — 读输入寄存器（单寄存器）
+             查询 idle purge 使能
+             请求帧: 01 04 00 1D 00 01 A1 CC
+             响应帧: 01 04 02 XX XX
+             ======================================== -->
+        <Command id="ReadIdlePurgeEnable">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <StartAddr>00 1D</StartAddr>
+                <RegisterCount>00 01</RegisterCount>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <ByteCount>02</ByteCount>
+                <RegisterValue>00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             7. 功能码 04 — 读输入寄存器（单寄存器）
+             查询 idle purge 状态
+             请求帧: 01 04 00 1E 00 01 51 CC
+             响应帧: 01 04 02 XX XX
+             ======================================== -->
+        <Command id="ReadIdlePurgeStatus">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <StartAddr>00 1E</StartAddr>
+                <RegisterCount>00 01</RegisterCount>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <ByteCount>02</ByteCount>
+                <RegisterValue>00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             8. 功能码 04 — 读输入寄存器（单寄存器）
+             idle purge 时间查询
+             请求帧: 01 04 00 1F 00 01 00 0C
+             响应帧: 01 04 02 XX XX
+             ======================================== -->
+        <Command id="ReadIdlePurgeTime">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <StartAddr>00 1F</StartAddr>
+                <RegisterCount>00 01</RegisterCount>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <ByteCount>02</ByteCount>
+                <RegisterValue>00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             9. 功能码 06 — 写单个保持寄存器
+             写入 idle purge 使能（1=开启，0=关闭）
+             请求帧: 01 06 00 14 XX XX
+             响应帧: 01 06 00 14 XX XX（镜像）
+             ======================================== -->
+        <Command id="WriteIdlePurgeEnable">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>06</Function>
+                <StartAddr>00 14</StartAddr>
+                <!-- 写入值，固定2字节：1=开启，0=关闭 -->
+                <RegisterValue>00 00</RegisterValue>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>06</Function>
+                <StartAddr>00 14</StartAddr>
+                <RegisterValue>00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             10. 功能码 06 — 写单个保持寄存器
+             写入 idle purge 充气时间（秒）
+             请求帧: 01 06 00 15 XX XX
+             响应帧: 01 06 00 15 XX XX（镜像）
+             ======================================== -->
+        <Command id="WriteIdlePurgeTime">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>06</Function>
+                <StartAddr>00 15</StartAddr>
+                <!-- 写入值，固定2字节：计时时长（s） -->
+                <RegisterValue>00 00</RegisterValue>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>06</Function>
+                <StartAddr>00 15</StartAddr>
+                <RegisterValue>00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             11. 功能码 06 — 写单个保持寄存器
+             写入 idle purge 充气间隔（秒）
+             请求帧: 01 06 00 16 XX XX
+             响应帧: 01 06 00 16 XX XX（镜像）
+             ======================================== -->
+        <Command id="WriteIdlePurgeInterval">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>06</Function>
+                <StartAddr>00 16</StartAddr>
+                <!-- 写入值，固定2字节：计时时长（s） -->
+                <RegisterValue>00 00</RegisterValue>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>06</Function>
+                <StartAddr>00 16</StartAddr>
+                <RegisterValue>00 00</RegisterValue>
             </respond>
         </Command>
 

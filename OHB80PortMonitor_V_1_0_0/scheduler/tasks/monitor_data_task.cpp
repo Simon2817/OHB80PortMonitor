@@ -139,11 +139,17 @@ void MonitorDataTask::updateFoupInfo(const QString& masterId, const QVariantMap&
     foup->inletPressure = data.value("inletPressure").toDouble();
     foup->inletFlow     = data.value("inFlow").toDouble();
     foup->RH            = data.value("humidity").toDouble();
+    foup->oldFoupIn     = foup->foupIn;
     foup->foupIn        = data.value("hasFoup").toBool();
-    
-    // 更新时间相关字段
-    quint32 startTimeSec = data.value("startTimeSec").toUInt();
-    foup->startTime = QDateTime::fromSecsSinceEpoch(startTimeSec).time();
+
+    // 根据 FOUP 状态变化更新 startTime
+    if (!foup->oldFoupIn && foup->foupIn) {
+        // FOUP 从不在位变为在位：设置为当前时间
+        foup->startTime = QTime::currentTime();
+    } else if (foup->oldFoupIn && !foup->foupIn) {
+        // FOUP 从在位变为不在位：设置为 00:00:00
+        foup->startTime = QTime(0, 0, 0);
+    }
     
     foup->purgeTimeMs = data.value("purgeTimeMs").toUInt();
     foup->idleTimeMs  = data.value("idleTimeMs").toUInt();

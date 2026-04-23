@@ -262,8 +262,8 @@ void CommLogFileSystem::requestQueryHistory(const CommHistoryQuery &query)
     // forceRefresh 时（Search 按钮）：主动淘汰该 key，强制重算以反映最新写入数据
     if (query.forceRefresh) m_queryCache.remove(key);
 
-    CommQueryValue cached;
-    bool cacheHit = m_queryCache.get(key, cached);
+    CommQueryValue *cached = m_queryCache.getPtr(key);
+    const bool cacheHit = (cached != nullptr);
 
     // ---- 2. 仅在 miss 时才读盘 ----
     QStringList files;
@@ -326,17 +326,19 @@ void CommLogFileSystem::requestQueryHistory(const CommHistoryQuery &query)
             }
         }
 
-        cached.source         = std::move(source);
-        cached.matchedIndices = std::move(matchedIndices);
-        m_queryCache.put(key, cached);
+        CommQueryValue v;
+        v.source         = std::move(source);
+        v.matchedIndices = std::move(matchedIndices);
+        m_queryCache.put(key, v);
+        cached = m_queryCache.getPtr(key);   // 指向缓存内的 value（零拷贝）
     }
 
     // ---- 4. 从缓存做分页切片（热路径：翻页走这里） ----
     // 核心：分页以"结果集"为基准
     //   - 有子查询过滤时：结果集 = source[matchedIndices]，共 matchedIndices.size() 条
     //   - 无子查询过滤时：结果集 = source，共 source.size() 条
-    const QVector<QStringList> &source  = cached.source;
-    const QVector<int>         &matched = cached.matchedIndices;
+    const QVector<QStringList> &source  = cached->source;
+    const QVector<int>         &matched = cached->matchedIndices;
 
     const int viewSize = hasSubQuery ? matched.size() : source.size();
 
@@ -370,6 +372,11 @@ void CommLogFileSystem::requestQueryHistory(const CommHistoryQuery &query)
     }
 
     emit historyReady(result);
+}
+
+void CommLogFileSystem::requestClearQueryCache()
+{
+    m_queryCache.clear();
 }
 
 void CommLogFileSystem::requestAvailableDates()

@@ -34,6 +34,8 @@ public:
                   const QString &durationMs, const QString &request, const QString &response);
     void queryHistory(const CommHistoryQuery &query);
     void requestAvailableDates();
+    // 释放查询 worker 的历史查询 LRU 缓存（空闲超时回收内存）
+    void clearQueryCache();
 
 signals:
     void pageReady(const CommPage &page, bool isPrev);
@@ -52,6 +54,7 @@ signals:
     void _requestCleanOldLogs();
     void _requestQueryHistory(const CommHistoryQuery &query);
     void _requestAvailableDates();
+    void _requestClearQueryCache();
 
 private slots:
     void onNavigationStateChanged(bool hasPrev, bool hasNext,

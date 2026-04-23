@@ -15,6 +15,7 @@ QT_END_NAMESPACE
 
 class QPushButton;
 class QTableView;
+class QTimer;
 class CommLogPageTableModel;
 class CommLogTableItemDelegate;
 class HistoryCalendarDialog;
@@ -42,6 +43,16 @@ public:
     // 初始化
     void initialize();                               // 配置完成后调用
 
+    // 空闲回收策略：widget 隐藏超过此阈值后清空历史查询 UI 并释放查询缓存。
+    // 0 或负数 = 关闭该机制。默认 60s。
+    void setIdleCleanupMs(int ms);
+    int  idleCleanupMs() const { return m_idleCleanupMs; }
+
+protected:
+    // 监听界面可见性变化，驱动空闲回收定时器
+    void showEvent(QShowEvent *ev) override;
+    void hideEvent(QHideEvent *ev) override;
+
 signals:
     void logWritten(bool success);                   // 日志写入完成
 
@@ -59,6 +70,10 @@ private slots:
     void onSelectDateClicked();
     void onAvailableDatesReady(const QSet<QDate> &dates);
 
+private slots:
+    // 空闲超时：清空历史查询 UI 并通知 worker 释放查询缓存
+    void onIdleCleanup();
+
 private:
     // 初始化
     void setupConnections();
@@ -70,6 +85,11 @@ private:
     void rebuildHistoryPageBar();
     QDate selectedDate() const;
     void  setSelectedDate(const QDate &d);
+    // 清空历史 Tab 的 UI（表格、分页条、上次查询/结果缓存）
+    void  clearHistoryUi();
+    // 统一根据"是否可见 + 当前是否在历史 Tab"决定启/停空闲定时器
+    void  updateIdleTimer();
+    bool  isHistoryTabActive() const;
 
     // UI
     Ui::CommunicateLoggerWidget *ui = nullptr;
@@ -90,6 +110,12 @@ private:
     CommHistoryQuery  m_lastQuery;                    // 上次查询
     CommHistoryResult m_lastResult;                   // 上次结果
     bool          m_histIsNewSearch      = false;
+
+    // ---- 空闲回收 ----
+    // 界面隐藏超过 m_idleCleanupMs 未再显示，则清空历史查询 UI 并释放 worker 的查询缓存。
+    // 整天 CSV 缓存的 QVector<QStringList> 单份可达数百 MB，空闲时保留无意义。
+    QTimer *m_idleTimer       = nullptr;
+    int     m_idleCleanupMs   = 60 * 1000;
 
     // 常量
     static const QStringList kLiveHeaders;           // 列头

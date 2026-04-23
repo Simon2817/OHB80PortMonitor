@@ -69,6 +69,8 @@ public slots:
     void requestCleanOldLogs();
     void requestQueryHistory(const CommHistoryQuery &query);
     void requestAvailableDates();
+    // 释放历史查询 LRU 缓存（空闲超时后由上层调用，用于回收内存）
+    void requestClearQueryCache();
 
 signals:
     void pageReady(const CommPage &page, bool isPrev);
@@ -118,8 +120,9 @@ private:
     CommLRUCache<QString,     CommPageTable> m_ptCache{5};
 
     // ---- 历史查询 LRU 缓存（仅在查询专用 worker 上使用） ----
-    // 缓存 "过滤后的整天记录集 + 子匹配索引"，Key 包含 (date,timeRange,qrcode,cmdId,fileSig)；
-    // 翻页只是对命中项做切片，切换查询条件也能命中（容量 5）。
-    // Key 的 files 字段保证今天的文件被 append 后自动失效。
-    CommLRUCache<CommQueryKey, CommQueryValue> m_queryCache{5};
+    // 缓存"过滤后的整天记录集 + 子匹配索引"，Key=(date,timeRange,qrcode,cmdId)。
+    // 【容量必须为 1】：单个 Value 持有整天几十万行 QStringList，
+    // 容量过大会在内存中同时保留多日记录（实测容量 5 时常驻 > 1GB）。
+    // 翻页时 Key 不变，容量 1 即可 100% 命中；切换查询条件本就需要重读。
+    CommLRUCache<CommQueryKey, CommQueryValue> m_queryCache{3};
 };

@@ -10,6 +10,10 @@
 #include <QHeaderView>
 #include <QSpinBox>
 #include <QComboBox>
+#include <QTimer>
+#include <QShowEvent>
+#include <QHideEvent>
+#include <QTabWidget>
 #include <climits>
 #include "historycalendardialog.h"
 
@@ -42,6 +46,19 @@ CommunicateLoggerWidget::CommunicateLoggerWidget(QWidget *parent)
     setupLiveTab();
     setupHistoryTab();
     setupConnections();
+
+    // 空闲回收定时器（single shot）：
+    //   "空闲" = widget 不可见 || 当前未在历史 Tab
+    //   状态变化时调用 updateIdleTimer() 启/停；已在倒计时中不重置，避免频繁切 tab 阻止回收
+    m_idleTimer = new QTimer(this);
+    m_idleTimer->setSingleShot(true);
+    connect(m_idleTimer, &QTimer::timeout, this, &CommunicateLoggerWidget::onIdleCleanup);
+
+    // 监听内部 Tab 切换（离开历史 Tab → 开始计时；回到历史 Tab → 停止计时）
+    if (ui && ui->tabWidget) {
+        connect(ui->tabWidget, &QTabWidget::currentChanged,
+                this, [this](int){ updateIdleTimer(); });
+    }
 }
 
 CommunicateLoggerWidget::~CommunicateLoggerWidget()
@@ -445,5 +462,80 @@ void CommunicateLoggerWidget::onAvailableDatesReady(const QSet<QDate> &dates)
     m_calendarDlg->setAvailableDates(dates);
     m_calendarDlg->setSelectedDate(selectedDate());
     m_calendarDlg->exec();
+}
+
+// =====================================================================
+// 空闲回收：隐藏即启动延时，再次显示即取消；超时则清空查询 UI 并释放 worker 缓存
+// =====================================================================
+
+void CommunicateLoggerWidget::setIdleCleanupMs(int ms)
+{
+    m_idleCleanupMs = ms;
+    if (!m_idleTimer) return;
+    if (ms <= 0) { m_idleTimer->stop(); return; }
+    // 用新阈值重新评估
+    if (m_idleTimer->isActive()) m_idleTimer->stop();
+    updateIdleTimer();
+}
+
+bool CommunicateLoggerWidget::isHistoryTabActive() const
+{
+    if (!ui || !ui->tabWidget || !ui->historyTab) return false;
+    return ui->tabWidget->currentWidget() == ui->historyTab;
+}
+
+// 统一入口：根据当前可见性 + 是否在历史 Tab 决定启/停倒计时
+// "非空闲" = widget 可见 AND 当前在历史 Tab → stop
+// "空闲"   = 其余情况                       → 若未在计时则 start（已在计时不重置）
+void CommunicateLoggerWidget::updateIdleTimer()
+{
+    if (!m_idleTimer) return;
+    const bool active = isVisible() && isHistoryTabActive();
+    if (active) {
+        m_idleTimer->stop();
+    } else if (m_idleCleanupMs > 0 && !m_idleTimer->isActive()) {
+        m_idleTimer->start(m_idleCleanupMs);
+    }
+}
+
+void CommunicateLoggerWidget::showEvent(QShowEvent *ev)
+{
+    QWidget::showEvent(ev);
+    updateIdleTimer();
+}
+
+void CommunicateLoggerWidget::hideEvent(QHideEvent *ev)
+{
+    QWidget::hideEvent(ev);
+    updateIdleTimer();
+}
+
+void CommunicateLoggerWidget::onIdleCleanup()
+{
+    // 1) 清空历史 Tab 的 UI 状态（模型 + 分页条 + 上次查询/结果）
+    clearHistoryUi();
+    // 2) 通知查询 worker 清空 LRU 缓存（跨线程 queued 调用，安全）
+    if (m_lfs) m_lfs->clearQueryCache();
+}
+
+void CommunicateLoggerWidget::clearHistoryUi()
+{
+    if (m_histModel) {
+        m_histModel->setRecords({});
+        m_histModel->setHighlightMask({});
+    }
+    m_lastQuery  = CommHistoryQuery();
+    m_lastResult = CommHistoryResult();
+    m_histIsNewSearch = false;
+
+    // 清空分页条
+    if (ui && ui->pageBarLayout) {
+        QHBoxLayout *bar = ui->pageBarLayout;
+        while (bar->count() > 0) {
+            QLayoutItem *item = bar->takeAt(0);
+            if (item->widget()) item->widget()->deleteLater();
+            delete item;
+        }
+    }
 }
 
