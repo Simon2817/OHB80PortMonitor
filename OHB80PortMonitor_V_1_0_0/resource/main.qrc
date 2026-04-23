@@ -57,5 +57,6 @@
         <file>image/logo.jpg</file>
         <file>image/communicatepage.png</file>
         <file>image/communicatepage_focus.png</file>
+        <file>image/useraccount.png</file>
     </qresource>
 </RCC>

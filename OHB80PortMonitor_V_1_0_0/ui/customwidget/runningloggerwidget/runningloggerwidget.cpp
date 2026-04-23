@@ -5,6 +5,32 @@
 #include <QFontMetrics>
 
 // =====================================================================
+// 静态常量
+// =====================================================================
+const QStringList RunningLoggerWidget::kHeaders = {
+    QStringLiteral("消息类型"),
+    QStringLiteral("发送时间"),
+    QStringLiteral("QRCode"),
+    QStringLiteral("警报ID"),
+    QStringLiteral("是否解决"),
+    QStringLiteral("解决时间"),
+    QStringLiteral("具体消息")
+};
+
+// =====================================================================
+// 静态方法
+// =====================================================================
+QString RunningLoggerWidget::msgTypeToString(MsgType type)
+{
+    switch (type) {
+    case MsgType::Message: return QStringLiteral("Message");
+    case MsgType::Warn:    return QStringLiteral("Warn");
+    case MsgType::Error:   return QStringLiteral("Error");
+    default:               return QStringLiteral("Unknown");
+    }
+}
+
+// =====================================================================
 // 构造 / 析构
 // =====================================================================
 
@@ -75,28 +101,13 @@ void RunningLoggerWidget::setPageSize(int size)
 void RunningLoggerWidget::initialize()
 {
     // 1. 设置表头
-    QStringList headers = {
-        QStringLiteral("消息类型"),
-        QStringLiteral("发送时间"),
-        QStringLiteral("QRCode"),
-        QStringLiteral("警报ID"),
-        QStringLiteral("是否解决"),
-        QStringLiteral("解决时间"),
-        QStringLiteral("具体消息")
-    };
-    m_loggerWidget->setHeaders(headers);
+    m_loggerWidget->setHeaders(kHeaders);
 
     // 2. 设置 list view 显示格式
     //    除了"具体消息"格式为 ": 具体消息"，其他字段都用 [] 包裹
     m_loggerWidget->setFormat(
         QStringLiteral("[{}][{}][{}][{}][{}][{}]: {}"),
-        {QStringLiteral("消息类型"),
-         QStringLiteral("发送时间"),
-         QStringLiteral("QRCode"),
-         QStringLiteral("警报ID"),
-         QStringLiteral("是否解决"),
-         QStringLiteral("解决时间"),
-         QStringLiteral("具体消息")}
+        kHeaders
     );
 
     // 3. 设置三种消息类型的字体颜色样式
@@ -143,7 +154,23 @@ void RunningLoggerWidget::writeRecord(RunningLoggerWidget::MsgType type,
     }
 
     // 通过 LoggerWidget 写入日志
-    m_loggerWidget->writeRecord(type, qrCode, alarmId, message);
+    QString typeStr;
+    switch (type) {
+    case MsgType::Message: typeStr = QStringLiteral("Message"); break;
+    case MsgType::Warn:    typeStr = QStringLiteral("Warn"); break;
+    case MsgType::Error:   typeStr = QStringLiteral("Error"); break;
+    }
+    QString sendTime = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+    QJsonObject record{
+        {kHeaders[0], typeStr},
+        {kHeaders[1], sendTime},
+        {kHeaders[2], qrCode},
+        {kHeaders[3], alarmId},
+        {kHeaders[4], QStringLiteral("否")},
+        {kHeaders[5], QString()},
+        {kHeaders[6], message}
+    };
+    m_loggerWidget->writeLog(record);
 
     // 若为警报记录，加入待处理警报队列
     if (isAlarm && !alarmId.isEmpty()) {
@@ -189,7 +216,24 @@ void RunningLoggerWidget::resolveAlarm(RunningLoggerWidget::MsgType type,
         m_pendingAlarms.removeAt(idx);
 
     // 通过 LoggerWidget 写入"已解决"记录
-    m_loggerWidget->writeResolveRecord(type, qrCode, alarmId, message);
+    QString typeStr;
+    switch (type) {
+    case MsgType::Message: typeStr = QStringLiteral("Message"); break;
+    case MsgType::Warn:    typeStr = QStringLiteral("Warn"); break;
+    case MsgType::Error:   typeStr = QStringLiteral("Error"); break;
+    }
+    QString sendTime = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+    QString resolveTime = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+    QJsonObject record{
+        {kHeaders[0], typeStr},
+        {kHeaders[1], sendTime},
+        {kHeaders[2], qrCode},
+        {kHeaders[3], alarmId},
+        {kHeaders[4], QStringLiteral("是")},
+        {kHeaders[5], resolveTime},
+        {kHeaders[6], message}
+    };
+    m_loggerWidget->writeLog(record);
 
     // 调整轮播索引
     if (m_pendingAlarms.isEmpty()) {
@@ -274,7 +318,7 @@ void RunningLoggerWidget::refreshDisplayText()
             m_currentAlarmIdx = 0;
         const PendingAlarm &alarm = m_pendingAlarms[m_currentAlarmIdx];
         m_fullDisplayText = QString("[%1] %2")
-                                .arg(LoggerWidget::msgTypeToString(alarm.type))
+                                .arg(msgTypeToString(alarm.type))
                                 .arg(alarm.message);
     } else {
         // 无警报时显示最新 Message

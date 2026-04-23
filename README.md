@@ -8,6 +8,37 @@
 
 ## 更新日志
 
+### 2026-04-23 16:00 - Simon
+**新增运行日志模块和用户管理模块**
+
+#### 运行日志模块
+- **RunningLoggerWidget**：实时运行日志显示组件
+  - 支持三种消息类型：Message、Warn、Error
+  - 待处理警报轮播显示
+  - 基于 LoggerWidget 实现，使用 QJson 格式存储
+  - 支持警报解决记录
+
+#### 用户管理模块
+- **UserManager**：用户权限管理系统
+  - 基于单例模式，统一管理用户登录状态
+  - 支持五级权限：Guest、Normal、Debug、Engineer、Root
+  - 内置 root 账号（密码：cytc666666），硬编码验证不写入配置文件
+  - 自动控制 UI 控件显示/隐藏（基于权限级别）
+  - 支持用户增删改查（需要 Debug 及以上权限）
+
+- **UserAccountLabel**：用户账号显示组件
+  - 未登录：显示默认图标，左键点击弹出登录菜单
+  - 已登录：显示蓝色圆形头像 + 用户名首字母
+  - 支持登录新账号和登出功能
+  - 自动响应登录/登出状态变化
+
+- **LoginDialog**：登录对话框
+  - 用户名和密码输入
+  - 通过 UserManager 进行登录验证
+  - 错误提示显示
+
+---
+
 ### 2026-04-22 19:16 - Simon
 **通讯日志历史查询性能优化（翻页 1021ms → 4ms）**
 
@@ -45,14 +76,7 @@
 |---|---|---|
 | 翻页总耗时 | 1021 ms | **4 ms** |
 | 缓存命中 | MISS（每次） | HIT |
-| Worker 计算 | 1015 ms | 0 ms |
-| 数据量 | 745597 行 source / 8179 匹配 | 相同 |
 
-#### 影响范围
-- 修改文件：`ui/customwidget/communicateloggerwidget/commhistoryquery.h`（新增 `forceRefresh`）
-- 修改文件：`ui/customwidget/communicateloggerwidget/commlogfilesystem.h`（`CommQueryKey`/`CommQueryValue`/LRU 定义）
-- 修改文件：`ui/customwidget/communicateloggerwidget/commlogfilesystem.cpp`（`requestQueryHistory` 重写）
-- 修改文件：`ui/customwidget/communicateloggerwidget/communicateloggerwidget.cpp`（Search / 翻页设置 `forceRefresh`）
 
 ---
 

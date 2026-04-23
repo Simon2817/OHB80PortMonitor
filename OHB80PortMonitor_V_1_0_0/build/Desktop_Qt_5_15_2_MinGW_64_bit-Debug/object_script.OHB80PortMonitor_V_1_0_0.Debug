@@ -20,6 +20,7 @@ debug/stdout_sinks.o
 debug/qthelper.o
 debug/binfilereader.o
 debug/communicationrecorder.o
+debug/usermanager.o
 debug/alarmpage.o
 debug/chartpage.o
 debug/communicatepage.o
@@ -27,6 +28,7 @@ debug/configpage.o
 debug/debugpage.o
 debug/homepage.o
 debug/uidemo6.o
+debug/logindialog.o
 debug/quiwidget.o
 debug/cranemapwidget.o
 debug/devicemonitorwidget.o
@@ -65,6 +67,8 @@ debug/commlogpagemodel.o
 debug/commlogpagetablemodel.o
 debug/commlogtableitemdelegate.o
 debug/communicateloggerwidget.o
+debug/runningloggerwidget.o
+debug/useraccountlabel.o
 debug/scheduler.o
 debug/monitor_data_task.o
 debug/send_command_task.o
@@ -93,6 +97,7 @@ debug/qrc_main.o
 debug/qrc_qss.o
 debug/moc_binfilereader.o
 debug/moc_communicationrecorder.o
+debug/moc_usermanager.o
 debug/moc_alarmpage.o
 debug/moc_chartpage.o
 debug/moc_communicatepage.o
@@ -100,6 +105,7 @@ debug/moc_configpage.o
 debug/moc_debugpage.o
 debug/moc_homepage.o
 debug/moc_uidemo6.o
+debug/moc_logindialog.o
 debug/moc_quiwidget.o
 debug/moc_cranemapwidget.o
 debug/moc_devicemonitorwidget.o
@@ -127,6 +133,8 @@ debug/moc_commlogicalfilesystem.o
 debug/moc_commlogpagemodel.o
 debug/moc_commlogpagetablemodel.o
 debug/moc_communicateloggerwidget.o
+debug/moc_runningloggerwidget.o
+debug/moc_useraccountlabel.o
 debug/moc_scheduler_task.o
 debug/moc_scheduler.o
 debug/moc_monitor_data_task.o

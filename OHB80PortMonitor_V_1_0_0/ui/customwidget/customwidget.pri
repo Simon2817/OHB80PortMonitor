@@ -36,4 +36,8 @@ INCLUDEPATH += $$PWD/communicateloggerwidget
 include($$PWD/runningloggerwidget/runningloggerwidget.pri)
 INCLUDEPATH += $$PWD/runningloggerwidget
 
+# useraccountlabel
+include($$PWD/useraccountlabel/useraccountlabel.pri)
+INCLUDEPATH += $$PWD/useraccountlabel
+
 FORMS +=

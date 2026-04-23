@@ -14,7 +14,8 @@ HEADERS += \
     $$PWD/configpage.h \
     $$PWD/debugpage.h \
     $$PWD/homepage.h \
-    $$PWD/uidemo6.h
+    $$PWD/uidemo6.h \
+    $$PWD/logindialog.h
 
 SOURCES += \
     $$PWD/alarmpage.cpp \
@@ -23,7 +24,8 @@ SOURCES += \
     $$PWD/configpage.cpp \
     $$PWD/debugpage.cpp \
     $$PWD/homepage.cpp \
-    $$PWD/uidemo6.cpp
+    $$PWD/uidemo6.cpp \
+    $$PWD/logindialog.cpp
 
 #customwidget
 include ($$PWD/customwidget/customwidget.pri)

@@ -27,6 +27,8 @@
 #include "configpage.h"
 #include "debugpage.h"
 #include "homepage.h"
+#include "runningloggerwidget.h"
+#include "useraccountlabel.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -38,6 +40,8 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QLabel *labIco;
     QLabel *labTitle;
+    RunningLoggerWidget *runningLoggerWidget;
+    UserAccountLabel *useraccountLab;
     QWidget *widgetMenu;
     QHBoxLayout *horizontalLayout;
     QToolButton *btnMenu;
@@ -132,6 +136,18 @@ public:
         labTitle->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         horizontalLayout_2->addWidget(labTitle);
+
+        runningLoggerWidget = new RunningLoggerWidget(widgetTitle);
+        runningLoggerWidget->setObjectName(QString::fromUtf8("runningLoggerWidget"));
+        runningLoggerWidget->setMinimumSize(QSize(500, 0));
+        runningLoggerWidget->setMaximumSize(QSize(500, 16777215));
+
+        horizontalLayout_2->addWidget(runningLoggerWidget);
+
+        useraccountLab = new UserAccountLabel(widgetTitle);
+        useraccountLab->setObjectName(QString::fromUtf8("useraccountLab"));
+
+        horizontalLayout_2->addWidget(useraccountLab);
 
         widgetMenu = new QWidget(widgetTitle);
         widgetMenu->setObjectName(QString::fromUtf8("widgetMenu"));

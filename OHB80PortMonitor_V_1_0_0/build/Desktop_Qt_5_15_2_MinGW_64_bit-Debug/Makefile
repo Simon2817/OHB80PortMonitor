@@ -235,6 +235,7 @@ Makefile: ../../OHB80PortMonitor_V_1_0_0.pro C:/Qt/5.15.2/mingw81_64/mkspecs/win
 		../../tool/qthelper/qthelper.pri \
 		../../tool/binfilereader/binfilereader.pri \
 		../../tool/communicationrecorder/communicationrecorder.pri \
+		../../tool/usermanager/usermanager.pri \
 		../../tool/tool.pri \
 		../../ui/customwidget/overheadcranetrack/overheadcranetrack.pri \
 		../../ui/customwidget/settingwidget/settingwidget.pri \
@@ -243,6 +244,8 @@ Makefile: ../../OHB80PortMonitor_V_1_0_0.pro C:/Qt/5.15.2/mingw81_64/mkspecs/win
 		../../ui/customwidget/alarmloggerwidget/alarmloggerwidget.pri \
 		../../ui/customwidget/historycalendardialog/historycalendardialog.pri \
 		../../ui/customwidget/communicateloggerwidget/communicateloggerwidget.pri \
+		../../ui/customwidget/runningloggerwidget/runningloggerwidget.pri \
+		../../ui/customwidget/useraccountlabel/useraccountlabel.pri \
 		../../ui/customwidget/customwidget.pri \
 		../../ui/ui.pri \
 		../../scheduler/scheduler.pri \
@@ -450,6 +453,7 @@ C:/Qt/5.15.2/mingw81_64/mkspecs/features/win32/default_pre.prf:
 ../../tool/qthelper/qthelper.pri:
 ../../tool/binfilereader/binfilereader.pri:
 ../../tool/communicationrecorder/communicationrecorder.pri:
+../../tool/usermanager/usermanager.pri:
 ../../tool/tool.pri:
 ../../ui/customwidget/overheadcranetrack/overheadcranetrack.pri:
 ../../ui/customwidget/settingwidget/settingwidget.pri:
@@ -458,6 +462,8 @@ C:/Qt/5.15.2/mingw81_64/mkspecs/features/win32/default_pre.prf:
 ../../ui/customwidget/alarmloggerwidget/alarmloggerwidget.pri:
 ../../ui/customwidget/historycalendardialog/historycalendardialog.pri:
 ../../ui/customwidget/communicateloggerwidget/communicateloggerwidget.pri:
+../../ui/customwidget/runningloggerwidget/runningloggerwidget.pri:
+../../ui/customwidget/useraccountlabel/useraccountlabel.pri:
 ../../ui/customwidget/customwidget.pri:
 ../../ui/ui.pri:
 ../../scheduler/scheduler.pri:

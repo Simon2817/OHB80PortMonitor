@@ -34,8 +34,11 @@ public:
         Error
     };
 
+    // 将 MsgType 转换为字符串
+    static QString msgTypeToString(MsgType type);
+
     // ====================================================================
-    // 
+    //
     // ====================================================================
     struct PendingAlarm {
         QString alarmId;
@@ -83,6 +86,9 @@ private slots:
 private:
     // 刷新按钮当前应显示的完整文本
     void refreshDisplayText();
+
+    // ---- 静态常量 ----
+    static const QStringList kHeaders;  // 日志表头
 
     // ---- UI 成员 ----
     QPushButton  *m_btn            = nullptr;

@@ -20,6 +20,7 @@ release/stdout_sinks.o
 release/qthelper.o
 release/binfilereader.o
 release/communicationrecorder.o
+release/usermanager.o
 release/alarmpage.o
 release/chartpage.o
 release/communicatepage.o
@@ -27,6 +28,7 @@ release/configpage.o
 release/debugpage.o
 release/homepage.o
 release/uidemo6.o
+release/logindialog.o
 release/quiwidget.o
 release/cranemapwidget.o
 release/devicemonitorwidget.o
@@ -65,6 +67,8 @@ release/commlogpagemodel.o
 release/commlogpagetablemodel.o
 release/commlogtableitemdelegate.o
 release/communicateloggerwidget.o
+release/runningloggerwidget.o
+release/useraccountlabel.o
 release/scheduler.o
 release/monitor_data_task.o
 release/send_command_task.o
@@ -93,6 +97,7 @@ release/qrc_main.o
 release/qrc_qss.o
 release/moc_binfilereader.o
 release/moc_communicationrecorder.o
+release/moc_usermanager.o
 release/moc_alarmpage.o
 release/moc_chartpage.o
 release/moc_communicatepage.o
@@ -100,6 +105,7 @@ release/moc_configpage.o
 release/moc_debugpage.o
 release/moc_homepage.o
 release/moc_uidemo6.o
+release/moc_logindialog.o
 release/moc_quiwidget.o
 release/moc_cranemapwidget.o
 release/moc_devicemonitorwidget.o
@@ -127,6 +133,8 @@ release/moc_commlogicalfilesystem.o
 release/moc_commlogpagemodel.o
 release/moc_commlogpagetablemodel.o
 release/moc_communicateloggerwidget.o
+release/moc_runningloggerwidget.o
+release/moc_useraccountlabel.o
 release/moc_scheduler_task.o
 release/moc_scheduler.o
 release/moc_monitor_data_task.o
