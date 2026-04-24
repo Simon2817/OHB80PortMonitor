@@ -1,6 +1,7 @@
 #include "devicemonitorwidget.h"
 #include "cranemapwidget.h"
 #include "app/shareddata.h"
+#include "classes/foupofohbinfo.h"
 
 Graph::DeviceMonitorWidget::DeviceMonitorWidget(QWidget* parent)
     : QWidget(parent)
@@ -110,7 +111,7 @@ void Graph::DeviceMonitorWidget::initTables()
     // 第一个表格：FoupMonitor
     QTableWidget* foupTable = m_tableManager.addTable(
         "FoupMonitor",
-        {"QRCode", "InletPressure", "InletFlow", "Relative Humidity"},
+        {"QRCode", "InletPressure", "OutletPressures", "InletFlow", "Relative Humidity", "Temperature"},
         this);
     m_layout->addWidget(foupTable);
     m_tableManager.setAlignment("FoupMonitor", Qt::AlignCenter);
@@ -118,7 +119,7 @@ void Graph::DeviceMonitorWidget::initTables()
     // 第二个表格：FoupPurgeTimeMonitor
     QTableWidget* purgeTable = m_tableManager.addTable(
         "FoupPurgeTimeMonitor",
-        {"Start Time", "Duration", "Purge Time", "Idle Time"},
+        {"Start Time", "Duration", "Purge Time", "Idle Enable", "Idle State", "IdleTime"},
         this);
     m_layout->addWidget(purgeTable);
     m_tableManager.setAlignment("FoupPurgeTimeMonitor", Qt::AlignCenter);
@@ -126,7 +127,7 @@ void Graph::DeviceMonitorWidget::initTables()
     // 第三个表格：SetMonitor
     QTableWidget* setTable = m_tableManager.addTable(
         "SetMonitor",
-        {"QRCode", "InletPressure", "InletFlow", "Relative Humidity"},
+        {"QRCode", "InletPressure", "OutletPressures", "InletFlow", "Relative Humidity", "Temperature"},
         this);
     m_layout->addWidget(setTable);
     m_tableManager.setAlignment("SetMonitor", Qt::AlignCenter);
@@ -138,35 +139,58 @@ void Graph::DeviceMonitorWidget::refreshFoupMonitor()
 
     const FoupOfOHBInfo* foup = m_monitoredFoupInfos.first();
 
-    // FoupMonitor 表
+    // FoupMonitor 表：QRCode / InletPressure / OutletPressures / InletFlow / Humidity / Temperature
     QStringList rowData;
     rowData << foup->qrCode
-            << QString::number(foup->inletPressure, 'f', 2) + " Mpa"
-            << QString::number(foup->inletFlow, 'f', 2) + " L/Min"
-            << QString::number(foup->RH, 'f', 2) + " %";
+            << QString::number(foup->inletPressure,    'f', 2) + " Bar"
+            << "-" + QString::number(foup->negativePressure, 'f', 2) + " Bar"
+            << QString::number(foup->inletFlow,        'f', 2) + " L/Min"
+            << QString::number(foup->RH,               'f', 2) + " %"
+            << QString::number(foup->temperature,      'f', 2) + " ℃";
     m_tableManager.updateFirstRow("FoupMonitor", rowData);
 
-    // FoupPurgeTimeMonitor 表
-    quint32 durationMs = foup->purgeTimeMs + foup->idleTimeMs;
-    double durationMin = durationMs / 60000.0;  // 毫秒转分钟
-
-    // 将毫秒转换为 hh:mm:ss 格式
-    auto formatTime = [](quint32 ms) -> QString {
-        int totalSeconds = ms / 1000;
-        int hours = totalSeconds / 3600;
-        int minutes = (totalSeconds % 3600) / 60;
-        int seconds = totalSeconds % 60;
+    // 将秒转换为 hh:mm:ss 格式
+    auto formatSec = [](quint16 sec) -> QString {
+        int hours   = sec / 3600;
+        int minutes = (sec % 3600) / 60;
+        int seconds = sec % 60;
         return QString("%1:%2:%3")
-                .arg(hours, 2, 10, QChar('0'))
+                .arg(hours,   2, 10, QChar('0'))
                 .arg(minutes, 2, 10, QChar('0'))
                 .arg(seconds, 2, 10, QChar('0'));
     };
 
+    // IdleState 转换为可读字符串
+    auto idleStateStr = [](IdleState s) -> QString {
+        switch (s) {
+        case IdleState::Stopped:   return "Idle";
+        case IdleState::Preparing: return "Preparing";
+        case IdleState::Purging:   return "Purging";
+        case IdleState::Idle:      return "Interval";
+        default:                   return "Unknown";
+        }
+    };
+
+    // 将秒转换为 hh:mm:ss 格式（用于 IdleTime）
+    auto formatSecForIdle = [](quint16 sec) -> QString {
+        int hours   = sec / 3600;
+        int minutes = (sec % 3600) / 60;
+        int seconds = sec % 60;
+        return QString("%1:%2:%3")
+                .arg(hours,   2, 10, QChar('0'))
+                .arg(minutes, 2, 10, QChar('0'))
+                .arg(seconds, 2, 10, QChar('0'));
+    };
+
+    // FoupPurgeTimeMonitor 表：Start Time / Duration / Purge Time / Idle Enable / Idle State / IdleTime
+    double durationMin = foup->purgeTimeSec / 60.0;
     QStringList purgeRowData;
-    purgeRowData << foup->startTime.toString("HH:mm:ss.zzz")
+    purgeRowData << foup->startTime.toString("HH:mm:ss")
                  << QString::number(durationMin, 'f', 1) + " Min"
-                 << formatTime(foup->purgeTimeMs)
-                 << formatTime(foup->idleTimeMs);
+                 << formatSec(foup->purgeTimeSec)
+                 << (foup->idlePurgeEnabled ? "Enabled" : "Disabled")
+                 << idleStateStr(foup->idleState)
+                 << formatSec(foup->idleWorkingTimeSec);
     m_tableManager.updateFirstRow("FoupPurgeTimeMonitor", purgeRowData);
 }
 
@@ -179,9 +203,11 @@ void Graph::DeviceMonitorWidget::refreshSetMonitor()
     for (const FoupOfOHBInfo* foup : m_monitoredFoupInfos) {
         QStringList rowData;
         rowData << foup->qrCode
-                << QString::number(foup->inletPressure, 'f', 2) + " Mpa"
-                << QString::number(foup->inletFlow, 'f', 2) + " L/Min"
-                << QString::number(foup->RH, 'f', 2) + " %";
+                << QString::number(foup->inletPressure,    'f', 2) + " Bar"
+                << "-" + QString::number(foup->negativePressure, 'f', 2) + " Bar"
+                << QString::number(foup->inletFlow,        'f', 2) + " L/Min"
+                << QString::number(foup->RH,               'f', 2) + " %"
+                << QString::number(foup->temperature,      'f', 2) + " ℃";
         rows.append(rowData);
     }
     m_tableManager.updateRows("SetMonitor", rows);

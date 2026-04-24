@@ -13,11 +13,14 @@
 
     <!-- ==================== 周期轮询指令集 ==================== -->
     <PeriodicCommands>
-        <CommandInterval>1000</CommandInterval>
+        <CommandInterval>300</CommandInterval>
         <CommandTimeout>1000</CommandTimeout>
         <RetryCount>0</RetryCount>
         <CommandSet>
             <Command ref="ReadFoupStatus"/>
+            <Command ref="ReadIdlePurgeEnable"/>
+            <Command ref="ReadIdlePurgeStatus"/>
+            <Command ref="ReadIdlePurgeWorkingTime"/>
         </CommandSet>
     </PeriodicCommands>
 
@@ -42,7 +45,7 @@
              CH_3: 进气主路流量值 (4~200L/Min)  = (256*hi + lo) / 100
              CH_4: 真空回路相对湿度 (0~100%)    = (256*hi + lo) / 100
              CH_5: 真空回路气体温度 (0~100℃)   = (256*hi + lo) / 100
-             CH_6: 预留
+             CH_6: FOUP 在位状态 (1=in, 0=out)
              CH_7: FOUP IN 充气秒数 (高16位)    = (256*hi + lo)
              CH_8: FOUP IN 充气秒数 (低16位)    = (256*hi + lo)
              CH_9: 预留
@@ -56,7 +59,7 @@
             </request>
             <respond>
                 <SlaveAddr>01</SlaveAddr>
-                <Function>04</Function>
+                <Function>12</Function>
                 <ByteCount>12</ByteCount>
                 <RegisterValue>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</RegisterValue>
             </respond>

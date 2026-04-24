@@ -6,6 +6,7 @@
 #include "app/applogger.h"
 #include "loggermanager.h"
 #include "classes/foupofohbinfo.h"
+#include "ui/customwidget/alarmloggerwidget/alarmid.h"
 
 #include <QDebug>
 
@@ -173,10 +174,11 @@ void NetworkStatusTask::onStatusChanged(ModbusConnecter::ConnectionStatus status
     } else {
         // 断开或出错：设置告警
         foup->hasAlarm = true;
-        foup->alarmId = "111";
-        qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "(" << ipPortStr << ") 连接异常，已设置告警 alarmId=111";
+        foup->alarmId = alarmIdToString(makeAlarmId(foup->qrCode.toInt(), AlarmCode::SoftwareConnectionLost));
+        foup->startTime = QTime(0, 0, 0);
+        qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "(" << ipPortStr << ") 连接异常，已设置告警 alarmId=" << foup->alarmId;
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
-            QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接异常，已设置告警 alarmId=111").arg(masterId).arg(ipPortStr).toStdString());
+            QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接异常，已设置告警 alarmId=%3").arg(masterId).arg(ipPortStr).arg(foup->alarmId).toStdString());
     }
 }
 

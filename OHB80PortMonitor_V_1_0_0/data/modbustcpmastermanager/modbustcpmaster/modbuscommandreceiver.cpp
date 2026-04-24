@@ -310,8 +310,14 @@ bool ModbusCommandReceiver::tryExtractMatchedFrame(const ModbusCommand& cmd, QBy
         int actualLength = minLength;
         if (isReadFc) {
             // 读类响应: 从站(1) + 功能码(1) + 字节计数(1) + 数据(N) + CRC(2)
-            const quint8 byteCount = static_cast<quint8>(head[2]);
-            actualLength = 1 + 1 + 1 + byteCount + 2;
+            const quint8 frameByteCount = static_cast<quint8>(head[2]);
+            // 非标准设备：响应功能码与请求功能码不同时，帧内BC字段可能不等于实际数据字节数。
+            // 此时使用 XML 配置的 response.byteCount 作为帧长依据，确保完整帧被提取。
+            const quint8 effectiveBC = (cmd.response.functionCode != cmd.request.functionCode
+                                        && cmd.response.byteCount > 0)
+                                       ? cmd.response.byteCount
+                                       : frameByteCount;
+            actualLength = 1 + 1 + 1 + effectiveBC + 2;
         }
         // 写类响应固定长度，actualLength 保持 minLength 即可
 
@@ -620,6 +626,7 @@ void ModbusCommandReceiver::fillResponseFrame(ModbusCommand& cmd, const QByteArr
         case 0x02:
         case 0x03:
         case 0x04:
+        case 0x12: // 非标准读寄存器响应（本设备对 FC04 返回 FC=0x12）
             if (payload.size() >= 3) {
                 cmd.response.byteCount = static_cast<quint8>(payload[2]);
                 cmd.response.registerValue = payload.mid(3);

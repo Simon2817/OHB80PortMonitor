@@ -84,6 +84,7 @@ debug/modbuscommand.o
 debug/commandpool.o
 debug/modbusconfigparser.o
 debug/modbuscrc.o
+debug/commandresponseparser.o
 debug/modbustcpmaster.o
 debug/modbusconnecter.o
 debug/modbuscommandsender.o

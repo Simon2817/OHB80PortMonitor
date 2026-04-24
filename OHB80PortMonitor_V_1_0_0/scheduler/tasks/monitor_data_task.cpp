@@ -102,137 +102,72 @@ void MonitorDataTask::onCommandCompleted(ModbusCommand cmd, const QString& maste
 {
     if (m_stopped) return;
 
-    // 提交给采集器进行节流（采集器会在达到阈值时通过 shouldEmit 回调发射 communicationCompleted）
+    // 提交给采集器进行节流
     if (m_recorder) {
         m_recorder->submitCommand(cmd, masterId);
     }
 
-    // 只处理 ReadFoupStatus 指令的成功响应
-    if (cmd.id != "ReadFoupStatus") return;
+    // 通过解析表统一分发（仅处理已注册的指令）
+    if (!CommandResponseParser::instance().hasParser(cmd.id)) return;
     if (!cmd.received) return;
 
-    // 解析响应数据
-    QVariantMap data = parseReadFoupStatusResponse(cmd);
+    QVariantMap data = CommandResponseParser::instance().parse(cmd);
     if (data.isEmpty()) {
-        qDebug() << "[Scheduler][MonitorDataTask] ReadFoupStatus 响应解析失败";
-        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN, 
-            QString("[Scheduler][MonitorDataTask] 设备 %1 ReadFoupStatus 响应解析失败").arg(masterId).toStdString());
+        qDebug() << "[Scheduler][MonitorDataTask]" << cmd.id << "响应解析失败";
         return;
     }
 
-    // 直接使用捕获的 masterId（qrCode）更新对应的 FoupOfOHBInfo
-    updateFoupInfo(masterId, data);
+    updateFoupInfo(masterId, cmd.id, data);
 }
 
-void MonitorDataTask::updateFoupInfo(const QString& masterId, const QVariantMap& data)
+void MonitorDataTask::updateFoupInfo(const QString& masterId, const QString& commandId, const QVariantMap& data)
 {
-    // 通过 SharedData 直接获取对应 qrCode 的 FoupOfOHBInfo 指针
     FoupOfOHBInfo* foup = SharedData::getFoupByQRCode(masterId);
     if (!foup) {
         qWarning() << "[Scheduler][MonitorDataTask] 未找到设备" << masterId << "对应的 FoupOfOHBInfo";
-        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN, 
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
             QString("[Scheduler][MonitorDataTask] 未找到设备 %1 对应的 FoupOfOHBInfo").arg(masterId).toStdString());
         return;
     }
 
-    // 更新 Foup 数据（根据服务端真实数据格式）
-    foup->inletPressure = data.value("inletPressure").toDouble();
-    foup->inletFlow     = data.value("inFlow").toDouble();
-    foup->RH            = data.value("humidity").toDouble();
-    foup->oldFoupIn     = foup->foupIn;
-    foup->foupIn        = data.value("hasFoup").toBool();
+    if (commandId == "ReadFoupStatus") {
+        foup->inletPressure    = data.value("inletPressure").toDouble();
+        foup->negativePressure = data.value("negativePressure").toDouble();
+        foup->inletFlow        = data.value("inletFlow").toDouble();
+        foup->RH               = data.value("humidity").toDouble();
+        foup->temperature      = data.value("temperature").toDouble();
+        foup->purgeTimeSec     = data.value("purgeTimeSec").toUInt();
+        foup->oldFoupIn = foup->foupIn;
+        foup->foupIn    = data.value("foupIn").toBool();
+        
+        // FOUP out → in：设置 startTime 为当前时间
+        if (!foup->oldFoupIn && foup->foupIn) {
+            foup->startTime = QTime::currentTime();
+        }
+    } else if (commandId == "ReadIdlePurgeEnable") {
+        foup->idlePurgeEnabled = data.value("idlePurgeEnabled").toBool();
+    } else if (commandId == "ReadIdlePurgeStatus") {  
+        foup->idleState = static_cast<IdleState>(data.value("idleState").toInt());
 
-    // 根据 FOUP 状态变化更新 startTime
-    if (!foup->oldFoupIn && foup->foupIn) {
-        // FOUP 从不在位变为在位：设置为当前时间
-        foup->startTime = QTime::currentTime();
-    } else if (foup->oldFoupIn && !foup->foupIn) {
-        // FOUP 从在位变为不在位：设置为 00:00:00
+    } else if (commandId == "ReadIdlePurgeWorkingTime") { 
+        foup->idleWorkingTimeSec = static_cast<quint16>(data.value("idleWorkingTimeSec").toUInt());
+    }
+
+    if (foup->foupIn) 
+    {
+        foup->idleWorkingTimeSec = 0;
+        foup->idleState = IdleState::Idle;
+    } else{
+        // FOUP in → out：重置 purge 相关字段
         foup->startTime = QTime(0, 0, 0);
-    }
-    
-    foup->purgeTimeMs = data.value("purgeTimeMs").toUInt();
-    foup->idleTimeMs  = data.value("idleTimeMs").toUInt();
-
-    qDebug() << "[Scheduler][MonitorDataTask] 设备" << masterId
-             << "数据已更新 压力=" << foup->inletPressure
-             << "流量=" << foup->inletFlow
-             << "湿度=" << foup->RH
-             << "FoupIn=" << foup->foupIn
-             << "StartTime=" << foup->startTime.toString()
-             << "PurgeTime=" << foup->purgeTimeMs
-             << "IdleTime=" << foup->idleTimeMs;
-}
-
-QVariantMap MonitorDataTask::parseReadFoupStatusResponse(const ModbusCommand& cmd) const
-{
-    QVariantMap result;
-
-    // ReadFoupStatus 响应：9 个寄存器 = 18 字节（存放在 response.registerValue）
-    const QByteArray& payload = cmd.response.registerValue;
-    if (payload.size() < 18) {
-        qWarning() << "[Scheduler][MonitorDataTask] ReadFoupStatus 响应字节数不足，实际=" << payload.size();
-        return result;
+        foup->purgeTimeSec = 0;
     }
 
-    // 辅助 lambda：读取大端 2 字节整数并除以 100.0（符合 Modbus 标准）
-    auto getU16BEAsDouble = [&payload](int offset) -> double {
-        if (offset + 1 >= payload.size()) return 0.0;
-        quint16 raw = (static_cast<quint8>(payload.at(offset)) << 8)
-                    | static_cast<quint8>(payload.at(offset + 1));
-        return raw / 100.0;
-    };
-
-    // 辅助 lambda：读取大端 4 字节整数（时间戳）
-    auto getU32BE = [&payload](int offset) -> quint32 {
-        if (offset + 3 >= payload.size()) return 0;
-        return (static_cast<quint8>(payload.at(offset)) << 24)
-             | (static_cast<quint8>(payload.at(offset + 1)) << 16)
-             | (static_cast<quint8>(payload.at(offset + 2)) << 8)
-             | static_cast<quint8>(payload.at(offset + 3));
-    };
-
-    // 辅助 lambda：读取大端 2 字节整数（秒）
-    auto getU16BE = [&payload](int offset) -> quint16 {
-        if (offset + 1 >= payload.size()) return 0;
-        return (static_cast<quint8>(payload.at(offset)) << 8)
-             | static_cast<quint8>(payload.at(offset + 1));
-    };
-
-    // 服务端数据格式（假设符合 Modbus 标准使用大端序）：
-    // 字节0-1: 进气压力（大端，/100.0）
-    // 字节2-3: 进气流量（大端，/100.0）
-    // 字节4-5: 相对湿度（大端，/100.0）
-    // 字节6-9: 开始时间戳（大端，秒）
-    // 字节10-11: 充气时间ms（大端）
-    // 字节12-13: idle时间ms（大端）
-    // 字节14-15: FoupIn状态（大端）
-    // 字节16-19: 填充（0x00）
-
-    // 1. 进气压力 (0.1-1.0 MPa)
-    result["inletPressure"] = getU16BEAsDouble(0);
-
-    // 2. 进气流量 (0-100 L/Min)
-    result["inFlow"] = getU16BEAsDouble(2);
-
-    // 3. 相对湿度 (0-100%)
-    result["humidity"] = getU16BEAsDouble(4);
-
-    // 4. 开始时间戳（秒）
-    quint32 startTimeSec = getU32BE(6);
-    result["startTimeSec"] = startTimeSec;
-
-    // 5. 充气时间（毫秒）
-    int chargeTimeMs = getU16BE(10) * 1000;
-    result["purgeTimeMs"] = chargeTimeMs;
-
-    // 6. idle时间（毫秒）
-    int idleTimeMs = getU16BE(12) * 1000;
-    result["idleTimeMs"] = idleTimeMs;
-
-    // 7. FoupIn状态（0或1）
-    quint16 foupInStatus = getU16BE(14);
-    result["hasFoup"] = (foupInStatus != 0);
-
-    return result;
+    if (!foup->idlePurgeEnabled)
+    {
+        foup->idleState = IdleState::Idle;
+        foup->idleWorkingTimeSec = 0;
+    }
 }
+
+

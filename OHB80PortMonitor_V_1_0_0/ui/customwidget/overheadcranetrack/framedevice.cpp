@@ -110,8 +110,8 @@ FrameDevice::DeviceStatus FrameDevice::calculateStatusByPurgeTime(QSharedPointer
         return DeviceStatus::FoupOut;
     }
 
-    // Foup 在位，根据 purgeTimeMs 计算状态
-    double purgeTimeMin = foupInfo->purgeTimeMs / 60000.0; // 毫秒转分钟
+    // Foup 在位，根据 purgeTimeSec 计算状态
+    double purgeTimeMin = foupInfo->purgeTimeSec / 60.0; // 秒转分钟
 
     if (purgeTimeMin >= 30.0) {
         return DeviceStatus::PurgeTime30Min;

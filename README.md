@@ -8,6 +8,89 @@
 
 ## 更新日志
 
+### 2026-04-24 10:50 - Simon
+**Modbus 扩展：FOUP 属性与 Idle Purge 状态查询**
+
+#### 主要完成的任务
+
+**1. XML 配置扩展**
+- 添加 7 条新 Modbus 指令定义到 `ModbusTcpMasterConfig.xml`
+- ReadFoupStatus：FOUP 属性查询（进气压力、负压、流量、湿度、温度、FOUP 在位状态、充气时间）
+- ReadIdlePurgeEnable：Idle Purge 使能查询
+- ReadIdlePurgeStatus：Idle Purge 状态查询
+- ReadIdlePurgeWorkingTime：Idle Purge 工作计时时间查询
+- WriteIdlePurgeEnable：Idle Purge 使能写入
+- WriteIdlePurgeTime：Idle Purge 时间写入
+- WriteIdlePurgeInterval：Idle Purge 间隔写入
+
+**2. 定时查询指令配置**
+- 设置 `PeriodicCommandSender` 间隔为 300ms
+- 添加 ReadFoupStatus、ReadIdlePurgeEnable、ReadIdlePurgeStatus、ReadIdlePurgeWorkingTime 到定时查询列表
+- 定时查询逻辑：仅在 FOUP in 状态时下发 idle purge 相关查询指令
+
+**3. Data 层：指令解析与响应处理**
+- 创建 `CommandResponseParser` 类，实现模块化的 Modbus 响应解析
+- 为 ReadFoupStatus、ReadIdlePurgeEnable、ReadIdlePurgeStatus、ReadIdlePurgeWorkingTime 注册解析函数
+- 修复非标准设备响应处理：
+  - ReadFoupStatus 响应函数码为 0x12（非标准），XML 配置已更新
+  - 接收器帧长计算：当响应 FC ≠ 请求 FC 时，使用 XML 配置的 byteCount 而非帧内 BC 字段
+  - fillResponseFrame 补充 case 0x12 分支，按读寄存器格式提取 registerValue
+
+**4. Scheduler 层：数据更新与状态管理**
+- MonitorDataTask 解析所有 4 条查询指令的响应
+- 将解析结果写入全局共享变量 FoupOfOHBInfo
+- 实现 FOUP 状态变化逻辑：
+  - **FOUP out → in**：设置 startTime 为当前时间，idleState 置为 Idle，idleWorkingTimeSec 归 0
+  - **FOUP in → out**：purgeTimeSec 和 startTime 归 0
+  - **Idle Purge 禁用**：idleState 置为 Idle，idleWorkingTimeSec 归 0
+
+**5. 全局共享变量扩展（FoupOfOHBInfo）**
+- 新增字段：
+  - `negativePressure`（double）：负压值
+  - `idlePurgeEnabled`（bool）：Idle Purge 使能状态
+  - `idleState`（enum）：Idle Purge 状态（Stopped、Preparing、Purging、Idle）
+  - `idleWorkingTimeSec`（quint16）：Idle Purge 工作计时时间（秒）
+- 重命名字段：
+  - `purgeTimeMs` → `purgeTimeSec`（单位改为秒）
+  - `idleTimeMs` → `idleWorkingTimeSec`（单位改为秒）
+
+**6. UI 层：监控表格扩展**
+- FoupMonitor 表（第一个表格）：
+  - 添加 "Vacuum"（负压）列，显示负压值并加负号前缀（例如：-0.05 Bar）
+  - 列头 "Humidity" 改为 "Relative Humidity"
+- FoupPurgeTimeMonitor 表（第二个表格）：
+  - 添加 "Idle Enable"、"Idle State"、"IdleTime" 列
+  - 列顺序：Start Time / Duration / Purge Time / Idle Enable / Idle State / IdleTime
+  - Duration：purgeTimeSec 转分钟显示（例如：5Min）
+  - Idle State：枚举值转中文显示
+  - IdleTime：idleWorkingTimeSec 转 hh:mm:ss 格式
+- SetMonitor 表（第三个表格）：
+  - 同步添加 "Vacuum" 列和 "Relative Humidity" 列头
+
+**7. 代码国际化**
+- RunningLoggerWidget 中文字符串改为英文：
+  - "暂无日志" → "No logs"
+  - "日志查看器" → "Log Viewer"
+
+#### 技术细节
+- **非标准设备处理**：本设备对 FC=0x04 请求返回 FC=0x12 响应，需要特殊处理帧长计算和数据提取
+- **状态机管理**：FOUP 在位状态变化时自动重置相关计时字段，避免数据不一致
+- **定时查询优化**：Idle purge 查询仅在 FOUP in 时执行，减少无效通信
+
+#### 影响范围
+- 修改文件：`bin/config/ModbusTcpMasterConfig.xml`
+- 新增文件：`data/modbustcpmastermanager/modbuscommand/commandresponseparser.h`、`.cpp`
+- 修改文件：`data/modbustcpmastermanager/modbuscommand/modbuscommand.pri`
+- 修改文件：`data/modbustcpmastermanager/modbustcpmaster/modbuscommandreceiver.cpp`
+- 修改文件：`classes/foupofohbinfo.h`、`.cpp`
+- 修改文件：`scheduler/tasks/monitor_data_task.h`、`.cpp`
+- 修改文件：`ui/customwidget/overheadcranetrack/devicemonitorwidget.cpp`
+- 修改文件：`ui/customwidget/overheadcranetrack/framedevice.cpp`
+- 修改文件：`scheduler/tasks/network_status_task.cpp`
+- 修改文件：`ui/customwidget/runningloggerwidget/runningloggerwidget.cpp`
+
+---
+
 ### 2026-04-24 09:00 - Simon
 **关机崩溃修复：ModbusTcpMasterPool 与 Scheduler 线程清理**
 

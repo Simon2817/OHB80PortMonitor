@@ -3,6 +3,7 @@
 
 #include "../scheduler_task.h"
 #include "modbustcpmastermanager/modbuscommand/modbuscommand.h"
+#include "modbustcpmastermanager/modbuscommand/commandresponseparser.h"
 
 #include <QHash>
 #include <QString>
@@ -37,11 +38,8 @@ private slots:
     void onCommandCompleted(ModbusCommand cmd, const QString& masterId);
 
 private:
-    // 解析 ReadFoupStatus 响应帧（18 字节，9 个寄存器）
-    QVariantMap parseReadFoupStatusResponse(const ModbusCommand& cmd) const;
-
-    // 将解析后的数据写入共享的 FoupOfOHBInfo
-    void updateFoupInfo(const QString& masterId, const QVariantMap& data);
+    // 使用解析表分发解析，并将结果写入对应 FoupOfOHBInfo
+    void updateFoupInfo(const QString& masterId, const QString& commandId, const QVariantMap& data);
 
     int m_totalCount = 0;
     bool m_stopped = false;

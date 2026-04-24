@@ -44,7 +44,7 @@ RunningLoggerWidget::RunningLoggerWidget(QWidget *parent)
     m_rootPath = CustomLogger::RunningLoggerPath();
 
     // ---- 按钮 ----
-    m_btn = new QPushButton(tr("暂无日志"), this);
+    m_btn = new QPushButton(tr("No logs"), this);
     m_btn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     m_btn->setMinimumHeight(36);
     m_btn->setCursor(Qt::PointingHandCursor);
@@ -59,7 +59,7 @@ RunningLoggerWidget::RunningLoggerWidget(QWidget *parent)
 
     // ---- 模态对话框（不拥有 LoggerWidget 的生命周期）----
     m_dialog = new QDialog(this);
-    m_dialog->setWindowTitle(tr("日志查看器"));
+    m_dialog->setWindowTitle(tr("Log Viewer"));
     m_dialog->resize(900, 620);
     QVBoxLayout *dlgLayout = new QVBoxLayout(m_dialog);
     dlgLayout->setContentsMargins(0, 0, 0, 0);
@@ -300,7 +300,7 @@ void RunningLoggerWidget::onBtnClicked()
 void RunningLoggerWidget::onScrollTick()
 {
     if (m_fullDisplayText.isEmpty()) {
-        m_btn->setText(tr("暂无日志"));
+        m_btn->setText(tr("No logs"));
         return;
     }
 
@@ -353,7 +353,7 @@ void RunningLoggerWidget::refreshDisplayText()
     } else {
         // 无警报时显示最新 Message
         m_fullDisplayText = m_latestMessageText.isEmpty()
-                                ? tr("暂无日志")
+                                ? tr("No logs")
                                 : m_latestMessageText;
     }
 

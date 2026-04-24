@@ -84,6 +84,7 @@ release/modbuscommand.o
 release/commandpool.o
 release/modbusconfigparser.o
 release/modbuscrc.o
+release/commandresponseparser.o
 release/modbustcpmaster.o
 release/modbusconnecter.o
 release/modbuscommandsender.o
