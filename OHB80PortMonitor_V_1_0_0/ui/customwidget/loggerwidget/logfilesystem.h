@@ -90,8 +90,12 @@ private:
     int         m_pageSize = 50;
     QStringList m_headers;
 
-    // 当天日志文件路径缓存（同一天始终指向同一个文件）
+    // 单文件最大记录数（超过后自动轮转到新文件）
+    static constexpr int kMaxRecordsPerFile = 50000;
+
+    // 当天日志文件路径缓存
     QString m_todayFilePath;
+    int     m_todayFileRecordCount = 0;  // 当前文件已有记录数（内存计数器）
 
     // 翻页游标（在 worker thread 中维护）
     QString m_currentFile;

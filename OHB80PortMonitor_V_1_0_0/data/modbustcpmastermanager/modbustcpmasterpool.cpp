@@ -26,33 +26,44 @@ ModbusTcpMasterPool::~ModbusTcpMasterPool()
     qDebug() << "[data][ModbusTcpMasterPool] 析构开始，开始安全清理资源...";
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterPool] 析构开始，开始安全清理资源").toStdString());
 
-    // 第一步：优雅停止所有 Master
+    // ── 第一步：同步停止所有 Master ──────────────────────────
+    // BlockingQueuedConnection 保证每个 stop() 在 Master 所属线程上完成后才返回
     stopAllMasters();
 
-    // 第二步：给 Master 一点时间完成清理
-    QThread::msleep(500);
+    // ── 第二步：调度 Master 销毁（仅 deleteLater，不再二次 stop） ──
+    // stop() 已在上一步同步完成，此处只需安排对象释放
+    qDebug() << "[data][ModbusTcpMasterPool] 调度删除" << m_mastersById.size() << "个 Master";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterPool] 调度删除 %1 个 Master").arg(m_mastersById.size()).toStdString());
+    for (auto it = m_mastersById.begin(); it != m_mastersById.end(); ++it) {
+        ModbusTcpMaster* master = it.value();
+        if (master) {
+            master->deleteLater();
+        }
+    }
+    m_mastersById.clear();
+    m_masterToThreadIndex.clear();
 
-    // 第三步：清空映射
-    clear();
+    // ── 第三步：向所有线程并行发出 quit 信号 ─────────────────
+    // quit() 在 deleteLater 之后投递，事件循环按 FIFO 处理：
+    //   先执行 DeferredDelete（销毁 Master），再退出事件循环
+    qDebug() << "[data][ModbusTcpMasterPool] 向" << m_threads.size() << "个工作线程发出退出信号";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterPool] 向 %1 个工作线程发出退出信号").arg(m_threads.size()).toStdString());
+    for (QThread* thread : qAsConst(m_threads)) {
+        if (thread) {
+            thread->quit();
+        }
+    }
 
-    // 第四步：安全停止并删除所有线程
-    qDebug() << "[data][ModbusTcpMasterPool] 开始清理" << m_threads.size() << "个工作线程...";
-    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterPool] 开始清理 %1 个工作线程").arg(m_threads.size()).toStdString());
+    // ── 第四步：逐一等待线程退出并释放 ───────────────────────
     for (int i = 0; i < m_threads.size(); ++i) {
         QThread* thread = m_threads[i];
         if (!thread) {
             continue;
         }
 
-        qDebug() << "[data][ModbusTcpMasterPool] 清理线程" << i << thread->objectName();
-        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, QString("[data][ModbusTcpMasterPool] 清理线程 %1 %2").arg(i).arg(thread->objectName()).toStdString());
-
-        // 优雅退出
-        thread->quit();
-
-        // 等待线程退出（增加超时时间到 5 秒）
         if (!thread->wait(5000)) {
-            qWarning() << "[data][ModbusTcpMasterPool] 线程" << i << "优雅退出超时，强制终止";
+            qWarning() << "[data][ModbusTcpMasterPool] 线程" << i << thread->objectName() << "优雅退出超时，强制终止";
+            LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN, QString("[data][ModbusTcpMasterPool] 线程 %1 %2 优雅退出超时，强制终止").arg(i).arg(thread->objectName()).toStdString());
             thread->terminate();
             thread->wait(1000);
         }

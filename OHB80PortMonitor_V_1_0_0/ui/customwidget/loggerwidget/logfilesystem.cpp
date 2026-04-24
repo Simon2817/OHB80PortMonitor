@@ -102,6 +102,8 @@ void LogFileSystem::requestAppendLog(const QJsonObject &record)
     bool ok = CsvIO::appendRecord(path, m_headers, record);
     if (!ok) { emit logAppended(false, false); return; }
 
+    ++m_todayFileRecordCount;
+
     // 失效旧缓存
     if (oldPageCount > 0)
         m_pageCache.remove({path, oldPageCount - 1});
@@ -134,6 +136,8 @@ void LogFileSystem::requestAppendBatch(const QVector<QJsonObject> &records)
         bool ok = CsvIO::appendRecord(path, m_headers, record);
         if (ok) anyOk = true;
     }
+
+    m_todayFileRecordCount += records.size();
 
     if (!anyOk) {
         emit logAppended(false, false);
@@ -366,12 +370,23 @@ QString LogFileSystem::todayFilePath()
 {
     QDate today = QDate::currentDate();
 
-    // 已缓存且仍是当天，直接返回
+    // 已缓存且仍是当天
     if (!m_todayFilePath.isEmpty()) {
         QDate cached = QDate::fromString(
             QFileInfo(m_todayFilePath).dir().dirName()
             + QFileInfo(m_todayFilePath).baseName().left(2), "yyyyMMdd");
-        if (cached == today) return m_todayFilePath;
+        if (cached == today) {
+            if (m_todayFileRecordCount < kMaxRecordsPerFile)
+                return m_todayFilePath;
+            // 文件已满 → 立即创建新文件（用毫秒精度避免文件名碰撞）
+            QString monthDir = QFileInfo(m_todayFilePath).absolutePath();
+            m_todayFilePath = QDir(monthDir).filePath(
+                QDateTime::currentDateTime().toString("dd_HHmmsszzz") + ".csv");
+            if (!m_headers.isEmpty())
+                CsvIO::writeHeader(m_todayFilePath, m_headers);
+            m_todayFileRecordCount = 0;
+            return m_todayFilePath;
+        }
         m_todayFilePath.clear(); // 跨天：清除缓存，重新查找
     }
 
@@ -383,16 +398,24 @@ QString LogFileSystem::todayFilePath()
     existing.sort(); // 按文件名字母序升序，最后一个即最晚创建的
 
     if (!existing.isEmpty()) {
-        // 复用今天最近的文件，不破坏已有数据
-        m_todayFilePath = dir.absoluteFilePath(existing.last());
-    } else {
-        // 今天尚无文件，新建
-        QDir().mkpath(monthDir);
-        m_todayFilePath = QDir(monthDir).filePath(
-            QDateTime::currentDateTime().toString("dd_HHmmss") + ".csv");
-        if (!m_headers.isEmpty())
-            CsvIO::writeHeader(m_todayFilePath, m_headers);
+        QString lastFile = dir.absoluteFilePath(existing.last());
+        int count = CsvIO::countRecords(lastFile);
+        if (count < kMaxRecordsPerFile) {
+            // 复用今天最近的文件，不破坏已有数据
+            m_todayFilePath = lastFile;
+            m_todayFileRecordCount = count;
+            return m_todayFilePath;
+        }
+        // 最近的文件已满 → 创建新文件
     }
+
+    // 今天尚无文件或所有文件已满，新建
+    QDir().mkpath(monthDir);
+    m_todayFilePath = QDir(monthDir).filePath(
+        QDateTime::currentDateTime().toString("dd_HHmmsszzz") + ".csv");
+    if (!m_headers.isEmpty())
+        CsvIO::writeHeader(m_todayFilePath, m_headers);
+    m_todayFileRecordCount = 0;
 
     return m_todayFilePath;
 }

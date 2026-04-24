@@ -66,11 +66,17 @@ void Scheduler::stop()
         m_persistentTasks.clear();
         m_runningTasks.clear();
         m_pendingQueue.clear();
-        qDeleteAll(m_tasks);
+        // 不能从主线程 delete 住在调度器线程上的 Task 对象，
+        // 改用 deleteLater() 让调度器线程自行销毁
+        for (auto it = m_tasks.begin(); it != m_tasks.end(); ++it) {
+            if (it.value()) {
+                it.value()->deleteLater();
+            }
+        }
         m_tasks.clear();
     }
 
-    // 停止线程
+    // 停止线程：deleteLater 事件会在 quit 退出事件循环前被处理
     m_thread.quit();
     m_thread.wait();
     qDebug() << "[Scheduler][stop] 调度器线程已停止";

@@ -8,6 +8,63 @@
 
 ## 更新日志
 
+### 2026-04-24 09:00 - Simon
+**关机崩溃修复：ModbusTcpMasterPool 与 Scheduler 线程清理**
+
+#### 问题描述
+应用关机时在 `ModbusTcpMasterPool` 析构阶段发生崩溃，日志显示"清理线程"后立即崩溃。根本原因是 **竞态条件**：
+- `clear()` 用 `QueuedConnection` 异步投递 `stop() + deleteLater()` 到 22 个工作线程
+- 线程清理是串行的：当 thread 0 被 quit/wait/delete 时，其他线程仍在处理 `clear()` 投递的事件
+- 二次 `stop()` 触发信号级联（`disconnectDevice` → `setStatus` → `statusChanged` → `onConnectionStatusChanged`），导致跨线程访问已销毁对象
+
+#### 修改内容
+
+**1. ModbusTcpMasterPool 析构函数重写**
+- **第一步**：`stopAllMasters()` — 用 `BlockingQueuedConnection` 同步停止所有 Master（保留不变）
+- **第二步**：直接 `deleteLater()` 所有 Master — 去掉冗余的二次 `stop()` 和 `QueuedConnection` lambda
+- **第三步**：并行 `quit()` 所有线程 — 避免串行 quit 时部分线程仍在处理事件的竞态
+- **第四步**：逐一 `wait()` 线程 — 确保干净退出
+- **移除**：500ms sleep（同步调用无需额外等待）
+
+**关键改进**：
+```
+修改前：stopAllMasters() → sleep(500) → clear() → 串行 quit/wait/delete 线程
+修改后：stopAllMasters() → deleteLater() → 并行 quit() → 逐一 wait()
+```
+
+**2. Scheduler::stop() 跨线程安全修复**
+- 问题：`qDeleteAll(m_tasks)` 在主线程直接 `delete` 住在调度器线程上的 Task 对象，违反 Qt 线程安全规则
+- 修复：改为 `deleteLater()` + `quit()` + `wait()`，让调度器线程自行销毁 Task 对象
+- 注释说明：`deleteLater` 事件会在 `quit` 退出事件循环前被处理
+
+#### 修复后的完整关机流程
+```
+aboutToQuit → Scheduler::stop()
+  ├─ 同步停止所有任务（BlockingQueuedConnection）
+  ├─ deleteLater() 所有 Task
+  ├─ quit() 调度器线程
+  └─ wait() 等待线程退出
+
+a.exec() 返回 → UI 析构（信号已自动断开）
+
+App::cleanup() → ModbusTcpMasterManager::shutdown()
+  ├─ stopAllMasters()（BlockingQueuedConnection 同步停止）
+  ├─ deleteLater() 所有 Master
+  ├─ 并行 quit() 所有工作线程
+  └─ 逐一 wait() 确保干净退出
+```
+
+#### 技术细节
+- **事件循环顺序**：Qt 事件循环按 FIFO 处理，`deleteLater()` 投递的 DeferredDelete 事件在 `quit()` 之前处理
+- **线程安全**：`deleteLater()` 自动投递到对象所属线程，无需手动 `invokeMethod`
+- **并行 quit 的好处**：避免串行 quit 时某些线程仍在处理事件，导致竞态条件
+
+#### 影响范围
+- 修改文件：`data/modbustcpmastermanager/modbustcpmasterpool.cpp`（析构函数）
+- 修改文件：`scheduler/scheduler.cpp`（stop 方法）
+
+---
+
 ### 2026-04-23 19:30 - Simon
 **报警直连运行日志与界面卡顿优化**
 
