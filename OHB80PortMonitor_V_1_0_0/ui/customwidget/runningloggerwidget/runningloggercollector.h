@@ -42,6 +42,8 @@ public:
 
     // 每帧最多提交条目数（防止队列积压时单帧 UI 卡顿）
     static constexpr int kMaxFlushPerTick = 20;
+    // 队列最大容量（超过时丢弃最旧条目，防止生产速度远超消费速度时内存膨胀）
+    static constexpr int kMaxQueueSize = 2000;
 
     explicit RunningLoggerCollector(QObject* parent = nullptr);
 

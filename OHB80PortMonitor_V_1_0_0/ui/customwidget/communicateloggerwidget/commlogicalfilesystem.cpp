@@ -9,6 +9,7 @@ CommLogicalFileSystem::CommLogicalFileSystem(QObject *parent)
     qRegisterMetaType<CommHistoryResult>("CommHistoryResult");
     qRegisterMetaType<CommPage>("CommPage");
     qRegisterMetaType<QSet<QDate>>("QSet<QDate>");
+    qRegisterMetaType<QVector<QStringList>>("QVector<QStringList>");
 
     // ---- 主 worker：append / page 导航 ----
     m_fs           = new CommLogFileSystem();
@@ -24,6 +25,8 @@ CommLogicalFileSystem::CommLogicalFileSystem(QObject *parent)
             m_fs, &CommLogFileSystem::requestNextPage);
     connect(this, &CommLogicalFileSystem::_requestAppendLog,
             m_fs, &CommLogFileSystem::requestAppendLog);
+    connect(this, &CommLogicalFileSystem::_requestAppendBatch,
+            m_fs, &CommLogFileSystem::requestAppendBatch);
     connect(this, &CommLogicalFileSystem::_requestCleanOldLogs,
             m_fs, &CommLogFileSystem::requestCleanOldLogs);
 
@@ -57,6 +60,12 @@ CommLogicalFileSystem::CommLogicalFileSystem(QObject *parent)
     m_workerThread->start();
     m_queryThread->start();
 
+    // 批量写入防抖定时器
+    m_batchTimer = new QTimer(this);
+    m_batchTimer->setSingleShot(true);
+    m_batchTimer->setInterval(50);
+    connect(m_batchTimer, &QTimer::timeout, this, &CommLogicalFileSystem::flushPendingLogs);
+
     m_midnightTimer = new QTimer(this);
     m_midnightTimer->setSingleShot(true);
     connect(m_midnightTimer, &QTimer::timeout,
@@ -66,12 +75,21 @@ CommLogicalFileSystem::CommLogicalFileSystem(QObject *parent)
 
 CommLogicalFileSystem::~CommLogicalFileSystem()
 {
+    m_batchTimer->stop();
     // 断开所有发往两个 worker 的信号，阻止新事件入队
     disconnect(this, nullptr, m_fs, nullptr);
     disconnect(this, nullptr, m_queryFs, nullptr);
     // 清除两个工作线程事件队列中已积压的待处理事件（主要是大量 requestAppendLog）
     QCoreApplication::removePostedEvents(m_fs);
     QCoreApplication::removePostedEvents(m_queryFs);
+    // 确保缓冲区中残留的日志被写入磁盘
+    if (!m_pendingLogs.isEmpty()) {
+        QVector<QStringList> batch;
+        batch.swap(m_pendingLogs);
+        QMetaObject::invokeMethod(m_fs, "requestAppendBatch",
+                                  Qt::BlockingQueuedConnection,
+                                  Q_ARG(QVector<QStringList>, batch));
+    }
 
     m_queryThread->quit();
     m_workerThread->quit();
@@ -118,7 +136,22 @@ void CommLogicalFileSystem::writeLog(const QString &qrcode, const QString &time,
                                       const QString &commandId, const QString &durationMs,
                                       const QString &request, const QString &response)
 {
-    emit _requestAppendLog(qrcode, time, commandId, durationMs, request, response);
+    m_pendingLogs.append({qrcode, time, commandId, durationMs, request, response});
+    // 达到批量上限时立即刷新，防止持续高频写入导致防抖定时器永远被重置而内存无限增长
+    if (m_pendingLogs.size() >= kMaxPendingBatch) {
+        m_batchTimer->stop();
+        flushPendingLogs();
+    } else {
+        m_batchTimer->start();
+    }
+}
+
+void CommLogicalFileSystem::flushPendingLogs()
+{
+    if (m_pendingLogs.isEmpty()) return;
+    QVector<QStringList> batch;
+    batch.swap(m_pendingLogs);
+    emit _requestAppendBatch(batch);
 }
 
 void CommLogicalFileSystem::queryHistory(const CommHistoryQuery &query)

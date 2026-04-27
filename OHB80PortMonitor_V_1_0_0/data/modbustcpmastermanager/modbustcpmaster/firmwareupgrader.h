@@ -63,6 +63,9 @@ public:
     // bin文件数据发送指令的响应超时时间(ms)
     void setTransferTimeout(int ms);
 
+    // 数据传输完成后等待设备重启加载新固件的时间(ms)
+    void setPostTransferWaitTime(int ms);
+
     // ============================================================================
     // 设置 BinFileReader 引用（外部调用，必须设置）
     // ============================================================================
@@ -145,10 +148,11 @@ private:
     bool         m_running = false;
 
     // 配置参数
-    int m_commandTimeout  = 3000;   // 指令响应超时(ms)，用于准备指令和版本指令
-    int m_waitingTime     = 1000;   // 等待设备就绪时间(ms)
-    int m_sendInterval    = 160;    // 分包发送间隔(ms)
-    int m_transferTimeout = 3000;   // 数据传输响应超时(ms)
+    int m_commandTimeout      = 3000;   // 指令响应超时(ms)，用于准备指令和版本指令
+    int m_waitingTime         = 1000;   // 等待设备就绪时间(ms)
+    int m_sendInterval        = 160;    // 分包发送间隔(ms)
+    int m_transferTimeout     = 3000;   // 数据传输响应超时(ms)
+    int m_postTransferWaitMs  = 2000;   // 数据传输完成后等待设备重启加载新固件的时间(ms)
 
     // 定时器（指针成员，以 this 为父对象，确保 moveToThread 时跟随迁移）
     QTimer *m_timeoutTimer;   // 通用超时定时器（准备/传输/版本指令共用）

@@ -82,8 +82,8 @@ void SettingItemWidget::initUI()
     m_mainLayout->addWidget(m_tipLabel);
     
     // 设置默认文本
-    setTitle("设置项");
-    setTip("请设置相关参数");
+    setTitle("Setting Item");
+    setTip("Please configure the related parameters");
     setFontSize(14);
 }
 
@@ -181,19 +181,19 @@ void SettingItemWidget::setStatus(const QString &errorMsg, bool success)
     
     if (success) {
         // 成功：显示绿色对勾，5秒后消失
-        m_statusLabel->setText("✓ 成功");
+        m_statusLabel->setText("✓ OK");
         m_statusLabel->setStyleSheet("QLabel#statusLabel { color: #00FF00; font-weight: bold; font-size: 14px; }");
         m_statusLabel->setVisible(true);
         m_statusTimer->start(5000);
     } else {
         // 失败：显示红色叉，10秒后消失，并弹框显示错误信息
-        m_statusLabel->setText("✗ 失败");
+        m_statusLabel->setText("✗ Fail");
         m_statusLabel->setStyleSheet("QLabel#statusLabel { color: #FF0000; font-weight: bold; font-size: 14px; }");
         m_statusLabel->setVisible(true);
         m_statusTimer->start(10000);
         
         // 弹框显示错误信息
-        QMessageBox::critical(this, "错误", errorMsg);
+        QMessageBox::critical(this, "Error", errorMsg);
     }
 }
 

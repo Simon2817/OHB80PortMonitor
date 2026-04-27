@@ -8,7 +8,8 @@ HEADERS += \
     $$PWD/tasks/init_check_task.h \
     $$PWD/tasks/network_status_task.h \
     $$PWD/tasks/set_firmware_config_task.h \
-    $$PWD/tasks/firmware_upgrade_task.h
+    $$PWD/tasks/firmware_upgrade_task.h \
+    $$PWD/tasks/set_idle_purge_task.h
 
 SOURCES += \
     $$PWD/scheduler.cpp \
@@ -17,4 +18,5 @@ SOURCES += \
     $$PWD/tasks/init_check_task.cpp \
     $$PWD/tasks/network_status_task.cpp \
     $$PWD/tasks/set_firmware_config_task.cpp \
-    $$PWD/tasks/firmware_upgrade_task.cpp
+    $$PWD/tasks/firmware_upgrade_task.cpp \
+    $$PWD/tasks/set_idle_purge_task.cpp

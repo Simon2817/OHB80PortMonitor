@@ -240,6 +240,7 @@ Makefile: ../../OHB80PortMonitor_V_1_0_0.pro C:/Qt/5.15.2/mingw81_64/mkspecs/win
 		../../ui/customwidget/overheadcranetrack/overheadcranetrack.pri \
 		../../ui/customwidget/settingwidget/settingwidget.pri \
 		../../ui/customwidget/debugsettingwidget/debugsettingwidget.pri \
+		../../ui/customwidget/configsettingwidget/configsettingwidget.pri \
 		../../ui/customwidget/loggerwidget/loggerwidget.pri \
 		../../ui/customwidget/alarmloggerwidget/alarmloggerwidget.pri \
 		../../ui/customwidget/historycalendardialog/historycalendardialog.pri \
@@ -458,6 +459,7 @@ C:/Qt/5.15.2/mingw81_64/mkspecs/features/win32/default_pre.prf:
 ../../ui/customwidget/overheadcranetrack/overheadcranetrack.pri:
 ../../ui/customwidget/settingwidget/settingwidget.pri:
 ../../ui/customwidget/debugsettingwidget/debugsettingwidget.pri:
+../../ui/customwidget/configsettingwidget/configsettingwidget.pri:
 ../../ui/customwidget/loggerwidget/loggerwidget.pri:
 ../../ui/customwidget/alarmloggerwidget/alarmloggerwidget.pri:
 ../../ui/customwidget/historycalendardialog/historycalendardialog.pri:

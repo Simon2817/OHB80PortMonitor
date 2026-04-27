@@ -46,6 +46,7 @@ debug/settingwidget.o
 debug/firmwareupdateconfigsettingwidget.o
 debug/firmwareupdatesettingwidget.o
 debug/firmwareupdatewidget.o
+debug/idlepurgesettingwidget.o
 debug/csvio.o
 debug/loadmoreitemwidget.o
 debug/logfilesystem.o
@@ -78,6 +79,7 @@ debug/init_check_task.o
 debug/network_status_task.o
 debug/set_firmware_config_task.o
 debug/firmware_upgrade_task.o
+debug/set_idle_purge_task.o
 debug/modbustcpmastermanager.o
 debug/modbustcpmasterpool.o
 debug/modbuscommand.o
@@ -122,6 +124,7 @@ debug/moc_settingwidget.o
 debug/moc_firmwareupdateconfigsettingwidget.o
 debug/moc_firmwareupdatesettingwidget.o
 debug/moc_firmwareupdatewidget.o
+debug/moc_idlepurgesettingwidget.o
 debug/moc_loadmoreitemwidget.o
 debug/moc_logfilesystem.o
 debug/moc_loggerwidget.o
@@ -148,6 +151,7 @@ debug/moc_init_check_task.o
 debug/moc_network_status_task.o
 debug/moc_set_firmware_config_task.o
 debug/moc_firmware_upgrade_task.o
+debug/moc_set_idle_purge_task.o
 debug/moc_modbustcpmastermanager.o
 debug/moc_modbustcpmasterpool.o
 debug/moc_modbustcpmaster.o

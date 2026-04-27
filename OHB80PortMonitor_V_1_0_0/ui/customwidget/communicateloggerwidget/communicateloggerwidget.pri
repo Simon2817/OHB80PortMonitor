@@ -27,6 +27,4 @@ SOURCES += \
     $$PWD/commlogtableitemdelegate.cpp \
     $$PWD/communicateloggerwidget.cpp
 
-# historycalendardialog
-include($$PWD/../loggerwidget/historycalendardialog/historycalendardialog.pri)
-INCLUDEPATH += $$PWD/../loggerwidget/historycalendardialog
+

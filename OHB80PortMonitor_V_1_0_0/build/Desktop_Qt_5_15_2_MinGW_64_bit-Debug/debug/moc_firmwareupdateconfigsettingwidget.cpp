@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_FirmwareUpdateConfigSettingWidget_t {
-    QByteArrayData data[9];
-    char stringdata0[203];
+    QByteArrayData data[10];
+    char stringdata0[239];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,7 +40,8 @@ QT_MOC_LITERAL(4, 63, 23), // "onLoadBinFileBtnClicked"
 QT_MOC_LITERAL(5, 87, 29), // "onPrepareTimeoutSetBtnClicked"
 QT_MOC_LITERAL(6, 117, 26), // "onWaitingTimeSetBtnClicked"
 QT_MOC_LITERAL(7, 144, 27), // "onSendIntervalSetBtnClicked"
-QT_MOC_LITERAL(8, 172, 30) // "onTransferTimeoutSetBtnClicked"
+QT_MOC_LITERAL(8, 172, 30), // "onTransferTimeoutSetBtnClicked"
+QT_MOC_LITERAL(9, 203, 35) // "onPostTransferWaitTimeSetBtnC..."
 
     },
     "FirmwareUpdateConfigSettingWidget\0"
@@ -49,7 +50,8 @@ QT_MOC_LITERAL(8, 172, 30) // "onTransferTimeoutSetBtnClicked"
     "onPrepareTimeoutSetBtnClicked\0"
     "onWaitingTimeSetBtnClicked\0"
     "onSendIntervalSetBtnClicked\0"
-    "onTransferTimeoutSetBtnClicked"
+    "onTransferTimeoutSetBtnClicked\0"
+    "onPostTransferWaitTimeSetBtnClicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -59,7 +61,7 @@ static const uint qt_meta_data_FirmwareUpdateConfigSettingWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -67,19 +69,21 @@ static const uint qt_meta_data_FirmwareUpdateConfigSettingWidget[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   44,    2, 0x06 /* Public */,
+       1,    1,   49,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   47,    2, 0x08 /* Private */,
-       5,    0,   48,    2, 0x08 /* Private */,
-       6,    0,   49,    2, 0x08 /* Private */,
-       7,    0,   50,    2, 0x08 /* Private */,
-       8,    0,   51,    2, 0x08 /* Private */,
+       4,    0,   52,    2, 0x08 /* Private */,
+       5,    0,   53,    2, 0x08 /* Private */,
+       6,    0,   54,    2, 0x08 /* Private */,
+       7,    0,   55,    2, 0x08 /* Private */,
+       8,    0,   56,    2, 0x08 /* Private */,
+       9,    0,   57,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
 
  // slots: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -101,6 +105,7 @@ void FirmwareUpdateConfigSettingWidget::qt_static_metacall(QObject *_o, QMetaObj
         case 3: _t->onWaitingTimeSetBtnClicked(); break;
         case 4: _t->onSendIntervalSetBtnClicked(); break;
         case 5: _t->onTransferTimeoutSetBtnClicked(); break;
+        case 6: _t->onPostTransferWaitTimeSetBtnClicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -144,13 +149,13 @@ int FirmwareUpdateConfigSettingWidget::qt_metacall(QMetaObject::Call _c, int _id
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }

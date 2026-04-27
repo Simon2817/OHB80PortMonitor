@@ -18,6 +18,7 @@ public:
     void setWaitingTime(int ms);
     void setSendInterval(int ms);
     void setTransferTimeout(int ms);
+    void setPostTransferWaitTime(int ms);
 
     // SchedulerTask 接口
     void start() override;
@@ -30,12 +31,14 @@ signals:
     void waitingTimeApplied();
     void sendIntervalApplied();
     void transferTimeoutApplied();
+    void postTransferWaitTimeApplied();
 
 private:
     std::optional<int> m_prepareTimeout;
     std::optional<int> m_waitingTime;
     std::optional<int> m_sendInterval;
     std::optional<int> m_transferTimeout;
+    std::optional<int> m_postTransferWaitTime;
 };
 
 #endif // SET_FIRMWARE_CONFIG_TASK_H

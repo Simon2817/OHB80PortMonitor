@@ -16,6 +16,10 @@ INCLUDEPATH += $$PWD/settingwidget
 include ($$PWD/debugsettingwidget/debugsettingwidget.pri)
 INCLUDEPATH += $$PWD/debugsettingwidget
 
+# configsettingwidget
+include ($$PWD/configsettingwidget/configsettingwidget.pri)
+INCLUDEPATH += $$PWD/configsettingwidget
+
 # loggerwidget
 include ($$PWD/loggerwidget/loggerwidget.pri)
 INCLUDEPATH += $$PWD/loggerwidget

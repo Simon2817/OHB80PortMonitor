@@ -17,10 +17,12 @@ FirmwareUpdateConfigSettingWidget::FirmwareUpdateConfigSettingWidget(QWidget *pa
     , m_waitingTimeSpinBox(nullptr)
     , m_sendIntervalSpinBox(nullptr)
     , m_transferTimeoutSpinBox(nullptr)
+    , m_postTransferWaitTimeSpinBox(nullptr)
     , m_prepareTimeoutItem(nullptr)
     , m_waitingTimeItem(nullptr)
     , m_sendIntervalItem(nullptr)
     , m_transferTimeoutItem(nullptr)
+    , m_postTransferWaitTimeItem(nullptr)
 {
     setTitle("Firmware Config");
     initUI();
@@ -54,6 +56,8 @@ void FirmwareUpdateConfigSettingWidget::initUI()
     initSendIntervalItem();
     // 传输响应超时项
     initTransferTimeoutItem();
+    // 数据传输后等待时间项
+    initPostTransferWaitTimeItem();
 
     qDebug() << "[ui][FirmwareUpdateConfigSettingWidget][initUI]：固件更新配置UI初始化完成";
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
@@ -147,7 +151,7 @@ void FirmwareUpdateConfigSettingWidget::initTransferTimeoutItem()
     m_transferTimeoutItem = new SettingItemWidget(this);
     m_transferTimeoutItem->setTitle("Transfer Response Timeout");
     m_transferTimeoutItem->setTip("Set transfer response timeout for firmware upgrade");
-    
+
     FirmwareConfig &fwConfig = FirmwareConfig::getInstance();
     m_transferTimeoutSpinBox = new QSpinBox(m_transferTimeoutItem);
     m_transferTimeoutSpinBox->setRange(1000, 30000);
@@ -155,12 +159,33 @@ void FirmwareUpdateConfigSettingWidget::initTransferTimeoutItem()
     m_transferTimeoutSpinBox->setSuffix(" ms");
     m_transferTimeoutSpinBox->setMaximumWidth(150);
     m_transferTimeoutItem->addWidget("transfer_timeout_spin", m_transferTimeoutSpinBox);
-    
+
     auto setBtn = new QPushButton("Set", m_transferTimeoutItem);
     m_transferTimeoutItem->addWidget("transfer_timeout_set_btn", setBtn);
     connect(setBtn, &QPushButton::clicked, this, &FirmwareUpdateConfigSettingWidget::onTransferTimeoutSetBtnClicked);
-    
+
     addItem(m_transferTimeoutItem);
+}
+
+void FirmwareUpdateConfigSettingWidget::initPostTransferWaitTimeItem()
+{
+    m_postTransferWaitTimeItem = new SettingItemWidget(this);
+    m_postTransferWaitTimeItem->setTitle("Post-Transfer Wait Time");
+    m_postTransferWaitTimeItem->setTip("Set wait time for device reboot after firmware data transfer");
+
+    FirmwareConfig &fwConfig = FirmwareConfig::getInstance();
+    m_postTransferWaitTimeSpinBox = new QSpinBox(m_postTransferWaitTimeItem);
+    m_postTransferWaitTimeSpinBox->setRange(0, 60000);
+    m_postTransferWaitTimeSpinBox->setValue(fwConfig.postTransferWaitMs());
+    m_postTransferWaitTimeSpinBox->setSuffix(" ms");
+    m_postTransferWaitTimeSpinBox->setMaximumWidth(150);
+    m_postTransferWaitTimeItem->addWidget("post_transfer_wait_time_spin", m_postTransferWaitTimeSpinBox);
+
+    auto setBtn = new QPushButton("Set", m_postTransferWaitTimeItem);
+    m_postTransferWaitTimeItem->addWidget("post_transfer_wait_time_set_btn", setBtn);
+    connect(setBtn, &QPushButton::clicked, this, &FirmwareUpdateConfigSettingWidget::onPostTransferWaitTimeSetBtnClicked);
+
+    addItem(m_postTransferWaitTimeItem);
 }
 
 void FirmwareUpdateConfigSettingWidget::onLoadBinFileBtnClicked()
@@ -257,9 +282,19 @@ void FirmwareUpdateConfigSettingWidget::onTransferTimeoutSetBtnClicked()
 {
     FirmwareConfig &fwConfig = FirmwareConfig::getInstance();
     submitConfigTask(m_transferTimeoutItem,
-                     [this](SetFirmwareConfigTask *task) { task->setTransferTimeout(m_transferTimeoutSpinBox->value()); }, 
-                     "传输响应超时", 
+                     [this](SetFirmwareConfigTask *task) { task->setTransferTimeout(m_transferTimeoutSpinBox->value()); },
+                     "传输响应超时",
                      m_transferTimeoutSpinBox->value(),
                      [&fwConfig](int value) { return fwConfig.setTransferResponseTimeoutMs(value); });
+}
+
+void FirmwareUpdateConfigSettingWidget::onPostTransferWaitTimeSetBtnClicked()
+{
+    FirmwareConfig &fwConfig = FirmwareConfig::getInstance();
+    submitConfigTask(m_postTransferWaitTimeItem,
+                     [this](SetFirmwareConfigTask *task) { task->setPostTransferWaitTime(m_postTransferWaitTimeSpinBox->value()); },
+                     "数据传输后等待时间",
+                     m_postTransferWaitTimeSpinBox->value(),
+                     [&fwConfig](int value) { return fwConfig.setPostTransferWaitMs(value); });
 }
 

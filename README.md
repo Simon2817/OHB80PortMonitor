@@ -8,6 +8,170 @@
 
 ## 更新日志
 
+### 2026-04-27 16:50 - Simon
+**配置文件更新：设备列表扩展与气控阀压力指令**
+
+#### 修改内容
+
+**1. ModbusTcpMasterConfig.xml 新增指令**
+- 添加 `WritePneumaticValvePressure` 指令（功能码 06）
+- 寄存器地址：0x0002
+- 用于设置气控阀压力值
+- 请求帧：`01 06 00 02 XX XX CRC`
+- 响应帧：`01 06 00 02 XX XX CRC`（镜像返回）
+- 值计算：`Value = (256 * hi_byte + lo_byte)`
+
+**2. qrcode.ini 设备列表扩展**
+- MasterDevices list 新增设备 ID：1220、1240、1270
+- 原设备列表：12001, 12010
+- 扩展后设备列表：12001, 12010, 1220, 1240, 1270
+
+#### 影响范围
+- 修改文件：`bin/config/ModbusTcpMasterConfig.xml`（添加 WritePneumaticValvePressure 指令）
+- 修改文件：`bin/config/qrcode.ini`（扩展 MasterDevices list）
+
+---
+
+### 2026-04-27 11:30 - Simon
+**固件升级：Modbus RTU CRC 字节序修复与设备重启等待时间配置**
+
+#### 修改内容
+
+**1. Modbus RTU CRC 字节序修复**
+- 修复 `handleVersionResponse` 中 CRC 校验字节序错误
+- Modbus RTU 协议标准：CRC 以低字节在前、高字节在后传输
+- 原代码 `receivedCrc = (resp[5] << 8) | resp[6]` 字节序反了
+- 修正为 `receivedCrc = (resp[6] << 8) | resp[5]`
+- 响应帧无论 CRC 校验成功或失败都打印完整帧内容
+
+**2. 数据传输后等待设备重启配置**
+- 将 `handleTransferResponse` 中的 `postTransferWaitMs` 局部变量改为成员变量 `m_postTransferWaitMs`
+- 添加 `setPostTransferWaitTime(int ms)` 方法，允许外部设置等待时间
+- 默认值：2000ms
+- 数据传输完成后等待设备重启/加载新固件，避免版本查询超时
+
+**3. 调度层接口扩展**
+- `SetFirmwareConfigTask` 添加 `setPostTransferWaitTime(int ms)` 方法
+- 添加 `postTransferWaitTimeApplied()` 信号
+- 添加成员变量 `m_postTransferWaitTime`
+- 在 `start()` 中将配置应用到所有设备的 FirmwareUpgrader
+
+**4. UI 层设置项添加**
+- `FirmwareUpdateConfigSettingWidget` 添加 "Post-Transfer Wait Time" 设置项
+- 新增控件 `m_postTransferWaitTimeSpinBox` 和 `m_postTransferWaitTimeItem`
+- 添加 `initPostTransferWaitTimeItem()` 初始化方法
+- 添加 `onPostTransferWaitTimeSetBtnClicked()` 槽函数
+- 范围：0-60000ms
+
+**5. FirmwareConfig 配置支持**
+- 添加 `postTransferWaitMs()` getter
+- 添加 `setPostTransferWaitMs()` setter
+- 配置键：`PostTransferWaitTimeMs`
+- 默认值：2000ms
+- 支持从 `bin/config/firmware.ini` 加载和保存配置
+
+#### 技术细节
+- **Modbus RTU CRC 标准**：CRC16 校验码在传输时低字节在前、高字节在后
+- **设备重启等待**：固件数据传输完成后，设备需要时间重启并加载新固件，此时发送版本查询会超时
+- **配置层级**：UI → Scheduler → Data 层，三层配置传递链路
+
+#### 影响范围
+- 修改文件：`data/modbustcpmastermanager/modbustcpmaster/firmwareupgrader.h`（添加成员变量和 setter）
+- 修改文件：`data/modbustcpmastermanager/modbustcpmaster/firmwareupgrader.cpp`（修复 CRC 字节序，使用成员变量）
+- 修改文件：`scheduler/tasks/set_firmware_config_task.h`（添加方法和信号）
+- 修改文件：`scheduler/tasks/set_firmware_config_task.cpp`（实现方法和应用配置）
+- 修改文件：`ui/customwidget/debugsettingwidget/firmwareupdateconfigsettingwidget.h`（添加控件和方法声明）
+- 修改文件：`ui/customwidget/debugsettingwidget/firmwareupdateconfigsettingwidget.cpp`（实现初始化和槽函数）
+- 修改文件：`config/firmwareconfig.h`（添加 getter/setter）
+- 修改文件：`config/firmwareconfig.cpp`（实现 getter/setter，加载/保存配置）
+
+---
+
+### 2026-04-27 09:00 - Simon
+**内存泄漏修复与 UI 线程阻塞优化**
+
+#### 问题背景
+软件运行后内存持续增长至 5468MB，同时频繁写入运行日志时 UI 线程出现明显卡顿。
+
+#### 根因分析
+
+**内存泄漏 1（严重）— LogicalFileSystem 防抖永不触发**
+- `LogicalFileSystem::writeLog()` 每次调用都重置 50ms single-shot 定时器
+- 80 设备持续写入（间隔 < 50ms）→ 定时器永远不超时 → `m_pendingLogs`（`QVector<QJsonObject>`）无限增长
+- 该 bug 同时影响 `RunningLoggerWidget` 和 `LoggerWidget`
+
+**内存泄漏 2（严重）— CommLogicalFileSystem 事件队列无界膨胀**
+- `CommLogicalFileSystem::writeLog()` 每次直接 emit 跨线程信号 `_requestAppendLog`
+- Qt 为每次 emit 创建 `QMetaCallEvent`（携带 6 个 QString 拷贝）投递到 worker 线程
+- worker 每次处理需 CSV 追加写 + 页表重建 + 页面读取，80 设备 × ~5 命令/秒 ≈ 400 事件/秒
+- worker I/O 跟不上 → Qt 事件队列无限膨胀（每小时增长数百 MB）
+
+**内存泄漏 3（中等）— 历史查询缓存容量不符**
+- `CommLogFileSystem::m_queryCache{3}` 注释明确写"容量必须为 1"，实际为 3
+- 每条缓存存整天 CSV 所有行（`QVector<QStringList>`），单条可达数百 MB
+
+**UI 阻塞 1 — refreshDisplayText 每条记录重绘**
+- `RunningLoggerWidget::writeRecord()` 每条都调用 `refreshDisplayText()` → `m_btn->setText()` → 触发 repaint
+- 每 50ms 处理 20 条 = 400 次/秒按钮重绘
+
+**UI 阻塞 2 — 归还剩余条目的 O(n²) 循环**
+- `onFlushTick()` 先 swap 整个队列（可能 10000+ 条），只消费 20 条后归还剩余
+- `QQueue::prepend()` 底层 `QList::prepend()` = O(n) memmove，9980 次循环 = O(n²)
+
+**UI 阻塞 3 — Collector 队列无上限**
+- `RunningLoggerCollector::log()` 无上限 enqueue → 连接风暴时队列无限膨胀
+
+#### 修改内容
+
+**1. LogicalFileSystem 防抖修复**
+- `writeLog()` 添加 `kMaxPendingBatch = 200` 上限保护
+- 达到上限时立即 `flushPendingLogs()`，不再等定时器
+- 低频写入仍走 50ms 防抖合并
+
+**2. CommLogicalFileSystem 批量缓冲改造**
+- `writeLog()` 改为主线程侧缓冲到 `QVector<QStringList>`
+- 50ms 防抖 + 200 条上限保护，批量 flush 到 worker
+- `CommLogFileSystem` 新增 `requestAppendBatch(const QVector<QStringList> &)` 槽
+- 一次批量 append 只做一次页表重建和页面读取（原先每条一次）
+- 析构函数 `BlockingQueuedConnection` flush 残留缓冲
+
+**3. 历史查询缓存容量修正**
+- `m_queryCache{3}` → `m_queryCache{1}`
+
+**4. RunningLoggerWidget 批量写入模式**
+- 新增 `beginBatchWrite()` / `endBatchWrite()` 接口
+- 批量模式下 `writeRecord()` 跳过 `refreshDisplayText()`
+- 仅在 `endBatchWrite()` 时统一刷新一次按钮文本
+- 400 次/秒 repaint → 20 次/秒
+
+**5. RunningLoggerCollector 重写**
+- `onFlushTick()` 只 dequeue 需要的条数，消除 swap + prepend-back 的 O(n²) 开销
+- 使用 `beginBatchWrite()` / `endBatchWrite()` 包裹批量写入
+- `log()` 添加 `kMaxQueueSize = 2000` 上限，超出丢弃最旧条目
+
+#### 性能对比
+| 指标 | 优化前 | 优化后 |
+|---|---|---|
+| 运行日志内存增长 | 无限（防抖永不触发） | 有界（≤200 条 flush） |
+| 通讯日志事件队列 | 无限（逐条 emit） | 有界（≤200 条批量） |
+| 历史查询缓存 | ≤3 天数据常驻 | ≤1 天数据常驻 |
+| 按钮重绘频率 | 400 次/秒 | 20 次/秒 |
+| Collector flush 复杂度 | O(n²) | O(k)，k=每帧消费数 |
+
+#### 影响范围
+- 修改文件：`ui/customwidget/loggerwidget/logicalfilesystem.h`（添加 kMaxPendingBatch）
+- 修改文件：`ui/customwidget/loggerwidget/logicalfilesystem.cpp`（writeLog 添加上限保护）
+- 修改文件：`ui/customwidget/communicateloggerwidget/commlogicalfilesystem.h`（添加 batch 信号/slot/定时器/缓冲区）
+- 修改文件：`ui/customwidget/communicateloggerwidget/commlogicalfilesystem.cpp`（writeLog 改为缓冲 + 防抖；析构 flush）
+- 修改文件：`ui/customwidget/communicateloggerwidget/commlogfilesystem.h`（添加 requestAppendBatch；m_queryCache 容量 3→1）
+- 修改文件：`ui/customwidget/communicateloggerwidget/commlogfilesystem.cpp`（实现 requestAppendBatch）
+- 修改文件：`ui/customwidget/runningloggerwidget/runningloggerwidget.h`（添加 beginBatchWrite/endBatchWrite）
+- 修改文件：`ui/customwidget/runningloggerwidget/runningloggerwidget.cpp`（实现批量写入模式）
+- 修改文件：`ui/customwidget/runningloggerwidget/runningloggercollector.h`（添加 kMaxQueueSize）
+- 修改文件：`ui/customwidget/runningloggerwidget/runningloggercollector.cpp`（重写 onFlushTick；log 添加队列上限）
+
+---
+
 ### 2026-04-24 10:50 - Simon
 **Modbus 扩展：FOUP 属性与 Idle Purge 状态查询**
 

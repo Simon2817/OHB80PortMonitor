@@ -22,10 +22,11 @@ SetFirmwareConfigTask::~SetFirmwareConfigTask()
         "=============================SetFirmwareConfigTask 调度任务结束=============================");
 }
 
-void SetFirmwareConfigTask::setPrepareTimeout(int ms)  { m_prepareTimeout = ms; }
-void SetFirmwareConfigTask::setWaitingTime(int ms)     { m_waitingTime = ms; }
-void SetFirmwareConfigTask::setSendInterval(int ms)    { m_sendInterval = ms; }
-void SetFirmwareConfigTask::setTransferTimeout(int ms) { m_transferTimeout = ms; }
+void SetFirmwareConfigTask::setPrepareTimeout(int ms)       { m_prepareTimeout       = ms; }
+void SetFirmwareConfigTask::setWaitingTime(int ms)          { m_waitingTime          = ms; }
+void SetFirmwareConfigTask::setSendInterval(int ms)         { m_sendInterval         = ms; }
+void SetFirmwareConfigTask::setTransferTimeout(int ms)      { m_transferTimeout      = ms; }
+void SetFirmwareConfigTask::setPostTransferWaitTime(int ms) { m_postTransferWaitTime = ms; }
 
 void SetFirmwareConfigTask::start()
 {
@@ -44,19 +45,21 @@ void SetFirmwareConfigTask::start()
         FirmwareUpgrader *upgrader = master->firmwareUpgrader();
         if (!upgrader) continue;
 
-        if (m_prepareTimeout.has_value())  upgrader->setPrepareTimeout(m_prepareTimeout.value());
-        if (m_waitingTime.has_value())     upgrader->setWaitingTime(m_waitingTime.value());
-        if (m_sendInterval.has_value())    upgrader->setSendInterval(m_sendInterval.value());
-        if (m_transferTimeout.has_value()) upgrader->setTransferTimeout(m_transferTimeout.value());
+        if (m_prepareTimeout.has_value())       upgrader->setPrepareTimeout(m_prepareTimeout.value());
+        if (m_waitingTime.has_value())          upgrader->setWaitingTime(m_waitingTime.value());
+        if (m_sendInterval.has_value())         upgrader->setSendInterval(m_sendInterval.value());
+        if (m_transferTimeout.has_value())      upgrader->setTransferTimeout(m_transferTimeout.value());
+        if (m_postTransferWaitTime.has_value()) upgrader->setPostTransferWaitTime(m_postTransferWaitTime.value());
 
         qDebug() << "[SetFirmwareConfigTask] Applied config to" << id;
         appliedCount++;
     }
 
-    if (m_prepareTimeout.has_value())  emit prepareTimeoutApplied();
-    if (m_waitingTime.has_value())     emit waitingTimeApplied();
-    if (m_sendInterval.has_value())    emit sendIntervalApplied();
-    if (m_transferTimeout.has_value()) emit transferTimeoutApplied();
+    if (m_prepareTimeout.has_value())       emit prepareTimeoutApplied();
+    if (m_waitingTime.has_value())          emit waitingTimeApplied();
+    if (m_sendInterval.has_value())         emit sendIntervalApplied();
+    if (m_transferTimeout.has_value())      emit transferTimeoutApplied();
+    if (m_postTransferWaitTime.has_value()) emit postTransferWaitTimeApplied();
 
     setState(Finished);
     emit finished(true, "Firmware config applied");

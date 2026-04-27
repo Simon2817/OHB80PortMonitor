@@ -18,6 +18,7 @@ FirmwareConfig::FirmwareConfig()
     , m_waitingForEquipmentReadyMs(1000)
     , m_sendIntervalForDataMs(100)
     , m_transferResponseTimeoutMs(3000)
+    , m_postTransferWaitMs(2000)
 {
     QString configDir = AppConfig::getInstance().getConfigDir();
     m_configFilePath = configDir + "/firmware.ini";
@@ -48,6 +49,7 @@ void FirmwareConfig::loadConfig()
     m_waitingForEquipmentReadyMs = settings.value("WaitingForEquipmentReadyTimeMs", 1000).toInt();
     m_sendIntervalForDataMs = settings.value("SendIntervalForDataTimeMs", 100).toInt();
     m_transferResponseTimeoutMs = settings.value("TransferResponseTimeoutTimeMs", 3000).toInt();
+    m_postTransferWaitMs = settings.value("PostTransferWaitTimeMs", 2000).toInt();
     settings.endGroup();
     
     qDebug() << "[app][FirmwareConfig][loadConfig]：加载固件配置 -"
@@ -70,6 +72,7 @@ bool FirmwareConfig::saveConfig()
     settings.setValue("WaitingForEquipmentReadyTimeMs", m_waitingForEquipmentReadyMs);
     settings.setValue("SendIntervalForDataTimeMs", m_sendIntervalForDataMs);
     settings.setValue("TransferResponseTimeoutTimeMs", m_transferResponseTimeoutMs);
+    settings.setValue("PostTransferWaitTimeMs", m_postTransferWaitMs);
     settings.endGroup();
     
     settings.sync();
@@ -101,6 +104,11 @@ int FirmwareConfig::sendIntervalForDataMs() const
 int FirmwareConfig::transferResponseTimeoutMs() const
 {
     return m_transferResponseTimeoutMs;
+}
+
+int FirmwareConfig::postTransferWaitMs() const
+{
+    return m_postTransferWaitMs;
 }
 
 bool FirmwareConfig::setPrepareCmdTimeoutMs(int ms)
@@ -136,5 +144,14 @@ bool FirmwareConfig::setTransferResponseTimeoutMs(int ms)
     qDebug() << "[app][FirmwareConfig][setTransferResponseTimeoutMs]：设置传输响应超时为" << ms << "ms";
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
         QString("[app][FirmwareConfig][setTransferResponseTimeoutMs]：设置传输响应超时为 %1ms").arg(ms).toStdString());
+    return saveConfig();
+}
+
+bool FirmwareConfig::setPostTransferWaitMs(int ms)
+{
+    m_postTransferWaitMs = ms;
+    qDebug() << "[app][FirmwareConfig][setPostTransferWaitMs]：设置数据传输后等待时间为" << ms << "ms";
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+        QString("[app][FirmwareConfig][setPostTransferWaitMs]：设置数据传输后等待时间为 %1ms").arg(ms).toStdString());
     return saveConfig();
 }

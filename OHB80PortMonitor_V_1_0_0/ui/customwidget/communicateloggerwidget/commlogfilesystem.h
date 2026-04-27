@@ -66,6 +66,7 @@ public slots:
     void requestNextPage();
     void requestAppendLog(const QString &qrcode, const QString &time, const QString &commandId,
                           const QString &durationMs, const QString &request, const QString &response);
+    void requestAppendBatch(const QVector<QStringList> &records);
     void requestCleanOldLogs();
     void requestQueryHistory(const CommHistoryQuery &query);
     void requestAvailableDates();
@@ -124,5 +125,5 @@ private:
     // 【容量必须为 1】：单个 Value 持有整天几十万行 QStringList，
     // 容量过大会在内存中同时保留多日记录（实测容量 5 时常驻 > 1GB）。
     // 翻页时 Key 不变，容量 1 即可 100% 命中；切换查询条件本就需要重读。
-    CommLRUCache<CommQueryKey, CommQueryValue> m_queryCache{3};
+    CommLRUCache<CommQueryKey, CommQueryValue> m_queryCache{1};
 };

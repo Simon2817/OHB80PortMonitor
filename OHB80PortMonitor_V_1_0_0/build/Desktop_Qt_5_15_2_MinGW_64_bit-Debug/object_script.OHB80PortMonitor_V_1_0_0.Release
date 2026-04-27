@@ -46,6 +46,7 @@ release/settingwidget.o
 release/firmwareupdateconfigsettingwidget.o
 release/firmwareupdatesettingwidget.o
 release/firmwareupdatewidget.o
+release/idlepurgesettingwidget.o
 release/csvio.o
 release/loadmoreitemwidget.o
 release/logfilesystem.o
@@ -78,6 +79,7 @@ release/init_check_task.o
 release/network_status_task.o
 release/set_firmware_config_task.o
 release/firmware_upgrade_task.o
+release/set_idle_purge_task.o
 release/modbustcpmastermanager.o
 release/modbustcpmasterpool.o
 release/modbuscommand.o
@@ -122,6 +124,7 @@ release/moc_settingwidget.o
 release/moc_firmwareupdateconfigsettingwidget.o
 release/moc_firmwareupdatesettingwidget.o
 release/moc_firmwareupdatewidget.o
+release/moc_idlepurgesettingwidget.o
 release/moc_loadmoreitemwidget.o
 release/moc_logfilesystem.o
 release/moc_loggerwidget.o
@@ -148,6 +151,7 @@ release/moc_init_check_task.o
 release/moc_network_status_task.o
 release/moc_set_firmware_config_task.o
 release/moc_firmware_upgrade_task.o
+release/moc_set_idle_purge_task.o
 release/moc_modbustcpmastermanager.o
 release/moc_modbustcpmasterpool.o
 release/moc_modbustcpmaster.o

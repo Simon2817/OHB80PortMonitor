@@ -43,6 +43,10 @@ void RunningLoggerCollector::log(RunningLoggerWidget::MsgType type,
                                  const QString& message)
 {
     QMutexLocker locker(&m_queueMutex);
+    // 队列上限保护，防止生产者速度远超消费者时内存无限增长
+    if (m_queue.size() >= kMaxQueueSize) {
+        m_queue.dequeue();
+    }
     m_queue.enqueue({ type, qrCode, alarmId, message });
 }
 
@@ -58,32 +62,20 @@ void RunningLoggerCollector::onFlushTick()
 {
     if (!m_target) return;
 
-    // 队列为空时快速返回，避免不必要的 swap 开销
+    // 只取出需要的条数，避免 swap 整个队列再归还剩余部分的 O(n²) 开销
+    QVector<LogEntry> batch;
     {
         QMutexLocker locker(&m_queueMutex);
         if (m_queue.isEmpty()) return;
+        int count = qMin(m_queue.size(), kMaxFlushPerTick);
+        batch.reserve(count);
+        for (int i = 0; i < count; ++i)
+            batch.append(m_queue.dequeue());
     }
 
-    // 每次最多提交一批，避免单帧阻塞 UI
-    QQueue<LogEntry> localQueue;
-    {
-        QMutexLocker locker(&m_queueMutex);
-        localQueue.swap(m_queue);
-    }
-
-    // 每帧最多提交 kMaxFlushPerTick 条，剩余条目下一帧继续消费
-    int count = 0;
-    while (!localQueue.isEmpty() && count < kMaxFlushPerTick) {
-        const LogEntry entry = localQueue.dequeue();
+    // 批量写入模式：仅在结束时统一刷新一次按钮文本，避免每条 setText 触发 repaint
+    m_target->beginBatchWrite();
+    for (const LogEntry &entry : batch)
         m_target->writeRecord(entry.type, entry.qrCode, entry.alarmId, entry.message);
-        ++count;
-    }
-
-    // 若本帧有剩余，将其归还队列头部（保持顺序）
-    if (!localQueue.isEmpty()) {
-        QMutexLocker locker(&m_queueMutex);
-        while (!localQueue.isEmpty()) {
-            m_queue.prepend(localQueue.takeLast());
-        }
-    }
+    m_target->endBatchWrite();
 }

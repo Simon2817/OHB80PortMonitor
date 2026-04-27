@@ -127,6 +127,41 @@ void CommLogFileSystem::requestAppendLog(const QString &qrcode, const QString &t
     emit logAppended(true, pageChanged);
 }
 
+void CommLogFileSystem::requestAppendBatch(const QVector<QStringList> &records)
+{
+    if (records.isEmpty()) return;
+
+    QString path = todayFilePath();
+    bool anyOk = false;
+
+    for (const QStringList &rec : records) {
+        QJsonObject record;
+        for (int i = 0; i < qMin(rec.size(), m_headers.size()); ++i)
+            record[m_headers[i]] = rec[i];
+        bool ok = CommCsvIO::appendRecord(path, m_headers, record);
+        if (ok) anyOk = true;
+    }
+
+    if (!anyOk) {
+        emit logAppended(false, false);
+        return;
+    }
+
+    m_pageCache.remove({path, m_currentPage});
+    m_ptCache.remove(path);
+
+    const CommPageTable *newPt = getPageTable(path);
+    int newPageCount = newPt ? newPt->pageCount() : 0;
+    int lastPage = qMax(0, newPageCount - 1);
+    m_currentFile = path;
+    m_currentPage = lastPage;
+
+    CommPage page = doReadPage(path, lastPage);
+    emit pageReady(page, false);
+    emitNavigationState(false);
+    emit logAppended(true, true);
+}
+
 void CommLogFileSystem::requestCleanOldLogs()
 {
     QStringList months = allMonthDirs();
@@ -345,7 +380,11 @@ void CommLogFileSystem::requestQueryHistory(const CommHistoryQuery &query)
     result.totalRecords = viewSize;
     result.totalPages   = viewSize == 0 ? 0
                           : (viewSize + query.pageSize - 1) / query.pageSize;
-    result.currentPage  = qBound(0, query.pageIndex, qMax(0, result.totalPages - 1));
+    // pageIndex < 0 表示"跳转到最后一页"（Search 按钮默认显示最新记录）
+    int requestedPage = query.pageIndex < 0
+                        ? qMax(0, result.totalPages - 1)
+                        : query.pageIndex;
+    result.currentPage  = qBound(0, requestedPage, qMax(0, result.totalPages - 1));
 
     const int from = result.currentPage * query.pageSize;
     const int to   = qMin(from + query.pageSize, viewSize);

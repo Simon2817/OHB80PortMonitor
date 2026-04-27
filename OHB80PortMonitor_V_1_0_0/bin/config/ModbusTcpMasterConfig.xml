@@ -34,6 +34,28 @@
     <CommandDefinitions>
 
         <!-- ========================================
+             1. 功能码 04 — 读输入寄存器（单寄存器）
+             设备版本号查询
+             请求帧: 01 04 00 15 00 01 CRC
+             响应帧: 01 04 02 XX XX CRC
+             Value = (256 * hi_byte + lo_byte)
+             ======================================== -->
+        <Command id="ReadVersion">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <StartAddr>00 15</StartAddr>
+                <RegisterCount>00 01</RegisterCount>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <ByteCount>02</ByteCount>
+                <RegisterValue>00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
              2. 功能码 04 — 读输入寄存器（多寄存器）
              FOUP 属性查询指令
              读取 FOUP 属性：进气压力、负压、流量、湿度、温度、FOUP IN 充气时间等
@@ -59,7 +81,7 @@
             </request>
             <respond>
                 <SlaveAddr>01</SlaveAddr>
-                <Function>12</Function>
+                <Function>04</Function>
                 <ByteCount>12</ByteCount>
                 <RegisterValue>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</RegisterValue>
             </respond>
@@ -190,6 +212,29 @@
                 <SlaveAddr>01</SlaveAddr>
                 <Function>06</Function>
                 <StartAddr>00 16</StartAddr>
+                <RegisterValue>00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             12. 功能码 06 — 写单个保持寄存器
+             设置气控阀压力
+             请求帧: 01 06 00 02 XX XX CRC
+             响应帧: 01 06 00 02 XX XX CRC（镜像）
+             Value = (256 * hi_byte + lo_byte)
+             ======================================== -->
+        <Command id="WritePneumaticValvePressure">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>06</Function>
+                <StartAddr>00 02</StartAddr>
+                <!-- 写入值，固定2字节：气控阀压力值 -->
+                <RegisterValue>00 00</RegisterValue>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>06</Function>
+                <StartAddr>00 02</StartAddr>
                 <RegisterValue>00 00</RegisterValue>
             </respond>
         </Command>

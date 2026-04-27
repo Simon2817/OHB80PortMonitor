@@ -1,6 +1,13 @@
 ﻿#include "quiwidget.h"
 #include "qthelper.h"
 
+#ifdef Q_OS_WIN
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#endif
+
 int QUIWidget::deskWidth()
 {
     return qApp->desktop()->availableGeometry().width();
@@ -1065,6 +1072,27 @@ QUIWidget::~QUIWidget()
 {
     delete widgetMain;
 }
+
+#ifdef Q_OS_WIN
+bool QUIWidget::nativeEvent(const QByteArray &eventType, void *message, long *result)
+{
+    MSG *msg = static_cast<MSG *>(message);
+    // 无边框窗口从任务栏恢复时，Qt 对 SC_RESTORE 的处理有缺陷，
+    // 窗口状态已变但不重新显示。此处手动处理恢复。
+    if (msg->message == WM_SYSCOMMAND) {
+        quint32 cmd = msg->wParam & 0xFFF0;
+        if (cmd == SC_RESTORE) {
+            setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+            show();
+            raise();
+            activateWindow();
+            *result = 0;
+            return true;
+        }
+    }
+    return QDialog::nativeEvent(eventType, message, result);
+}
+#endif
 
 bool QUIWidget::eventFilter(QObject *obj, QEvent *evt)
 {

@@ -296,7 +296,11 @@ void CommunicateLoggerWidget::onSearchClicked()
     CommHistoryQuery q;
     q.date      = selectedDate();
     q.pageSize  = 50;
-    q.pageIndex = 0;
+    q.pageIndex = -1;  // -1 = 跳转到最后一页（最新记录）
+
+    qDebug() << "[HistSearch] dateEdit text:" << ui->dateEdit->text()
+             << "parsed date:" << q.date.toString("yyyy-MM-dd")
+             << "valid:" << q.date.isValid();
 
     if (ui->timeCheck->isChecked()) {
         q.timeColumnIndex = kLiveHeaders.indexOf(QStringLiteral("Time"));

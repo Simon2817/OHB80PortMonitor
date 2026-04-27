@@ -68,6 +68,12 @@ public:
                      const QString &alarmId,
                      const QString &message);
 
+    // -------- 批量写入模式 --------
+    // beginBatchWrite / endBatchWrite 之间的 writeRecord 不会每条都刷新按钮文本，
+    // 仅在 endBatchWrite 时统一刷新一次，减少不必要的 repaint。
+    void beginBatchWrite();
+    void endBatchWrite();
+
     // -------- 解决一条警报 --------
     // 根据 alarmId 定位，将其从待处理警报队列中移除，
     // 并将该条记录（是否解决=是，解决时间=当前时间）写入日志控件。
@@ -116,6 +122,9 @@ private:
     // ---- 警报轮播状态 ----
     QTimer *m_alarmCycleTimer = nullptr;
     int     m_currentAlarmIdx = 0;
+
+    // ---- 批量写入模式 ----
+    bool m_batchWriting = false;
 
     // ---- 配置 ----
     QString m_rootPath;

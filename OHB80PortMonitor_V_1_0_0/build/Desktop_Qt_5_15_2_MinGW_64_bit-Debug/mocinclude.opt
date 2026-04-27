@@ -14,11 +14,11 @@
 -ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/overheadcranetrack
 -ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/settingwidget
 -ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget
+-ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget
 -ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/loggerwidget
 -ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmloggerwidget/historycalendardialog
 -ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmloggerwidget
 -ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/historycalendardialog
--ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/loggerwidget/historycalendardialog
 -ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/communicateloggerwidget
 -ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/runningloggerwidget
 -ID:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/ui/customwidget/useraccountlabel

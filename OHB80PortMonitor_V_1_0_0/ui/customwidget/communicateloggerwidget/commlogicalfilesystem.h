@@ -51,6 +51,7 @@ signals:
     void _requestNextPage();
     void _requestAppendLog(const QString &qrcode, const QString &time, const QString &commandId,
                            const QString &durationMs, const QString &request, const QString &response);
+    void _requestAppendBatch(const QVector<QStringList> &records);
     void _requestCleanOldLogs();
     void _requestQueryHistory(const CommHistoryQuery &query);
     void _requestAvailableDates();
@@ -60,6 +61,7 @@ private slots:
     void onNavigationStateChanged(bool hasPrev, bool hasNext,
                                    const QString &file, int page, int pageCount);
     void onMidnightCleanup();
+    void flushPendingLogs();
 
 private:
     void scheduleMidnight();
@@ -72,6 +74,9 @@ private:
     QThread           *m_queryThread  = nullptr;
 
     QTimer            *m_midnightTimer = nullptr;
+    QTimer            *m_batchTimer    = nullptr;
+    QVector<QStringList> m_pendingLogs;
+    static constexpr int kMaxPendingBatch = 200;
 
     bool    m_hasPrev     = false;
     bool    m_hasNext     = false;

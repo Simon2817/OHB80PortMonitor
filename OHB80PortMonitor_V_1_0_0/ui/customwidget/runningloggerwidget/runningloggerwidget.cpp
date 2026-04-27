@@ -199,6 +199,22 @@ void RunningLoggerWidget::writeRecord(RunningLoggerWidget::MsgType type,
         m_latestMessageText = QString("[Message] %1").arg(message);
     }
 
+    if (!m_batchWriting)
+        refreshDisplayText();
+}
+
+// =====================================================================
+// 批量写入模式
+// =====================================================================
+
+void RunningLoggerWidget::beginBatchWrite()
+{
+    m_batchWriting = true;
+}
+
+void RunningLoggerWidget::endBatchWrite()
+{
+    m_batchWriting = false;
     refreshDisplayText();
 }
 

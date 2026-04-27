@@ -119,8 +119,14 @@ void LogicalFileSystem::requestNextPage() { emit _requestNextPage(); }
 void LogicalFileSystem::writeLog(const QJsonObject &record)
 {
     m_pendingLogs.append(record);
-    // 重置定时器，等待 50ms 无新写入后一次性刷新
-    m_batchTimer->start();
+    // 达到批量上限时立即刷新，防止持续高频写入导致防抖定时器永远被重置而内存无限增长
+    if (m_pendingLogs.size() >= kMaxPendingBatch) {
+        m_batchTimer->stop();
+        flushPendingLogs();
+    } else {
+        // 重置定时器，等待 50ms 无新写入后一次性刷新
+        m_batchTimer->start();
+    }
 }
 
 void LogicalFileSystem::flushPendingLogs()

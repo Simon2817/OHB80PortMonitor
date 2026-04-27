@@ -87,6 +87,7 @@ private:
     QTimer        *m_midnightTimer = nullptr;
     QTimer        *m_batchTimer    = nullptr;
     QVector<QJsonObject> m_pendingLogs;
+    static constexpr int kMaxPendingBatch = 200;
 
     // 缓存的导航状态（由 worker thread 异步更新，主线程只读）
     bool    m_hasPrev     = false;

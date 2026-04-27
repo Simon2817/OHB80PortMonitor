@@ -261,6 +261,9 @@ public:
 
 protected:
     bool eventFilter(QObject *obj, QEvent *evt);
+#ifdef Q_OS_WIN
+    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
+#endif
 
 private:
     QVBoxLayout *verticalLayout1;

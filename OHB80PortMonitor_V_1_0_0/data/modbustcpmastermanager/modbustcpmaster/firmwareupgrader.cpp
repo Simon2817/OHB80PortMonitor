@@ -54,10 +54,11 @@ void FirmwareUpgrader::setBinFileReader(BinFileReader *reader)
 // ======================================================
 bool FirmwareUpgrader::isRunning() const { return m_running; }
 
-void FirmwareUpgrader::setPrepareTimeout(int ms)  { m_commandTimeout  = ms; }
-void FirmwareUpgrader::setWaitingTime(int ms)     { m_waitingTime     = ms; }
-void FirmwareUpgrader::setSendInterval(int ms)    { m_sendInterval    = ms; }
-void FirmwareUpgrader::setTransferTimeout(int ms) { m_transferTimeout = ms; }
+void FirmwareUpgrader::setPrepareTimeout(int ms)     { m_commandTimeout      = ms; }
+void FirmwareUpgrader::setWaitingTime(int ms)        { m_waitingTime         = ms; }
+void FirmwareUpgrader::setSendInterval(int ms)       { m_sendInterval        = ms; }
+void FirmwareUpgrader::setTransferTimeout(int ms)    { m_transferTimeout     = ms; }
+void FirmwareUpgrader::setPostTransferWaitTime(int ms) { m_postTransferWaitMs = ms; }
 
 // ======================================================
 // emitState — 统一状态更新 + 信号 + 日志
@@ -416,27 +417,41 @@ void FirmwareUpgrader::onSendTimer()
 }
 
 // ======================================================
-// sendVersionCommand  — 发送 AreYouThere (State 10)
-// 帧格式：02 33 id(2) 31 CRC(2)，CRC 从 id 字段起计算
+// sendVersionCommand  — 发送版本号查询 (State 10)
+// 帧格式：01 04 00 15 00 01 CRC(2)，Modbus RTU 读输入寄存器
 // ======================================================
 void FirmwareUpgrader::sendVersionCommand()
 {
     QByteArray frame;
-    frame.append(char(0x02));  // start
-    frame.append(char(0x33));  // len
-    frame.append(char(0x00));  // id high
-    frame.append(char(0x00));  // id low
-    frame.append(char(0x31));  // cmd
-    frame.append(ModbusCrc::modbusCRC16(frame.mid(2)));
+    frame.append(char(0x01));  // Slave Addr
+    frame.append(char(0x04));  // Function (读输入寄存器)
+    frame.append(char(0x00));  // Start Addr high
+    frame.append(char(0x15));  // Start Addr low
+    frame.append(char(0x00));  // Register Count high
+    frame.append(char(0x01));  // Register Count low
+    frame.append(ModbusCrc::modbusCRC16(frame));
     m_lastSentFrame = frame;
 
     emitState(UpgradeState::VersionCmdSent,
-              QString("[固件升级] 发送获取版本号指令 (AreYouThere): %1")
+              QString("[固件升级] 发送获取版本号指令 (Modbus RTU): %1")
                   .arg(QString(frame.toHex(' ').toUpper())),
               frame);
 
-    m_socket->write(frame);
-    m_socket->flush();
+    qint64 written = m_socket->write(frame);
+    bool flushed = m_socket->flush();
+
+    qDebug() << "[FirmwareUpgrader] [sendVersionCommand] socket state:" << m_socket->state()
+             << "isOpen:" << m_socket->isOpen()
+             << "isValid:" << m_socket->isValid()
+             << "bytesAvailable:" << m_socket->bytesAvailable()
+             << "bytesToWrite:" << m_socket->bytesToWrite()
+             << "written:" << written << "flushed:" << flushed
+             << "frame:" << frame.toHex(' ').toUpper();
+
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+        QString("[data][FirmwareUpgrader][sendVersionCommand]：设备ID=%1 socketState=%2 isOpen=%3 written=%4 flushed=%5")
+            .arg(m_master->ID).arg(static_cast<int>(m_socket->state())).arg(m_socket->isOpen()).arg(written).arg(flushed).toStdString());
+
     m_timeoutTimer->start(m_commandTimeout);
 }
 
@@ -552,7 +567,19 @@ bool FirmwareUpgrader::handleTransferResponse()
                       .arg(QString(resp.toHex(' ').toUpper())),
                   resp);
 
-        sendVersionCommand();
+        // 设备完成数据传输后需要时间重启/加载新固件，等待后再发版本查询
+        emitState(UpgradeState::DataTransferFinished,
+                  QString("[固件升级] 等待设备重启加载新固件 %1 ms").arg(m_postTransferWaitMs));
+        m_timeoutTimer->stop();  // 停掉旧定时器，避免误触发
+        // 排空可能的残留数据
+        m_receiveBuffer.clear();
+        if (m_socket && m_socket->bytesAvailable() > 0) {
+            m_socket->readAll();
+        }
+        QTimer::singleShot(m_postTransferWaitMs, this, [this]() {
+            if (!m_running) return;
+            sendVersionCommand();
+        });
     } else {
         QString errMsg;
         if (resp == TRANSFER_ERR_SIZE)       errMsg = "Bin 字节数异常";
@@ -573,40 +600,81 @@ bool FirmwareUpgrader::handleTransferResponse()
 
 // ======================================================
 // handleVersionResponse  — 处理版本号响应（State 10 → 11 → 12）
-// AreYouThere 响应：03 35 id(2) 31 ver1 ver2 crc(2) = 9 字节
+// Modbus RTU 响应：01 04 02 ver(2) crc(2) = 7 字节
 // ======================================================
 bool FirmwareUpgrader::handleVersionResponse()
 {
-    if (m_receiveBuffer.size() < 9) return false;
+    qDebug() << "[FirmwareUpgrader] [handleVersionResponse] receiveBuffer:"
+             << m_receiveBuffer.toHex(' ').toUpper()
+             << "size:" << m_receiveBuffer.size();
 
-    // KMP 搜索帧头 03 35，再验证 cmd 字节（offset+4 == 0x31）
-    static const QByteArray VERSION_RESP_PREFIX = QByteArray::fromHex("0335");
+    if (m_receiveBuffer.size() < 7) {
+        qDebug() << "[FirmwareUpgrader] [handleVersionResponse] buffer too small, need >= 7, got" << m_receiveBuffer.size();
+        return false;
+    }
+
+    // KMP 搜索帧头 01 04，再验证字节计数（offset+2 == 0x02）
+    static const QByteArray VERSION_RESP_PREFIX = QByteArray::fromHex("0104");
     int startPos = -1;
     int searchFrom = 0;
     while (true) {
         int hit = QtHelper::kmpSearch(m_receiveBuffer.mid(searchFrom), VERSION_RESP_PREFIX);
         if (hit < 0) break;
         int candidate = searchFrom + hit;
-        if (candidate + 9 > m_receiveBuffer.size()) break;
-        if (static_cast<quint8>(m_receiveBuffer[candidate + 4]) == 0x31) {
+        if (candidate + 7 > m_receiveBuffer.size()) break;
+        if (static_cast<quint8>(m_receiveBuffer[candidate + 2]) == 0x02) {
             startPos = candidate;
             break;
         }
         searchFrom = candidate + 1;
     }
-    if (startPos < 0 || m_receiveBuffer.size() < startPos + 9) return false;
+    if (startPos < 0) {
+        qDebug() << "[FirmwareUpgrader] [handleVersionResponse] frame header not found";
+        return false;
+    }
+    if (m_receiveBuffer.size() < startPos + 7) {
+        qDebug() << "[FirmwareUpgrader] [handleVersionResponse] incomplete frame, need" << (startPos + 7) << "got" << m_receiveBuffer.size();
+        return false;
+    }
+
+    qDebug() << "[FirmwareUpgrader] [handleVersionResponse] found frame at pos:" << startPos;
+
+    // 验证 CRC
+    QByteArray resp = m_receiveBuffer.mid(startPos, 7);
+    QByteArray payload = resp.mid(0, 5);  // 不包含 CRC (Slave+Function+ByteCount+Data)
+    // Modbus RTU CRC：低字节在前，高字节在后
+    quint16 receivedCrc = (static_cast<quint8>(resp[6]) << 8) | static_cast<quint8>(resp[5]);
+    QByteArray crcBytes = ModbusCrc::modbusCRC16(payload);
+    quint16 calculatedCrc = (static_cast<quint8>(crcBytes[1]) << 8) | static_cast<quint8>(crcBytes[0]);
+
+    qDebug() << "[FirmwareUpgrader] [handleVersionResponse] resp:" << resp.toHex(' ').toUpper()
+             << "payload:" << payload.toHex(' ').toUpper()
+             << "receivedCrc:" << QString::number(receivedCrc, 16)
+             << "calculatedCrc:" << QString::number(calculatedCrc, 16);
+
+    // 无论 CRC 校验成功或失败，都打印响应帧
+    LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::INFO,
+        QString("[data][FirmwareUpgrader][handleVersionResponse]：设备ID=%1 收到版本号响应帧=%2")
+            .arg(m_master->ID).arg(QString(resp.toHex(' ').toUpper())).toStdString());
+
+    if (receivedCrc != calculatedCrc) {
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_master->ID).toStdString(), Level::WARN,
+            QString("[data][FirmwareUpgrader][handleVersionResponse]：设备ID=%1 CRC校验失败，接收=%2，计算=%3")
+                .arg(m_master->ID).arg(receivedCrc, 4, 16, QChar('0')).arg(calculatedCrc, 4, 16, QChar('0')).toStdString());
+        return false;
+    }
 
     m_timeoutTimer->stop();
-    QByteArray resp = m_receiveBuffer.mid(startPos, 9);
 
     emitState(UpgradeState::VersionCmdFinished,
               QString("[固件升级] 收到版本号响应: %1")
                   .arg(QString(resp.toHex(' ').toUpper())),
               resp);
 
-    // 解析版本字节：03 35 id(2) 31 [ver1] [ver2] crc(2)
-    quint8 ver1 = static_cast<quint8>(resp[5]);
-    quint8 ver2 = static_cast<quint8>(resp[6]);
+    // 解析版本字节：01 04 02 [ver1] [ver2] crc(2)
+    // 版本号是 ASCII 字符，例如 31 31 = "1.1"
+    quint8 ver1 = static_cast<quint8>(resp[3]);
+    quint8 ver2 = static_cast<quint8>(resp[4]);
     QString currentVersion = QString("%1.%2").arg(ver1 - 0x30).arg(ver2 - 0x30);
 
     // 更新 ModbusTcpMaster 中的固件版本号

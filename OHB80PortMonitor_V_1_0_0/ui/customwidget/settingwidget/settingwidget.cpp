@@ -62,7 +62,7 @@ void SettingWidget::initUI()
     m_mainLayout->addLayout(m_customWidgetsLayout);
     
     // 设置默认标题
-    setTitle("设置");
+    setTitle("Settings");
     
     // 设置标题栏可点击
     m_titleLabel->setCursor(Qt::PointingHandCursor);
