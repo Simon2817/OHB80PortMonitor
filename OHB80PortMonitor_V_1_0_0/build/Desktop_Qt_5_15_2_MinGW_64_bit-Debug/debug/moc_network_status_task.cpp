@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_NetworkStatusTask_t {
-    QByteArrayData data[15];
-    char stringdata0[196];
+    QByteArrayData data[18];
+    char stringdata0[236];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -45,8 +45,11 @@ QT_MOC_LITERAL(9, 133, 6), // "status"
 QT_MOC_LITERAL(10, 140, 8), // "masterId"
 QT_MOC_LITERAL(11, 149, 15), // "onStatusChanged"
 QT_MOC_LITERAL(12, 165, 19), // "onInitCheckFinished"
-QT_MOC_LITERAL(13, 185, 5), // "start"
-QT_MOC_LITERAL(14, 191, 4) // "stop"
+QT_MOC_LITERAL(13, 185, 21), // "onWriteQRCodeFinished"
+QT_MOC_LITERAL(14, 207, 13), // "ModbusCommand"
+QT_MOC_LITERAL(15, 221, 3), // "cmd"
+QT_MOC_LITERAL(16, 225, 5), // "start"
+QT_MOC_LITERAL(17, 231, 4) // "stop"
 
     },
     "NetworkStatusTask\0allInitFinished\0\0"
@@ -54,7 +57,8 @@ QT_MOC_LITERAL(14, 191, 4) // "stop"
     "failedMasterIds\0statusChanged\0"
     "ModbusConnecter::ConnectionStatus\0"
     "status\0masterId\0onStatusChanged\0"
-    "onInitCheckFinished\0start\0stop"
+    "onInitCheckFinished\0onWriteQRCodeFinished\0"
+    "ModbusCommand\0cmd\0start\0stop"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,7 +68,7 @@ static const uint qt_meta_data_NetworkStatusTask[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -72,16 +76,17 @@ static const uint qt_meta_data_NetworkStatusTask[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    4,   44,    2, 0x06 /* Public */,
-       7,    2,   53,    2, 0x06 /* Public */,
+       1,    4,   49,    2, 0x06 /* Public */,
+       7,    2,   58,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      11,    2,   58,    2, 0x08 /* Private */,
-      12,    4,   63,    2, 0x08 /* Private */,
+      11,    2,   63,    2, 0x08 /* Private */,
+      12,    4,   68,    2, 0x08 /* Private */,
+      13,    2,   77,    2, 0x08 /* Private */,
 
  // methods: name, argc, parameters, tag, flags
-      13,    0,   72,    2, 0x02 /* Public */,
-      14,    0,   73,    2, 0x02 /* Public */,
+      16,    0,   82,    2, 0x02 /* Public */,
+      17,    0,   83,    2, 0x02 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Bool, QMetaType::Int, QMetaType::Int, QMetaType::QStringList,    3,    4,    5,    6,
@@ -90,6 +95,7 @@ static const uint qt_meta_data_NetworkStatusTask[] = {
  // slots: parameters
     QMetaType::Void, 0x80000000 | 8, QMetaType::QString,    9,   10,
     QMetaType::Void, QMetaType::Bool, QMetaType::Int, QMetaType::Int, QMetaType::QStringList,    3,    4,    5,    6,
+    QMetaType::Void, 0x80000000 | 14, QMetaType::QString,   15,   10,
 
  // methods: parameters
     QMetaType::Void,
@@ -108,9 +114,21 @@ void NetworkStatusTask::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 1: _t->statusChanged((*reinterpret_cast< ModbusConnecter::ConnectionStatus(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
         case 2: _t->onStatusChanged((*reinterpret_cast< ModbusConnecter::ConnectionStatus(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
         case 3: _t->onInitCheckFinished((*reinterpret_cast< bool(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< const QStringList(*)>(_a[4]))); break;
-        case 4: _t->start(); break;
-        case 5: _t->stop(); break;
+        case 4: _t->onWriteQRCodeFinished((*reinterpret_cast< ModbusCommand(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 5: _t->start(); break;
+        case 6: _t->stop(); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 4:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< ModbusCommand >(); break;
+            }
+            break;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
@@ -160,13 +178,13 @@ int NetworkStatusTask::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
-            *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        if (_id < 7)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 7;
     }
     return _id;
 }

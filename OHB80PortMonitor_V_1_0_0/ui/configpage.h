@@ -8,6 +8,10 @@ class ConfigPage;
 }
 
 class IdlePurgeSettingWidget;
+class PneumaticValvePressureSettingWidget;
+class SH85SelfCheckSettingWidget;
+class HumidityOffsetSettingWidget;
+class PurgeFlowSettingWidget;
 
 class ConfigPage : public QWidget
 {
@@ -28,6 +32,10 @@ private slots:
 private:
     Ui::ConfigPage *ui;
     IdlePurgeSettingWidget *m_idlePurgeWidget;
+    PneumaticValvePressureSettingWidget *m_pneumaticValvePressureWidget;
+    SH85SelfCheckSettingWidget *m_sh85SelfCheckWidget;
+    HumidityOffsetSettingWidget *m_humidityOffsetWidget;
+    PurgeFlowSettingWidget *m_purgeFlowWidget;
 };
 
 #endif // CONFIGPAGE_H

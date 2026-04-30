@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>506</width>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -61,9 +61,30 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnFirmwareUpdate">
+       <widget class="QToolButton" name="btnPneumaticValvePressure">
         <property name="text">
-         <string>Firmware Up</string>
+         <string>Pneumatic Valve</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btnSH85SelfCheck">
+        <property name="text">
+         <string>SH85 Self-check</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btnHumidityOffset">
+        <property name="text">
+         <string>Humidity Offset</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btnPurgeFlow">
+        <property name="text">
+         <string>Purge Flow</string>
         </property>
        </widget>
       </item>
@@ -111,8 +132,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>386</width>
-           <height>259</height>
+           <width>492</width>
+           <height>386</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">

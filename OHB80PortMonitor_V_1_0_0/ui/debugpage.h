@@ -9,6 +9,9 @@ class DebugPage;
 
 class FirmwareUpdateConfigSettingWidget;
 class FirmwareUpdateSettingWidget;
+class VEFCGasTypeSettingWidget;
+class UIRefreshTimeSettingWidget;
+class VEFCFlowUnitMediumStatusWidget;
 
 class DebugPage : public QWidget
 {
@@ -30,6 +33,9 @@ private:
     Ui::DebugPage *ui;
     FirmwareUpdateConfigSettingWidget *m_firmwareConfigWidget;
     FirmwareUpdateSettingWidget       *m_firmwareUpdateWidget;
+    VEFCGasTypeSettingWidget          *m_vefcGasTypeWidget;
+    UIRefreshTimeSettingWidget        *m_uiRefreshTimeWidget;
+    VEFCFlowUnitMediumStatusWidget    *m_vefcFlowUnitMediumStatusWidget;
 };
 
 #endif // DEBUGPAGE_H

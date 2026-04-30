@@ -286,8 +286,10 @@ void ModbusCommandSender::handleFailedCommand(ModbusCommand cmd, const QString& 
         case CommandModule::BusinessCommandIssuer: moduleStr = "BUSINESS"; break;
     }
 
+    // 定时查询指令失败不进入重发队列（依赖下一次周期轮询，避免堆积）
     const bool shouldRetry = !cmd.deviceBusy && !cmd.checksumError
-                           && cmd.sendCount <= cmd.maxRetryCount;
+                           && cmd.sendCount <= cmd.maxRetryCount
+                           && cmd.module != CommandModule::PeriodicCommandSender;
 
     if (!shouldRetry) {
         qDebug() << "[FAILED] [设备ID=" << m_masterId << "] " << nowStr()
@@ -326,6 +328,19 @@ void ModbusCommandSender::handleFailedCommand(ModbusCommand cmd, const QString& 
                 .arg(m_masterId).arg(moduleStr).arg(cmd.id).arg(cmd.uuid).arg(errorMessage)
                 .arg(cmd.sendCount).arg(cmd.maxRetryCount + 1);
         LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusCommandSender][handleFailedCommand]：%1").arg(logMsg).toStdString());
+    }
+
+    // 超时重发：先通知外部底层正在尝试重新发送该指令，再投递到重发队列
+    if (timedOut) {
+        if (cmd.module != CommandModule::PeriodicCommandSender) {
+            QString logMsg = QString("超时重发通知 - 设备ID=%1 module=%2 id=%3 uuid=%4 sendCount=%5/%6")
+                    .arg(m_masterId).arg(moduleStr).arg(cmd.id).arg(cmd.uuid)
+                    .arg(cmd.sendCount).arg(cmd.maxRetryCount + 1);
+            LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(),
+                Level::INFO,
+                QString("[data][ModbusCommandSender][handleFailedCommand]：%1").arg(logMsg).toStdString());
+        }
+        emit commandTimeoutRetry(cmd, m_masterId);
     }
 
     addToRetryQueue(cmd);

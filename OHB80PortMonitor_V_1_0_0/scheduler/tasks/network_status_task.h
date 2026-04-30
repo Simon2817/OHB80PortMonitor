@@ -4,6 +4,7 @@
 #include "../scheduler_task.h"
 #include "init_check_task.h"
 #include "modbustcpmastermanager/modbustcpmaster/modbusconnecter.h"
+#include "modbustcpmastermanager/modbuscommand/modbuscommand.h"
 
 #include <QHash>
 #include <QList>
@@ -40,9 +41,12 @@ private slots:
     // InitCheckTask 完成回调
     void onInitCheckFinished(bool allSuccess, int successCount, int failCount,
                              const QStringList &failedMasterIds);
+    // WriteQRCode 指令响应回调
+    void onWriteQRCodeFinished(ModbusCommand cmd, const QString &masterId);
 
 private:
     void disconnectAll();
+    void submitWriteQRCode(const QString &masterId);
 
     int m_totalCount = 0;
     bool m_stopped = false;
@@ -50,6 +54,9 @@ private:
     // 记录每个设备上一次的连接状态
     QHash<QString, ModbusConnecter::ConnectionStatus> m_lastStatusMap;
     QList<QMetaObject::Connection> m_connections;
+
+    // 待处理的 WriteQRCode 指令：uuid -> masterId
+    QHash<qint64, QString> m_writeQRCodePendingMap;
 
     InitCheckTask *m_initCheckTask = nullptr;
 };

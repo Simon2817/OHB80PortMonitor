@@ -2,6 +2,8 @@
 #include "modbustcpmastermanager/modbustcpmastermanager.h"
 #include "modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h"
 #include "modbustcpmastermanager/modbustcpmaster/modbusconnecter.h"
+#include "modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h"
+#include "modbustcpmastermanager/modbuscommand/commandpool.h"
 #include "app/shareddata.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
@@ -171,6 +173,9 @@ void NetworkStatusTask::onStatusChanged(ModbusConnecter::ConnectionStatus status
         qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "(" << ipPortStr << ") 连接成功，告警已清除";
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
             QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接成功，告警已清除").arg(masterId).arg(ipPortStr).toStdString());
+
+        // 连接成功后下发 WriteQRCode 指令
+        submitWriteQRCode(masterId);
     } else {
         // 断开或出错：设置告警
         foup->hasAlarm = true;
@@ -205,4 +210,96 @@ void NetworkStatusTask::disconnectAll()
     for (const QMetaObject::Connection &conn : qAsConst(m_connections))
         QObject::disconnect(conn);
     m_connections.clear();
+}
+
+void NetworkStatusTask::submitWriteQRCode(const QString &masterId)
+{
+    ModbusTcpMasterManager &mgr = ModbusTcpMasterManager::instance();
+    ModbusTcpMaster *master = mgr.getMaster(masterId);
+    if (!master || !master->sender()) {
+        qWarning() << "[Scheduler][NetworkStatusTask] 下发 WriteQRCode 失败：master 不可用 masterId=" << masterId;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+            QString("[Scheduler][NetworkStatusTask] 下发 WriteQRCode 失败：master 不可用 masterId=%1").arg(masterId).toStdString());
+        return;
+    }
+
+    CommandPool *pool = mgr.commandPool();
+    if (!pool || !pool->contains("WriteQRCode")) {
+        qWarning() << "[Scheduler][NetworkStatusTask] 下发 WriteQRCode 失败：指令池缺少 WriteQRCode";
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+            "[Scheduler][NetworkStatusTask] 下发 WriteQRCode 失败：指令池缺少 WriteQRCode");
+        return;
+    }
+
+    ModbusCommand cmd = pool->clone("WriteQRCode");
+    if (!cmd.isValid()) {
+        qWarning() << "[Scheduler][NetworkStatusTask] 下发 WriteQRCode 失败：指令克隆失败";
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+            "[Scheduler][NetworkStatusTask] 下发 WriteQRCode 失败：指令克隆失败");
+        return;
+    }
+
+    cmd.module = CommandModule::BusinessCommandIssuer;
+
+    // 将 qrcode 转换为 4 字节数据
+    bool ok = false;
+    quint32 qrcodeValue = masterId.toUInt(&ok);
+    if (!ok) {
+        qWarning() << "[Scheduler][NetworkStatusTask] 下发 WriteQRCode 失败：qrcode 转换失败 masterId=" << masterId;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+            QString("[Scheduler][NetworkStatusTask] 下发 WriteQRCode 失败：qrcode 转换失败 masterId=%1").arg(masterId).toStdString());
+        return;
+    }
+
+    // 4 字节大端序：高字节在前
+    QByteArray data;
+    data.append(static_cast<char>((qrcodeValue >> 24) & 0xFF));
+    data.append(static_cast<char>((qrcodeValue >> 16) & 0xFF));
+    data.append(static_cast<char>((qrcodeValue >> 8) & 0xFF));
+    data.append(static_cast<char>(qrcodeValue & 0xFF));
+    cmd.response.registerValue = data;
+
+    // 记录待处理指令
+    m_writeQRCodePendingMap[cmd.uuid] = masterId;
+
+    qDebug() << "[Scheduler][NetworkStatusTask] 下发 WriteQRCode masterId=" << masterId << "value=" << qrcodeValue << "uuid=" << cmd.uuid;
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+        QString("[Scheduler][NetworkStatusTask] 下发 WriteQRCode masterId=%1 value=%2 uuid=%3").arg(masterId).arg(qrcodeValue).arg(cmd.uuid).toStdString());
+
+    // 连接信号监听响应
+    ModbusCommandSender *sender = master->sender();
+    auto conn = connect(sender, &ModbusCommandSender::commandFinished,
+                        this, &NetworkStatusTask::onWriteQRCodeFinished,
+                        Qt::QueuedConnection);
+    m_connections.append(conn);
+
+    QMetaObject::invokeMethod(sender, [sender, cmd]() {
+        sender->submit(cmd);
+    }, Qt::QueuedConnection);
+}
+
+void NetworkStatusTask::onWriteQRCodeFinished(ModbusCommand cmd, const QString &masterId)
+{
+    if (m_stopped) return;
+
+    // 检查是否是我们关注的 WriteQRCode 指令
+    if (!m_writeQRCodePendingMap.contains(cmd.uuid)) return;
+
+    m_writeQRCodePendingMap.remove(cmd.uuid);
+
+    const bool ok = cmd.received && !cmd.timedOut && !cmd.checksumError && !cmd.deviceBusy;
+
+    if (ok) {
+        qDebug() << "[Scheduler][NetworkStatusTask] WriteQRCode 指令成功 masterId=" << masterId << "uuid=" << cmd.uuid;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+            QString("[Scheduler][NetworkStatusTask] WriteQRCode 指令成功 masterId=%1 uuid=%2").arg(masterId).arg(cmd.uuid).toStdString());
+    } else {
+        qWarning() << "[Scheduler][NetworkStatusTask] WriteQRCode 指令失败 masterId=" << masterId
+                   << "uuid=" << cmd.uuid << "received=" << cmd.received
+                   << "timedOut=" << cmd.timedOut << "checksumError=" << cmd.checksumError
+                   << "deviceBusy=" << cmd.deviceBusy;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+            QString("[Scheduler][NetworkStatusTask] WriteQRCode 指令失败 masterId=%1 uuid=%2 received=%3 timedOut=%4 checksumError=%5 deviceBusy=%6")
+                .arg(masterId).arg(cmd.uuid).arg(cmd.received).arg(cmd.timedOut).arg(cmd.checksumError).arg(cmd.deviceBusy).toStdString());
+    }
 }

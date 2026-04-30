@@ -2,6 +2,7 @@
 #include "appconfig.h"
 #include <QSettings>
 #include <QDir>
+#include <QFile>
 #include <QDebug>
 
 QRCodeConfig& QRCodeConfig::getInstance()
@@ -77,13 +78,19 @@ QVector<QString> QRCodeConfig::readMasterDevices() const
     QSettings settings(m_configFilePath, QSettings::IniFormat);
     
     settings.beginGroup("MasterDevices");
-    QString listStr = settings.value("list", "").toString();
+    // QSettings IniFormat 会将逗号分隔值自动解析为 QStringList，
+    // 直接使用 toStringList() 同时兼容单值和多值两种情况
+    QStringList items = settings.value("list").toStringList();
     settings.endGroup();
+    qDebug() << "QRCodeConfig::readMasterDevices: 文件路径=" << m_configFilePath
+             << "文件存在=" << QFile::exists(m_configFilePath)
+             << "解析条数=" << items.size() << "原始列表=" << items;
     
-    if (!listStr.isEmpty()) {
-        QStringList items = listStr.split(',', Qt::SkipEmptyParts);
-        for (const QString& item : items) {
-            QString deviceId = item.trimmed();
+    for (const QString& item : items) {
+        // 兼容中文逗号混入同一条目的情况
+        const QStringList subItems = QString(item).replace('，', ',').split(',', Qt::SkipEmptyParts);
+        for (const QString& sub : subItems) {
+            QString deviceId = sub.trimmed();
             if (!deviceId.isEmpty()) {
                 masterDevices.append(deviceId);
                 qDebug() << "QRCodeConfig: 读取主设备 -" << deviceId;

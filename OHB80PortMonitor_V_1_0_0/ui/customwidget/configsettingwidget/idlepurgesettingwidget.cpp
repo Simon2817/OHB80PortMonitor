@@ -78,7 +78,7 @@ void IdlePurgeSettingWidget::initDurationItem()
 
     m_durationSpinBox = new QSpinBox(m_durationItem);
     m_durationSpinBox->setRange(1, 9999);
-    m_durationSpinBox->setValue(30);
+    m_durationSpinBox->setValue(10);
     m_durationSpinBox->setSuffix(" s");
     m_durationSpinBox->setFixedWidth(120);
     m_durationItem->addWidget("duration_spin", m_durationSpinBox);
@@ -98,7 +98,7 @@ void IdlePurgeSettingWidget::initIntervalItem()
 
     m_intervalSpinBox = new QSpinBox(m_intervalItem);
     m_intervalSpinBox->setRange(1, 99999);
-    m_intervalSpinBox->setValue(300);
+    m_intervalSpinBox->setValue(5);
     m_intervalSpinBox->setSuffix(" s");
     m_intervalSpinBox->setFixedWidth(120);
     m_intervalItem->addWidget("interval_spin", m_intervalSpinBox);
@@ -142,13 +142,16 @@ void IdlePurgeSettingWidget::submitCommand(SettingItemWidget *item,
 {
     auto *task = new SetIdlePurgeTask(property, value);
 
+    item->setStatusWaiting();
+
     connect(task, &SetIdlePurgeTask::allFinished, this,
-            [this, item](bool allSuccess, int successCount,
+            [this, item](bool /*allSuccess*/, int successCount,
                          QStringList failedQrCodes,
                          QString propertyName, quint16 setValue) {
-                if (allSuccess) {
-                    item->setStatus(
-                        QString("Success (%1 device(s))").arg(successCount), true);
+                // 只要有一台失败即视为任务失败
+                const bool hasFailure = !failedQrCodes.isEmpty();
+                if (!hasFailure) {
+                    item->setStatusOK();
                     QMessageBox::information(
                         this,
                         "Set Succeeded",
@@ -157,10 +160,7 @@ void IdlePurgeSettingWidget::submitCommand(SettingItemWidget *item,
                             .arg(setValue)
                             .arg(successCount));
                 } else {
-                    item->setStatus(
-                        QString("Partial fail: %1 ok, %2 failed")
-                            .arg(successCount).arg(failedQrCodes.count()),
-                        false);
+                    item->setStatusFailed();
 
                     // MessageBox 提示失败设备列表
                     const QString failList = failedQrCodes.join(", ");

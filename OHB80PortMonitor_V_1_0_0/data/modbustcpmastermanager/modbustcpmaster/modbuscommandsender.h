@@ -41,6 +41,10 @@ signals:
     // 指令发送完毕信号（无论成功或失败，携带 Master ID 方便调度层使用）
     void commandFinished(ModbusCommand cmd, QString masterId);
 
+    // 超时重发信号：在确认可重发并将指令重新投递到重发队列之前发出，
+    // 用于通知外部底层正在尝试重新发送该指令。
+    void commandTimeoutRetry(ModbusCommand cmd, QString masterId);
+
 private slots:
     void dispatch();  // 调度一次：取出优先级最高的就绪指令并发送
     void onReceiverSucceeded(ModbusCommand cmd);

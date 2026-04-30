@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QToolButton>
@@ -28,7 +27,10 @@ public:
     QWidget *widgetTop;
     QHBoxLayout *horizontalLayout;
     QToolButton *btnFirmwareConfig;
-    QPushButton *btnFirmwareUpdate;
+    QToolButton *btnFirmwareUpdate;
+    QToolButton *btnVEFCGasType;
+    QToolButton *btnUIRefreshTime;
+    QToolButton *btnVEFCStatus;
     QSpacerItem *horizontalSpacer;
     QWidget *widgetSettings;
     QVBoxLayout *verticalLayout;
@@ -57,10 +59,25 @@ public:
 
         horizontalLayout->addWidget(btnFirmwareConfig);
 
-        btnFirmwareUpdate = new QPushButton(widgetTop);
+        btnFirmwareUpdate = new QToolButton(widgetTop);
         btnFirmwareUpdate->setObjectName(QString::fromUtf8("btnFirmwareUpdate"));
 
         horizontalLayout->addWidget(btnFirmwareUpdate);
+
+        btnVEFCGasType = new QToolButton(widgetTop);
+        btnVEFCGasType->setObjectName(QString::fromUtf8("btnVEFCGasType"));
+
+        horizontalLayout->addWidget(btnVEFCGasType);
+
+        btnUIRefreshTime = new QToolButton(widgetTop);
+        btnUIRefreshTime->setObjectName(QString::fromUtf8("btnUIRefreshTime"));
+
+        horizontalLayout->addWidget(btnUIRefreshTime);
+
+        btnVEFCStatus = new QToolButton(widgetTop);
+        btnVEFCStatus->setObjectName(QString::fromUtf8("btnVEFCStatus"));
+
+        horizontalLayout->addWidget(btnVEFCStatus);
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -103,6 +120,9 @@ public:
         DebugPage->setWindowTitle(QCoreApplication::translate("DebugPage", "Form", nullptr));
         btnFirmwareConfig->setText(QCoreApplication::translate("DebugPage", "Firmware Cnf", nullptr));
         btnFirmwareUpdate->setText(QCoreApplication::translate("DebugPage", "Firmware Up", nullptr));
+        btnVEFCGasType->setText(QCoreApplication::translate("DebugPage", "VEFC Gas Type", nullptr));
+        btnUIRefreshTime->setText(QCoreApplication::translate("DebugPage", "UI Refresh Time", nullptr));
+        btnVEFCStatus->setText(QCoreApplication::translate("DebugPage", "VEFC Status", nullptr));
     } // retranslateUi
 
 };

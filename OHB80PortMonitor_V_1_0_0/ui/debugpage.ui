@@ -61,9 +61,30 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnFirmwareUpdate">
+       <widget class="QToolButton" name="btnFirmwareUpdate">
         <property name="text">
          <string>Firmware Up</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btnVEFCGasType">
+        <property name="text">
+         <string>VEFC Gas Type</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btnUIRefreshTime">
+        <property name="text">
+         <string>UI Refresh Time</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btnVEFCStatus">
+        <property name="text">
+         <string>VEFC Status</string>
         </property>
        </widget>
       </item>

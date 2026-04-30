@@ -8,6 +8,125 @@
 
 ## 更新日志
 
+### 2026-04-30 15:17 - Simon
+**功能实现：Purge 流量/VEFC 气体类型/UI 刷新时间/VEFC 状态读取**
+
+#### 修改内容
+
+**1. 设置充气流量功能**
+- 新增 `PurgeFlowSettingWidget` UI 控件（ConfigPage）
+  - Target Device QRCode SpinBox（设备选择）
+  - Purge Flow SpinBox（流量值，整数）+ Set / Set All 按钮
+  - Set：仅对选中设备生效
+  - Set All：对所有设备生效
+- 新增 `SetPurgeFlowTask` 调度任务
+  - 底层指令：`WritePurgeFlow`（FC 0x06, addr 0x0000）
+  - 寄存器值 = flow × 100（例：35 → 3500）
+  - 仅 FOUP IN 时有效，FOUP OUT 状态固定为 0
+  - 信号：`allFinished(bool allSuccess, int successCount, QStringList failedQrCodes, int flowValue)`
+
+**2. 设置 VEFC 气体介质类型功能**
+- 新增 `VEFCGasTypeSettingWidget` UI 控件（DebugPage）
+  - Target Device QRCode SpinBox（设备选择）
+  - Gas Type ComboBox（CDA/N2/Ar/CO2/O2）+ Set / Set All 按钮
+- 新增 `SetVEFCGasTypeTask` 调度任务
+  - 底层指令：`WriteVEFCGasType`（FC 0x06, addr 0x0001，掉电保持）
+  - 气体类型枚举：CDA=0x0000, N2=0x0001, Ar=0x0002, CO2=0x0003, O2=0x0004
+  - 信号：`allFinished(bool allSuccess, int successCount, QStringList failedQrCodes, int gasType)`
+- 初始下发器配置：在 `InitialCommands` 中添加 `WriteVEFCGasType` 指令
+
+**3. 设置下位机 UI 屏幕刷新时长功能**
+- 新增 `UIRefreshTimeSettingWidget` UI 控件（DebugPage）
+  - Target Device QRCode SpinBox（设备选择）
+  - Log Screen Duration SpinBox（log 界面时长，秒）
+  - Property Screen Duration SpinBox（属性界面时长，秒）
+  - + Set / Set All 按钮
+- 新增 `SetUIRefreshTimeTask` 调度任务
+  - 底层指令：`WriteUIRefreshTime`（FC 0x10, addr 0x0004，2 寄存器，4 字节）
+  - 数据布局（大端）：[0..1] logScreenSec, [2..3] propertyScreenSec
+  - 信号：`allFinished(bool allSuccess, int successCount, QStringList failedQrCodes, int logScreenSec, int propertyScreenSec)`
+
+**4. 读取 VEFC 流量单位以及介质配置状态功能**
+- 新增 `VEFCFlowUnitMediumStatusWidget` UI 控件（DebugPage）
+  - Target Device QRCode SpinBox（设备选择）
+  - Read / Read All 按钮
+  - 读取结果弹窗提示：全部成功或逐行列出失败设备
+- 新增 `ReadVEFCFlowUnitAndMediumStatusTask` 调度任务
+  - 底层指令：`ReadVEFCFlowUnitAndMediumStatus`（FC 0x04, addr 0x0011）
+  - 响应 2 字节寄存器：
+    - hi_byte: 0=单位配置成功 / 1=单位配置失败（默认 L/Min）
+    - lo_byte: 0=介质配置成功 / 1=介质配置失败（默认 CDA）
+  - 信号：`allFinished(bool allSuccess, int successCount, QList<DeviceStatus> results)`
+  - DeviceStatus 结构：qrcode, commFailed, unitOk, mediumOk, unitRaw, mediumRaw
+
+#### 技术细节
+- **任务模式**：所有设置任务支持单设备（Set）和全设备（Set All）两种模式
+- **倍率转换**：Purge 流量值需乘以 100 写入寄存器
+- **掉电保持**：VEFC 气体介质类型配置掉电保持，放入初始下发器
+- **状态反馈**：VEFC 状态读取任务返回每台设备的详细状态（通信/单位/介质）
+
+#### 影响范围
+- 新增文件：`ui/customwidget/configsettingwidget/purgeflowsettingwidget.h`、`.cpp`
+- 新增文件：`scheduler/tasks/set_purge_flow_task.h`、`.cpp`
+- 新增文件：`ui/customwidget/debugsettingwidget/vefcgastypesettingwidget.h`、`.cpp`
+- 新增文件：`scheduler/tasks/set_vefc_gas_type_task.h`、`.cpp`
+- 新增文件：`ui/customwidget/debugsettingwidget/uirefreshtimesettingwidget.h`、`.cpp`
+- 新增文件：`scheduler/tasks/set_ui_refresh_time_task.h`、`.cpp`
+- 新增文件：`ui/customwidget/debugsettingwidget/vefcflowunitmediumstatuswidget.h`、`.cpp`
+- 新增文件：`scheduler/tasks/read_vefc_flow_unit_medium_status_task.h`、`.cpp`
+- 修改文件：`bin/config/ModbusTcpMasterConfig.xml`（新增 ReadVEFCFlowUnitAndMediumStatus 指令，InitialCommands 添加 WriteVEFCGasType）
+- 修改文件：`ui/configpage.cpp`（集成 PurgeFlowSettingWidget）
+- 修改文件：`ui/debugpage.cpp`（集成 VEFCGasTypeSettingWidget / UIRefreshTimeSettingWidget / VEFCFlowUnitMediumStatusWidget）
+- 修改文件：`scheduler/scheduler.pri`（添加新任务文件）
+- 修改文件：`ui/customwidget/configsettingwidget/configsettingwidget.pri`（添加 PurgeFlowSettingWidget）
+- 修改文件：`ui/customwidget/debugsettingwidget/debugsettingwidget.pri`（添加三个 DebugPage 控件）
+
+---
+
+### 2026-04-30 14:18 - Simon
+**Modbus 指令扩展：QRCode 地址修正与 Purge/VEFC/UI 刷新配置**
+
+#### 修改内容
+
+**1. ModbusTcpMasterConfig.xml WriteQRCode 地址修正**
+- 修改 `WriteQRCode` 指令寄存器地址：0x0004 → 0x0002
+- 请求帧：`01 10 00 02 00 02 04 XX XX XX XX CRC`
+- 响应帧：`01 10 00 02 00 02 CRC`
+- 功能码 10（写多个保持寄存器），写入 QRCode/设备ID（4字节）
+
+**2. 新增 WritePurgeFlow 指令**
+- 功能码 06，寄存器地址 0x0000
+- 用于设置 Purge 流量大小（VEFC 流量）
+- 请求帧：`01 06 00 00 XX XX CRC`
+- 响应帧：`01 06 00 00 XX XX CRC`（镜像）
+- 值计算：`Value = (256 * hi_byte + lo_byte)`
+- 备注：流量值需乘以 100 写入（例：35 slm/sccm → 3500），仅 FOUP IN 时有效
+
+**3. 新增 WriteVEFCGasType 指令**
+- 功能码 06，寄存器地址 0x0001
+- 用于写入 VEFC 气体介质类型（掉电保持）
+- 请求帧：`01 06 00 01 XX XX CRC`
+- 响应帧：`01 06 00 01 XX XX CRC`（镜像）
+- 介质类型枚举：
+  - 0x0000 = CDA（上电初始默认）
+  - 0x0001 = N2
+  - 0x0002 = Ar
+  - 0x0003 = CO2
+  - 0x0004 = O2
+- 备注：放到初始下发器中
+
+**4. 新增 WriteUIRefreshTime 指令**
+- 功能码 10，寄存器地址 0x0004
+- 用于设置 UI 页面刷新时间
+- 请求帧：`01 10 00 04 00 02 04 XX XX XX XX CRC`
+- 响应帧：`01 10 00 04 00 02 CRC`
+- 数据长度：4 字节（2 个寄存器）
+
+#### 影响范围
+- 修改文件：`bin/config/ModbusTcpMasterConfig.xml`（WriteQRCode 地址修正，新增 WritePurgeFlow/WriteVEFCGasType/WriteUIRefreshTime 指令）
+
+---
+
 ### 2026-04-27 16:50 - Simon
 **配置文件更新：设备列表扩展与气控阀压力指令**
 

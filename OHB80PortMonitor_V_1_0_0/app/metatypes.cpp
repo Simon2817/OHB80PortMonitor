@@ -4,6 +4,7 @@
 #include "modbuscommand/modbuscommand.h"
 #include "modbustcpmastermanager/modbustcpmaster/firmwareupgrader.h"
 #include "loggerwidget/pagetable.h"
+#include "tasks/sh85_self_check_task.h"
 
 void MetaTypes::registerTypes()
 {
@@ -18,6 +19,9 @@ void MetaTypes::registerTypes()
 
     // 注册 Page 类型，用于 LogFileSystem::pageReady 跨线程信号
     qRegisterMetaType<Page>("Page");
+
+    // 注册 SH85SelfCheckTask::Result，用于 SH85SelfCheckTask::allFinished 跨线程信号
+    qRegisterMetaType<SH85SelfCheckTask::Result>("SH85SelfCheckTask::Result");
 
     qDebug() << "All meta types registered successfully";
 }

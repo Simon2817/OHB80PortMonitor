@@ -59,7 +59,7 @@ void SettingItemWidget::initUI()
     m_statusLabel->setObjectName("statusLabel");
     m_statusLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     m_statusLabel->setVisible(false);
-    m_statusLabel->setFixedWidth(80); // 设置固定宽度
+    m_statusLabel->setFixedWidth(120); // 设置固定宽度
     
     // 添加水平弹簧（第0行，第1列）
     m_actionsLayout->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 1);
@@ -202,4 +202,34 @@ void SettingItemWidget::hideStatusLabel()
     if (m_statusLabel) {
         m_statusLabel->setVisible(false);
     }
+}
+
+void SettingItemWidget::setStatusWaiting(const QString &msg)
+{
+    if (!m_statusLabel || !m_statusTimer) return;
+    m_statusTimer->stop();
+    m_statusLabel->setText("⏳ " + msg);
+    m_statusLabel->setStyleSheet("QLabel#statusLabel { color: #FFA500; font-weight: bold; font-size: 14px; }");
+    m_statusLabel->setVisible(true);
+    // Waiting 状态不自动消失，等待后续 setStatusOK / setStatusFailed 覆盖
+}
+
+void SettingItemWidget::setStatusOK(const QString &msg)
+{
+    if (!m_statusLabel || !m_statusTimer) return;
+    m_statusTimer->stop();
+    m_statusLabel->setText("✓ " + msg);
+    m_statusLabel->setStyleSheet("QLabel#statusLabel { color: #00FF00; font-weight: bold; font-size: 14px; }");
+    m_statusLabel->setVisible(true);
+    m_statusTimer->start(5000);
+}
+
+void SettingItemWidget::setStatusFailed(const QString &msg)
+{
+    if (!m_statusLabel || !m_statusTimer) return;
+    m_statusTimer->stop();
+    m_statusLabel->setText("✗ " + msg);
+    m_statusLabel->setStyleSheet("QLabel#statusLabel { color: #FF0000; font-weight: bold; font-size: 14px; }");
+    m_statusLabel->setVisible(true);
+    m_statusTimer->start(10000);
 }

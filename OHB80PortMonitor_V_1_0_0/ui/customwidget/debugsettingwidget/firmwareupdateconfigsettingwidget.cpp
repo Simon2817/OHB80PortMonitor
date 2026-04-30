@@ -216,7 +216,9 @@ void FirmwareUpdateConfigSettingWidget::submitConfigTask(SettingItemWidget *item
     
     SetFirmwareConfigTask *task = new SetFirmwareConfigTask();
     configSetter(task);
-    
+
+    if (item) item->setStatusWaiting();
+
     connect(task, &SetFirmwareConfigTask::finished, this, [this, item, paramName, value, saveConfigCallback](bool success, const QString &msg) {
         QString logMsg = success 
             ? QString("[ui][FirmwareUpdateConfigSettingWidget][submitConfigTask]：%1设置成功: %2ms, %3").arg(paramName).arg(value).arg(msg)
@@ -235,12 +237,14 @@ void FirmwareUpdateConfigSettingWidget::submitConfigTask(SettingItemWidget *item
             
             // 显示状态
             if (item) {
-                item->setStatus(saved ? "配置已保存" : "保存失败", saved);
+                if (saved) item->setStatusOK();
+                else       item->setStatusFailed();
             }
         } else {
             // 显示任务执行状态
             if (item) {
-                item->setStatus(success ? msg : QString("失败: %1").arg(msg), success);
+                if (success) item->setStatusOK();
+                else         item->setStatusFailed();
             }
         }
     });

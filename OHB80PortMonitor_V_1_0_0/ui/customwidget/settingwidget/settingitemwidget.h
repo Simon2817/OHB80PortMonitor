@@ -46,6 +46,11 @@ public:
     // 设置状态（成功/失败）
     void setStatus(const QString &errorMsg, bool success);
 
+    // 三态独立方法（不触发内部 QMessageBox）
+    void setStatusWaiting(const QString &msg = "Waiting...");
+    void setStatusOK(const QString &msg = "OK");
+    void setStatusFailed(const QString &msg = "Failed");
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 

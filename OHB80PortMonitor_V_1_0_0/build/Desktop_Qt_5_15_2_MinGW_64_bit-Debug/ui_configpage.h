@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QToolButton>
@@ -28,7 +27,10 @@ public:
     QWidget *widgetTop;
     QHBoxLayout *horizontalLayout;
     QToolButton *btnIdelPurge;
-    QPushButton *btnFirmwareUpdate;
+    QToolButton *btnPneumaticValvePressure;
+    QToolButton *btnSH85SelfCheck;
+    QToolButton *btnHumidityOffset;
+    QToolButton *btnPurgeFlow;
     QSpacerItem *horizontalSpacer;
     QWidget *widgetSettings;
     QVBoxLayout *verticalLayout;
@@ -40,7 +42,7 @@ public:
     {
         if (ConfigPage->objectName().isEmpty())
             ConfigPage->setObjectName(QString::fromUtf8("ConfigPage"));
-        ConfigPage->resize(400, 300);
+        ConfigPage->resize(506, 425);
         verticalLayout_3 = new QVBoxLayout(ConfigPage);
         verticalLayout_3->setSpacing(3);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
@@ -57,10 +59,25 @@ public:
 
         horizontalLayout->addWidget(btnIdelPurge);
 
-        btnFirmwareUpdate = new QPushButton(widgetTop);
-        btnFirmwareUpdate->setObjectName(QString::fromUtf8("btnFirmwareUpdate"));
+        btnPneumaticValvePressure = new QToolButton(widgetTop);
+        btnPneumaticValvePressure->setObjectName(QString::fromUtf8("btnPneumaticValvePressure"));
 
-        horizontalLayout->addWidget(btnFirmwareUpdate);
+        horizontalLayout->addWidget(btnPneumaticValvePressure);
+
+        btnSH85SelfCheck = new QToolButton(widgetTop);
+        btnSH85SelfCheck->setObjectName(QString::fromUtf8("btnSH85SelfCheck"));
+
+        horizontalLayout->addWidget(btnSH85SelfCheck);
+
+        btnHumidityOffset = new QToolButton(widgetTop);
+        btnHumidityOffset->setObjectName(QString::fromUtf8("btnHumidityOffset"));
+
+        horizontalLayout->addWidget(btnHumidityOffset);
+
+        btnPurgeFlow = new QToolButton(widgetTop);
+        btnPurgeFlow->setObjectName(QString::fromUtf8("btnPurgeFlow"));
+
+        horizontalLayout->addWidget(btnPurgeFlow);
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -80,7 +97,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 386, 259));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 492, 386));
         verticalLayout_2 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_2->setSpacing(3);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
@@ -102,7 +119,10 @@ public:
     {
         ConfigPage->setWindowTitle(QCoreApplication::translate("ConfigPage", "Form", nullptr));
         btnIdelPurge->setText(QCoreApplication::translate("ConfigPage", "Idle Purge", nullptr));
-        btnFirmwareUpdate->setText(QCoreApplication::translate("ConfigPage", "Firmware Up", nullptr));
+        btnPneumaticValvePressure->setText(QCoreApplication::translate("ConfigPage", "Pneumatic Valve", nullptr));
+        btnSH85SelfCheck->setText(QCoreApplication::translate("ConfigPage", "SH85 Self-check", nullptr));
+        btnHumidityOffset->setText(QCoreApplication::translate("ConfigPage", "Humidity Offset", nullptr));
+        btnPurgeFlow->setText(QCoreApplication::translate("ConfigPage", "Purge Flow", nullptr));
     } // retranslateUi
 
 };

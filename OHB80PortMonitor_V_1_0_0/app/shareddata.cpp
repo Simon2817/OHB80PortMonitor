@@ -47,10 +47,10 @@ SharedData::SharedData() {
                 foup.hasAlarm = true;
                 foups.append(foup);
 
-                // static int num = 0;
-                if (!foup.ip.isEmpty() && foup.port > 0 ) {
+                static int num = 0;
+                if (!foup.ip.isEmpty() && foup.port > 0 && num <= 0) {
                     ModbusTcpMasterManager::instance().addMaster(foup.ip, foup.port, foup.qrCode);
-                    // num++;
+                    num++;
                 }
                 else {
                     qDebug() << "Invalid IP or port for foup:" << foup.qrCode;

@@ -2,12 +2,19 @@
 #include "ui_debugpage.h"
 #include "customwidget/debugsettingwidget/firmwareupdateconfigsettingwidget.h"
 #include "customwidget/debugsettingwidget/firmwareupdatesettingwidget.h"
+#include "customwidget/debugsettingwidget/vefcgastypesettingwidget.h"
+#include "customwidget/debugsettingwidget/uirefreshtimesettingwidget.h"
+#include "customwidget/debugsettingwidget/vefcflowunitmediumstatuswidget.h"
+#include <QScrollBar>
 
 DebugPage::DebugPage(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DebugPage)
     , m_firmwareConfigWidget(nullptr)
     , m_firmwareUpdateWidget(nullptr)
+    , m_vefcGasTypeWidget(nullptr)
+    , m_uiRefreshTimeWidget(nullptr)
+    , m_vefcFlowUnitMediumStatusWidget(nullptr)
 {
     ui->setupUi(this);
 
@@ -34,6 +41,18 @@ void DebugPage::initUI()
     // 配置界面选择 bin 文件后 → 同步到升级界面
     connect(m_firmwareConfigWidget, &FirmwareUpdateConfigSettingWidget::binFilePathChanged,
             m_firmwareUpdateWidget, &FirmwareUpdateSettingWidget::setFirmwareFilePath);
+
+    // VEFC 气体介质类型 SettingWidget
+    m_vefcGasTypeWidget = new VEFCGasTypeSettingWidget(this);
+    ui->scrollAreaWidgetContents->layout()->addWidget(m_vefcGasTypeWidget);
+
+    // UI 页面刷新时间 SettingWidget
+    m_uiRefreshTimeWidget = new UIRefreshTimeSettingWidget(this);
+    ui->scrollAreaWidgetContents->layout()->addWidget(m_uiRefreshTimeWidget);
+
+    // VEFC 流量单位 / 介质状态读取 SettingWidget
+    m_vefcFlowUnitMediumStatusWidget = new VEFCFlowUnitMediumStatusWidget(this);
+    ui->scrollAreaWidgetContents->layout()->addWidget(m_vefcFlowUnitMediumStatusWidget);
     
     ui->scrollAreaWidgetContents->layout()->addItem(
         new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding)
@@ -61,14 +80,21 @@ void DebugPage::navBtnClicked()
         b->setChecked(b == btn);
     }
 
-    QString key;
-    if (objName == "btnHSMS") {
-        key = "idle_purge";
+    QWidget *targetWidget = nullptr;
+    if (objName == "btnFirmwareConfig") {
+        targetWidget = m_firmwareConfigWidget;
+    } else if (objName == "btnFirmwareUpdate") {
+        targetWidget = m_firmwareUpdateWidget;
+    } else if (objName == "btnVEFCGasType") {
+        targetWidget = m_vefcGasTypeWidget;
+    } else if (objName == "btnUIRefreshTime") {
+        targetWidget = m_uiRefreshTimeWidget;
+    } else if (objName == "btnVEFCStatus") {
+        targetWidget = m_vefcFlowUnitMediumStatusWidget;
     }
 
-    // if (m_settingWidgetList.contains(key)) {
-    //     SettingWidget *target = m_settingWidgetList[key];
-    //     QPoint pos = target->mapTo(ui->scrollAreaWidgetContents, QPoint(0, 0));
-    //     ui->scrollArea->verticalScrollBar()->setValue(pos.y());
-    // }
+    if (targetWidget) {
+        QPoint pos = targetWidget->mapTo(ui->scrollAreaWidgetContents, QPoint(0, 0));
+        ui->scrollArea->verticalScrollBar()->setValue(pos.y());
+    }
 }

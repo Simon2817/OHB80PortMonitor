@@ -1,11 +1,20 @@
 #include "configpage.h"
 #include "ui_configpage.h"
 #include "customwidget/configsettingwidget/idlepurgesettingwidget.h"
+#include "customwidget/configsettingwidget/pneumaticvalvepressuresettingwidget.h"
+#include "customwidget/configsettingwidget/sh85selfchecksettingwidget.h"
+#include "customwidget/configsettingwidget/humidityoffsetsettingwidget.h"
+#include "customwidget/configsettingwidget/purgeflowsettingwidget.h"
+#include <QScrollBar>
 
 ConfigPage::ConfigPage(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ConfigPage)
     , m_idlePurgeWidget(nullptr)
+    , m_pneumaticValvePressureWidget(nullptr)
+    , m_sh85SelfCheckWidget(nullptr)
+    , m_humidityOffsetWidget(nullptr)
+    , m_purgeFlowWidget(nullptr)
 {
     ui->setupUi(this);
     initUI();
@@ -22,6 +31,18 @@ void ConfigPage::initUI()
 
     m_idlePurgeWidget = new IdlePurgeSettingWidget(this);
     ui->scrollAreaWidgetContents->layout()->addWidget(m_idlePurgeWidget);
+
+    m_pneumaticValvePressureWidget = new PneumaticValvePressureSettingWidget(this);
+    ui->scrollAreaWidgetContents->layout()->addWidget(m_pneumaticValvePressureWidget);
+
+    m_sh85SelfCheckWidget = new SH85SelfCheckSettingWidget(this);
+    ui->scrollAreaWidgetContents->layout()->addWidget(m_sh85SelfCheckWidget);
+
+    m_humidityOffsetWidget = new HumidityOffsetSettingWidget(this);
+    ui->scrollAreaWidgetContents->layout()->addWidget(m_humidityOffsetWidget);
+
+    m_purgeFlowWidget = new PurgeFlowSettingWidget(this);
+    ui->scrollAreaWidgetContents->layout()->addWidget(m_purgeFlowWidget);
 
     ui->scrollAreaWidgetContents->layout()->addItem(
         new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding)
@@ -48,14 +69,21 @@ void ConfigPage::navBtnClicked()
         b->setChecked(b == btn);
     }
 
-    QString key;
-    if (objName == "btnHSMS") {
-        key = "idle_purge";
+    QWidget *targetWidget = nullptr;
+    if (objName == "btnIdelPurge") {
+        targetWidget = m_idlePurgeWidget;
+    } else if (objName == "btnPneumaticValvePressure") {
+        targetWidget = m_pneumaticValvePressureWidget;
+    } else if (objName == "btnSH85SelfCheck") {
+        targetWidget = m_sh85SelfCheckWidget;
+    } else if (objName == "btnHumidityOffset") {
+        targetWidget = m_humidityOffsetWidget;
+    } else if (objName == "btnPurgeFlow") {
+        targetWidget = m_purgeFlowWidget;
     }
 
-    // if (m_settingWidgetList.contains(key)) {
-    //     SettingWidget *target = m_settingWidgetList[key];
-    //     QPoint pos = target->mapTo(ui->scrollAreaWidgetContents, QPoint(0, 0));
-    //     ui->scrollArea->verticalScrollBar()->setValue(pos.y());
-    // }
+    if (targetWidget) {
+        QPoint pos = targetWidget->mapTo(ui->scrollAreaWidgetContents, QPoint(0, 0));
+        ui->scrollArea->verticalScrollBar()->setValue(pos.y());
+    }
 }
