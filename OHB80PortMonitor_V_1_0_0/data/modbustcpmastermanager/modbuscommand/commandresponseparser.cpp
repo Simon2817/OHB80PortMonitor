@@ -22,6 +22,7 @@ void CommandResponseParser::registerBuiltinParsers()
     registerParser("ReadIdlePurgeEnable",     &CommandResponseParser::parseReadIdlePurgeEnable);
     registerParser("ReadIdlePurgeStatus",     &CommandResponseParser::parseReadIdlePurgeStatus);
     registerParser("ReadIdlePurgeWorkingTime",&CommandResponseParser::parseReadIdlePurgeWorkingTime);
+    registerParser("ReadIdlePurgeAll",        &CommandResponseParser::parseReadIdlePurgeAll);
 }
 
 void CommandResponseParser::registerParser(const QString& commandId, ParseFunc func)
@@ -139,5 +140,25 @@ QVariantMap CommandResponseParser::parseReadIdlePurgeWorkingTime(const ModbusCom
 
     // CH_1: 计时时长（秒）
     result["idleWorkingTimeSec"] = static_cast<quint16>(readU16BE(payload, 0));
+    return result;
+}
+
+QVariantMap CommandResponseParser::parseReadIdlePurgeAll(const ModbusCommand& cmd)
+{
+    QVariantMap result;
+    const QByteArray& payload = cmd.response.registerValue;
+
+    // 3个寄存器 × 2字节 = 6字节
+    if (payload.size() < 6) {
+        qWarning() << "[CommandResponseParser] ReadIdlePurgeAll 响应字节数不足，实际=" << payload.size();
+        return result;
+    }
+
+    // CH_1 (0x001D): Idle Purge 使能 (0=关闭, 1=开启)
+    result["idlePurgeEnabled"]  = (readU16BE(payload, 0) != 0);
+    // CH_2 (0x001E): Idle Purge 状态 (0=Idle, 1=准备, 2=充气, 3=充气间隔)
+    result["idleState"]         = static_cast<int>(readU16BE(payload, 2));
+    // CH_3 (0x001F): 工作计时时长（秒）
+    result["idleWorkingTimeSec"] = static_cast<quint16>(readU16BE(payload, 4));
     return result;
 }

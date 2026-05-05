@@ -2,6 +2,23 @@
 #include "loggermanager.h"
 #include "app/applogger.h"
 #include <QDebug>
+#include <QDateTime>
+
+namespace {
+static inline QString nowStr()
+{
+    return QDateTime::currentDateTime().toString("HH:mm:ss.zzz");
+}
+static inline QString toHexSpaced(const QByteArray& data)
+{
+    QString s;
+    s.reserve(data.size() * 3);
+    for (unsigned char b : data)
+        s += QString::asprintf("%02X ", b);
+    if (!s.isEmpty()) s.chop(1);
+    return s;
+}
+}
 
 // ============================================================
 // PeriodicCommandSender - 定时循环指令发送器实现
@@ -15,6 +32,11 @@ PeriodicCommandSender::PeriodicCommandSender(ModbusCommandSender& sender, const 
     // 指令成功信号转发为 commandCompleted，并附加 masterId
     connect(this, &CyclicCommandIssuer::commandSucceeded,
             this, [this](ModbusCommand cmd) {
+                qDebug() << "[PERIODIC-RECV]" << nowStr()
+                         << "设备ID=" << m_masterId
+                         << "id=" << cmd.id
+                         << "len=" << cmd.response.rawBytes.size()
+                         << "frame=" << toHexSpaced(cmd.response.rawBytes);
                 emit commandCompleted(cmd, m_masterId);
             });
     connect(this, &CyclicCommandIssuer::roundFinished,

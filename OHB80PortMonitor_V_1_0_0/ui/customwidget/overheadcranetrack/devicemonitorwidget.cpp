@@ -162,13 +162,16 @@ void Graph::DeviceMonitorWidget::refreshFoupMonitor()
 
     // IdleState 转换为可读字符串
     auto idleStateStr = [](IdleState s) -> QString {
+        QString str;
         switch (s) {
-        case IdleState::Stopped:   return "Idle";
-        case IdleState::Preparing: return "Preparing";
-        case IdleState::Purging:   return "Purging";
-        case IdleState::Idle:      return "Interval";
-        default:                   return "Unknown";
+        case IdleState::Stopped:   str = "Stop"; break;
+        case IdleState::Preparing: str = "Preparing"; break;
+        case IdleState::Purging:   str = "Purging"; break;
+        case IdleState::Idle:      str = "Interval"; break;
+        default:                   str = "Unknown"; break;
         }
+        qDebug() << "[DeviceMonitorWidget] idleStateStr: raw=" << static_cast<int>(s) << "str=" << str;
+        return str;
     };
 
     // 将秒转换为 hh:mm:ss 格式（用于 IdleTime）

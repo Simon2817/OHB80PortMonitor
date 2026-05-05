@@ -118,6 +118,8 @@ void MonitorDataTask::onCommandCompleted(ModbusCommand cmd, const QString& maste
     }
 
     updateFoupInfo(masterId, cmd.id, data);
+
+    qDebug() << "[MonitorDataTask][ReadIdlePurgeAll] rsp: " << cmd.response.rawBytes;
 }
 
 void MonitorDataTask::updateFoupInfo(const QString& masterId, const QString& commandId, const QVariantMap& data)
@@ -144,11 +146,18 @@ void MonitorDataTask::updateFoupInfo(const QString& masterId, const QString& com
         if (!foup->oldFoupIn && foup->foupIn) {
             foup->startTime = QTime::currentTime();
         }
+    } else if (commandId == "ReadIdlePurgeAll") {
+        foup->idlePurgeEnabled   = data.value("idlePurgeEnabled").toBool();
+        foup->idleState          = static_cast<IdleState>(data.value("idleState").toInt());
+        foup->idleWorkingTimeSec = static_cast<quint16>(data.value("idleWorkingTimeSec").toUInt());
+        qDebug() << "[MonitorDataTask][ReadIdlePurgeAll] 设备=" << masterId
+                 << "idlePurgeEnabled=" << foup->idlePurgeEnabled
+                 << "idleState=" << static_cast<int>(foup->idleState)
+                 << "idleWorkingTimeSec=" << foup->idleWorkingTimeSec;
     } else if (commandId == "ReadIdlePurgeEnable") {
         foup->idlePurgeEnabled = data.value("idlePurgeEnabled").toBool();
     } else if (commandId == "ReadIdlePurgeStatus") {  
         foup->idleState = static_cast<IdleState>(data.value("idleState").toInt());
-
     } else if (commandId == "ReadIdlePurgeWorkingTime") { 
         foup->idleWorkingTimeSec = static_cast<quint16>(data.value("idleWorkingTimeSec").toUInt());
     }

@@ -2,6 +2,7 @@
 #include "loggermanager.h"
 #include "app/applogger.h"
 #include <QDebug>
+#include <QThread>
 
 ModbusConnecter::ModbusConnecter(QTcpSocket& socket, const QString& host, quint16 port, const QString& masterId, QObject *parent)
     : QObject(parent)
@@ -71,6 +72,10 @@ ModbusConnecter::~ModbusConnecter()
 
 bool ModbusConnecter::connectDevice(ConnectionMode mode)
 {
+    if (QThread::currentThread() != thread()) {
+        QMetaObject::invokeMethod(this, [this, mode]() { connectDevice(mode); }, Qt::QueuedConnection);
+        return true;
+    }
     if (!m_socket) {
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] QTcpSocket 指针为空";
         LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, QString("[data][ModbusConnecter][connectDevice]：设备ID=%1 QTcpSocket 指针为空").arg(m_masterId).toStdString());
@@ -120,6 +125,10 @@ bool ModbusConnecter::connectDevice(ConnectionMode mode)
 
 bool ModbusConnecter::disconnectDevice(ConnectionMode mode)
 {
+    if (QThread::currentThread() != thread()) {
+        QMetaObject::invokeMethod(this, [this, mode]() { disconnectDevice(mode); }, Qt::QueuedConnection);
+        return true;
+    }
     if (!m_socket) {
         return false;
     }
@@ -233,6 +242,10 @@ void ModbusConnecter::setStatus(ConnectionStatus status)
 
 void ModbusConnecter::startAutoReconnect()
 {
+    if (QThread::currentThread() != thread()) {
+        QMetaObject::invokeMethod(this, &ModbusConnecter::startAutoReconnect, Qt::QueuedConnection);
+        return;
+    }
     if (!m_autoReconnectEnabled || m_reconnectTimer->isActive()) {
         return;
     }
@@ -244,6 +257,10 @@ void ModbusConnecter::startAutoReconnect()
 
 void ModbusConnecter::stopAutoReconnect()
 {
+    if (QThread::currentThread() != thread()) {
+        QMetaObject::invokeMethod(this, &ModbusConnecter::stopAutoReconnect, Qt::QueuedConnection);
+        return;
+    }
     if (m_reconnectTimer->isActive()) {
         m_reconnectTimer->stop();
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Stopped auto-reconnect";
@@ -260,6 +277,10 @@ void ModbusConnecter::stopAutoReconnect()
 
 void ModbusConnecter::startConnectionCheck()
 {
+    if (QThread::currentThread() != thread()) {
+        QMetaObject::invokeMethod(this, &ModbusConnecter::startConnectionCheck, Qt::QueuedConnection);
+        return;
+    }
     if (!m_connectionCheckTimer->isActive()) {
         m_connectionCheckTimer->start();
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Started connection check";
@@ -269,6 +290,10 @@ void ModbusConnecter::startConnectionCheck()
 
 void ModbusConnecter::stopConnectionCheck()
 {
+    if (QThread::currentThread() != thread()) {
+        QMetaObject::invokeMethod(this, &ModbusConnecter::stopConnectionCheck, Qt::QueuedConnection);
+        return;
+    }
     if (m_connectionCheckTimer->isActive()) {
         m_connectionCheckTimer->stop();
         qDebug() << "ModbusConnecter: [设备ID=" << m_masterId << "] Stopped connection check";

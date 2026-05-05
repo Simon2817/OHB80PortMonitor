@@ -19,9 +19,7 @@
         <RetryCount>0</RetryCount>
         <CommandSet>
             <Command ref="ReadFoupStatus"/>
-            <Command ref="ReadIdlePurgeEnable"/>
-            <Command ref="ReadIdlePurgeStatus"/>
-            <Command ref="ReadIdlePurgeWorkingTime"/>
+            <Command ref="ReadIdlePurgeAll"/>
         </CommandSet>
     </PeriodicCommands>
 
@@ -114,7 +112,31 @@
         </Command>
         
         <!-- ========================================
-             6. 功能码 04 — 读输入寄存器（单寄存器）
+             6. 功能码 04 — 读输入寄存器（三寄存器合并帧）
+             合并查询 idle purge 使能 / 状态 / 工作计时时间
+             Request : 01 04 00 1D 00 03 CRC
+             Response: 01 04 06 CH1_H CH1_L CH2_H CH2_L CH3_H CH3_L CRC
+               CH_1 (0x001D): Idle Purge 使能 (1=开启, 0=关闭)
+               CH_2 (0x001E): Idle Purge 状态
+               CH_3 (0x001F): Idle Purge 工作计时时间
+             ======================================== -->
+        <Command id="ReadIdlePurgeAll">
+            <request>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <StartAddr>00 1D</StartAddr>
+                <RegisterCount>00 03</RegisterCount>
+            </request>
+            <respond>
+                <SlaveAddr>01</SlaveAddr>
+                <Function>04</Function>
+                <ByteCount>06</ByteCount>
+                <RegisterValue>00 00 00 00 00 00</RegisterValue>
+            </respond>
+        </Command>
+
+        <!-- ========================================
+             6a. 功能码 04 — 读输入寄存器（单寄存器，保留备用）
              查询 idle purge 使能
              请求帧: 01 04 00 1D 00 01 A1 CC
              响应帧: 01 04 02 XX XX
@@ -135,7 +157,7 @@
         </Command>
 
         <!-- ========================================
-             7. 功能码 04 — 读输入寄存器（单寄存器）
+             7. 功能码 04 — 读输入寄存器（单寄存器，保留备用）
              查询 idle purge 状态
              请求帧: 01 04 00 1E 00 01 51 CC
              响应帧: 01 04 02 XX XX
@@ -156,7 +178,7 @@
         </Command>
 
         <!-- ========================================
-             8. 功能码 04 — 读输入寄存器（单寄存器）
+             8. 功能码 04 — 读输入寄存器（单寄存器，保留备用）
              idle purge 工作计时时间查询
              请求帧: 01 04 00 1F 00 01 00 0C
              响应帧: 01 04 02 XX XX

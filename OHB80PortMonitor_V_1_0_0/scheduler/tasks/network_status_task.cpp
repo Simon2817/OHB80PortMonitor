@@ -9,6 +9,7 @@
 #include "loggermanager.h"
 #include "classes/foupofohbinfo.h"
 #include "ui/customwidget/alarmloggerwidget/alarmid.h"
+#include "ui/customwidget/runningloggerwidget/runningloggercollector.h"
 
 #include <QDebug>
 
@@ -257,7 +258,17 @@ void NetworkStatusTask::submitWriteQRCode(const QString &masterId)
     data.append(static_cast<char>((qrcodeValue >> 16) & 0xFF));
     data.append(static_cast<char>((qrcodeValue >> 8) & 0xFF));
     data.append(static_cast<char>(qrcodeValue & 0xFF));
-    cmd.response.registerValue = data;
+    // 更新请求寄存器数据
+    cmd.request.registerValue = data;
+    cmd.request.byteCount     = static_cast<quint8>(data.size());
+
+    // 同步更新 rawBytes 中的数据段（FC 0x10，数据从偏移 7 开始，共 4 字节）
+    if (cmd.request.functionCode == 0x10
+        && cmd.request.rawBytes.size() >= 7 + 4
+        && data.size() == 4) {
+        for (int i = 0; i < 4; ++i)
+            cmd.request.rawBytes[7 + i] = data[i];
+    }
 
     // 记录待处理指令
     m_writeQRCodePendingMap[cmd.uuid] = masterId;
@@ -265,6 +276,8 @@ void NetworkStatusTask::submitWriteQRCode(const QString &masterId)
     qDebug() << "[Scheduler][NetworkStatusTask] 下发 WriteQRCode masterId=" << masterId << "value=" << qrcodeValue << "uuid=" << cmd.uuid;
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
         QString("[Scheduler][NetworkStatusTask] 下发 WriteQRCode masterId=%1 value=%2 uuid=%3").arg(masterId).arg(qrcodeValue).arg(cmd.uuid).toStdString());
+    RunningLoggerCollector::instance()->logMessage(
+        QString("[WriteQRCode] Device %1 → QRCode=%2").arg(masterId).arg(qrcodeValue));
 
     // 连接信号监听响应
     ModbusCommandSender *sender = master->sender();

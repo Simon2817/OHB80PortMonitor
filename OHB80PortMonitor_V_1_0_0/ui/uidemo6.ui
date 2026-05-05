@@ -707,10 +707,9 @@ background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #00326B,stop:1 
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>CommunicatePage</class>
-   <extends>QWidget</extends>
-   <header>communicatepage.h</header>
-   <container>1</container>
+   <class>UserAccountLabel</class>
+   <extends>QLabel</extends>
+   <header>useraccountlabel.h</header>
   </customwidget>
   <customwidget>
    <class>RunningLoggerWidget</class>
@@ -719,9 +718,10 @@ background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #00326B,stop:1 
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>UserAccountLabel</class>
-   <extends>QLabel</extends>
-   <header>useraccountlabel.h</header>
+   <class>CommunicatePage</class>
+   <extends>QWidget</extends>
+   <header>communicatepage.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

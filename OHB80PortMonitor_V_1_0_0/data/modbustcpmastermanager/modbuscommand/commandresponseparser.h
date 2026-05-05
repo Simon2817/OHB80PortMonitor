@@ -62,6 +62,10 @@ private:
     // CH_1(0-1)：计时时长（秒）
     static QVariantMap parseReadIdlePurgeWorkingTime(const ModbusCommand& cmd);
 
+    // ReadIdlePurgeAll：3个寄存器合并帧，6字节
+    // CH_1(0-1)：idlePurgeEnabled   CH_2(2-3)：idleState   CH_3(4-5)：idleWorkingTimeSec
+    static QVariantMap parseReadIdlePurgeAll(const ModbusCommand& cmd);
+
     QMap<QString, ParseFunc> m_parsers;
 };
 
