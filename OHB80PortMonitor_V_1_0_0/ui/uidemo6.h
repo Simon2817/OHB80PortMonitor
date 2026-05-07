@@ -33,6 +33,8 @@ public:
     bool getDoubleClickMaximize() const;
     // 注册控件权限（需要在 UIDemo6 构造后调用）
     void registerWidgetPermissions();
+    // 连接 TipLabelTask 信号到 scrollingTipLabel（需要在 initScheduler 后调用）
+    void connectTipLabelTask();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

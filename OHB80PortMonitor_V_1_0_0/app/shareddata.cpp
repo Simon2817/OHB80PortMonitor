@@ -8,6 +8,7 @@
 #include "scheduler/tasks/monitor_data_task.h"
 #include "scheduler/tasks/alarm_dispatch_task.h"
 #include "scheduler/tasks/running_logger_task.h"
+#include "scheduler/tasks/tip_label_task.h"
 #include <QDebug>
 #include <QHash>
 
@@ -17,6 +18,7 @@ NetworkStatusTask* SharedData::s_networkStatusTask = nullptr;
 MonitorDataTask* SharedData::s_monitorDataTask = nullptr;
 AlarmDispatchTask* SharedData::s_alarmDispatchTask = nullptr;
 RunningLoggerTask* SharedData::s_runningLoggerTask = nullptr;
+TipLabelTask* SharedData::s_tipLabelTask = nullptr;
 
 SharedData::SharedData() {
 
@@ -155,6 +157,13 @@ void SharedData::initScheduler()
         qDebug() << "[SharedData] 已提交运行日志采集任务, TaskID:" << id;
     }
 
+    // 提交滚动公告栏数据采集任务（长驻）
+    if (!s_tipLabelTask) {
+        s_tipLabelTask = new TipLabelTask();
+        QString id = scheduler->submitTask(s_tipLabelTask);
+        qDebug() << "[SharedData] 已提交滚动公告栏任务, TaskID:" << id;
+    }
+
     qDebug() << "[SharedData] 调度器已启动，所有常驻任务已提交";
 }
 
@@ -176,4 +185,9 @@ AlarmDispatchTask* SharedData::getAlarmDispatchTask()
 RunningLoggerTask* SharedData::getRunningLoggerTask()
 {
     return s_runningLoggerTask;
+}
+
+TipLabelTask* SharedData::getTipLabelTask()
+{
+    return s_tipLabelTask;
 }

@@ -22,7 +22,8 @@ HEADERS += \
     $$PWD/tasks/read_vefc_flow_unit_medium_status_task.h \
     $$PWD/tasks/alarm_dispatch_task.h \
     $$PWD/tasks/running_logger_task.h \
-    $$PWD/tasks/user_management_task.h
+    $$PWD/tasks/user_management_task.h \
+    $$PWD/tasks/tip_label_task.h
 
 SOURCES += \
     $$PWD/scheduler.cpp \
@@ -45,4 +46,5 @@ SOURCES += \
     $$PWD/tasks/read_vefc_flow_unit_medium_status_task.cpp \
     $$PWD/tasks/alarm_dispatch_task.cpp \
     $$PWD/tasks/running_logger_task.cpp \
-    $$PWD/tasks/user_management_task.cpp
+    $$PWD/tasks/user_management_task.cpp \
+    $$PWD/tasks/tip_label_task.cpp

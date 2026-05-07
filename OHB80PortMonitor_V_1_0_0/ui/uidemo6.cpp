@@ -5,6 +5,9 @@
 #include "alarmpage.h"
 #include "app.h"
 #include "usermanager.h"
+#include "app/shareddata.h"
+#include "scheduler/tasks/tip_label_task.h"
+#include "ui/customwidget/scrollingtiplabel/scrollingtiplabel.h"
 
 UIDemo6::UIDemo6(QWidget *parent) :
     QDialog(parent),
@@ -139,6 +142,27 @@ void UIDemo6::setDoubleClickMaximize(bool enabled)
 bool UIDemo6::getDoubleClickMaximize() const
 {
     return this->doubleClickMaximize;
+}
+
+void UIDemo6::connectTipLabelTask()
+{
+    TipLabelTask* task = SharedData::getTipLabelTask();
+    if (!task) {
+        qWarning() << "[UIDemo6] TipLabelTask not available, skip connection";
+        return;
+    }
+
+    connect(task, &TipLabelTask::alarmLogReady,
+            ui->scrollingTipLabel, &ScrollingTipLabel::submitAlarmLog,
+            Qt::QueuedConnection);
+    connect(task, &TipLabelTask::alarmResolvedReady,
+            ui->scrollingTipLabel, &ScrollingTipLabel::submitAlarmResolved,
+            Qt::QueuedConnection);
+    connect(task, &TipLabelTask::operationLogReady,
+            ui->scrollingTipLabel, &ScrollingTipLabel::submitOperationLog,
+            Qt::QueuedConnection);
+
+    qDebug() << "[UIDemo6] TipLabelTask signals connected to scrollingTipLabel";
 }
 
 void UIDemo6::registerWidgetPermissions()

@@ -11,6 +11,7 @@ class NetworkStatusTask;
 class MonitorDataTask;
 class AlarmDispatchTask;
 class RunningLoggerTask;
+class TipLabelTask;
 
 class SharedData
 {
@@ -43,12 +44,16 @@ public:
     // 获取运行日志采集任务（logMessage / logWarn / logError 入口）
     static RunningLoggerTask* getRunningLoggerTask();
 
+    // 获取滚动公告栏数据采集任务（submitAlarmLog / submitAlarmResolved / submitOperationLog 入口）
+    static TipLabelTask* getTipLabelTask();
+
 private:
     static bool s_modbusManagerInitialized;
     static NetworkStatusTask* s_networkStatusTask;
     static MonitorDataTask* s_monitorDataTask;
     static AlarmDispatchTask* s_alarmDispatchTask;
     static RunningLoggerTask* s_runningLoggerTask;
+    static TipLabelTask* s_tipLabelTask;
 };
 
 #endif // SHAREDDATA_H

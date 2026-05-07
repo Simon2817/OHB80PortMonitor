@@ -9,7 +9,7 @@
 ## 更新日志
 
 ### 2026-05-07 - Simon
-**新增 ScrollingTipLabel 控件：滚动公告栏**
+**新增 ScrollingTipLabel 控件与 TipLabelTask 调度任务**
 
 #### 修改内容
 
@@ -34,6 +34,29 @@
 - `submitAlarmResolved(int alarmRecordId)` - 提交警报已解决
 - `submitOperationLog(const QStringList& operationLog)` - 提交操作日志
 
+**5. 新增 TipLabelTask 调度任务**
+- 位置：`scheduler/tasks/tip_label_task.h`、`tip_label_task.cpp`
+- 功能：为 ScrollingTipLabel 提供生产者-消费者模式的日志采集任务
+- 继承自 SchedulerTask，运行在调度器线程中
+- 提供与 ScrollingTipLabel 相同的公开接口（submitAlarmLog / submitAlarmResolved / submitOperationLog）
+- 内部队列线程安全，支持任意线程调用
+- 使用无锁 swap 技巧减少锁持有时间：O(1) 交换 + 无锁处理
+- 通过信号将记录转发给 ScrollingTipLabel，调用方无需知道 UI 控件的存在
+
+**6. TipLabelTask 公开接口**
+- `submitAlarmLog(const QStringList& operationLog, int alarmRecordId)` - 提交警报日志（线程安全）
+- `submitAlarmResolved(int alarmRecordId)` - 提交警报已解决（线程安全）
+- `submitOperationLog(const QStringList& operationLog)` - 提交操作日志（线程安全）
+
+**7. TipLabelTask 信号**
+- `alarmLogReady(QStringList, int)` - 警报日志就绪
+- `alarmResolvedReady(int)` - 警报已解决
+- `operationLogReady(QStringList)` - 操作日志就绪
+
+**8. 使用方式**
+- 业务侧调用：`SharedData::getTipLabelTask()->submitXxx(...)`
+- UI 端连接：`UIDemo6::connectTipLabelTask()` 将信号连接到 `scrollingTipLabel`
+
 #### 影响范围
 - 新增文件：
   - `ui/customwidget/scrollingtiplabel/scrollingtiplabel.h`
@@ -41,8 +64,15 @@
   - `ui/customwidget/scrollingtiplabel/scrollingtiplabel.pri`
   - `docs/api/scrollingtiplabel.md`
   - `docs/realize/scrollingtiplabel.md`
+  - `scheduler/tasks/tip_label_task.h`
+  - `scheduler/tasks/tip_label_task.cpp`
+  - `docs/api/tip_label_task.md`
+  - `docs/realize/tip_label_task.md`
 - 修改文件：
   - `ui/customwidget/customwidget.pri`（添加 scrollingtiplabel 模块引用）
+  - `scheduler/scheduler.pri`（添加 tip_label_task 文件）
+  - `app/shareddata.h`、`app/shareddata.cpp`（注册 TipLabelTask 到调度器）
+  - `ui/uidemo6.h`、`ui/uidemo6.cpp`（添加 connectTipLabelTask 方法）
 
 ---
 
