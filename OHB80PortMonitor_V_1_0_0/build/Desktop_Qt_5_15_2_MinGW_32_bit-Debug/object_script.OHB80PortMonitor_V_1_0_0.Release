@@ -69,6 +69,7 @@ release/useraccountlabel.o
 release/paginationwidget.o
 release/waitdialog.o
 release/datetimesetdialog.o
+release/scrollingtiplabel.o
 release/scheduler.o
 release/alarmlogquerytask.o
 release/communicatelogquerytask.o
@@ -170,6 +171,7 @@ release/moc_useraccountlabel.o
 release/moc_paginationwidget.o
 release/moc_waitdialog.o
 release/moc_datetimesetdialog.o
+release/moc_scrollingtiplabel.o
 release/moc_scheduler_task.o
 release/moc_scheduler.o
 release/moc_alarmlogquerytask.o

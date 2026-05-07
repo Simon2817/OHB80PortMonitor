@@ -139,6 +139,25 @@ image:None;
        </widget>
       </item>
       <item>
+       <widget class="ScrollingTipLabel" name="scrollingTipLabel">
+        <property name="minimumSize">
+         <size>
+          <width>500</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>500</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -700,6 +719,11 @@ background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #00326B,stop:1 
    <extends>QWidget</extends>
    <header>communicatepage.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ScrollingTipLabel</class>
+   <extends>QLabel</extends>
+   <header>scrollingtiplabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

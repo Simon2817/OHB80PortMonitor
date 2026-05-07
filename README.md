@@ -8,6 +8,44 @@
 
 ## 更新日志
 
+### 2026-05-07 - Simon
+**新增 ScrollingTipLabel 控件：滚动公告栏**
+
+#### 修改内容
+
+**1. 新增 ScrollingTipLabel 控件**
+- 位置：`ui/customwidget/scrollingtiplabel/`
+- 功能：实时显示系统操作日志和警报日志
+- 继承自 QLabel，支持滚动显示消息
+
+**2. 核心功能**
+- 警报优先显示：警报队列不空时优先显示最后一个警报
+- 消息消除机制：通过警报记录 ID 或操作日志替换实现消息更新
+- 滚动显示：文本长度超过控件宽度时自动滚动显示
+- 自动隐藏：无消息时自动隐藏控件，有消息时自动显示
+
+**3. 样式切换**
+- 警报模式：红色背景（#fff5f5）、红色边框（#ff6b6b）、红色文字（#c92a2a）、加粗字体
+- 普通模式：浅灰色背景（#f8f9fa）、灰色边框（#dee2e6）、深灰色文字（#495057）
+- 样式根据当前显示的消息类型自动切换
+
+**4. 公开接口**
+- `submitAlarmLog(const QStringList& operationLog, int alarmRecordId)` - 提交警报日志
+- `submitAlarmResolved(int alarmRecordId)` - 提交警报已解决
+- `submitOperationLog(const QStringList& operationLog)` - 提交操作日志
+
+#### 影响范围
+- 新增文件：
+  - `ui/customwidget/scrollingtiplabel/scrollingtiplabel.h`
+  - `ui/customwidget/scrollingtiplabel/scrollingtiplabel.cpp`
+  - `ui/customwidget/scrollingtiplabel/scrollingtiplabel.pri`
+  - `docs/api/scrollingtiplabel.md`
+  - `docs/realize/scrollingtiplabel.md`
+- 修改文件：
+  - `ui/customwidget/customwidget.pri`（添加 scrollingtiplabel 模块引用）
+
+---
+
 ### 2026-05-06 - Simon
 **日志系统重构：以 SQLite 数据库替换三套旧 CSV 日志模块**
 

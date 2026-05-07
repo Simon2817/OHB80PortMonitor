@@ -67,4 +67,9 @@ INCLUDEPATH += $$PWD/waitdialog
 #datetimesetdialog
 include ($$PWD/datetimesetdialog/datetimesetdialog.pri)
 INCLUDEPATH += $$PWD/datetimesetdialog
+
+#scrollingtiplabel
+include ($$PWD/scrollingtiplabel/scrollingtiplabel.pri)
+INCLUDEPATH += $$PWD/scrollingtiplabel
+
 FORMS +=

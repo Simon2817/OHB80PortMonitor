@@ -69,6 +69,7 @@ debug/useraccountlabel.o
 debug/paginationwidget.o
 debug/waitdialog.o
 debug/datetimesetdialog.o
+debug/scrollingtiplabel.o
 debug/scheduler.o
 debug/alarmlogquerytask.o
 debug/communicatelogquerytask.o
@@ -170,6 +171,7 @@ debug/moc_useraccountlabel.o
 debug/moc_paginationwidget.o
 debug/moc_waitdialog.o
 debug/moc_datetimesetdialog.o
+debug/moc_scrollingtiplabel.o
 debug/moc_scheduler_task.o
 debug/moc_scheduler.o
 debug/moc_alarmlogquerytask.o

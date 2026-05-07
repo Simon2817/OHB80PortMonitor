@@ -27,6 +27,7 @@
 #include "configpage.h"
 #include "debugpage.h"
 #include "homepage.h"
+#include "scrollingtiplabel.h"
 #include "useraccountlabel.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,6 +40,7 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QLabel *labIco;
     QLabel *labTitle;
+    ScrollingTipLabel *scrollingTipLabel;
     QSpacerItem *horizontalSpacer;
     UserAccountLabel *useraccountLab;
     QWidget *widgetMenu;
@@ -135,6 +137,13 @@ public:
         labTitle->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         horizontalLayout_2->addWidget(labTitle);
+
+        scrollingTipLabel = new ScrollingTipLabel(widgetTitle);
+        scrollingTipLabel->setObjectName(QString::fromUtf8("scrollingTipLabel"));
+        scrollingTipLabel->setMinimumSize(QSize(500, 0));
+        scrollingTipLabel->setMaximumSize(QSize(500, 35));
+
+        horizontalLayout_2->addWidget(scrollingTipLabel);
 
         horizontalSpacer = new QSpacerItem(20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
@@ -406,6 +415,7 @@ public:
         UIDemo6->setWindowTitle(QCoreApplication::translate("UIDemo6", "Dialog", nullptr));
         labIco->setText(QString());
         labTitle->setText(QString());
+        scrollingTipLabel->setText(QString());
         btnMenu->setText(QString());
 #if QT_CONFIG(tooltip)
         btnMenu_Min->setToolTip(QCoreApplication::translate("UIDemo6", "\346\234\200\345\260\217\345\214\226", nullptr));

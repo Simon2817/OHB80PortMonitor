@@ -248,6 +248,7 @@ Makefile: ../../OHB80PortMonitor_V_1_0_0.pro C:/Qt/5.15.2/mingw81_32/mkspecs/win
 		../../ui/customwidget/paginationwidget/paginationwidget.pri \
 		../../ui/customwidget/waitdialog/waitdialog.pri \
 		../../ui/customwidget/datetimesetdialog/datetimesetdialog.pri \
+		../../ui/customwidget/scrollingtiplabel/scrollingtiplabel.pri \
 		../../ui/customwidget/customwidget.pri \
 		../../ui/ui.pri \
 		../../scheduler/scheduler.pri \
@@ -476,6 +477,7 @@ C:/Qt/5.15.2/mingw81_32/mkspecs/features/win32/default_pre.prf:
 ../../ui/customwidget/paginationwidget/paginationwidget.pri:
 ../../ui/customwidget/waitdialog/waitdialog.pri:
 ../../ui/customwidget/datetimesetdialog/datetimesetdialog.pri:
+../../ui/customwidget/scrollingtiplabel/scrollingtiplabel.pri:
 ../../ui/customwidget/customwidget.pri:
 ../../ui/ui.pri:
 ../../scheduler/scheduler.pri:
