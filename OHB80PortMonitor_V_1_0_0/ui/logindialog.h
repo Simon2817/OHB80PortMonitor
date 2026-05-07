@@ -6,6 +6,8 @@
 #include <QPushButton>
 #include <QLabel>
 
+enum class UserPermission;
+
 class LoginDialog : public QDialog
 {
     Q_OBJECT
@@ -22,6 +24,8 @@ public:
 private slots:
     void onLoginClicked();
     void onCancelClicked();
+    void onLoginSucceeded(const QString& username, UserPermission permission);
+    void onLoginFailed(const QString& reason);
 
 private:
     void setupUI();

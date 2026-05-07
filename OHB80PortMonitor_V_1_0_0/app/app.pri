@@ -8,6 +8,7 @@ SOURCES += \
     $$PWD/metatypes.cpp
 
 HEADERS += \
+    $$PWD/alarmtype.h \
     $$PWD/app.h \
     $$PWD/appconfig.h \
     $$PWD/applogger.h \

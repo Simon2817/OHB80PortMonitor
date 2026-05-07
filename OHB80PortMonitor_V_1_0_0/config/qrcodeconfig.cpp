@@ -88,7 +88,7 @@ QVector<QString> QRCodeConfig::readMasterDevices() const
     
     for (const QString& item : items) {
         // 兼容中文逗号混入同一条目的情况
-        const QStringList subItems = QString(item).replace('，', ',').split(',', Qt::SkipEmptyParts);
+        const QStringList subItems = QString(item).replace("，", ",").split(',', Qt::SkipEmptyParts);
         for (const QString& sub : subItems) {
             QString deviceId = sub.trimmed();
             if (!deviceId.isEmpty()) {

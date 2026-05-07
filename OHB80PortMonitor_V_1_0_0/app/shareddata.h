@@ -9,6 +9,8 @@
 
 class NetworkStatusTask;
 class MonitorDataTask;
+class AlarmDispatchTask;
+class RunningLoggerTask;
 
 class SharedData
 {
@@ -35,10 +37,18 @@ public:
     // 获取监控数据任务
     static MonitorDataTask* getMonitorDataTask();
 
+    // 获取警报调度任务（所有 submitAlarm / submitResolve 入口）
+    static AlarmDispatchTask* getAlarmDispatchTask();
+
+    // 获取运行日志采集任务（logMessage / logWarn / logError 入口）
+    static RunningLoggerTask* getRunningLoggerTask();
+
 private:
     static bool s_modbusManagerInitialized;
     static NetworkStatusTask* s_networkStatusTask;
     static MonitorDataTask* s_monitorDataTask;
+    static AlarmDispatchTask* s_alarmDispatchTask;
+    static RunningLoggerTask* s_runningLoggerTask;
 };
 
 #endif // SHAREDDATA_H

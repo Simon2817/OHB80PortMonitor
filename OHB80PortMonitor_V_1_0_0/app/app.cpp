@@ -6,6 +6,7 @@
 #include "metatypes.h"
 #include "modbustcpmastermanager/modbustcpmastermanager.h"
 #include "scheduler/scheduler.h"
+#include "logdatabases/databasemanager.h"
 #include <qdir>
 #include <qstandardpaths>
 #include <qdebug>
@@ -51,6 +52,11 @@ bool App::initialize()
         qWarning() << "ModbusTcpMasterConfig.xml 配置文件加载失败，使用默认配置";
     }
 
+    // 初始化日志数据库（所有 LogDB::*LogDBCon 的入口）
+    if (!LogDB::DatabaseManager::instance().initialize(AppConfig::getInstance().getDatabaseDir())) {
+        qWarning() << "LogDB::DatabaseManager 初始化失败，日志数据库不可用";
+    }
+
     // 初始化共享数据
     getSharedData();
 
@@ -76,6 +82,9 @@ void App::cleanup()
     // 优雅关闭 Modbus 主控池（停止所有 Master、quit/wait 工作线程）
     // 必须在 QApplication 销毁前、日志关闭前执行
     ModbusTcpMasterManager::instance().shutdown();
+
+    // 关闭日志数据库（必须在 spdlog 关闭前，避免 worker 线程里的日志调用 use-after-free）
+    LogDB::DatabaseManager::instance().cleanup();
 
     // 关闭日志系统
     if (s_logger) {

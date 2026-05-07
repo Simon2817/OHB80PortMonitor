@@ -4,10 +4,14 @@
 #include "modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h"
 #include "modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h"
 #include "modbustcpmastermanager/modbuscommand/commandpool.h"
+#include "modbustcpmastermanager/modbuscommand/commandresponseparser.h"
+#include "logdatabases/databasemanager.h"
+#include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 
 #include <QDebug>
+#include <QDateTime>
 
 namespace {
 constexpr const char *kCmdStart = "StartSelfCheck";
@@ -261,6 +265,38 @@ void SH85SelfCheckTask::onCommandFinished(ModbusCommand cmd, const QString &mast
 
     const CmdKind kind = m_pendingMap.take(cmd.uuid);
     const bool ok = cmd.received && !cmd.timedOut && !cmd.checksumError && !cmd.deviceBusy;
+
+    // 写入通讯日志
+    {
+        const QString sentTimeStr = cmd.sentMs > 0
+            ? QDateTime::fromMSecsSinceEpoch(cmd.sentMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))
+            : QStringLiteral("-");
+        int execStatus = 3;
+        if (cmd.received)          execStatus = 0;
+        else if (cmd.timedOut)     execStatus = 1;
+        else if (cmd.sendCount > 1) execStatus = 2;
+        const int retryCount = qMax(0, cmd.sendCount - 1);
+        QString description;
+        if (execStatus != 0) {
+            description = cmd.errorMessage;
+        } else {
+            QVariantMap parsedData = CommandResponseParser::instance().parse(cmd);
+            if (!parsedData.isEmpty()) {
+                QStringList parts;
+                for (auto it = parsedData.constBegin(); it != parsedData.constEnd(); ++it)
+                    parts << QString("%1=%2").arg(it.key(), it.value().toString());
+                description = parts.join(", ");
+            }
+        }
+        if (LogDB::CommunicateLogDBCon *db = LogDB::DatabaseManager::instance().communicateLogCon()) {
+            const QString respTimeStr = cmd.responseMs > 0
+                ? QDateTime::fromMSecsSinceEpoch(cmd.responseMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))
+                : QString();
+            db->insertRecord(sentTimeStr, respTimeStr, cmd.id, masterId,
+                             execStatus, retryCount,
+                             cmd.request.rawBytes, cmd.response.rawBytes, description);
+        }
+    }
 
     qDebug() << "[Scheduler][SH85SelfCheckTask] 响应 kind="
              << (kind == CmdKind::StartSelfCheck ? "Start"

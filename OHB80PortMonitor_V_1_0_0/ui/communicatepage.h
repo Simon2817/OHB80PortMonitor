@@ -20,7 +20,7 @@ public:
 
 private slots:
     // 处理通讯完成信号，写入日志表
-    void onCommunicationCompleted(ModbusCommand cmd, QString masterId);
+    void onCommunicationCompleted(ModbusCommand cmd, QString masterId, QString description);
 
 private:
     Ui::CommunicatePage *ui;

@@ -8,8 +8,6 @@ namespace Ui {
 class AlarmPage;
 }
 
-class AlarmLoggerWidget;
-
 class AlarmPage : public QWidget
 {
     Q_OBJECT
@@ -17,8 +15,6 @@ class AlarmPage : public QWidget
 public:
     explicit AlarmPage(QWidget *parent = nullptr);
     ~AlarmPage();
-
-    AlarmLoggerWidget* alarmLogger() const;
 
 private slots:
     void onNetworkStatusChanged(ModbusConnecter::ConnectionStatus status, const QString &masterId);

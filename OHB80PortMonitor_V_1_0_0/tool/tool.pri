@@ -14,6 +14,4 @@ INCLUDEPATH += $$PWD/binfilereader
 include ($$PWD/communicationrecorder/communicationrecorder.pri)
 INCLUDEPATH += $$PWD/communicationrecorder
 
-# usermanager
-include ($$PWD/usermanager/usermanager.pri)
-INCLUDEPATH += $$PWD/usermanager
+# usermanager 已迁移至 data/usermanager

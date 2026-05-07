@@ -3,6 +3,8 @@
 #include "alarmlogicsystem.h"
 #include "alarminfo.h"
 #include "historycalendardialog/historycalendardialog.h"
+#include "logdatabases/databasemanager.h"
+#include "logdatabases/alarmlogdb/alarmlogdbcon.h"
 #include <algorithm>
 #include <QDate>
 #include <QDateTime>
@@ -240,6 +242,19 @@ void AlarmLoggerWidget::writeRecord(const AlarmInfo &info)
 
     m_idRowMap[info.alarmId()].append(row);
     m_table->scrollToBottom();
+
+    // 同步写入 AlarmLogDBCon（SQLite 持久化）
+    if (auto* db = LogDB::DatabaseManager::instance().alarmLogCon()) {
+        db->insertRecord(
+            static_cast<int>(info.level()),
+            info.sendTime(),
+            info.qrCode(),
+            alarmIdToString(info.alarmId()),
+            0,                  // is_resolved=0（发布时）
+            QString(),          // resolve_time 留空
+            1,                  // customer_visible 默认 1
+            info.message());
+    }
 }
 
 void AlarmLoggerWidget::resolveRecord(qint64 alarmId)
@@ -258,6 +273,11 @@ void AlarmLoggerWidget::resolveRecord(qint64 alarmId)
         setResolvedCell(row, true);
         m_table->item(row, headerToColumn(m_headerConfig.headers[5]))->setText(resolveTime);
         m_resolvedRows.append(row);
+    }
+
+    // 同步更新 AlarmLogDBCon：把同 alarmType 下未解决的行原位标为已解决
+    if (auto* db = LogDB::DatabaseManager::instance().alarmLogCon()) {
+        db->updateResolve(alarmIdToString(alarmId), resolveTime);
     }
 }
 

@@ -2,7 +2,7 @@
 #include "../settingwidget/settingitemwidget.h"
 #include "scheduler/scheduler.h"
 #include "qrcodeconfig.h"
-#include "customwidget/runningloggerwidget/runningloggercollector.h"
+#include "scheduler/tasks/running_logger_task.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 #include "app/shareddata.h"
@@ -178,7 +178,7 @@ void SH85SelfCheckSettingWidget::onAllFinished(bool success,
 
         const QString logMsg =
             QString("[SH85 Self-check] Failed on device %1: %2").arg(qrcode).arg(friendly);
-        RunningLoggerCollector::instance()->logMessage(logMsg);
+        SharedData::getRunningLoggerTask()->logMessage(logMsg);
     }
 
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(),

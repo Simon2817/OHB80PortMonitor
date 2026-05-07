@@ -29,10 +29,14 @@ signals:
      * @brief 通讯完成信号（每条指令完成后发射，包含成功/失败/超时）
      * @param cmd 指令对象（含请求帧、响应帧、发送/响应时间等）
      * @param masterId 对应的 Master ID（qrCode）
+     * @param description 描述字段（失败时为错误信息，成功时为解析后的字段值）
      */
-    void communicationCompleted(ModbusCommand cmd, QString masterId);
+    void communicationCompleted(ModbusCommand cmd, QString masterId, QString description);
 
 private slots:
+    // 接收 CommunicationRecorder 的 shouldEmit 信号，写入数据库
+    void onCommunicationRecorded(ModbusCommand cmd, const QString& masterId);
+
     // 接收 PeriodicCommandSender 的 commandCompleted 信号
     // masterId 参数通过 lambda 捕获传入，对应 FoupOfOHBInfo 的 qrCode
     void onCommandCompleted(ModbusCommand cmd, const QString& masterId);

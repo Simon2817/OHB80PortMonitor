@@ -4,13 +4,17 @@
 #include "modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h"
 #include "modbustcpmastermanager/modbustcpmaster/modbusconnecter.h"
 #include "modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h"
+#include "modbustcpmastermanager/modbuscommand/commandresponseparser.h"
 #include "app/shareddata.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 #include "classes/setofohbinfo.h"
 #include "classes/foupofohbinfo.h"
+#include "logdatabases/databasemanager.h"
+#include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 
 #include <QDebug>
+#include <QDateTime>
 
 MonitorDataTask::MonitorDataTask(QObject *parent)
     : SchedulerTask(parent)
@@ -20,9 +24,9 @@ MonitorDataTask::MonitorDataTask(QObject *parent)
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
         "=============================MonitorDataTask 调度任务开始=============================");
 
-    // 采集器的 shouldEmit 信号转发为 MonitorDataTask 的 communicationCompleted 信号
+    // 采集器的 shouldEmit 信号连接到 onCommunicationRecorded 槽函数（写入数据库）
     connect(m_recorder, &CommunicationRecorder::shouldEmit,
-            this, &MonitorDataTask::communicationCompleted);
+            this, &MonitorDataTask::onCommunicationRecorded);
 }
 
 MonitorDataTask::~MonitorDataTask()
@@ -96,6 +100,70 @@ void MonitorDataTask::stop()
     emit finished(false, "监控任务被取消");
     qDebug() << "[Scheduler][MonitorDataTask] 已停止";
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, "[Scheduler][MonitorDataTask] 已停止");
+}
+
+void MonitorDataTask::onCommunicationRecorded(ModbusCommand cmd, const QString& masterId)
+{
+    // 计算响应时间（ms）：发送到接收的时间差
+    qint64 responseTimeMs = 0;
+    if (cmd.sentMs > 0 && cmd.responseMs > 0) {
+        responseTimeMs = cmd.responseMs - cmd.sentMs;
+    }
+
+    // 将发送时刻格式化为可读字符串
+    QString sentTimeStr = cmd.sentMs > 0
+        ? QDateTime::fromMSecsSinceEpoch(cmd.sentMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))
+        : QStringLiteral("-");
+
+    // exec_status：0=Success / 1=Timeout / 2=Retry / 3=Send Failed
+    int execStatus = 3;
+    if (cmd.received) {
+        execStatus = 0;
+    } else if (cmd.timedOut) {
+        execStatus = 1;
+    } else if (cmd.sendCount > 1) {
+        execStatus = 2;
+    }
+
+    const int retryCount = qMax(0, cmd.sendCount - 1);
+
+    // description 字段：失败时写入 errorMessage，成功时解析响应字段
+    QString description;
+    if (execStatus != 0) {
+        // 执行失败：写入错误信息
+        description = cmd.errorMessage;
+    } else {
+        // 执行成功：解析响应字段
+        QVariantMap parsedData = CommandResponseParser::instance().parse(cmd);
+        if (!parsedData.isEmpty()) {
+            QStringList parts;
+            for (auto it = parsedData.constBegin(); it != parsedData.constEnd(); ++it) {
+                parts << QString("%1=%2").arg(it.key(), it.value().toString());
+            }
+            description = parts.join(", ");
+        }
+    }
+
+    // 写入 CommunicateLogDBCon（SQLite 持久化）
+    if (LogDB::CommunicateLogDBCon* db = LogDB::DatabaseManager::instance().communicateLogCon()) {
+        QString respTimeStr = cmd.responseMs > 0
+            ? QDateTime::fromMSecsSinceEpoch(cmd.responseMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))
+            : QString();
+
+        db->insertRecord(
+            sentTimeStr,
+            respTimeStr,
+            cmd.id,
+            masterId,
+            execStatus,
+            retryCount,
+            cmd.request.rawBytes,
+            cmd.response.rawBytes,
+            description);
+    }
+
+    // 转发 communicationCompleted 信号供 UI 更新实时日志
+    emit communicationCompleted(cmd, masterId, description);
 }
 
 void MonitorDataTask::onCommandCompleted(ModbusCommand cmd, const QString& masterId)

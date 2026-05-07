@@ -32,3 +32,4 @@ SOURCES += \
 #customwidget
 include ($$PWD/customwidget/customwidget.pri)
 INCLUDEPATH += $$PWD/customwidget
+

@@ -241,7 +241,7 @@ private:
     std::string format_message(const std::string& fmt, Args&&... args) {
         std::string result = fmt;
         size_t pos = 0;
-        auto replace_one = [&](auto&& arg) {
+        [[maybe_unused]] auto replace_one = [&](auto&& arg) {
             size_t ph = result.find("{}", pos);
             if (ph != std::string::npos) {
                 std::ostringstream oss;

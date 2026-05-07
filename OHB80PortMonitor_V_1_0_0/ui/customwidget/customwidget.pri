@@ -24,24 +24,47 @@ INCLUDEPATH += $$PWD/configsettingwidget
 include ($$PWD/loggerwidget/loggerwidget.pri)
 INCLUDEPATH += $$PWD/loggerwidget
 
-# alarmloggerwidget
-include ($$PWD/alarmloggerwidget/alarmloggerwidget.pri)
-INCLUDEPATH += $$PWD/alarmloggerwidget
+# alarmloggerwidget [DEPRECATED] 警报生命周期现由 AlarmDispatchTask + AlarmLogDBCon 接管
+# include ($$PWD/alarmloggerwidget/alarmloggerwidget.pri)
+# INCLUDEPATH += $$PWD/alarmloggerwidget
+
+# alarmlogwidget
+include ($$PWD/alarmlogwidget/alarmlogwidget.pri)
+INCLUDEPATH += $$PWD/alarmlogwidget
 
 # historycalendardialog
 include($$PWD/historycalendardialog/historycalendardialog.pri)
 INCLUDEPATH += $$PWD/historycalendardialog
 
-# communicateloggerwidget
-include($$PWD/communicateloggerwidget/communicateloggerwidget.pri)
-INCLUDEPATH += $$PWD/communicateloggerwidget
+# communicateloggerwidget [DEPRECATED] 由 ComunicateLogWidget + CommunicateLogDBCon 取代
+# include($$PWD/communicateloggerwidget/communicateloggerwidget.pri)
+# INCLUDEPATH += $$PWD/communicateloggerwidget
 
-# runningloggerwidget
-include($$PWD/runningloggerwidget/runningloggerwidget.pri)
-INCLUDEPATH += $$PWD/runningloggerwidget
+# comunicatelogwidget
+include($$PWD/comunicatelogwidget/comunicatelogwidget.pri)
+INCLUDEPATH += $$PWD/comunicatelogwidget
+
+# runningloggerwidget [DEPRECATED] 由 RunningLoggerTask + OperationLogDBCon 接管
+# include($$PWD/runningloggerwidget/runningloggerwidget.pri)
+# INCLUDEPATH += $$PWD/runningloggerwidget
+
+# operationlogwidget
+include($$PWD/operationlogwidget/operationlogwidget.pri)
+INCLUDEPATH += $$PWD/operationlogwidget
 
 # useraccountlabel
 include($$PWD/useraccountlabel/useraccountlabel.pri)
 INCLUDEPATH += $$PWD/useraccountlabel
 
+#paginationwidget
+include ($$PWD/paginationwidget/paginationwidget.pri)
+INCLUDEPATH += $$PWD/paginationwidget
+
+#waitdialog
+include ($$PWD/waitdialog/waitdialog.pri)
+INCLUDEPATH += $$PWD/waitdialog
+
+#datetimesetdialog
+include ($$PWD/datetimesetdialog/datetimesetdialog.pri)
+INCLUDEPATH += $$PWD/datetimesetdialog
 FORMS +=

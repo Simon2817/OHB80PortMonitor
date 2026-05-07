@@ -175,7 +175,7 @@ void Graph::DeviceMonitorWidget::refreshFoupMonitor()
     };
 
     // 将秒转换为 hh:mm:ss 格式（用于 IdleTime）
-    auto formatSecForIdle = [](quint16 sec) -> QString {
+    [[maybe_unused]] auto formatSecForIdle = [](quint16 sec) -> QString {
         int hours   = sec / 3600;
         int minutes = (sec % 3600) / 60;
         int seconds = sec % 60;

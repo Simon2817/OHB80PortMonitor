@@ -100,7 +100,7 @@ CraneMapWidget::CraneMapWidget(QWidget *parent)
     m_devicePool = new FrameDevicePool(this);
     
     // 连接滚动控制器信号
-    connect(m_scrollController, &ScrollController::scrollOffsetChanged, this, [this](const QPoint& newOffset) {
+    connect(m_scrollController, &ScrollController::scrollOffsetChanged, this, [this](const QPoint& /*newOffset*/) {
         // 只同步移动控件，不重新计算缩放（性能优化）
         syncDevicePositions();
         update();

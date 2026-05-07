@@ -2,6 +2,9 @@
 #include "runningloggercollector.h"
 #include "customlogger.h"
 #include "alarmid.h"
+#include "logdatabases/databasemanager.h"
+#include "logdatabases/operationlogdb/operationlogdbcon.h"
+#include "logdatabases/dbtypes.h"
 
 #include <QVBoxLayout>
 #include <QDateTime>
@@ -201,6 +204,25 @@ void RunningLoggerWidget::writeRecord(RunningLoggerWidget::MsgType type,
 
     if (!m_batchWriting)
         refreshDisplayText();
+
+    // 同步写入 OperationLogDBCon（SQLite 持久化）
+    if (auto* db = LogDB::DatabaseManager::instance().operationLogCon()) {
+        int logType = static_cast<int>(LogDB::OperationLogType::Message);
+        switch (type) {
+        case MsgType::Message: logType = static_cast<int>(LogDB::OperationLogType::Message); break;
+        case MsgType::Warn:    logType = static_cast<int>(LogDB::OperationLogType::Warn);    break;
+        case MsgType::Error:   logType = static_cast<int>(LogDB::OperationLogType::Error);   break;
+        }
+
+        // 把 qrCode / alarmId 拼到 description 以保留上下文
+        QString desc;
+        if (!qrCode.isEmpty())  desc += QStringLiteral("[%1]").arg(qrCode);
+        if (!alarmId.isEmpty()) desc += QStringLiteral("[%1]").arg(alarmId);
+        if (!desc.isEmpty())    desc += QLatin1Char(' ');
+        desc += message;
+
+        db->insertRecord(sendTime, logType, desc);
+    }
 }
 
 // =====================================================================

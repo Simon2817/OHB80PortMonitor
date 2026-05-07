@@ -2,7 +2,10 @@
 #include "logindialog.h"
 #include "changepassworddialog.h"
 #include "usermanager.h"
-#include "runningloggercollector.h"
+#include "scheduler/scheduler.h"
+#include "scheduler/tasks/user_management_task.h"
+#include "scheduler/tasks/running_logger_task.h"
+#include "app/shareddata.h"
 
 #include <QPixmap>
 #include <QMenu>
@@ -185,25 +188,42 @@ void UserAccountLabel::onLoginRequested()
 
 void UserAccountLabel::onLoginNewRequested()
 {
-    // 如果已登录，先退出当前账号并记录日志
+    // 如果已登录，先退出当前账号
     if (m_loginState == LoginState::LoggedIn && !m_currentUser.isEmpty()) {
-        const QString user = UserManager::instance()->currentUser();
-        UserManager::instance()->logout();
-        RunningLoggerCollector::instance()->logMessage(
-            QStringLiteral("User logout: ") + user);
-    }
+        auto* task = new UserManagementTask(this);
+        task->setLogout();
+        connect(task, &UserManagementTask::logoutSucceeded,
+                this, [this]() {
+                    SharedData::getRunningLoggerTask()->logMessage(
+                        QStringLiteral("User logout: ") + m_currentUser);
+                    // 登出成功后显示登录对话框
+                    LoginDialog dlg(this);
+                    dlg.exec();
+                });
+        connect(task, &UserManagementTask::finished,
+                task, &QObject::deleteLater);
 
-    // 显示登录对话框
-    LoginDialog dlg(this);
-    dlg.exec();
+        Scheduler::instance()->submitTask(task);
+    } else {
+        // 未登录，直接显示登录对话框
+        LoginDialog dlg(this);
+        dlg.exec();
+    }
 }
 
 void UserAccountLabel::onLogoutRequested()
 {
-    const QString user = UserManager::instance()->currentUser();
-    UserManager::instance()->logout();
-    RunningLoggerCollector::instance()->logMessage(
-        QStringLiteral("User logout: ") + user);
+    auto* task = new UserManagementTask(this);
+    task->setLogout();
+    connect(task, &UserManagementTask::logoutSucceeded,
+            this, [this]() {
+                SharedData::getRunningLoggerTask()->logMessage(
+                    QStringLiteral("User logout: ") + m_currentUser);
+            });
+    connect(task, &UserManagementTask::finished,
+            task, &QObject::deleteLater);
+
+    Scheduler::instance()->submitTask(task);
 }
 
 void UserAccountLabel::onChangePasswordRequested()

@@ -1,10 +1,9 @@
 #include "communicatepage.h"
-#include "customlogger.h"
 #include "ui_communicatepage.h"
 #include "app/shareddata.h"
 #include "scheduler/tasks/monitor_data_task.h"
-#include "modbustcpmastermanager/modbustcpmastermanager.h"
-#include "modbustcpmastermanager/modbuscommand/commandpool.h"
+#include "logdatabases/databasemanager.h"
+#include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 
 #include <QJsonObject>
 #include <QDateTime>
@@ -32,27 +31,15 @@ CommunicatePage::~CommunicatePage()
 
 void CommunicatePage::initCommLoggerWidget()
 {
-    // 配置日志根目录（表头由 CommunicateLoggerWidget 内部注册）
-    ui->commLoggerWidget->setRootPath(CustomLogger::CommunicationLoggerPath());
-
-    ui->commLoggerWidget->setPageSize(100);
-
-    // 单个 CSV 分片大小上限（字节）；超过即自动滚动新文件，便于后续按分片并发读取与剪枝
-    // 值越小：分片越多，读取越并行，但小文件数量增加；5MB 为经验折中
-    ui->commLoggerWidget->setMaxFileBytes(5 * 1024 * 1024);
-
-    // 预填充实时表格（每个 qrCode 一行），同时设置 qrcode 查询范围
-    ui->commLoggerWidget->initQrcodeList(SharedData::getAllQrcodes());
-
-    // 填充 CommandId 下拉框（用于历史查询）
-    if (CommandPool *pool = ModbusTcpMasterManager::instance().commandPool()) {
-        ui->commLoggerWidget->setCommandIds(pool->ids());
-    }
-
-    ui->commLoggerWidget->initialize();
+    // 新 ComunicateLogWidget 的 UI 选项（QRCode 范围 / Command ID 下拉等）
+    // 由 widget 内部统一处理；老 widget 的 setRootPath / setMaxFileBytes /
+    // initQrcodeList / setCommandIds / initialize 等接口已废弃，
+    // 持久化改由 LogDB::CommunicateLogDBCon 接管，live log 通过其
+    // recordInserted 信号自动渲染。
+    ui->commLoggerWidget->initUi();
 }
 
-void CommunicatePage::onCommunicationCompleted(ModbusCommand cmd, QString masterId)
+void CommunicatePage::onCommunicationCompleted(ModbusCommand cmd, QString masterId, QString description)
 {
     // 计算响应时间（ms）：发送到接收的时间差
     qint64 responseTimeMs = 0;
@@ -69,7 +56,36 @@ void CommunicatePage::onCommunicationCompleted(ModbusCommand cmd, QString master
         ? QDateTime::fromMSecsSinceEpoch(cmd.sentMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))
         : QStringLiteral("-");
 
-    // 写入日志（参数顺序对应 CommunicateLoggerWidget::kLiveHeaders）
-    ui->commLoggerWidget->writeLog(masterId, sentTimeStr, cmd.id,
-                                   QString::number(responseTimeMs), sendFrameHex, recvFrameHex);
+    QString respTimeStr = cmd.responseMs > 0
+        ? QDateTime::fromMSecsSinceEpoch(cmd.responseMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))
+        : QString();
+
+    // exec_status：0=Success / 1=Timeout / 2=Retry / 3=Send Failed
+    int execStatus = 3;
+    if (cmd.received) {
+        execStatus = 0;
+    } else if (cmd.timedOut) {
+        execStatus = 1;
+    } else if (cmd.sendCount > 1) {
+        execStatus = 2;
+    }
+
+    const int retryCount = qMax(0, cmd.sendCount - 1);
+
+    // 调用 ComunicateLogWidget::writeLog 更新实时日志（固定行数表格，按 qrcode 索引）
+    // description 由 MonitorDataTask::onCommunicationRecorded 解析并传递
+    ui->commLoggerWidget->writeLog(
+        masterId,
+        sentTimeStr,
+        respTimeStr,
+        cmd.id,
+        QString::number(responseTimeMs),
+        QString::number(execStatus),
+        QString::number(retryCount),
+        sendFrameHex,
+        recvFrameHex,
+        description
+    );
+
+    // 数据库写入已移至 MonitorDataTask::onCommunicationRecorded 中完成
 }

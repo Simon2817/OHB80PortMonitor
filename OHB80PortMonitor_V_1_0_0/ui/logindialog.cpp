@@ -1,6 +1,9 @@
 #include "logindialog.h"
 #include "usermanager.h"
-#include "runningloggercollector.h"
+#include "scheduler/scheduler.h"
+#include "scheduler/tasks/user_management_task.h"
+#include "scheduler/tasks/running_logger_task.h"
+#include "app/shareddata.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -77,24 +80,48 @@ void LoginDialog::onLoginClicked()
         return;
     }
 
-    // 调用 UserManager 进行登录验证
-    UserManager* mgr = UserManager::instance();
-    if (mgr->login(user, pwd)) {
-        RunningLoggerCollector::instance()->logMessage(
-            QStringLiteral("User login success: ") + user);
-        accept();  // 登录成功，关闭对话框
-    } else {
-        RunningLoggerCollector::instance()->logMessage(
-            QStringLiteral("User login failed: ") + user);
-        m_errorLabel->setText(QStringLiteral("Username or password is incorrect"));
-        m_errorLabel->setVisible(true);
-        m_passwordEdit->clear();
-    }
+    // 使用 UserManagementTask 进行登录验证
+    auto* task = new UserManagementTask(this);
+    task->setLogin(user, pwd);
+
+    connect(task, &UserManagementTask::loginSucceeded,
+            this, &LoginDialog::onLoginSucceeded);
+    connect(task, &UserManagementTask::loginFailed,
+            this, &LoginDialog::onLoginFailed);
+    connect(task, &UserManagementTask::finished,
+            this, [this](bool success, const QString&) {
+                m_loginBtn->setEnabled(true);
+                m_loginBtn->setText(QStringLiteral("Login"));
+            });
+    connect(task, &UserManagementTask::finished,
+            task, &QObject::deleteLater);
+
+    m_loginBtn->setEnabled(false);
+    m_loginBtn->setText(QStringLiteral("Logging in..."));
+
+    Scheduler::instance()->submitTask(task);
 }
 
 void LoginDialog::onCancelClicked()
 {
     reject();
+}
+
+void LoginDialog::onLoginSucceeded(const QString& username, UserPermission permission)
+{
+    Q_UNUSED(permission)
+    SharedData::getRunningLoggerTask()->logMessage(
+        QStringLiteral("User login success: ") + username);
+    accept();  // 登录成功，关闭对话框
+}
+
+void LoginDialog::onLoginFailed(const QString& reason)
+{
+    SharedData::getRunningLoggerTask()->logMessage(
+        QStringLiteral("User login failed: ") + m_usernameEdit->text().trimmed());
+    m_errorLabel->setText(reason);
+    m_errorLabel->setVisible(true);
+    m_passwordEdit->clear();
 }
 
 QString LoginDialog::username() const

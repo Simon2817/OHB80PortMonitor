@@ -139,22 +139,6 @@ image:None;
        </widget>
       </item>
       <item>
-       <widget class="RunningLoggerWidget" name="runningLoggerWidget" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>500</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>500</width>
-          <height>16777215</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -710,12 +694,6 @@ background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #00326B,stop:1 
    <class>UserAccountLabel</class>
    <extends>QLabel</extends>
    <header>useraccountlabel.h</header>
-  </customwidget>
-  <customwidget>
-   <class>RunningLoggerWidget</class>
-   <extends>QWidget</extends>
-   <header>runningloggerwidget.h</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>CommunicatePage</class>

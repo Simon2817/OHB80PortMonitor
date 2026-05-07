@@ -32,6 +32,14 @@ public:
     QString getQRCodeConfigPath() const;  // 获取二维码配置文件路径
     QString getUserInfoConfigPath() const; // 获取用户信息配置文件路径
     QString getModbusConfigPath() const;  // 获取 Modbus 配置文件路径
+
+    // 数据库相关路径
+    QString getDatabaseDir() const;                    // 获取数据库目录（可执行文件目录/databases）
+    QString getAlarmLogQueriesSqlPath() const;         // 获取 alarm_log_queries.sql 路径
+    QString getCommunicateLogQueriesSqlPath() const;   // 获取 communicate_log_queries.sql 路径
+    QString getCreateOperationLogSqlPath() const;      // 获取 create_operation_log.sql 路径
+    QString getDeviceParamLogQueriesSqlPath() const;   // 获取 device_param_log_queries.sql 路径
+    QString getOperationLogQueriesSqlPath() const;     // 获取 operation_log_queries.sql 路径
     
     // 配置文件操作
     void reload();
@@ -57,6 +65,7 @@ private:
     QString m_configDir;
     QString m_debugLogDir;
     QString m_userLogDir;
+    QString m_databaseDir;
     
     mutable NetworkConfig* m_networkConfig;
     mutable QRCodeConfig* m_qrCodeConfig;

@@ -11,9 +11,9 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "alarmlogwidget.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -21,7 +21,7 @@ class Ui_AlarmPage
 {
 public:
     QVBoxLayout *verticalLayout;
-    QLabel *label;
+    AlarmLogWidget *alarmLoggerWidget;
 
     void setupUi(QWidget *AlarmPage)
     {
@@ -29,12 +29,13 @@ public:
             AlarmPage->setObjectName(QString::fromUtf8("AlarmPage"));
         AlarmPage->resize(400, 300);
         verticalLayout = new QVBoxLayout(AlarmPage);
+        verticalLayout->setSpacing(3);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        label = new QLabel(AlarmPage);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setAlignment(Qt::AlignCenter);
+        verticalLayout->setContentsMargins(3, 3, 3, 3);
+        alarmLoggerWidget = new AlarmLogWidget(AlarmPage);
+        alarmLoggerWidget->setObjectName(QString::fromUtf8("alarmLoggerWidget"));
 
-        verticalLayout->addWidget(label);
+        verticalLayout->addWidget(alarmLoggerWidget);
 
 
         retranslateUi(AlarmPage);
@@ -45,7 +46,6 @@ public:
     void retranslateUi(QWidget *AlarmPage)
     {
         AlarmPage->setWindowTitle(QCoreApplication::translate("AlarmPage", "Form", nullptr));
-        label->setText(QCoreApplication::translate("AlarmPage", "Alarm Page", nullptr));
     } // retranslateUi
 
 };

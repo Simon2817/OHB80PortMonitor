@@ -3,7 +3,7 @@
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/set_humidity_offset_task.h"
 #include "app/shareddata.h"
-#include "customwidget/runningloggerwidget/runningloggercollector.h"
+#include "scheduler/tasks/running_logger_task.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 
@@ -201,7 +201,7 @@ void HumidityOffsetSettingWidget::submitTask(const QStringList &qrcodes,
                     const QString logMsg =
                         QString("[Humidity %1] Set %2%% failed on device(s): %3")
                             .arg(fieldName).arg(valuePct).arg(failList);
-                    RunningLoggerCollector::instance()->logMessage(logMsg);
+                    SharedData::getRunningLoggerTask()->logMessage(logMsg);
                 }
             });
 

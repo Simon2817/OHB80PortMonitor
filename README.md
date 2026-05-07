@@ -8,6 +8,94 @@
 
 ## 更新日志
 
+### 2026-05-06 - Simon
+**日志系统重构：以 SQLite 数据库替换三套旧 CSV 日志模块**
+
+#### 背景与动机
+
+旧三套日志模块（`AlarmLoggerWidget`、`CommunicateLoggerWidget`、`RunningLoggerWidget`/`LoggerWidget`）均基于 CSV 文件存储，存在以下问题：
+
+| 问题 | 说明 |
+|---|---|
+| 查询性能差 | 每次查询全量扫描 CSV，无索引支持，数据量大时翻页极慢 |
+| 历史范围查询难 | 旧模块按天分文件，跨天查询需读取并合并多个文件 |
+| 数据安全性低 | CSV 无事务保护，多线程并发写入易导致文件损坏 |
+| 结构分散难维护 | 三套 CSV 格式各异，代码重复，后续扩展字段成本高 |
+
+#### 修改内容
+
+**1. 新增 `data/logdatabases/` 数据层子系统**
+
+共享基础组件（均在 `LogDB` 命名空间下）：
+
+- **`DatabaseManager`**（单例）：统一管理全部数据库连接的初始化与清理，提供 4 个 DBCon 的访问入口
+- **`WriteSqlDBCon`**：专用写入线程 + 阻塞任务队列，所有日志模块共享同一写连接，保证写操作串行无竞争
+- **`DBConnectionHelper`**：SQLite 连接工具，默认启用 WAL 模式 + `synchronous=NORMAL` + `busyTimeout=5000ms`，读写性能与数据安全兼顾
+- **`SqlMapper`**：从外部 `.sql` 文件按 `-- ID=xxx` 注释解析 SQL 语句，通过 ID 字符串映射，彻底解耦硬编码 SQL
+- **`LogCleanupScheduler`**：通用定期清理调度器，每分钟检查一次，按可配置月份阈值（`retainMonths`）触发删除旧数据（`cleanupMonths`）
+- **`dbtypes.h`**：跨模块公共类型（`SortOrder`、`OperationLogType`、`WriteOp`、`WriteResult`）
+
+**2. 四个日志 DB 模块（每模块各含 SqlLogic + DBCon 两层）**
+
+| 新模块 | 替换旧模块 | 数据库表 | 关键字段 |
+|---|---|---|---|
+| `AlarmLogDBCon` | `AlarmLoggerWidget`（CSV） | `alarm_log` | alarm_level / occur_time / qr_code / alarm_type / is_resolved / resolve_time / customer_visible / description |
+| `CommunicateLogDBCon` | `CommunicateLoggerWidget`（CSV） | `communicate_log` | send_time / response_time / command_id / qr_code / exec_status / retry_count / send_frame / response_frame / description |
+| `OperationLogDBCon` | `RunningLoggerWidget`/`LoggerWidget`（CSV） | `operation_log` | occur_time / log_type / description |
+| `DeviceParamLogDBCon` | 无旧模块（新增） | `device_param_log` | qr_code / record_time / inlet_pressure / outlet_pressure / inlet_flow / humidity / temperature / foup_status |
+
+所有表均配套 `log_record_count` 计数缓存表，`queryTotalCount()` 直接读缓存，避免对大表做 `COUNT(*)`。
+
+`AlarmLogDBCon` 额外支持 `updateResolve()` 接口及对应 `recordResolved` 信号，实现警报原位已解决标记。
+
+**3. Scheduler 层 — 四个新任务**
+
+- **`AlarmLogQueryTask`**：警报日志多条件（级别 / qrCode / 类型 / 是否解决 / 客户可见 / 时间区间）分页查询任务
+- **`CommunicateLogQueryTask`**：通讯日志多条件（commandId / qrCode / 执行状态 / 重试次数 / 时间区间 / 排序方向）分页查询任务
+- **`OperationLogQueryTask`**：运行日志范围 + 条件分页查询任务，支持关键词高亮、全局顺序号显示、跨页 Pre/Next 跳转
+- **`RunningLoggerTask`**：运行日志采集常驻任务，取代旧 `RunningLoggerCollector`；业务侧任意线程调用 `logMessage / logWarn / logError` 直接落库，无需独立缓冲队列
+
+**4. UI 层 — 三个新控件替换旧控件**
+
+- **`AlarmLogWidget`**：警报日志控件，含实时表（订阅 `recordInserted`/`recordResolved`）+ 历史条件查询 + 分页；支持启动时加载上次未解决警报
+- **`ComunicateLogWidget`**：通讯日志控件，含实时表（固定行，按 qrcode 更新）+ 历史条件查询 + 分页
+- **`OperationLogWidget`**：运行日志控件，含实时表 + 历史高级查询（时间范围 / 日志类型 / 关键词 / 命中行高亮 / 上一条下一条跨页跳转）
+
+> 旧模块（`AlarmLoggerWidget`、`CommunicateLoggerWidget`、`RunningLoggerWidget`/`LoggerWidget`）代码仍保留在工程中，但已不再集成使用。
+
+**5. SQL 文件（`bin/x32/databases/` 与 `bin/x64/databases/`）**
+
+- `create_operation_log.sql`：建表语句（4 张日志表 + `log_record_count` 计数缓存表 + 触发器）
+- `alarm_log_queries.sql`：警报日志查询语句集（分页条件查询 / 总数 / 插入 / 删除 / update_resolve / 时间边界）
+- `communicate_log_queries.sql`：通讯日志查询语句集
+- `operation_log_queries.sql`：运行日志查询语句集（含 prev/next 匹配 ID、首条定位等高级查询）
+- `device_param_log_queries.sql`：设备参数日志查询语句集
+
+#### 技术细节
+- **WAL 模式**：读写并发不互锁，读操作不阻塞写，写操作不阻塞读
+- **写入线程隔离**：`WriteSqlDBCon` 占一条写专用连接，各 SqlLogic 各持一条只读连接，完全隔离
+- **SQL 外置**：所有查询语句外置到 `.sql` 文件，通过 `SqlMapper` 按 ID 索引加载，便于独立调试和修改
+- **计数缓存**：通过数据库触发器维护 `log_record_count`，`queryTotalCount()` O(1) 查表无需全表扫描
+- **定期清理**：每个 SqlLogic 内置 `LogCleanupScheduler`，默认保留 12 个月，超限时一次删除最早 3 个月
+
+#### 新增文件
+- `data/logdatabases/databasemanager.h`、`.cpp`、`dbtypes.h`、`dbconnectionhelper.h`、`.cpp`、`sqlmapper.h`、`.cpp`、`logcleanupscheduler.h`、`.cpp`、`logdatabases.pri`
+- `data/logdatabases/alarmlogdb/alarmlogsqllogic.h`、`.cpp`、`alarmlogdbcon.h`、`.cpp`、`alarmlogdb.pri`
+- `data/logdatabases/communicatelogdb/communicatelogsqllogic.h`、`.cpp`、`communicatelogdbcon.h`、`.cpp`、`communicatelogdb.pri`
+- `data/logdatabases/operationlogdb/operationlogsqllogic.h`、`.cpp`、`operationlogdbcon.h`、`.cpp`、`operationlogdb.pri`
+- `data/logdatabases/deviceparamlogdb/deviceparamlogsqllogic.h`、`.cpp`、`deviceparamlogdbcon.h`、`.cpp`、`deviceparamlogdb.pri`
+- `data/logdatabases/writesqldb/writesqldbcon.h`、`.cpp`、`writesqldb.pri`
+- `scheduler/tasks/alarmlogquerytask.h`、`.cpp`
+- `scheduler/tasks/communicatelogquerytask.h`、`.cpp`
+- `scheduler/tasks/operationlogquerytask.h`、`.cpp`
+- `scheduler/tasks/running_logger_task.h`、`.cpp`
+- `ui/customwidget/alarmlogwidget/alarmlogwidget.h`、`.cpp`、`.ui`、`alarmlogwidget.pri`
+- `ui/customwidget/comunicatelogwidget/comunicatelogwidget.h`、`.cpp`、`.ui`、`comunicatelogwidget.pri`
+- `ui/customwidget/operationlogwidget/operationlogwidget.h`、`.cpp`、`.ui`、`operationlogwidget.pri`
+- `bin/x32/databases/create_operation_log.sql`、`alarm_log_queries.sql`、`communicate_log_queries.sql`、`operation_log_queries.sql`、`device_param_log_queries.sql`
+
+---
+
 ### 2026-04-30 15:17 - Simon
 **功能实现：Purge 流量/VEFC 气体类型/UI 刷新时间/VEFC 状态读取**
 

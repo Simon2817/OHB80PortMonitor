@@ -32,7 +32,7 @@ ModbusConnecter::ModbusConnecter(QTcpSocket& socket, const QString& host, quint1
     connect(m_socket, &QTcpSocket::connected, this, &ModbusConnecter::onAsyncReconnectConnected);
 
     // 异步重连失败信号 — 连接错误时快速触发下次重试
-    connect(m_socket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),
+    connect(m_socket, &QAbstractSocket::errorOccurred,
             this, [this](QAbstractSocket::SocketError) {
         if (!m_asyncReconnecting) return;
         // 连接失败，立即清理并安排下次重试

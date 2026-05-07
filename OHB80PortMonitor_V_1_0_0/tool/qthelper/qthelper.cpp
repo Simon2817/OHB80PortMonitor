@@ -53,7 +53,8 @@ QRect QtHelper::getCurrentScreenAvailableGeometry(QWidget *widget)
 {
     if (!widget) {
         // 如果widget为空，返回主屏幕的可用区域
-        return QApplication::desktop()->availableGeometry();
+        QScreen *primaryScreen = QGuiApplication::primaryScreen();
+        return primaryScreen ? primaryScreen->availableGeometry() : QRect();
     }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
@@ -70,7 +71,8 @@ QRect QtHelper::getCurrentScreenAvailableGeometry(QWidget *widget)
 #endif
 
     // 如果无法获取屏幕信息，返回主屏幕的可用区域
-    return QApplication::desktop()->availableGeometry();
+    QScreen *primaryScreen = QGuiApplication::primaryScreen();
+    return primaryScreen ? primaryScreen->availableGeometry() : QRect();
 }
 
 static QSharedMemory* s_instanceMemory = nullptr;

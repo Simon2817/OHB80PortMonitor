@@ -272,7 +272,7 @@ void LoggerManager::ensure_directory(const std::string& dir)
 std::shared_ptr<spdlog::logger> LoggerManager::get_or_create_logger(
     const std::string& full_path,
     const std::string& date_str,
-    const std::string& filename)
+    const std::string& /*filename*/)
 {
     // 快速路径：读锁查缓存（多线程并发读取，零争用）
     {

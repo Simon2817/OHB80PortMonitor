@@ -30,15 +30,15 @@
     <number>3</number>
    </property>
    <item>
-    <widget class="AlarmLoggerWidget" name="alarmLoggerWidget" native="true"/>
+    <widget class="AlarmLogWidget" name="alarmLoggerWidget" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AlarmLoggerWidget</class>
+   <class>AlarmLogWidget</class>
    <extends>QWidget</extends>
-   <header>alarmloggerwidget.h</header>
+   <header>alarmlogwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

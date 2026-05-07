@@ -3,7 +3,7 @@
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/set_purge_flow_task.h"
 #include "app/shareddata.h"
-#include "customwidget/runningloggerwidget/runningloggercollector.h"
+#include "scheduler/tasks/running_logger_task.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 
@@ -127,7 +127,7 @@ void PurgeFlowSettingWidget::submitTask(const QStringList &qrcodes, int flowValu
                         QString("Failed to set Purge Flow=[%1] on %2 device(s):\n%3")
                             .arg(flowFinal).arg(failedQrCodes.count()).arg(failList));
 
-                    RunningLoggerCollector::instance()->logMessage(
+                    SharedData::getRunningLoggerTask()->logMessage(
                         QString("[Purge Flow] Set %1 failed on device(s): %2")
                             .arg(flowFinal).arg(failList));
                 }

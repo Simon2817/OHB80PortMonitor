@@ -10,9 +10,9 @@
 
 ModbusTcpMaster::ModbusTcpMaster(const QString& ip, quint16 port, const QString& id, QObject* parent)
     : QObject(parent)
+    , ID(id)
     , m_ip(ip)
     , m_port(port)
-    , ID(id)
 {
     m_socket = new QTcpSocket(this);
     m_connector = new ModbusConnecter(*m_socket, m_ip, m_port, ID, this);
@@ -84,7 +84,7 @@ FirmwareUpgrader* ModbusTcpMaster::firmwareUpgrader() const
     return m_firmwareUpgrader;
 }
 
-void ModbusTcpMaster::onConnectionStatusChanged(ModbusConnecter::ConnectionStatus status, const QString& masterId)
+void ModbusTcpMaster::onConnectionStatusChanged(ModbusConnecter::ConnectionStatus status, const QString& /*masterId*/)
 {
     switch (status) {
         case ModbusConnecter::ConnectionStatus::Connected:

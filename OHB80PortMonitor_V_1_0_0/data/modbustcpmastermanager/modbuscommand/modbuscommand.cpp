@@ -58,7 +58,7 @@ ModbusCommand& ModbusCommand::operator=(const ModbusCommand& other)
 QByteArray ModbusCommand::fromHexString(const QString& hexStr)
 {
     QByteArray result;
-    const QStringList tokens = hexStr.trimmed().split(' ', QString::SkipEmptyParts);
+    const QStringList tokens = hexStr.trimmed().split(' ', Qt::SkipEmptyParts);
     for (const QString& token : tokens) {
         bool ok = false;
         const uint byte = token.toUInt(&ok, 16);

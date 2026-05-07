@@ -69,7 +69,7 @@ void PeriodicCommandSender::onRoundComplete(QList<ModbusCommand> failedCommands)
     }
 }
 
-void PeriodicCommandSender::onLogMessage(QString message)
+void PeriodicCommandSender::onLogMessage(QString /*message*/)
 {
     // LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[PeriodicCommandSender]：设备ID=%1 %2").arg(m_masterId).arg(message).toStdString());
 }

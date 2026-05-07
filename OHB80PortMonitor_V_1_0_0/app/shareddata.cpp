@@ -6,6 +6,8 @@
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/network_status_task.h"
 #include "scheduler/tasks/monitor_data_task.h"
+#include "scheduler/tasks/alarm_dispatch_task.h"
+#include "scheduler/tasks/running_logger_task.h"
 #include <QDebug>
 #include <QHash>
 
@@ -13,6 +15,8 @@ QVector<SetOfOHBInfo> SharedData::setOfOHBInfoList;
 bool SharedData::s_modbusManagerInitialized = false;
 NetworkStatusTask* SharedData::s_networkStatusTask = nullptr;
 MonitorDataTask* SharedData::s_monitorDataTask = nullptr;
+AlarmDispatchTask* SharedData::s_alarmDispatchTask = nullptr;
+RunningLoggerTask* SharedData::s_runningLoggerTask = nullptr;
 
 SharedData::SharedData() {
 
@@ -137,6 +141,20 @@ void SharedData::initScheduler()
         qDebug() << "[SharedData] 已提交监控数据任务, TaskID:" << monitorTaskId;
     }
 
+    // 提交警报调度任务（长驻，取代老 AlarmLogicSystem）
+    if (!s_alarmDispatchTask) {
+        s_alarmDispatchTask = new AlarmDispatchTask();
+        QString id = scheduler->submitTask(s_alarmDispatchTask);
+        qDebug() << "[SharedData] 已提交警报调度任务, TaskID:" << id;
+    }
+
+    // 提交运行日志采集任务（长驻，取代老 RunningLoggerCollector）
+    if (!s_runningLoggerTask) {
+        s_runningLoggerTask = new RunningLoggerTask();
+        QString id = scheduler->submitTask(s_runningLoggerTask);
+        qDebug() << "[SharedData] 已提交运行日志采集任务, TaskID:" << id;
+    }
+
     qDebug() << "[SharedData] 调度器已启动，所有常驻任务已提交";
 }
 
@@ -148,4 +166,14 @@ NetworkStatusTask* SharedData::getNetworkStatusTask()
 MonitorDataTask* SharedData::getMonitorDataTask()
 {
     return s_monitorDataTask;
+}
+
+AlarmDispatchTask* SharedData::getAlarmDispatchTask()
+{
+    return s_alarmDispatchTask;
+}
+
+RunningLoggerTask* SharedData::getRunningLoggerTask()
+{
+    return s_runningLoggerTask;
 }

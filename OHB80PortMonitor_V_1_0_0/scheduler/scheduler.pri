@@ -3,7 +3,10 @@ INCLUDEPATH += $$PWD
 HEADERS += \
     $$PWD/scheduler_task.h \
     $$PWD/scheduler.h \
+    $$PWD/tasks/alarmlogquerytask.h \
+    $$PWD/tasks/communicatelogquerytask.h \
     $$PWD/tasks/monitor_data_task.h \
+    $$PWD/tasks/operationlogquerytask.h \
     $$PWD/tasks/send_command_task.h \
     $$PWD/tasks/init_check_task.h \
     $$PWD/tasks/network_status_task.h \
@@ -16,11 +19,17 @@ HEADERS += \
     $$PWD/tasks/set_purge_flow_task.h \
     $$PWD/tasks/set_vefc_gas_type_task.h \
     $$PWD/tasks/set_ui_refresh_time_task.h \
-    $$PWD/tasks/read_vefc_flow_unit_medium_status_task.h
+    $$PWD/tasks/read_vefc_flow_unit_medium_status_task.h \
+    $$PWD/tasks/alarm_dispatch_task.h \
+    $$PWD/tasks/running_logger_task.h \
+    $$PWD/tasks/user_management_task.h
 
 SOURCES += \
     $$PWD/scheduler.cpp \
+    $$PWD/tasks/alarmlogquerytask.cpp \
+    $$PWD/tasks/communicatelogquerytask.cpp \
     $$PWD/tasks/monitor_data_task.cpp \
+    $$PWD/tasks/operationlogquerytask.cpp \
     $$PWD/tasks/send_command_task.cpp \
     $$PWD/tasks/init_check_task.cpp \
     $$PWD/tasks/network_status_task.cpp \
@@ -33,4 +42,7 @@ SOURCES += \
     $$PWD/tasks/set_purge_flow_task.cpp \
     $$PWD/tasks/set_vefc_gas_type_task.cpp \
     $$PWD/tasks/set_ui_refresh_time_task.cpp \
-    $$PWD/tasks/read_vefc_flow_unit_medium_status_task.cpp
+    $$PWD/tasks/read_vefc_flow_unit_medium_status_task.cpp \
+    $$PWD/tasks/alarm_dispatch_task.cpp \
+    $$PWD/tasks/running_logger_task.cpp \
+    $$PWD/tasks/user_management_task.cpp

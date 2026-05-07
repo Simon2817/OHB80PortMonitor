@@ -1,6 +1,6 @@
 #pragma once
 #include <QHash>
-#include <QLinkedList>
+#include <QList>
 #include <QPair>
 #include <functional>
 
@@ -89,7 +89,7 @@ public:
 
 private:
     int m_capacity;
-    using ListType = QLinkedList<QPair<Key, Value>>;
+    using ListType = QList<QPair<Key, Value>>;
     ListType m_list;
     QHash<Key, typename ListType::iterator> m_map;
 };

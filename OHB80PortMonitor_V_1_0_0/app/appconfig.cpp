@@ -27,6 +27,7 @@ AppConfig::AppConfig()
     qDebug() << "Config dir:" << m_configDir;
     qDebug() << "Debug log dir:" << m_debugLogDir;
     qDebug() << "User log dir:" << m_userLogDir;
+    qDebug() << "Database dir:" << m_databaseDir;
 }
 
 void AppConfig::initializePaths()
@@ -43,13 +44,15 @@ void AppConfig::initializePaths()
     m_configDir = m_rootDir + "/config";
     m_debugLogDir = m_executableDir + "/log";
     m_userLogDir = m_rootDir + "/log";
+    m_databaseDir = m_executableDir + "/databases";
     
     // 确保所有目录存在
     QStringList dirs = {
         m_executableDir,
         m_configDir,
         m_debugLogDir,
-        m_userLogDir
+        m_userLogDir,
+        m_databaseDir
     };
     
     for (const QString& dir : dirs) {
@@ -127,6 +130,36 @@ QString AppConfig::getUserInfoConfigPath() const
 QString AppConfig::getModbusConfigPath() const
 {
     return m_configDir + "/ModbusTcpMasterConfig.xml";
+}
+
+QString AppConfig::getDatabaseDir() const
+{
+    return m_databaseDir;
+}
+
+QString AppConfig::getAlarmLogQueriesSqlPath() const
+{
+    return m_databaseDir + "/alarm_log_queries.sql";
+}
+
+QString AppConfig::getCommunicateLogQueriesSqlPath() const
+{
+    return m_databaseDir + "/communicate_log_queries.sql";
+}
+
+QString AppConfig::getCreateOperationLogSqlPath() const
+{
+    return m_databaseDir + "/create_operation_log.sql";
+}
+
+QString AppConfig::getDeviceParamLogQueriesSqlPath() const
+{
+    return m_databaseDir + "/device_param_log_queries.sql";
+}
+
+QString AppConfig::getOperationLogQueriesSqlPath() const
+{
+    return m_databaseDir + "/operation_log_queries.sql";
 }
 
 NetworkConfig& AppConfig::getNetworkConfig() const

@@ -292,8 +292,8 @@ void Graph::FoupLevelGraphBuilder::createFoupDevices(int nodeId, const QPointF& 
 }
 
 void Graph::FoupLevelGraphBuilder::processEdge(const GraphConfig::EdgeInfo& edgeInfo,
-                                           const QSharedPointer<GraphNode>& fromNode,
-                                           const QSharedPointer<GraphNode>& toNode)
+                                           const QSharedPointer<GraphNode>& /*fromNode*/,
+                                           const QSharedPointer<GraphNode>& /*toNode*/)
 {
     std::string loggerPre = "[ui][FoupLevelGraphBuilder][processEdge]";
     
@@ -586,7 +586,7 @@ void Graph::FoupLevelGraphBuilder::processStraightLine(int fromId, int toId, dou
     m_drawCommands.append(cmd);
 }
 
-void Graph::FoupLevelGraphBuilder::processVirtualLine(int fromId, int toId, EdgeType edgeType, double size, double offset)
+void Graph::FoupLevelGraphBuilder::processVirtualLine(int fromId, int toId, EdgeType edgeType, double size, double /*offset*/)
 {
     std::string loggerPre = "[ui][FoupLevelGraphBuilder][processVirtualLine]";
 
@@ -617,7 +617,7 @@ void Graph::FoupLevelGraphBuilder::processVirtualLine(int fromId, int toId, Edge
                  fromPos.x(), fromPos.y(), toPos.x(), toPos.y());
 }
 
-void Graph::FoupLevelGraphBuilder::processSCurve(int fromId, int toId, EdgeType edgeType, double size, double offset)
+void Graph::FoupLevelGraphBuilder::processSCurve(int fromId, int toId, EdgeType edgeType, double size, double /*offset*/)
 {
     std::string loggerPre = "[ui][FoupLevelGraphBuilder][processSCurve]";
 
@@ -676,7 +676,7 @@ void Graph::FoupLevelGraphBuilder::processSCurve(int fromId, int toId, EdgeType 
                  fromPos.x(), fromPos.y(), toPos.x(), toPos.y());
 }
 
-void Graph::FoupLevelGraphBuilder::processSemicircleArc(int fromId, int toId, EdgeType edgeType, double size, double offset)
+void Graph::FoupLevelGraphBuilder::processSemicircleArc(int fromId, int toId, EdgeType edgeType, double size, double /*offset*/)
 {
     std::string loggerPre = "[ui][FoupLevelGraphBuilder][processSemicircleArc]";
 

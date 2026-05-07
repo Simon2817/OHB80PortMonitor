@@ -1,10 +1,10 @@
 #include "alarmpage.h"
 #include "ui_alarmpage.h"
 #include "app/shareddata.h"
-#include "app/customlogger.h"
+#include "app/alarmtype.h"
 #include "scheduler/tasks/network_status_task.h"
+#include "scheduler/tasks/alarm_dispatch_task.h"
 #include "modbustcpmastermanager/modbustcpmaster/modbusconnecter.h"
-#include "customwidget/alarmloggerwidget/alarmid.h"
 
 AlarmPage::AlarmPage(QWidget *parent)
     : QWidget(parent)
@@ -12,10 +12,10 @@ AlarmPage::AlarmPage(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Set alarm log root directory
-    ui->alarmLoggerWidget->setRootDir(CustomLogger::AlarmLoggerPath());
+    // 新 AlarmLogWidget 只需 initUi，所有警报生命周期与持久化都交给 AlarmDispatchTask
+    ui->alarmLoggerWidget->initUi();
 
-    // Get network status monitoring task and connect signal
+    // 连接网络状态任务 → 本页警报推送
     NetworkStatusTask* networkTask = SharedData::getNetworkStatusTask();
     if (networkTask) {
         connect(networkTask, &NetworkStatusTask::statusChanged,
@@ -29,20 +29,22 @@ AlarmPage::~AlarmPage()
     delete ui;
 }
 
-AlarmLoggerWidget* AlarmPage::alarmLogger() const
-{
-    return ui->alarmLoggerWidget;
-}
-
 void AlarmPage::onNetworkStatusChanged(ModbusConnecter::ConnectionStatus status, const QString &masterId)
 {
-    qint64 alarmId = makeAlarmId(masterId.toInt(), AlarmCode::SoftwareConnectionLost);
+    AlarmDispatchTask* dispatcher = SharedData::getAlarmDispatchTask();
+    if (!dispatcher) return;
+
+    const int alarmType   = static_cast<int>(AlarmType::DeviceOffline);
+    const int alarmSource = static_cast<int>(AlarmSource::Device);
 
     if (status == ModbusConnecter::ConnectionStatus::Connected) {
-        // Connection successful: submit error resolution
-        ui->alarmLoggerWidget->submitResolve(alarmId);
+        // 连接恢复：解决设备离线警报
+        dispatcher->submitResolve(alarmType, alarmSource, masterId);
     } else {
-        // Connection failed or disconnected: report SoftwareConnectionLost alarm
-        ui->alarmLoggerWidget->submitAlarm(AlarmLevel::Error, masterId, alarmId, QString("Device %1 connection lost").arg(masterId));
+        // 连接丢失：上报设备离线警报
+        dispatcher->submitAlarm(alarmType,
+                                alarmSource,
+                                masterId,
+                                QStringLiteral("Device %1 connection lost").arg(masterId));
     }
 }

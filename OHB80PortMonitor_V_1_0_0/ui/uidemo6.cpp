@@ -5,8 +5,6 @@
 #include "alarmpage.h"
 #include "app.h"
 #include "usermanager.h"
-#include "runningloggerwidget.h"
-#include "alarmloggerwidget.h"
 
 UIDemo6::UIDemo6(QWidget *parent) :
     QDialog(parent),
@@ -67,14 +65,9 @@ void UIDemo6::initForm()
     // 为 widgetTitle 安装事件过滤器以处理双击事件
     ui->widgetTitle->installEventFilter(this);
 
-    // 初始化运行日志控件（根目录已在构造函数中自动设置）
-    ui->runningLoggerWidget->initialize();
-
-    // 将 AlarmPage 的警报信号直接投递到运行日志控件
-    connect(ui->alarmpage->alarmLogger(), &AlarmLoggerWidget::alarmPublished,
-            ui->runningLoggerWidget, &RunningLoggerWidget::onAlarmPublished);
-    connect(ui->alarmpage->alarmLogger(), &AlarmLoggerWidget::alarmResolved,
-            ui->runningLoggerWidget, &RunningLoggerWidget::onAlarmResolved);
+    // 老 RunningLoggerWidget 已废弃，运行日志由 RunningLoggerTask + OperationLogDBCon 接管；
+    // 老 AlarmLoggerWidget 也已废弃，警报生命周期由 AlarmDispatchTask 与 AlarmLogDBCon 接管。
+    // UI 端需要实时显示请订阅 OperationLogDBCon::recordInserted / AlarmLogDBCon::recordInserted。
 
     // 注册控件权限
     registerWidgetPermissions();

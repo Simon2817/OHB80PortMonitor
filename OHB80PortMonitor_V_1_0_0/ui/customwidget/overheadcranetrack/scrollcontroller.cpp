@@ -50,7 +50,7 @@ void ScrollController::scrollContentsBy(int dx, int dy)
     emit scrollOffsetChanged(m_scrollOffset);
 }
 
-void ScrollController::scrollToDevice(QSharedPointer<FrameDevice> device, const QSize& viewportSize, int offsetPixels)
+void ScrollController::scrollToDevice(QSharedPointer<FrameDevice> device, const QSize& viewportSize, int /*offsetPixels*/)
 {
     if (!device) {
         return;

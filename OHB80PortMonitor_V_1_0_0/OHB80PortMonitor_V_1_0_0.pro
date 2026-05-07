@@ -1,4 +1,4 @@
-QT       += core gui concurrent serialport serialbus printsupport network xml
+QT       += core gui concurrent serialport serialbus printsupport network xml sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

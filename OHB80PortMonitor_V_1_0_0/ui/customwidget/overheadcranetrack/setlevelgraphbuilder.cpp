@@ -256,8 +256,8 @@ void Graph::SetLevelGraphBuilder::createFrameDevice(int nodeId, const QPointF& p
 }
 
 void Graph::SetLevelGraphBuilder::processEdge(const GraphConfig::EdgeInfo& edgeInfo,
-                                       const QSharedPointer<GraphNode>& fromNode,
-                                       const QSharedPointer<GraphNode>& toNode)
+                                       const QSharedPointer<GraphNode>& /*fromNode*/,
+                                       const QSharedPointer<GraphNode>& /*toNode*/)
 {
     switch (edgeInfo.type)
     {
@@ -324,7 +324,7 @@ void Graph::SetLevelGraphBuilder::processStraightLine(int fromId, int toId, doub
     m_drawCommands.append(cmd);
 }
 
-void Graph::SetLevelGraphBuilder::processVirtualLine(int fromId, int toId, EdgeType edgeType, double size, double offset)
+void Graph::SetLevelGraphBuilder::processVirtualLine(int fromId, int toId, EdgeType edgeType, double size, double /*offset*/)
 {
     std::string loggerPre = "[ui][SetLevelGraphBuilder][processVirtualLine]";
     
@@ -355,7 +355,7 @@ void Graph::SetLevelGraphBuilder::processVirtualLine(int fromId, int toId, EdgeT
                  fromPos.x(), fromPos.y(), toPos.x(), toPos.y());
 }
 
-void Graph::SetLevelGraphBuilder::processSCurve(int fromId, int toId, EdgeType edgeType, double size, double offset)
+void Graph::SetLevelGraphBuilder::processSCurve(int fromId, int toId, EdgeType edgeType, double size, double /*offset*/)
 {
     std::string loggerPre = "[ui][SetLevelGraphBuilder][processSCurve]";
     
@@ -431,7 +431,7 @@ void Graph::SetLevelGraphBuilder::processSCurve(int fromId, int toId, EdgeType e
     m_drawCommands.append(cmd);
 }
 
-void Graph::SetLevelGraphBuilder::processSemicircleArc(int fromId, int toId, EdgeType edgeType, double size, double offset)
+void Graph::SetLevelGraphBuilder::processSemicircleArc(int fromId, int toId, EdgeType edgeType, double size, double /*offset*/)
 {
     std::string loggerPre = "[ui][SetLevelGraphBuilder][processSemicircleArc]";
     

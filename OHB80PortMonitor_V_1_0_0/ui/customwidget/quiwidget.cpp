@@ -10,12 +10,14 @@
 
 int QUIWidget::deskWidth()
 {
-    return qApp->desktop()->availableGeometry().width();
+    QScreen *primaryScreen = QGuiApplication::primaryScreen();
+    return primaryScreen ? primaryScreen->availableGeometry().width() : 0;
 }
 
 int QUIWidget::deskHeight()
 {
-    return qApp->desktop()->availableGeometry().height();
+    QScreen *primaryScreen = QGuiApplication::primaryScreen();
+    return primaryScreen ? primaryScreen->availableGeometry().height() : 0;
 }
 
 QString QUIWidget::appName()
@@ -204,9 +206,10 @@ void QUIWidget::setFormInCenter(QWidget *frm)
 {
     int frmX = frm->width();
     int frmY = frm->height();
-    QDesktopWidget w;
-    int deskWidth = w.availableGeometry().width();
-    int deskHeight = w.availableGeometry().height();
+    QScreen *primaryScreen = QGuiApplication::primaryScreen();
+    QRect availRect = primaryScreen ? primaryScreen->availableGeometry() : QRect();
+    int deskWidth = availRect.width();
+    int deskHeight = availRect.height();
     QPoint movePoint(deskWidth / 2 - frmX / 2, deskHeight / 2 - frmY / 2);
     frm->move(movePoint);
 }
@@ -248,13 +251,13 @@ void QUIWidget::setSystemDateTime(const QString &year, const QString &month, con
 {
 #ifdef Q_OS_WIN
     QProcess p(0);
-    p.start("cmd");
+    p.start("cmd", QStringList());
     p.waitForStarted();
     p.write(QString("date %1-%2-%3\n").arg(year).arg(month).arg(day).toLatin1());
     p.closeWriteChannel();
     p.waitForFinished(1000);
     p.close();
-    p.start("cmd");
+    p.start("cmd", QStringList());
     p.waitForStarted();
     p.write(QString("time %1:%2:%3.00\n").arg(hour).arg(min).arg(sec).toLatin1());
     p.closeWriteChannel();
