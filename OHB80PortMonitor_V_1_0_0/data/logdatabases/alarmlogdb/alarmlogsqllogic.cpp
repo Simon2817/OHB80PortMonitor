@@ -69,8 +69,8 @@ bool AlarmLogSqlLogic::insertRecord(int alarmLevel,
                                     const QString& alarmType,
                                     int isResolved,
                                     const QString& resolveTime,
-                                    int customerVisible,
-                                    const QString& description)
+                                    const QString& description,
+                                    int userPermission)
 {
     QString sql = m_sqlMapper->getSql("insert_record");
     if (sql.isEmpty()) {
@@ -86,14 +86,16 @@ bool AlarmLogSqlLogic::insertRecord(int alarmLevel,
     result.tableName = "alarm_log";
     result.opType = static_cast<int>(WriteOp::Insert);
 
+    // 顺序与 SQL ((alarm_level, occur_time, qr_code, alarm_type, is_resolved,
+    //                resolve_time, description, user_permission)) 严格对齐
     result.params << alarmLevel
                   << occurTime
                   << qrCode
                   << alarmType
                   << isResolved
                   << (resolveTime.isEmpty() ? QVariant() : QVariant(resolveTime))
-                  << customerVisible
-                  << description;
+                  << description
+                  << userPermission;
 
     emit writeExecuted(result);
     return true;
@@ -103,7 +105,6 @@ QList<QVariantMap> AlarmLogSqlLogic::queryPageWithConditions(int alarmLevel,
                                                              const QString& qrCode,
                                                              const QString& alarmType,
                                                              int isResolved,
-                                                             int customerVisible,
                                                              const QString& startTime,
                                                              const QString& endTime,
                                                              int pageSize,
@@ -137,9 +138,6 @@ QList<QVariantMap> AlarmLogSqlLogic::queryPageWithConditions(int alarmLevel,
     // is_resolved（-1表示不应用）
     query.addBindValue(isResolved == -1 ? QVariant() : isResolved);
     query.addBindValue(isResolved == -1 ? QVariant() : isResolved);
-    // customer_visible（-1表示不应用）
-    query.addBindValue(customerVisible == -1 ? QVariant() : customerVisible);
-    query.addBindValue(customerVisible == -1 ? QVariant() : customerVisible);
     // 时间区间（NULL检查 + start + end）
     query.addBindValue(startTime.isEmpty() ? QVariant() : startTime);
     query.addBindValue(startTime.isEmpty() ? QVariant() : startTime);
@@ -196,7 +194,6 @@ int AlarmLogSqlLogic::queryTotalCountWithConditions(int alarmLevel,
                                                     const QString& qrCode,
                                                     const QString& alarmType,
                                                     int isResolved,
-                                                    int customerVisible,
                                                     const QString& startTime,
                                                     const QString& endTime)
 {
@@ -220,8 +217,6 @@ int AlarmLogSqlLogic::queryTotalCountWithConditions(int alarmLevel,
     query.addBindValue(alarmType.isEmpty() ? QVariant() : alarmType);
     query.addBindValue(isResolved == -1 ? QVariant() : isResolved);
     query.addBindValue(isResolved == -1 ? QVariant() : isResolved);
-    query.addBindValue(customerVisible == -1 ? QVariant() : customerVisible);
-    query.addBindValue(customerVisible == -1 ? QVariant() : customerVisible);
     query.addBindValue(startTime.isEmpty() ? QVariant() : startTime);
     query.addBindValue(startTime.isEmpty() ? QVariant() : startTime);
     query.addBindValue(startTime.isEmpty() ? QVariant() : endTime);

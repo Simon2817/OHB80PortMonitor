@@ -25,7 +25,7 @@
 //     "level(1) + sourceIdentifier(5) + type(4)"
 //
 // 用法：
-//   // 提交（推荐简化入参；alarmLevel / customerVisible 由 alarmtype.h 推导）
+//   // 提交（推荐简化入参；alarmLevel 由 alarmtype.h 推导）
 //   SharedData::getAlarmDispatchTask()->submitAlarm(
 //       static_cast<int>(AlarmType::DeviceOffline),
 //       static_cast<int>(AlarmSource::Device),
@@ -57,7 +57,7 @@ public:
     QString taskType() const override { return QStringLiteral("AlarmDispatchTask"); }
     bool isPersistent() const override { return true; }
 
-    // 简化提交（线程安全）：依据 alarmType 自动推导 alarmLevel / customerVisible，
+    // 简化提交（线程安全）：依据 alarmType 自动推导 alarmLevel，
     // occurTime 自动取当前时刻，alarmId 由 generateAlarmId 生成。
     // 返回构造完成后的 alarmId（可用于后续 submitResolve）。
     QString submitAlarm(int alarmType,

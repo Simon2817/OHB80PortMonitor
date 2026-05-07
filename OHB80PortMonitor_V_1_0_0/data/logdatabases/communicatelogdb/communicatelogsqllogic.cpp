@@ -71,7 +71,8 @@ bool CommunicateLogSqlLogic::insertRecord(const QString& sendTime,
                                           int retryCount,
                                           const QByteArray& sendFrame,
                                           const QByteArray& responseFrame,
-                                          const QString& description)
+                                          const QString& description,
+                                          int userPermission)
 {
     QString sql = m_sqlMapper->getSql("insert_record");
     if (sql.isEmpty()) {
@@ -87,6 +88,8 @@ bool CommunicateLogSqlLogic::insertRecord(const QString& sendTime,
     result.tableName = "communicate_log";
     result.opType = static_cast<int>(WriteOp::Insert);
 
+    // 顺序与 SQL ((send_time, response_time, command_id, qr_code, exec_status,
+    //                retry_count, send_frame, response_frame, description, user_permission)) 严格对齐
     result.params << sendTime
                   << (responseTime.isEmpty() ? QVariant() : QVariant(responseTime))
                   << commandId
@@ -95,7 +98,8 @@ bool CommunicateLogSqlLogic::insertRecord(const QString& sendTime,
                   << retryCount
                   << sendFrame
                   << (responseFrame.isEmpty() ? QVariant() : QVariant(responseFrame))
-                  << description;
+                  << description
+                  << userPermission;
 
     emit writeExecuted(result);
     return true;

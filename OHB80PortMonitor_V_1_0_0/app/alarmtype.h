@@ -163,24 +163,6 @@ inline int alarmTypeToLevel(int type)
     }
 }
 
-// 根据警告类型获取该类型默认是否对客户可见
-// 返回 1 表示客户可见，0 表示客户不可见（与 alarm_log.customer_visible 列保持一致）
-inline int alarmTypeToCustomerVisible(int type)
-{
-    switch (type) {
-        // —— 用户不可见 ——
-        case static_cast<int>(AlarmType::VEFCUnitConfigFailed):
-        case static_cast<int>(AlarmType::VEFCGasMediumConfigFailed):
-        case static_cast<int>(AlarmType::VEFCFlowValueSetFailed):
-        case static_cast<int>(AlarmType::SH85PreCheckStatusAbnormal):
-        case static_cast<int>(AlarmType::SH85AcceptanceTimeout):
-            return 0;
-        // —— 其余均为用户可见 ——
-        default:
-            return 1;
-    }
-}
-
 // 警报来源枚举
 enum class AlarmSource : int
 {

@@ -9,6 +9,60 @@
 ## 更新日志
 
 ### 2026-05-07 - Simon
+**移除 alarm_log.customer_visible 字段（全链路清理）**
+
+#### 背景
+本次移除 `customer_visible` 字段，保留 2026-05-06 日志系统重构时新增的 `user_permission` 字段（INTEGER NOT NULL DEFAULT 0）。
+
+#### 修改内容
+
+**1. SQL 文件（x32 + x64 同步）**
+- `create_operation_log.sql`：从 `CREATE TABLE alarm_log` 移除 `customer_visible` 列；移除 `idx_alarm_log_customer_visible` 索引；末尾追加 `ALTER TABLE alarm_log DROP COLUMN customer_visible;` 老库降级迁移
+- `alarm_log_queries.sql`：`query_page_with_conditions` / `query_total_count_with_conditions` 删除 `(? IS NULL OR customer_visible = ?)` 条件行（参数 15→13、13→11）；`insert_record` 删除列名与一个 `?`（9→8）
+
+**2. C++ 数据访问层**
+- `data/logdatabases/alarmlogdb/alarmlogdbcon.{h,cpp}`：`insertRecord` / `queryPageWithConditions` / `queryTotalCountWithConditions` 移除 `int customerVisible` 参数；`onWriteTaskCompleted` 中 `row` 不再写 `customer_visible`，params 长度校验 9→8、`user_permission` 索引 8→7
+- `data/logdatabases/alarmlogdb/alarmlogsqllogic.{h,cpp}`：同步删除参数、`addBindValue` 两次 / `params << customerVisible`
+
+**3. 业务逻辑层**
+- `classes/alarminfo.h`：删除 `bool customerVisible` 字段、构造初始化、`reset()`
+- `app/alarmtype.h`：删除 `alarmTypeToCustomerVisible()` 函数
+- `scheduler/tasks/alarm_dispatch_task.{h,cpp}`：删除推导赋值、`loadActiveFromDb` 读取、`persistInsert` 透传、头文件文档说明
+- `scheduler/tasks/alarmlogquerytask.{h,cpp}`：删除 `setCustomerVisible` / `m_customerVisible`、查询调用入参
+
+**4. UI 层**
+- `ui/customwidget/alarmlogwidget/alarmlogwidget.{h,cpp}`：删除 `setCustomerVisibleFilter` / `customerVisibleFilter` / `m_customerVisibleFilter`、表头 "Customer Visible" 列、live log 与 history log 渲染、查询入参
+- `ui/customwidget/alarmloggerwidget/alarmloggerwidget.cpp`：`insertRecord` 调用移除 `customer_visible` 实参
+
+**5. 文档**
+- `docs/api/log_databases_user_permission.md`：`AlarmLogDBCon::insertRecord` 示例同步
+- `docs/realize/log_databases_user_permission.md`：`alarm_log` ER 图同步
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/bin/x32/databases/create_operation_log.sql`
+  - `OHB80PortMonitor_V_1_0_0/bin/x64/databases/create_operation_log.sql`
+  - `OHB80PortMonitor_V_1_0_0/bin/x32/databases/alarm_log_queries.sql`
+  - `OHB80PortMonitor_V_1_0_0/bin/x64/databases/alarm_log_queries.sql`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/alarmlogdb/alarmlogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/alarmlogdb/alarmlogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/alarmlogdb/alarmlogsqllogic.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/alarmlogdb/alarmlogsqllogic.cpp`
+  - `OHB80PortMonitor_V_1_0_0/classes/alarminfo.h`
+  - `OHB80PortMonitor_V_1_0_0/app/alarmtype.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarmlogquerytask.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarmlogquerytask.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmloggerwidget/alarmloggerwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/docs/api/log_databases_user_permission.md`
+  - `OHB80PortMonitor_V_1_0_0/docs/realize/log_databases_user_permission.md`
+
+---
+
+### 2026-05-07 - Simon
 **新增 ScrollingTipLabel 控件与 TipLabelTask 调度任务**
 
 #### 修改内容

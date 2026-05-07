@@ -70,7 +70,7 @@ void AlarmLogWidget::initLiveLog()
     auto* model = new QStandardItemModel(this);
     model->setHorizontalHeaderLabels({
         "Alarm Level", "Occur Time", "QRCode", "Alarm Type",
-        "Is Resolved", "Resolve Time", "Customer Visible", "Description"
+        "Is Resolved", "Resolve Time", "Description"
     });
     ui->tableViewLiveLog->setModel(model);
     ui->tableViewLiveLog->horizontalHeader()->setStretchLastSection(true);
@@ -98,7 +98,6 @@ void AlarmLogWidget::loadUnresolvedToLiveLog()
         /*qrCode*/ QString(),
         /*alarmType*/ QString(),
         /*isResolved*/ 0,
-        /*customerVisible*/ -1,
         /*startTime*/ QString(),
         /*endTime*/ QString(),
         /*pageSize*/ kLiveLogMaxRows,
@@ -149,7 +148,7 @@ void AlarmLogWidget::onRecordInserted(const QVariantMap& row)
     auto* model = qobject_cast<QStandardItemModel*>(ui->tableViewLiveLog->model());
     if (!model) return;
 
-    // alarm_level / alarm_type / is_resolved / customer_visible 做友好化映射
+    // alarm_level / alarm_type / is_resolved 做友好化映射
     const int levelVal = row.value("alarm_level").toInt();
     const QString levelText = alarmLevelName(levelVal);
 
@@ -161,9 +160,6 @@ void AlarmLogWidget::onRecordInserted(const QVariantMap& row)
     const int resolvedVal = row.value("is_resolved").toInt();
     const QString resolvedText = alarmResolvedStatusName(resolvedVal);
 
-    const int cv = row.value("customer_visible").toInt();
-    const QString cvText = (cv == 1) ? QStringLiteral("Visible") : QStringLiteral("Hidden");
-
     QList<QStandardItem*> items;
     items << new QStandardItem(levelText)
           << new QStandardItem(row.value("occur_time").toString())
@@ -171,7 +167,6 @@ void AlarmLogWidget::onRecordInserted(const QVariantMap& row)
           << new QStandardItem(typeText)
           << new QStandardItem(resolvedText)
           << new QStandardItem(row.value("resolve_time").toString())
-          << new QStandardItem(cvText)
           << new QStandardItem(row.value("description").toString());
 
     model->insertRow(0, items);
@@ -203,17 +198,6 @@ void AlarmLogWidget::initUi()
     for (const auto& it : alarmResolvedStatusList()) {
         ui->comboBoxIsResolved->addItem(it.first, it.second);
     }
-}
-
-void AlarmLogWidget::setCustomerVisibleFilter(int value)
-{
-    // -1: 不应用该条件；0: 客户不可见；1: 客户可见
-    m_customerVisibleFilter = value;
-}
-
-int AlarmLogWidget::customerVisibleFilter() const
-{
-    return m_customerVisibleFilter;
 }
 
 void AlarmLogWidget::onSetStartTimeClicked()
@@ -329,10 +313,6 @@ void AlarmLogWidget::submitQuery(int page)
     if (!m_lastQRCode.isEmpty())     task->setQRCode(m_lastQRCode);
     if (!m_lastAlarmType.isEmpty())  task->setAlarmType(m_lastAlarmType);
     if (m_lastIsResolved != -1)      task->setIsResolved(m_lastIsResolved);
-    // 外部注入的客户可见过滤，每次提交查询都会使用
-    if (m_customerVisibleFilter != -1) {
-        task->setCustomerVisible(m_customerVisibleFilter);
-    }
     if (!m_lastStartTime.isEmpty() || !m_lastEndTime.isEmpty()) {
         QString s = m_lastStartTime;
         QString e = m_lastEndTime;
@@ -383,7 +363,7 @@ void AlarmLogWidget::setHistoryLogData(const QList<QVariantMap>& data)
 
     QStringList headers;
     headers << "ID" << "Alarm Level" << "Occur Time" << "QRCode" << "Alarm Type"
-            << "Is Resolved" << "Resolve Time" << "Customer Visible" << "Description";
+            << "Is Resolved" << "Resolve Time" << "Description";
     model->setHorizontalHeaderLabels(headers);
 
     for (int row = 0; row < data.size(); ++row) {
@@ -399,9 +379,6 @@ void AlarmLogWidget::setHistoryLogData(const QList<QVariantMap>& data)
         // is_resolved 以枚举名称显示
         const int resolvedVal = r.value("is_resolved").toInt();
         const QString resolvedText = alarmResolvedStatusName(resolvedVal);
-        // customer_visible 显示友好化
-        const int cv = r.value("customer_visible").toInt();
-        const QString cvText = (cv == 1) ? QStringLiteral("Visible") : QStringLiteral("Hidden");
 
         model->setItem(row, 0, new QStandardItem(r.value("id").toString()));
         model->setItem(row, 1, new QStandardItem(levelText));
@@ -410,8 +387,7 @@ void AlarmLogWidget::setHistoryLogData(const QList<QVariantMap>& data)
         model->setItem(row, 4, new QStandardItem(typeText));
         model->setItem(row, 5, new QStandardItem(resolvedText));
         model->setItem(row, 6, new QStandardItem(r.value("resolve_time").toString()));
-        model->setItem(row, 7, new QStandardItem(cvText));
-        model->setItem(row, 8, new QStandardItem(r.value("description").toString()));
+        model->setItem(row, 7, new QStandardItem(r.value("description").toString()));
     }
 
     ui->tableViewHistoryLog->resizeColumnsToContents();

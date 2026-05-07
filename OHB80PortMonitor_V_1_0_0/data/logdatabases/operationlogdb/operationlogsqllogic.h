@@ -27,7 +27,9 @@ public slots:
     bool initializeDatabase();
 
     // 插入数据
-    bool insertRecord(const QString& occurTime, int logType, const QString& description);
+    // userPermission 默认 0（UserPermission::Guest），兼容旧调用方
+    bool insertRecord(const QString& occurTime, int logType, const QString& description,
+                      int userPermission = 0);
 
     // 查询方法
     QList<QVariantMap> queryPagination(int pageSize, int pageNumber);

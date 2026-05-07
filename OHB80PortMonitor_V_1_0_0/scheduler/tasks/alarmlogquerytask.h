@@ -22,7 +22,6 @@ public:
     void setQRCode(const QString& qrCode);
     void setAlarmType(const QString& alarmType);
     void setIsResolved(int isResolved);
-    void setCustomerVisible(int customerVisible);
     void setOccurTimeRange(const QString& startTime, const QString& endTime);
 
     // 执行查询
@@ -43,7 +42,6 @@ private:
     QString m_qrCode;           // 空字符串表示未设置
     QString m_alarmType;        // 空字符串表示未设置
     int     m_isResolved;       // -1 表示未设置
-    int     m_customerVisible;  // -1 表示未设置
     QString m_startTime;        // 空字符串表示未设置
     QString m_endTime;          // 空字符串表示未设置
     int     m_pageNumber;       // 1-based，0 表示未设置

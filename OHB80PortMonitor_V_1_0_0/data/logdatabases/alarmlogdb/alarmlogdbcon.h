@@ -32,7 +32,6 @@ public:
                                                const QString& qrCode,
                                                const QString& alarmType,
                                                int isResolved,
-                                               int customerVisible,
                                                const QString& startTime,
                                                const QString& endTime,
                                                int pageSize,
@@ -44,7 +43,6 @@ public:
                                       const QString& qrCode,
                                       const QString& alarmType,
                                       int isResolved,
-                                      int customerVisible,
                                       const QString& startTime,
                                       const QString& endTime);
 
@@ -55,14 +53,16 @@ public:
     void queryTimeBounds(QString& earliestTime, QString& latestTime);
 
     // 插入接口
+    // userPermission: 触发该警报的用户权限级别（UserPermission 枚举），
+    //                 默认 0（UserPermission::Guest），兼容旧调用方
     void insertRecord(int alarmLevel,
                       const QString& occurTime,
                       const QString& qrCode,
                       const QString& alarmType,
                       int isResolved,
                       const QString& resolveTime,
-                      int customerVisible,
-                      const QString& description);
+                      const QString& description,
+                      int userPermission = 0);
 
     // 删除接口
     void deleteByTimeRange(const QString& startTime, const QString& endTime);
@@ -73,7 +73,7 @@ public:
 signals:
     // 实时事件：本 DBCon 提交的 INSERT 已成功落库
     // row 字段对应 alarm_log 表列：alarm_level / occur_time / qr_code / alarm_type /
-    //   is_resolved / resolve_time / customer_visible / description
+    //   is_resolved / resolve_time / description / user_permission
     void recordInserted(const QVariantMap& row);
 
     // 实时事件：本 DBCon 提交的 UPDATE(update_resolve) 已成功执行

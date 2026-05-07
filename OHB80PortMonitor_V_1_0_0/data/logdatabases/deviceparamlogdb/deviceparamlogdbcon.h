@@ -43,6 +43,8 @@ public:
     int queryMonthRange();
 
     // 插入接口
+    // userPermission: 触发该采样的用户权限级别（UserPermission 枚举），
+    //                 默认 0（UserPermission::Guest），兼容旧调用方
     void insertRecord(const QString& qrCode,
                       const QString& recordTime,
                       double inletPressure,
@@ -50,7 +52,8 @@ public:
                       double inletFlow,
                       double humidity,
                       double temperature,
-                      int foupStatus);
+                      int foupStatus,
+                      int userPermission = 0);
 
     // 删除接口
     void deleteByTimeRange(const QString& startTime, const QString& endTime);

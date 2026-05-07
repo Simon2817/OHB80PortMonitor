@@ -89,7 +89,7 @@ void LoginDialog::onLoginClicked()
     connect(task, &UserManagementTask::loginFailed,
             this, &LoginDialog::onLoginFailed);
     connect(task, &UserManagementTask::finished,
-            this, [this](bool success, const QString&) {
+            this, [this](bool, const QString&) {
                 m_loginBtn->setEnabled(true);
                 m_loginBtn->setText(QStringLiteral("Login"));
             });

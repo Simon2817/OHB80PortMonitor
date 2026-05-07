@@ -12,6 +12,9 @@
 #include "classes/foupofohbinfo.h"
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
+#include "logdatabases/alarmlogdb/alarmlogdbcon.h"
+#include "scheduler/tasks/tip_label_task.h"
+#include "scheduler/tasks/running_logger_task.h"
 
 #include <QDebug>
 #include <QDateTime>
@@ -70,8 +73,8 @@ void MonitorDataTask::start()
     }
 
     qDebug() << "[Scheduler][MonitorDataTask] 启动，监听" << m_totalCount << "个设备的 ReadFoupStatus 响应";
-    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO, 
-        QString("[Scheduler][MonitorDataTask] 启动，监听 %1 个设备的 ReadFoupStatus 响应").arg(m_totalCount).toStdString());
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+        QString("[Scheduler][MonitorDataTask] 启动，监听 %1 个设备的实时数据").arg(m_totalCount).toStdString());
     emit progress(0, QString("开始监控 %1 个设备的实时数据").arg(m_totalCount));
 }
 
@@ -104,12 +107,6 @@ void MonitorDataTask::stop()
 
 void MonitorDataTask::onCommunicationRecorded(ModbusCommand cmd, const QString& masterId)
 {
-    // 计算响应时间（ms）：发送到接收的时间差
-    qint64 responseTimeMs = 0;
-    if (cmd.sentMs > 0 && cmd.responseMs > 0) {
-        responseTimeMs = cmd.responseMs - cmd.sentMs;
-    }
-
     // 将发送时刻格式化为可读字符串
     QString sentTimeStr = cmd.sentMs > 0
         ? QDateTime::fromMSecsSinceEpoch(cmd.sentMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))
@@ -164,6 +161,23 @@ void MonitorDataTask::onCommunicationRecorded(ModbusCommand cmd, const QString& 
 
     // 转发 communicationCompleted 信号供 UI 更新实时日志
     emit communicationCompleted(cmd, masterId, description);
+
+    // 通讯失败时上报运行日志到 TipLabelTask 和 RunningLoggerTask
+    if (execStatus != 0) {
+        QString currentTime = QDateTime::fromMSecsSinceEpoch(cmd.sentMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"));
+        QString statusStr;
+        if (execStatus == 1) statusStr = "超时";
+        else if (execStatus == 2) statusStr = "重试";
+        else if (execStatus == 3) statusStr = "发送失败";
+        QString message = QString("设备 %1 指令 %2 %3: %4").arg(masterId, cmd.id, statusStr, description);
+
+        if (TipLabelTask* tipTask = SharedData::getTipLabelTask()) {
+            tipTask->submitOperationLog({currentTime, "WARN", message});
+        }
+        if (RunningLoggerTask* loggerTask = SharedData::getRunningLoggerTask()) {
+            loggerTask->logWarn(message);
+        }
+    }
 }
 
 void MonitorDataTask::onCommandCompleted(ModbusCommand cmd, const QString& masterId)
@@ -209,10 +223,35 @@ void MonitorDataTask::updateFoupInfo(const QString& masterId, const QString& com
         foup->purgeTimeSec     = data.value("purgeTimeSec").toUInt();
         foup->oldFoupIn = foup->foupIn;
         foup->foupIn    = data.value("foupIn").toBool();
-        
+
         // FOUP out → in：设置 startTime 为当前时间
         if (!foup->oldFoupIn && foup->foupIn) {
             foup->startTime = QTime::currentTime();
+
+            // 上报 FOUP 插入运行日志到 TipLabelTask 和 RunningLoggerTask
+            QString currentTime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"));
+            QString message = QString("设备 %1 FOUP In").arg(masterId);
+            if (TipLabelTask* tipTask = SharedData::getTipLabelTask()) {
+                tipTask->submitOperationLog({currentTime, "INFO", message});
+            }
+            if (RunningLoggerTask* loggerTask = SharedData::getRunningLoggerTask()) {
+                loggerTask->logMessage(message);
+            }
+        }
+        // FOUP in → out：重置相关字段
+        else if (foup->oldFoupIn && !foup->foupIn) {
+            foup->startTime = QTime(0, 0, 0);
+            foup->purgeTimeSec = 0;
+
+            // 上报 FOUP 移除运行日志到 TipLabelTask 和 RunningLoggerTask
+            QString currentTime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"));
+            QString message = QString("设备 %1 FOUP Out").arg(masterId);
+            if (TipLabelTask* tipTask = SharedData::getTipLabelTask()) {
+                tipTask->submitOperationLog({currentTime, "INFO", message});
+            }
+            if (RunningLoggerTask* loggerTask = SharedData::getRunningLoggerTask()) {
+                loggerTask->logMessage(message);
+            }
         }
     } else if (commandId == "ReadIdlePurgeAll") {
         foup->idlePurgeEnabled   = data.value("idlePurgeEnabled").toBool();
@@ -224,13 +263,13 @@ void MonitorDataTask::updateFoupInfo(const QString& masterId, const QString& com
                  << "idleWorkingTimeSec=" << foup->idleWorkingTimeSec;
     } else if (commandId == "ReadIdlePurgeEnable") {
         foup->idlePurgeEnabled = data.value("idlePurgeEnabled").toBool();
-    } else if (commandId == "ReadIdlePurgeStatus") {  
+    } else if (commandId == "ReadIdlePurgeStatus") {
         foup->idleState = static_cast<IdleState>(data.value("idleState").toInt());
-    } else if (commandId == "ReadIdlePurgeWorkingTime") { 
+    } else if (commandId == "ReadIdlePurgeWorkingTime") {
         foup->idleWorkingTimeSec = static_cast<quint16>(data.value("idleWorkingTimeSec").toUInt());
     }
 
-    if (foup->foupIn) 
+    if (foup->foupIn)
     {
         foup->idleWorkingTimeSec = 0;
         foup->idleState = IdleState::Idle;

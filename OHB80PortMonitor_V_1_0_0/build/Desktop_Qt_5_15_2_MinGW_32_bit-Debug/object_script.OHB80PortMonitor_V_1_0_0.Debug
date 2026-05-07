@@ -91,6 +91,7 @@ debug/read_vefc_flow_unit_medium_status_task.o
 debug/alarm_dispatch_task.o
 debug/running_logger_task.o
 debug/user_management_task.o
+debug/tip_label_task.o
 debug/modbustcpmastermanager.o
 debug/modbustcpmasterpool.o
 debug/modbuscommand.o
@@ -194,6 +195,7 @@ debug/moc_read_vefc_flow_unit_medium_status_task.o
 debug/moc_alarm_dispatch_task.o
 debug/moc_running_logger_task.o
 debug/moc_user_management_task.o
+debug/moc_tip_label_task.o
 debug/moc_modbustcpmastermanager.o
 debug/moc_modbustcpmasterpool.o
 debug/moc_modbustcpmaster.o

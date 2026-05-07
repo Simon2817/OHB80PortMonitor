@@ -64,7 +64,7 @@ void AlarmLogDBCon::onWriteTaskCompleted(const WriteResult& result)
     // ---- INSERT 派发 ----
     if (result.opType == static_cast<int>(WriteOp::Insert)) {
         // params 顺序与 SQL ((alarm_level, occur_time, qr_code, alarm_type,
-        //                    is_resolved, resolve_time, customer_visible, description)) 严格对齐
+        //                    is_resolved, resolve_time, description, user_permission)) 严格对齐
         if (result.params.size() < 8) return;
         QVariantMap row;
         row[QStringLiteral("alarm_level")]      = result.params.at(0);
@@ -73,8 +73,8 @@ void AlarmLogDBCon::onWriteTaskCompleted(const WriteResult& result)
         row[QStringLiteral("alarm_type")]       = result.params.at(3);
         row[QStringLiteral("is_resolved")]      = result.params.at(4);
         row[QStringLiteral("resolve_time")]     = result.params.at(5);
-        row[QStringLiteral("customer_visible")] = result.params.at(6);
-        row[QStringLiteral("description")]      = result.params.at(7);
+        row[QStringLiteral("description")]      = result.params.at(6);
+        row[QStringLiteral("user_permission")]  = result.params.at(7);
 
         emit recordInserted(row);
         return;
@@ -96,7 +96,6 @@ QList<QVariantMap> AlarmLogDBCon::queryPageWithConditions(int alarmLevel,
                                                           const QString& qrCode,
                                                           const QString& alarmType,
                                                           int isResolved,
-                                                          int customerVisible,
                                                           const QString& startTime,
                                                           const QString& endTime,
                                                           int pageSize,
@@ -110,7 +109,6 @@ QList<QVariantMap> AlarmLogDBCon::queryPageWithConditions(int alarmLevel,
                               Q_ARG(QString, qrCode),
                               Q_ARG(QString, alarmType),
                               Q_ARG(int, isResolved),
-                              Q_ARG(int, customerVisible),
                               Q_ARG(QString, startTime),
                               Q_ARG(QString, endTime),
                               Q_ARG(int, pageSize),
@@ -131,7 +129,6 @@ int AlarmLogDBCon::queryTotalCountWithConditions(int alarmLevel,
                                                  const QString& qrCode,
                                                  const QString& alarmType,
                                                  int isResolved,
-                                                 int customerVisible,
                                                  const QString& startTime,
                                                  const QString& endTime)
 {
@@ -143,7 +140,6 @@ int AlarmLogDBCon::queryTotalCountWithConditions(int alarmLevel,
                               Q_ARG(QString, qrCode),
                               Q_ARG(QString, alarmType),
                               Q_ARG(int, isResolved),
-                              Q_ARG(int, customerVisible),
                               Q_ARG(QString, startTime),
                               Q_ARG(QString, endTime));
     return count;
@@ -207,8 +203,8 @@ void AlarmLogDBCon::insertRecord(int alarmLevel,
                                  const QString& alarmType,
                                  int isResolved,
                                  const QString& resolveTime,
-                                 int customerVisible,
-                                 const QString& description)
+                                 const QString& description,
+                                 int userPermission)
 {
     QMetaObject::invokeMethod(m_sqlLogic, "insertRecord",
                               Qt::QueuedConnection,
@@ -218,8 +214,8 @@ void AlarmLogDBCon::insertRecord(int alarmLevel,
                               Q_ARG(QString, alarmType),
                               Q_ARG(int, isResolved),
                               Q_ARG(QString, resolveTime),
-                              Q_ARG(int, customerVisible),
-                              Q_ARG(QString, description));
+                              Q_ARG(QString, description),
+                              Q_ARG(int, userPermission));
 }
 
 void AlarmLogDBCon::deleteByTimeRange(const QString& startTime, const QString& endTime)

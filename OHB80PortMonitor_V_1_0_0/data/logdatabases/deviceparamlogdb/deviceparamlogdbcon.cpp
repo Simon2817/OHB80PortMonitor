@@ -135,7 +135,8 @@ void DeviceParamLogDBCon::insertRecord(const QString& qrCode,
                                        double inletFlow,
                                        double humidity,
                                        double temperature,
-                                       int foupStatus)
+                                       int foupStatus,
+                                       int userPermission)
 {
     QMetaObject::invokeMethod(m_sqlLogic, "insertRecord",
                               Qt::QueuedConnection,
@@ -146,7 +147,8 @@ void DeviceParamLogDBCon::insertRecord(const QString& qrCode,
                               Q_ARG(double, inletFlow),
                               Q_ARG(double, humidity),
                               Q_ARG(double, temperature),
-                              Q_ARG(int, foupStatus));
+                              Q_ARG(int, foupStatus),
+                              Q_ARG(int, userPermission));
 }
 
 void DeviceParamLogDBCon::deleteByTimeRange(const QString& startTime, const QString& endTime)

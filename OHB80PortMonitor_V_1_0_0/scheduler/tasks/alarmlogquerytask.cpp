@@ -7,7 +7,6 @@ AlarmLogQueryTask::AlarmLogQueryTask(QObject *parent)
     , m_db(nullptr)
     , m_alarmLevel(-1)
     , m_isResolved(-1)
-    , m_customerVisible(-1)
     , m_pageNumber(0)
     , m_pageSize(500)
 {
@@ -62,11 +61,6 @@ void AlarmLogQueryTask::setIsResolved(int isResolved)
     m_isResolved = isResolved;
 }
 
-void AlarmLogQueryTask::setCustomerVisible(int customerVisible)
-{
-    m_customerVisible = customerVisible;
-}
-
 void AlarmLogQueryTask::setOccurTimeRange(const QString& startTime, const QString& endTime)
 {
     m_startTime = startTime;
@@ -117,7 +111,7 @@ void AlarmLogQueryTask::executeQuery()
     // 有条件查询：当前页中所有满足条件的记录
     if (m_pageNumber > 0) {
         QList<QVariantMap> pageRecords = m_db->queryPageWithConditions(
-            m_alarmLevel, m_qrCode, m_alarmType, m_isResolved, m_customerVisible,
+            m_alarmLevel, m_qrCode, m_alarmType, m_isResolved,
             m_startTime, m_endTime,
             m_pageSize, m_pageNumber);
         emit pageWithConditionsResult(pageRecords);
@@ -125,7 +119,7 @@ void AlarmLogQueryTask::executeQuery()
 
     // 有条件查询：总记录数
     int totalCountWithConditions = m_db->queryTotalCountWithConditions(
-        m_alarmLevel, m_qrCode, m_alarmType, m_isResolved, m_customerVisible,
+        m_alarmLevel, m_qrCode, m_alarmType, m_isResolved,
         m_startTime, m_endTime);
     emit totalCountWithConditionsResult(totalCountWithConditions);
 

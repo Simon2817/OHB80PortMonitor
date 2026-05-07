@@ -17,7 +17,6 @@ struct AlarmInfo
     QString occurTime;               // 警报发生时间
     QString resolvedTime;            // 警报解决时间（Warn级别可为空）
     bool isResolved;                 // 是否已解决
-    bool customerVisible;            // 客户是否可见（0:不可见 1:可见）
     QString description;             // 警报描述信息
 
     // 默认构造函数
@@ -27,7 +26,6 @@ struct AlarmInfo
         , alarmType(0)
         , alarmSource(0)
         , isResolved(false)
-        , customerVisible(true)
     {}
 
     // 生成警报ID
@@ -46,7 +44,6 @@ struct AlarmInfo
         occurTime.clear();
         resolvedTime.clear();
         isResolved = false;
-        customerVisible = true;
         description.clear();
     }
 

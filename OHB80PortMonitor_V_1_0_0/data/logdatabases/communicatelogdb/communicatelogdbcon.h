@@ -56,6 +56,8 @@ public:
     void queryTimeBounds(QString& earliestTime, QString& latestTime);
 
     // 插入接口
+    // userPermission: 触发该通讯的用户权限级别（UserPermission 枚举），
+    //                 默认 0（UserPermission::Guest），兼容旧调用方
     void insertRecord(const QString& sendTime,
                       const QString& responseTime,
                       const QString& commandId,
@@ -64,7 +66,8 @@ public:
                       int retryCount,
                       const QByteArray& sendFrame,
                       const QByteArray& responseFrame,
-                      const QString& description);
+                      const QString& description,
+                      int userPermission = 0);
 
     // 删除接口
     void deleteByTimeRange(const QString& startTime, const QString& endTime);

@@ -59,7 +59,6 @@ QString AlarmDispatchTask::submitAlarm(int alarmType,
     info.sourceIdentifier = sourceIdentifier;
     info.description      = description;
     info.alarmLevel       = alarmTypeToLevel(alarmType);
-    info.customerVisible  = (alarmTypeToCustomerVisible(alarmType) == 1);
     return submitAlarm(info);
 }
 
@@ -166,7 +165,6 @@ void AlarmDispatchTask::loadActiveFromDb()
         /*qrCode*/ QString(),
         /*alarmType*/ QString(),
         /*isResolved*/ 0,
-        /*customerVisible*/ -1,
         /*startTime*/ QString(),
         /*endTime*/ QString(),
         /*pageSize*/ kPageSize,
@@ -183,7 +181,6 @@ void AlarmDispatchTask::loadActiveFromDb()
         info.alarmType        = row.value(QStringLiteral("alarm_type")).toInt();
         info.isResolved       = false;
         info.resolvedTime     = row.value(QStringLiteral("resolve_time")).toString();
-        info.customerVisible  = row.value(QStringLiteral("customer_visible")).toInt() == 1;
         info.description      = row.value(QStringLiteral("description")).toString();
         // alarm_source 未落库；generateAlarmId() 仅需 level/identifier/type，
         // 默认 Device 不影响 alarmId 与后续去重
@@ -218,7 +215,6 @@ void AlarmDispatchTask::persistInsert(const AlarmInfo& info)
         QString::number(info.alarmType),      // alarm_type 列为 TEXT
         info.isResolved ? 1 : 0,
         info.resolvedTime,
-        info.customerVisible ? 1 : 0,
         info.description);
 }
 

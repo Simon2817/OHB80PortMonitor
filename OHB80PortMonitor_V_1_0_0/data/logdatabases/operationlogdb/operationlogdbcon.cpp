@@ -76,12 +76,13 @@ void OperationLogDBCon::onWriteTaskCompleted(const WriteResult& result)
     if (result.opType != static_cast<int>(WriteOp::Insert)) return;
     if (result.result != QStringLiteral("Success")) return;
 
-    // params 顺序与 SQL ((occur_time, log_type, description)) 严格对齐
-    if (result.params.size() < 3) return;
+    // params 顺序与 SQL ((occur_time, log_type, description, user_permission)) 严格对齐
+    if (result.params.size() < 4) return;
     QVariantMap row;
-    row[QStringLiteral("occur_time")]  = result.params.at(0);
-    row[QStringLiteral("log_type")]    = result.params.at(1);
-    row[QStringLiteral("description")] = result.params.at(2);
+    row[QStringLiteral("occur_time")]      = result.params.at(0);
+    row[QStringLiteral("log_type")]        = result.params.at(1);
+    row[QStringLiteral("description")]     = result.params.at(2);
+    row[QStringLiteral("user_permission")] = result.params.at(3);
 
     emit recordInserted(row);
 }
@@ -307,13 +308,15 @@ void OperationLogDBCon::queryTimeBounds(QString& earliestTime, QString& latestTi
     latestTime   = latest;
 }
 
-void OperationLogDBCon::insertRecord(const QString& occurTime, int logType, const QString& description)
+void OperationLogDBCon::insertRecord(const QString& occurTime, int logType, const QString& description,
+                                     int userPermission)
 {
     QMetaObject::invokeMethod(m_sqlLogic, "insertRecord",
                               Qt::QueuedConnection,
                               Q_ARG(QString, occurTime),
                               Q_ARG(int, logType),
-                              Q_ARG(QString, description));
+                              Q_ARG(QString, description),
+                              Q_ARG(int, userPermission));
 }
 
 void OperationLogDBCon::deleteByTimeRange(const QString& startTime, const QString& endTime)

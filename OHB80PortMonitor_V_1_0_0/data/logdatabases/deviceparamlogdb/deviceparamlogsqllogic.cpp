@@ -70,7 +70,8 @@ bool DeviceParamLogSqlLogic::insertRecord(const QString& qrCode,
                                           double inletFlow,
                                           double humidity,
                                           double temperature,
-                                          int foupStatus)
+                                          int foupStatus,
+                                          int userPermission)
 {
     QString sql = m_sqlMapper->getSql("insert_record");
     if (sql.isEmpty()) {
@@ -86,6 +87,8 @@ bool DeviceParamLogSqlLogic::insertRecord(const QString& qrCode,
     result.tableName = "device_param_log";
     result.opType = static_cast<int>(WriteOp::Insert);
 
+    // 顺序与 SQL ((qr_code, record_time, inlet_pressure, outlet_pressure, inlet_flow,
+    //                humidity, temperature, foup_status, user_permission)) 严格对齐
     result.params << qrCode
                   << recordTime
                   << inletPressure
@@ -93,7 +96,8 @@ bool DeviceParamLogSqlLogic::insertRecord(const QString& qrCode,
                   << inletFlow
                   << humidity
                   << temperature
-                  << foupStatus;
+                  << foupStatus
+                  << userPermission;
 
     emit writeExecuted(result);
     return true;

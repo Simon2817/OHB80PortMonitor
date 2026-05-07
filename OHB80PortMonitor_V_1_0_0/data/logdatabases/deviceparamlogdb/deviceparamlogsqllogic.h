@@ -26,6 +26,7 @@ public slots:
     bool initializeDatabase();
 
     // 插入数据
+    // userPermission 默认 0（UserPermission::Guest），兼容旧调用方
     bool insertRecord(const QString& qrCode,
                       const QString& recordTime,
                       double inletPressure,
@@ -33,7 +34,8 @@ public slots:
                       double inletFlow,
                       double humidity,
                       double temperature,
-                      int foupStatus);
+                      int foupStatus,
+                      int userPermission = 0);
 
     // 分页条件查询
     // 任意条件传入空字符串表示不应用该条件

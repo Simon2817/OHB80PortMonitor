@@ -4,6 +4,7 @@
 #include "../scheduler_task.h"
 #include "modbustcpmastermanager/modbuscommand/modbuscommand.h"
 #include "modbustcpmastermanager/modbuscommand/commandresponseparser.h"
+#include "tip_label_task.h"
 
 #include <QHash>
 #include <QString>

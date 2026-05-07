@@ -67,18 +67,19 @@ void CommunicateLogDBCon::onWriteTaskCompleted(const WriteResult& result)
     if (result.result != QStringLiteral("Success")) return;
 
     // params 顺序与 SQL ((send_time, response_time, command_id, qr_code,
-    //                    exec_status, retry_count, send_frame, response_frame, description)) 严格对齐
-    if (result.params.size() < 9) return;
+    //                    exec_status, retry_count, send_frame, response_frame, description, user_permission)) 严格对齐
+    if (result.params.size() < 10) return;
     QVariantMap row;
-    row[QStringLiteral("send_time")]      = result.params.at(0);
-    row[QStringLiteral("response_time")]  = result.params.at(1);
-    row[QStringLiteral("command_id")]     = result.params.at(2);
-    row[QStringLiteral("qr_code")]        = result.params.at(3);
-    row[QStringLiteral("exec_status")]    = result.params.at(4);
-    row[QStringLiteral("retry_count")]    = result.params.at(5);
-    row[QStringLiteral("send_frame")]     = result.params.at(6);
-    row[QStringLiteral("response_frame")] = result.params.at(7);
-    row[QStringLiteral("description")]    = result.params.at(8);
+    row[QStringLiteral("send_time")]       = result.params.at(0);
+    row[QStringLiteral("response_time")]   = result.params.at(1);
+    row[QStringLiteral("command_id")]      = result.params.at(2);
+    row[QStringLiteral("qr_code")]         = result.params.at(3);
+    row[QStringLiteral("exec_status")]     = result.params.at(4);
+    row[QStringLiteral("retry_count")]     = result.params.at(5);
+    row[QStringLiteral("send_frame")]      = result.params.at(6);
+    row[QStringLiteral("response_frame")]  = result.params.at(7);
+    row[QStringLiteral("description")]     = result.params.at(8);
+    row[QStringLiteral("user_permission")] = result.params.at(9);
 
     emit recordInserted(row);
 }
@@ -198,7 +199,8 @@ void CommunicateLogDBCon::insertRecord(const QString& sendTime,
                                        int retryCount,
                                        const QByteArray& sendFrame,
                                        const QByteArray& responseFrame,
-                                       const QString& description)
+                                       const QString& description,
+                                       int userPermission)
 {
     QMetaObject::invokeMethod(m_sqlLogic, "insertRecord",
                               Qt::QueuedConnection,
@@ -210,7 +212,8 @@ void CommunicateLogDBCon::insertRecord(const QString& sendTime,
                               Q_ARG(int, retryCount),
                               Q_ARG(QByteArray, sendFrame),
                               Q_ARG(QByteArray, responseFrame),
-                              Q_ARG(QString, description));
+                              Q_ARG(QString, description),
+                              Q_ARG(int, userPermission));
 }
 
 void CommunicateLogDBCon::deleteByTimeRange(const QString& startTime, const QString& endTime)

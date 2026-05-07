@@ -252,7 +252,6 @@ void AlarmLoggerWidget::writeRecord(const AlarmInfo &info)
             alarmIdToString(info.alarmId()),
             0,                  // is_resolved=0（发布时）
             QString(),          // resolve_time 留空
-            1,                  // customer_visible 默认 1
             info.message());
     }
 }

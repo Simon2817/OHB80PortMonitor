@@ -20,12 +20,6 @@ public:
     // 由 MainWindow 在执行查询测试前调用，使界面具备可用的查询条件输入。
     void initUi();
 
-    // 由外部（如主界面 / 权限模块）设置"客户是否可见"过滤条件。
-    // 传入 -1 表示不应用该条件；0 表示仅查询客户不可见；1 表示仅查询客户可见。
-    // 每次提交查询时都会使用此值作为过滤条件。
-    void setCustomerVisibleFilter(int value);
-    int  customerVisibleFilter() const;
-
 private slots:
     void onCheckBoxAllStateChanged(int state);
     void onSearchClicked();
@@ -54,9 +48,6 @@ private:
     int     m_lastIsResolved;       // -1 表示未启用
     QString m_lastStartTime;
     QString m_lastEndTime;
-
-    // 外部注入的"客户是否可见"过滤条件，默认 -1（不过滤）
-    int m_customerVisibleFilter = -1;
 
     void submitQuery(int page);
     void setHistoryLogData(const QList<QVariantMap>& data);

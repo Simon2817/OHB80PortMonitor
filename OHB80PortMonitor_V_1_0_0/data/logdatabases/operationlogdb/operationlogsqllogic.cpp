@@ -67,7 +67,8 @@ void OperationLogSqlLogic::initializeCleanupScheduler()
     m_cleanupScheduler->start();
 }
 
-bool OperationLogSqlLogic::insertRecord(const QString& occurTime, int logType, const QString& description)
+bool OperationLogSqlLogic::insertRecord(const QString& occurTime, int logType, const QString& description,
+                                       int userPermission)
 {
     QString sql = m_sqlMapper->getSql("insert_record");
     if (sql.isEmpty()) {
@@ -84,8 +85,8 @@ bool OperationLogSqlLogic::insertRecord(const QString& occurTime, int logType, c
     result.tableName = "operation_log";
     result.opType = static_cast<int>(WriteOp::Insert);
 
-    // 构造参数列表
-    result.params << occurTime << logType << description;
+    // 构造参数列表（顺序与 SQL ((occur_time, log_type, description, user_permission)) 严格对齐）
+    result.params << occurTime << logType << description << userPermission;
 
     // 发出信号，传递SQL语句和参数给WriteSqlDBCon
     emit writeExecuted(result);

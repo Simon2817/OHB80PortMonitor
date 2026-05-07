@@ -27,6 +27,7 @@ public slots:
     bool initializeDatabase();
 
     // 插入数据
+    // userPermission 默认 0（UserPermission::Guest），兼容旧调用方
     bool insertRecord(const QString& sendTime,
                       const QString& responseTime,
                       const QString& commandId,
@@ -35,7 +36,8 @@ public slots:
                       int retryCount,
                       const QByteArray& sendFrame,
                       const QByteArray& responseFrame,
-                      const QString& description);
+                      const QString& description,
+                      int userPermission = 0);
 
     // 分页条件查询
     // 任意条件传入空字符串/-1表示不应用该条件

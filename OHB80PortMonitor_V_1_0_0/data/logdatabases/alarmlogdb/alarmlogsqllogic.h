@@ -26,14 +26,15 @@ public slots:
     bool initializeDatabase();
 
     // 插入数据
+    // userPermission 默认 0（UserPermission::Guest），兼容旧调用方
     bool insertRecord(int alarmLevel,
                       const QString& occurTime,
                       const QString& qrCode,
                       const QString& alarmType,
                       int isResolved,
                       const QString& resolveTime,
-                      int customerVisible,
-                      const QString& description);
+                      const QString& description,
+                      int userPermission = 0);
 
     // 分页条件查询
     // 任意条件传入空字符串/-1表示不应用该条件
@@ -41,7 +42,6 @@ public slots:
                                                const QString& qrCode,
                                                const QString& alarmType,
                                                int isResolved,
-                                               int customerVisible,
                                                const QString& startTime,
                                                const QString& endTime,
                                                int pageSize,
@@ -55,7 +55,6 @@ public slots:
                                       const QString& qrCode,
                                       const QString& alarmType,
                                       int isResolved,
-                                      int customerVisible,
                                       const QString& startTime,
                                       const QString& endTime);
 
