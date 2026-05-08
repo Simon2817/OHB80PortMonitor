@@ -6,6 +6,7 @@
 #include <QVariantMap>
 #include "alarmlogsqllogic.h"
 #include "writesqldbcon.h"
+#include "alarmrecord.h"
 
 namespace LogDB {
 
@@ -28,7 +29,7 @@ public:
     void cleanup();
 
     // 查询接口
-    QList<QVariantMap> queryPageWithConditions(int alarmLevel,
+    QList<AlarmRecord> queryPageWithConditions(int alarmLevel,
                                                const QString& qrCode,
                                                const QString& alarmType,
                                                int isResolved,
@@ -72,9 +73,8 @@ public:
 
 signals:
     // 实时事件：本 DBCon 提交的 INSERT 已成功落库
-    // row 字段对应 alarm_log 表列：alarm_level / occur_time / qr_code / alarm_type /
-    //   is_resolved / resolve_time / description / user_permission
-    void recordInserted(const QVariantMap& row);
+    // 携带 AlarmRecord（包含 alarm_log 表所有字段）
+    void recordInserted(const AlarmRecord& record);
 
     // 实时事件：本 DBCon 提交的 UPDATE(update_resolve) 已成功执行
     // 用于驱动 UI 把对应 (qr_code, alarm_type) 行的 is_resolved/resolve_time 列原位刷新

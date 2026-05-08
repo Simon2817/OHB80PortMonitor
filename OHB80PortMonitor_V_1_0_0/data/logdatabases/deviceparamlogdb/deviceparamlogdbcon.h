@@ -6,6 +6,7 @@
 #include <QVariantMap>
 #include "deviceparamlogsqllogic.h"
 #include "writesqldbcon.h"
+#include "deviceparamrecord.h"
 
 namespace LogDB {
 
@@ -28,11 +29,11 @@ public:
     void cleanup();
 
     // 查询接口
-    QList<QVariantMap> queryPageWithConditions(const QString& qrCode,
-                                               const QString& startTime,
-                                               const QString& endTime,
-                                               int pageSize,
-                                               int pageNumber);
+    QList<DeviceParamRecord> queryPageWithConditions(const QString& qrCode,
+                                                     const QString& startTime,
+                                                     const QString& endTime,
+                                                     int pageSize,
+                                                     int pageNumber);
 
     int queryTotalCount();
 
@@ -57,6 +58,11 @@ public:
 
     // 删除接口
     void deleteByTimeRange(const QString& startTime, const QString& endTime);
+
+signals:
+    // 实时事件：本 DBCon 提交的 INSERT 已成功落库
+    // 携带 DeviceParamRecord（包含 device_param_log 表所有字段）
+    void recordInserted(const DeviceParamRecord& record);
 
 private slots:
     void onWriteTaskCompleted(const WriteResult& result);

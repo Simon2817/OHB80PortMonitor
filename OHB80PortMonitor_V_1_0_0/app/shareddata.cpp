@@ -7,8 +7,8 @@
 #include "scheduler/tasks/network_status_task.h"
 #include "scheduler/tasks/monitor_data_task.h"
 #include "scheduler/tasks/alarm_dispatch_task.h"
-#include "scheduler/tasks/running_logger_task.h"
-#include "scheduler/tasks/tip_label_task.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
+#include "setofohbinfo.h"
 #include <QDebug>
 #include <QHash>
 
@@ -17,8 +17,7 @@ bool SharedData::s_modbusManagerInitialized = false;
 NetworkStatusTask* SharedData::s_networkStatusTask = nullptr;
 MonitorDataTask* SharedData::s_monitorDataTask = nullptr;
 AlarmDispatchTask* SharedData::s_alarmDispatchTask = nullptr;
-RunningLoggerTask* SharedData::s_runningLoggerTask = nullptr;
-TipLabelTask* SharedData::s_tipLabelTask = nullptr;
+OperationDispatchTask* SharedData::s_operationDispatchTask = nullptr;
 
 SharedData::SharedData() {
 
@@ -150,18 +149,11 @@ void SharedData::initScheduler()
         qDebug() << "[SharedData] 已提交警报调度任务, TaskID:" << id;
     }
 
-    // 提交运行日志采集任务（长驻，取代老 RunningLoggerCollector）
-    if (!s_runningLoggerTask) {
-        s_runningLoggerTask = new RunningLoggerTask();
-        QString id = scheduler->submitTask(s_runningLoggerTask);
-        qDebug() << "[SharedData] 已提交运行日志采集任务, TaskID:" << id;
-    }
-
-    // 提交滚动公告栏数据采集任务（长驻）
-    if (!s_tipLabelTask) {
-        s_tipLabelTask = new TipLabelTask();
-        QString id = scheduler->submitTask(s_tipLabelTask);
-        qDebug() << "[SharedData] 已提交滚动公告栏任务, TaskID:" << id;
+    // 提交操作调度任务（长驻，取代老 RunningLoggerCollector）
+    if (!s_operationDispatchTask) {
+        s_operationDispatchTask = new OperationDispatchTask();
+        QString id = scheduler->submitTask(s_operationDispatchTask);
+        qDebug() << "[SharedData] 已提交操作调度任务, TaskID:" << id;
     }
 
     qDebug() << "[SharedData] 调度器已启动，所有常驻任务已提交";
@@ -182,12 +174,7 @@ AlarmDispatchTask* SharedData::getAlarmDispatchTask()
     return s_alarmDispatchTask;
 }
 
-RunningLoggerTask* SharedData::getRunningLoggerTask()
+OperationDispatchTask* SharedData::getOperationDispatchTask()
 {
-    return s_runningLoggerTask;
-}
-
-TipLabelTask* SharedData::getTipLabelTask()
-{
-    return s_tipLabelTask;
+    return s_operationDispatchTask;
 }

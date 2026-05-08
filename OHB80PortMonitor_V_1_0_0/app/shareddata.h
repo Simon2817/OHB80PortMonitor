@@ -4,25 +4,25 @@
 #include <QVector>
 #include <QStringList>
 #include <QSharedPointer>
-#include "classes/setofohbinfo.h"
-#include "classes/foupofohbinfo.h"
+#include <QString>
+#include <QVariantMap>
+#include "setofohbinfo.h"
 
 class NetworkStatusTask;
 class MonitorDataTask;
 class AlarmDispatchTask;
-class RunningLoggerTask;
-class TipLabelTask;
+class OperationDispatchTask;
 
 class SharedData
 {
 public:
     SharedData();
-    
+
     static QVector<SetOfOHBInfo> setOfOHBInfoList;
-    
+
     // 根据 uiId 获取 SetOfOHBInfo 对象
     static QSharedPointer<SetOfOHBInfo> getSetOfOHBInfoByUiId(int uiId);
-    
+
     // 根据 qrCode 获取 FoupOfOHBInfo 指针（用于直接修改）
     static FoupOfOHBInfo* getFoupByQRCode(const QString& qrCode);
 
@@ -41,19 +41,15 @@ public:
     // 获取警报调度任务（所有 submitAlarm / submitResolve 入口）
     static AlarmDispatchTask* getAlarmDispatchTask();
 
-    // 获取运行日志采集任务（logMessage / logWarn / logError 入口）
-    static RunningLoggerTask* getRunningLoggerTask();
-
-    // 获取滚动公告栏数据采集任务（submitAlarmLog / submitAlarmResolved / submitOperationLog 入口）
-    static TipLabelTask* getTipLabelTask();
+    // 获取操作调度任务（logMessage / logWarn / logError 入口）
+    static OperationDispatchTask* getOperationDispatchTask();
 
 private:
     static bool s_modbusManagerInitialized;
     static NetworkStatusTask* s_networkStatusTask;
     static MonitorDataTask* s_monitorDataTask;
     static AlarmDispatchTask* s_alarmDispatchTask;
-    static RunningLoggerTask* s_runningLoggerTask;
-    static TipLabelTask* s_tipLabelTask;
+    static OperationDispatchTask* s_operationDispatchTask;
 };
 
 #endif // SHAREDDATA_H

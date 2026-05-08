@@ -1,6 +1,6 @@
 #include "changepassworddialog.h"
 #include "usermanager.h"
-#include "scheduler/tasks/running_logger_task.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "app/shareddata.h"
 
 #include <QVBoxLayout>
@@ -115,12 +115,12 @@ void ChangePasswordDialog::onChangePasswordClicked()
 
     // 修改密码
     if (mgr->modifyUser(username, newPassword)) {
-        SharedData::getRunningLoggerTask()->logMessage(
+        SharedData::getOperationDispatchTask()->logMessage(
             QStringLiteral("Password changed: ") + username);
         QMessageBox::information(this, QStringLiteral("Success"), QStringLiteral("Password changed successfully"));
         accept();
     } else {
-        SharedData::getRunningLoggerTask()->logMessage(
+        SharedData::getOperationDispatchTask()->logMessage(
             QStringLiteral("Password change failed: ") + username);
         m_errorLabel->setText(QStringLiteral("Failed to change password"));
         m_errorLabel->setVisible(true);

@@ -10,7 +10,7 @@
 #include "loggermanager.h"
 #include "classes/foupofohbinfo.h"
 #include "classes/alarminfo.h"
-#include "scheduler/tasks/running_logger_task.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "scheduler/tasks/alarm_dispatch_task.h"
 
 #include <QDebug>
@@ -184,10 +184,10 @@ void NetworkStatusTask::onStatusChanged(ModbusConnecter::ConnectionStatus status
         foup->hasAlarm = true;
         // 用新 AlarmInfo 规则生成 alarmId（设备类型 = DeviceOffline，来源 = Device + qrCode）
         AlarmInfo probe;
-        probe.alarmType        = static_cast<int>(AlarmType::DeviceOffline);
-        probe.alarmSource      = static_cast<int>(AlarmSource::Device);
-        probe.sourceIdentifier = foup->qrCode;
-        probe.alarmLevel       = alarmTypeToLevel(probe.alarmType);
+        probe.record.alarmType   = static_cast<int>(AlarmType::DeviceOffline);
+        probe.alarmSource        = static_cast<int>(AlarmSource::Device);
+        probe.record.qrCode      = foup->qrCode;
+        probe.record.alarmLevel  = alarmTypeToLevel(probe.record.alarmType);
         foup->alarmId = probe.generateAlarmId();
         foup->startTime = QTime(0, 0, 0);
         qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "(" << ipPortStr << ") 连接异常，已设置告警 alarmId=" << foup->alarmId;
@@ -284,7 +284,7 @@ void NetworkStatusTask::submitWriteQRCode(const QString &masterId)
     qDebug() << "[Scheduler][NetworkStatusTask] 下发 WriteQRCode masterId=" << masterId << "value=" << qrcodeValue << "uuid=" << cmd.uuid;
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
         QString("[Scheduler][NetworkStatusTask] 下发 WriteQRCode masterId=%1 value=%2 uuid=%3").arg(masterId).arg(qrcodeValue).arg(cmd.uuid).toStdString());
-    SharedData::getRunningLoggerTask()->logMessage(
+    SharedData::getOperationDispatchTask()->logMessage(
         QString("[WriteQRCode] Device %1 → QRCode=%2").arg(masterId).arg(qrcodeValue));
 
     // 连接信号监听响应

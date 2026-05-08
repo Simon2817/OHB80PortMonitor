@@ -93,7 +93,7 @@ void AlarmLogWidget::loadUnresolvedToLiveLog()
     if (!db) return;
 
     // 查询 is_resolved=0 的未解决记录（SQL 结果按 occur_time DESC）
-    const QList<QVariantMap> rows = db->queryPageWithConditions(
+    const QList<AlarmRecord> rows = db->queryPageWithConditions(
         /*alarmLevel*/ -1,
         /*qrCode*/ QString(),
         /*alarmType*/ QString(),
@@ -143,31 +143,26 @@ void AlarmLogWidget::onRecordResolved(const QString& qrCode,
     }
 }
 
-void AlarmLogWidget::onRecordInserted(const QVariantMap& row)
+void AlarmLogWidget::onRecordInserted(const AlarmRecord& record)
 {
     auto* model = qobject_cast<QStandardItemModel*>(ui->tableViewLiveLog->model());
     if (!model) return;
 
     // alarm_level / alarm_type / is_resolved 做友好化映射
-    const int levelVal = row.value("alarm_level").toInt();
-    const QString levelText = alarmLevelName(levelVal);
+    const QString levelText = alarmLevelName(record.alarmLevel);
 
-    const QString typeRaw = row.value("alarm_type").toString();
-    bool typeOk = false;
-    const int typeVal = typeRaw.toInt(&typeOk);
-    const QString typeText = typeOk ? alarmTypeName(typeVal) : typeRaw;
+    const QString typeText = alarmTypeName(record.alarmType);
 
-    const int resolvedVal = row.value("is_resolved").toInt();
-    const QString resolvedText = alarmResolvedStatusName(resolvedVal);
+    const QString resolvedText = alarmResolvedStatusName(record.isResolved);
 
     QList<QStandardItem*> items;
     items << new QStandardItem(levelText)
-          << new QStandardItem(row.value("occur_time").toString())
-          << new QStandardItem(row.value("qr_code").toString())
+          << new QStandardItem(record.occurTime)
+          << new QStandardItem(record.qrCode)
           << new QStandardItem(typeText)
           << new QStandardItem(resolvedText)
-          << new QStandardItem(row.value("resolve_time").toString())
-          << new QStandardItem(row.value("description").toString());
+          << new QStandardItem(record.resolveTime)
+          << new QStandardItem(record.description);
 
     model->insertRow(0, items);
     while (model->rowCount() > kLiveLogMaxRows) {
@@ -331,7 +326,7 @@ void AlarmLogWidget::submitQuery(int page)
     Scheduler::instance()->submitTask(task);
 }
 
-void AlarmLogWidget::onPageWithConditionsResult(const QList<QVariantMap>& records)
+void AlarmLogWidget::onPageWithConditionsResult(const QList<AlarmRecord>& records)
 {
     setHistoryLogData(records);
 }
@@ -347,7 +342,7 @@ void AlarmLogWidget::onTotalCountWithConditionsResult(int totalCount)
              << " 总记录数:" << totalCount;
 }
 
-void AlarmLogWidget::setHistoryLogData(const QList<QVariantMap>& data)
+void AlarmLogWidget::setHistoryLogData(const QList<AlarmRecord>& data)
 {
     QStandardItemModel* model = qobject_cast<QStandardItemModel*>(ui->tableViewHistoryLog->model());
     if (!model) {
@@ -367,27 +362,22 @@ void AlarmLogWidget::setHistoryLogData(const QList<QVariantMap>& data)
     model->setHorizontalHeaderLabels(headers);
 
     for (int row = 0; row < data.size(); ++row) {
-        const QVariantMap& r = data[row];
+        const AlarmRecord& r = data[row];
         // alarm_level 以枚举名称显示
-        const int levelVal = r.value("alarm_level").toInt();
-        const QString levelText = alarmLevelName(levelVal);
+        const QString levelText = alarmLevelName(r.alarmLevel);
         // alarm_type 存为 TEXT（枚举整数字符串），转成名称显示
-        const QString typeRaw = r.value("alarm_type").toString();
-        bool typeOk = false;
-        const int typeVal = typeRaw.toInt(&typeOk);
-        const QString typeText = typeOk ? alarmTypeName(typeVal) : typeRaw;
+        const QString typeText = alarmTypeName(r.alarmType);
         // is_resolved 以枚举名称显示
-        const int resolvedVal = r.value("is_resolved").toInt();
-        const QString resolvedText = alarmResolvedStatusName(resolvedVal);
+        const QString resolvedText = alarmResolvedStatusName(r.isResolved);
 
-        model->setItem(row, 0, new QStandardItem(r.value("id").toString()));
+        model->setItem(row, 0, new QStandardItem(QString::number(r.id)));
         model->setItem(row, 1, new QStandardItem(levelText));
-        model->setItem(row, 2, new QStandardItem(r.value("occur_time").toString()));
-        model->setItem(row, 3, new QStandardItem(r.value("qr_code").toString()));
+        model->setItem(row, 2, new QStandardItem(r.occurTime));
+        model->setItem(row, 3, new QStandardItem(r.qrCode));
         model->setItem(row, 4, new QStandardItem(typeText));
         model->setItem(row, 5, new QStandardItem(resolvedText));
-        model->setItem(row, 6, new QStandardItem(r.value("resolve_time").toString()));
-        model->setItem(row, 7, new QStandardItem(r.value("description").toString()));
+        model->setItem(row, 6, new QStandardItem(r.resolveTime));
+        model->setItem(row, 7, new QStandardItem(r.description));
     }
 
     ui->tableViewHistoryLog->resizeColumnsToContents();

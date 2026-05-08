@@ -56,23 +56,63 @@ void DeviceParamLogDBCon::onWriteTaskCompleted(const WriteResult& result)
              << "Result:" << result.result
              << "SQL ID:" << result.sqlId
              << "Params:" << result.params;
+
+    // 仅派发本表的成功 INSERT
+    if (result.tableName != QStringLiteral("device_param_log")) return;
+    if (result.opType != static_cast<int>(WriteOp::Insert)) return;
+    if (result.result != QStringLiteral("Success")) return;
+
+    // params 顺序与 SQL ((qr_code, record_time, inlet_pressure, outlet_pressure,
+    //                    inlet_flow, humidity, temperature, foup_status, user_permission)) 严格对齐
+    if (result.params.size() < 9) return;
+
+    DeviceParamRecord record;
+    record.qrCode          = result.params.at(0).toString();
+    record.recordTime      = result.params.at(1).toString();
+    record.inletPressure   = result.params.at(2).toDouble();
+    record.outletPressure  = result.params.at(3).toDouble();
+    record.inletFlow       = result.params.at(4).toDouble();
+    record.humidity        = result.params.at(5).toDouble();
+    record.temperature     = result.params.at(6).toDouble();
+    record.foupStatus      = result.params.at(7).toInt();
+    record.userPermission  = result.params.at(8).toInt();
+
+    emit recordInserted(record);
 }
 
-QList<QVariantMap> DeviceParamLogDBCon::queryPageWithConditions(const QString& qrCode,
+QList<DeviceParamRecord> DeviceParamLogDBCon::queryPageWithConditions(const QString& qrCode,
                                                                 const QString& startTime,
                                                                 const QString& endTime,
                                                                 int pageSize,
                                                                 int pageNumber)
 {
-    QList<QVariantMap> results;
+    QList<QVariantMap> varResults;
     QMetaObject::invokeMethod(m_sqlLogic, "queryPageWithConditions",
                               Qt::BlockingQueuedConnection,
-                              Q_RETURN_ARG(QList<QVariantMap>, results),
+                              Q_RETURN_ARG(QList<QVariantMap>, varResults),
                               Q_ARG(QString, qrCode),
                               Q_ARG(QString, startTime),
                               Q_ARG(QString, endTime),
                               Q_ARG(int, pageSize),
                               Q_ARG(int, pageNumber));
+
+    // 转换 QVariantMap 为 DeviceParamRecord
+    QList<DeviceParamRecord> results;
+    results.reserve(varResults.size());
+    for (const QVariantMap& row : varResults) {
+        DeviceParamRecord rec;
+        rec.id              = row.value(QStringLiteral("id")).toInt();
+        rec.qrCode          = row.value(QStringLiteral("qr_code")).toString();
+        rec.recordTime      = row.value(QStringLiteral("record_time")).toString();
+        rec.inletPressure   = row.value(QStringLiteral("inlet_pressure")).toDouble();
+        rec.outletPressure  = row.value(QStringLiteral("outlet_pressure")).toDouble();
+        rec.inletFlow       = row.value(QStringLiteral("inlet_flow")).toDouble();
+        rec.humidity        = row.value(QStringLiteral("humidity")).toDouble();
+        rec.temperature     = row.value(QStringLiteral("temperature")).toDouble();
+        rec.foupStatus      = row.value(QStringLiteral("foup_status")).toInt();
+        rec.userPermission  = row.value(QStringLiteral("user_permission")).toInt();
+        results.append(rec);
+    }
     return results;
 }
 

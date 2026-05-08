@@ -2,31 +2,30 @@
 #define ALARMINFO_H
 
 #include <QString>
+#include <QMetaType>
 #include "alarmtype.h"
+#include "alarmrecord.h"
 
 
-// 警报信息结构体
+// ====================================================================
+// AlarmInfo —— 警报业务信息
+//
+// 内部组合 AlarmRecord（数据库行字段），并在其之上扩展业务字段：
+//   - alarmSource:  警报来源（Device/User/System），不入库
+//   - alarmId:      由级别 + 来源标识 + 类型生成的 10 位字符串，不入库
+//
+// 与 AlarmRecord 重合的字段（id / alarmLevel / alarmType / qrCode /
+// occurTime / resolveTime / isResolved / description / userPermission）
+// 全部由 record 持有，业务侧请通过 info.record.xxx 访问。
+// ====================================================================
 struct AlarmInfo
 {
-    int id;                          // 数据库记录ID
-    int alarmLevel;                  // 警报级别 (AlarmLevel: Warn=1, Error=2, Fatal=3)
-    int alarmType;                   // 警告类型 (AlarmType枚举值)
-    int alarmSource;                 // 警报来源 (AlarmSource: Device=1, User=2, System=3)
-    QString sourceIdentifier;        // 来源标识（设备qrcode或用户名等）
-    QString alarmId;                 // 警报ID（根据级别+来源+类型生成）
-    QString occurTime;               // 警报发生时间
-    QString resolvedTime;            // 警报解决时间（Warn级别可为空）
-    bool isResolved;                 // 是否已解决
-    QString description;             // 警报描述信息
+    AlarmRecord record;              // DB 行字段（id/level/type/qrCode/...）
 
-    // 默认构造函数
-    AlarmInfo()
-        : id(0)
-        , alarmLevel(0)
-        , alarmType(0)
-        , alarmSource(0)
-        , isResolved(false)
-    {}
+    int     alarmSource = 0;         // 警报来源（AlarmSource: Device=1,User=2,System=3）
+    QString alarmId;                 // 警报ID（generateAlarmId() 生成）
+
+    AlarmInfo() = default;
 
     // 生成警报ID
     // 格式：【警报级别(1位)】+【来源标识(5位)】+【警告类型(4位)】
@@ -35,23 +34,19 @@ struct AlarmInfo
     // 重置所有字段
     void reset()
     {
-        id = 0;
-        alarmLevel = 0;
-        alarmType = 0;
+        record.reset();
         alarmSource = 0;
-        sourceIdentifier.clear();
         alarmId.clear();
-        occurTime.clear();
-        resolvedTime.clear();
-        isResolved = false;
-        description.clear();
     }
 
     // 检查是否有效
     bool isValid() const
     {
-        return id > 0 && alarmLevel > 0 && alarmType > 0 && alarmSource > 0;
+        return record.id > 0 && record.alarmLevel > 0
+            && record.alarmType > 0 && alarmSource > 0;
     }
 };
+
+Q_DECLARE_METATYPE(AlarmInfo)
 
 #endif // ALARMINFO_H

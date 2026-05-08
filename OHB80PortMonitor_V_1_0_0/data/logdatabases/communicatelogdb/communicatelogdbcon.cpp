@@ -69,22 +69,23 @@ void CommunicateLogDBCon::onWriteTaskCompleted(const WriteResult& result)
     // params 顺序与 SQL ((send_time, response_time, command_id, qr_code,
     //                    exec_status, retry_count, send_frame, response_frame, description, user_permission)) 严格对齐
     if (result.params.size() < 10) return;
-    QVariantMap row;
-    row[QStringLiteral("send_time")]       = result.params.at(0);
-    row[QStringLiteral("response_time")]   = result.params.at(1);
-    row[QStringLiteral("command_id")]      = result.params.at(2);
-    row[QStringLiteral("qr_code")]         = result.params.at(3);
-    row[QStringLiteral("exec_status")]     = result.params.at(4);
-    row[QStringLiteral("retry_count")]     = result.params.at(5);
-    row[QStringLiteral("send_frame")]      = result.params.at(6);
-    row[QStringLiteral("response_frame")]  = result.params.at(7);
-    row[QStringLiteral("description")]     = result.params.at(8);
-    row[QStringLiteral("user_permission")] = result.params.at(9);
 
-    emit recordInserted(row);
+    CommunicateRecord record;
+    record.sendTime        = result.params.at(0).toString();
+    record.responseTime    = result.params.at(1).toString();
+    record.commandId       = result.params.at(2).toString();
+    record.qrCode          = result.params.at(3).toString();
+    record.execStatus      = result.params.at(4).toInt();
+    record.retryCount      = result.params.at(5).toInt();
+    record.sendFrame       = result.params.at(6).toByteArray();
+    record.responseFrame   = result.params.at(7).toByteArray();
+    record.description     = result.params.at(8).toString();
+    record.userPermission  = result.params.at(9).toInt();
+
+    emit recordInserted(record);
 }
 
-QList<QVariantMap> CommunicateLogDBCon::queryPageWithConditions(const QString& commandId,
+QList<CommunicateRecord> CommunicateLogDBCon::queryPageWithConditions(const QString& commandId,
                                                                 const QString& qrCode,
                                                                 int execStatus,
                                                                 int retryCount,
@@ -94,10 +95,10 @@ QList<QVariantMap> CommunicateLogDBCon::queryPageWithConditions(const QString& c
                                                                 int pageNumber,
                                                                 SortOrder sortOrder)
 {
-    QList<QVariantMap> results;
+    QList<QVariantMap> varResults;
     QMetaObject::invokeMethod(m_sqlLogic, "queryPageWithConditions",
                               Qt::BlockingQueuedConnection,
-                              Q_RETURN_ARG(QList<QVariantMap>, results),
+                              Q_RETURN_ARG(QList<QVariantMap>, varResults),
                               Q_ARG(QString, commandId),
                               Q_ARG(QString, qrCode),
                               Q_ARG(int, execStatus),
@@ -107,6 +108,25 @@ QList<QVariantMap> CommunicateLogDBCon::queryPageWithConditions(const QString& c
                               Q_ARG(int, pageSize),
                               Q_ARG(int, pageNumber),
                               Q_ARG(int, static_cast<int>(sortOrder)));
+
+    // 转换 QVariantMap 为 CommunicateRecord
+    QList<CommunicateRecord> results;
+    results.reserve(varResults.size());
+    for (const QVariantMap& row : varResults) {
+        CommunicateRecord rec;
+        rec.id              = row.value(QStringLiteral("id")).toInt();
+        rec.sendTime        = row.value(QStringLiteral("send_time")).toString();
+        rec.responseTime    = row.value(QStringLiteral("response_time")).toString();
+        rec.commandId       = row.value(QStringLiteral("command_id")).toString();
+        rec.qrCode          = row.value(QStringLiteral("qr_code")).toString();
+        rec.execStatus      = row.value(QStringLiteral("exec_status")).toInt();
+        rec.retryCount      = row.value(QStringLiteral("retry_count")).toInt();
+        rec.sendFrame       = row.value(QStringLiteral("send_frame")).toByteArray();
+        rec.responseFrame   = row.value(QStringLiteral("response_frame")).toByteArray();
+        rec.description     = row.value(QStringLiteral("description")).toString();
+        rec.userPermission  = row.value(QStringLiteral("user_permission")).toInt();
+        results.append(rec);
+    }
     return results;
 }
 

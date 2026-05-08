@@ -13,8 +13,7 @@
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 #include "logdatabases/alarmlogdb/alarmlogdbcon.h"
-#include "scheduler/tasks/tip_label_task.h"
-#include "scheduler/tasks/running_logger_task.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 
 #include <QDebug>
 #include <QDateTime>
@@ -162,7 +161,7 @@ void MonitorDataTask::onCommunicationRecorded(ModbusCommand cmd, const QString& 
     // 转发 communicationCompleted 信号供 UI 更新实时日志
     emit communicationCompleted(cmd, masterId, description);
 
-    // 通讯失败时上报运行日志到 TipLabelTask 和 RunningLoggerTask
+    // 通讯失败时上报运行日志到 OperationDispatchTask
     if (execStatus != 0) {
         QString currentTime = QDateTime::fromMSecsSinceEpoch(cmd.sentMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"));
         QString statusStr;
@@ -171,10 +170,7 @@ void MonitorDataTask::onCommunicationRecorded(ModbusCommand cmd, const QString& 
         else if (execStatus == 3) statusStr = "发送失败";
         QString message = QString("设备 %1 指令 %2 %3: %4").arg(masterId, cmd.id, statusStr, description);
 
-        if (TipLabelTask* tipTask = SharedData::getTipLabelTask()) {
-            tipTask->submitOperationLog({currentTime, "WARN", message});
-        }
-        if (RunningLoggerTask* loggerTask = SharedData::getRunningLoggerTask()) {
+        if (OperationDispatchTask* loggerTask = SharedData::getOperationDispatchTask()) {
             loggerTask->logWarn(message);
         }
     }
@@ -227,31 +223,11 @@ void MonitorDataTask::updateFoupInfo(const QString& masterId, const QString& com
         // FOUP out → in：设置 startTime 为当前时间
         if (!foup->oldFoupIn && foup->foupIn) {
             foup->startTime = QTime::currentTime();
-
-            // 上报 FOUP 插入运行日志到 TipLabelTask 和 RunningLoggerTask
-            QString currentTime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"));
-            QString message = QString("设备 %1 FOUP In").arg(masterId);
-            if (TipLabelTask* tipTask = SharedData::getTipLabelTask()) {
-                tipTask->submitOperationLog({currentTime, "INFO", message});
-            }
-            if (RunningLoggerTask* loggerTask = SharedData::getRunningLoggerTask()) {
-                loggerTask->logMessage(message);
-            }
         }
         // FOUP in → out：重置相关字段
         else if (foup->oldFoupIn && !foup->foupIn) {
             foup->startTime = QTime(0, 0, 0);
             foup->purgeTimeSec = 0;
-
-            // 上报 FOUP 移除运行日志到 TipLabelTask 和 RunningLoggerTask
-            QString currentTime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"));
-            QString message = QString("设备 %1 FOUP Out").arg(masterId);
-            if (TipLabelTask* tipTask = SharedData::getTipLabelTask()) {
-                tipTask->submitOperationLog({currentTime, "INFO", message});
-            }
-            if (RunningLoggerTask* loggerTask = SharedData::getRunningLoggerTask()) {
-                loggerTask->logMessage(message);
-            }
         }
     } else if (commandId == "ReadIdlePurgeAll") {
         foup->idlePurgeEnabled   = data.value("idlePurgeEnabled").toBool();

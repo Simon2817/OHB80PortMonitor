@@ -33,11 +33,11 @@ void AlarmDispatchTask::stop()
 // =====================================================================
 void AlarmDispatchTask::normalize(AlarmInfo& info) const
 {
-    if (info.alarmLevel == 0) {
-        info.alarmLevel = alarmTypeToLevel(info.alarmType);
+    if (info.record.alarmLevel == 0) {
+        info.record.alarmLevel = alarmTypeToLevel(info.record.alarmType);
     }
-    if (info.occurTime.isEmpty()) {
-        info.occurTime = QDateTime::currentDateTime()
+    if (info.record.occurTime.isEmpty()) {
+        info.record.occurTime = QDateTime::currentDateTime()
                              .toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"));
     }
     if (info.alarmId.isEmpty()) {
@@ -54,11 +54,11 @@ QString AlarmDispatchTask::submitAlarm(int alarmType,
                                        const QString& description)
 {
     AlarmInfo info;
-    info.alarmType        = alarmType;
-    info.alarmSource      = alarmSource;
-    info.sourceIdentifier = sourceIdentifier;
-    info.description      = description;
-    info.alarmLevel       = alarmTypeToLevel(alarmType);
+    info.record.alarmType   = alarmType;
+    info.alarmSource        = alarmSource;
+    info.record.qrCode      = sourceIdentifier;
+    info.record.description = description;
+    info.record.alarmLevel  = alarmTypeToLevel(alarmType);
     return submitAlarm(info);
 }
 
@@ -75,8 +75,8 @@ QString AlarmDispatchTask::submitAlarm(AlarmInfo info)
         if (m_active.contains(info.alarmId)) {
             return info.alarmId;
         }
-        info.isResolved = false;
-        info.resolvedTime.clear();
+        info.record.isResolved = 0;
+        info.record.resolveTime.clear();
         m_active.insert(info.alarmId, info);
     }
 
@@ -101,8 +101,8 @@ void AlarmDispatchTask::submitResolve(const QString& alarmId)
             return;
         }
         resolvedInfo = it.value();
-        resolvedInfo.isResolved   = true;
-        resolvedInfo.resolvedTime = QDateTime::currentDateTime()
+        resolvedInfo.record.isResolved   = 1;
+        resolvedInfo.record.resolveTime = QDateTime::currentDateTime()
                                         .toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"));
         m_active.erase(it);
     }
@@ -119,10 +119,10 @@ void AlarmDispatchTask::submitResolve(int alarmType,
                                      const QString& sourceIdentifier)
 {
     AlarmInfo probe;
-    probe.alarmType        = alarmType;
-    probe.alarmSource      = alarmSource;
-    probe.sourceIdentifier = sourceIdentifier;
-    probe.alarmLevel       = alarmTypeToLevel(alarmType);
+    probe.record.alarmType   = alarmType;
+    probe.alarmSource        = alarmSource;
+    probe.record.qrCode      = sourceIdentifier;
+    probe.record.alarmLevel  = alarmTypeToLevel(alarmType);
     submitResolve(probe.generateAlarmId());
 }
 
@@ -158,9 +158,9 @@ void AlarmDispatchTask::loadActiveFromDb()
         return;
     }
 
-    // 全量取未解决记录（alarmLevel=-1 / qrCode=\"\" / alarmType=\"\" 表示不限）
+    // 全量取未解决记录（alarmLevel=-1 / qrCode="" / alarmType="" 表示不限）
     constexpr int kPageSize = 10000;
-    const QList<QVariantMap> rows = db->queryPageWithConditions(
+    const QList<AlarmRecord> rows = db->queryPageWithConditions(
         /*alarmLevel*/ -1,
         /*qrCode*/ QString(),
         /*alarmType*/ QString(),
@@ -172,16 +172,17 @@ void AlarmDispatchTask::loadActiveFromDb()
 
     QMutexLocker locker(&m_mutex);
     int restored = 0;
-    for (const QVariantMap& row : rows) {
+    for (const AlarmRecord& row : rows) {
         AlarmInfo info;
-        info.id               = row.value(QStringLiteral("id")).toInt();
-        info.alarmLevel       = row.value(QStringLiteral("alarm_level")).toInt();
-        info.occurTime        = row.value(QStringLiteral("occur_time")).toString();
-        info.sourceIdentifier = row.value(QStringLiteral("qr_code")).toString();
-        info.alarmType        = row.value(QStringLiteral("alarm_type")).toInt();
-        info.isResolved       = false;
-        info.resolvedTime     = row.value(QStringLiteral("resolve_time")).toString();
-        info.description      = row.value(QStringLiteral("description")).toString();
+        info.record.id              = row.id;
+        info.record.alarmLevel      = row.alarmLevel;
+        info.record.occurTime       = row.occurTime;
+        info.record.qrCode          = row.qrCode;
+        info.record.alarmType       = row.alarmType;
+        info.record.isResolved      = 0;
+        info.record.resolveTime     = row.resolveTime;
+        info.record.description     = row.description;
+        info.record.userPermission  = row.userPermission;
         // alarm_source 未落库；generateAlarmId() 仅需 level/identifier/type，
         // 默认 Device 不影响 alarmId 与后续去重
         info.alarmSource      = static_cast<int>(AlarmSource::Device);
@@ -209,13 +210,17 @@ void AlarmDispatchTask::persistInsert(const AlarmInfo& info)
     }
 
     db->insertRecord(
-        info.alarmLevel,
-        info.occurTime,
-        info.sourceIdentifier,                // 复用 qr_code 列存设备来源
-        QString::number(info.alarmType),      // alarm_type 列为 TEXT
-        info.isResolved ? 1 : 0,
-        info.resolvedTime,
-        info.description);
+        info.record.alarmLevel,
+        info.record.occurTime,
+        info.record.qrCode,                          // 复用 qr_code 列存设备来源
+        QString::number(info.record.alarmType),      // alarm_type 列为 TEXT
+        info.record.isResolved,
+        info.record.resolveTime,
+        info.record.description,
+        info.record.userPermission);
+
+    // 发出插入完成信号，供 UI 接收显示
+    emit alarmLogInserted(info.record);
 }
 
 // =====================================================================
@@ -230,7 +235,7 @@ void AlarmDispatchTask::persistResolve(const AlarmInfo& info)
         return;
     }
     // updateResolve 按 (qr_code, alarm_type) 联合定位单条
-    db->updateResolve(info.sourceIdentifier,
-                      QString::number(info.alarmType),
-                      info.resolvedTime);
+    db->updateResolve(info.record.qrCode,
+                      QString::number(info.record.alarmType),
+                      info.record.resolveTime);
 }

@@ -3,6 +3,7 @@
 
 #include "scheduler/scheduler_task.h"
 #include "operationlogdbcon.h"
+#include "operationrecord.h"
 #include "dbtypes.h"
 
 #include <QAtomicInt>
@@ -47,7 +48,7 @@ public:
 
 signals:
     void targetPageResult(int page);
-    void currentPageResult(const QList<QVariantMap>& records);
+    void currentPageResult(const QList<OperationRecord>& records);
     void matchedIdsOnPageResult(const QList<int>& matchedIds);
     void totalCountInRangeResult(int totalCount);
     void totalMatchedCountResult(int totalCount);

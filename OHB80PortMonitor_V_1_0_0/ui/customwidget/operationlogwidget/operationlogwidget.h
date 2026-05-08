@@ -2,8 +2,8 @@
 #define OPERATIONLOGWIDGET_H
 
 #include <QWidget>
-#include <QVariantMap>
 #include <QSet>
+#include "operationrecord.h"
 #include "dbtypes.h"
 
 namespace Ui {
@@ -35,13 +35,13 @@ private slots:
 
     // 任务结果（来自 OperationLogQueryTask）
     void onTargetPageResult(int page);
-    void onCurrentPageResult(const QList<QVariantMap>& records);
+    void onCurrentPageResult(const QList<OperationRecord>& records);
     void onMatchedIdsOnPageResult(const QList<int>& matchedIds);
     void onTotalCountInRangeResult(int totalCount);
     void onTotalMatchedCountResult(int totalCount);
     void onFirstMatchedPositionResult(int position);
     void onTaskFinished(bool success, const QString& message);
-    void onRecordInserted(const QVariantMap& row);
+    void onRecordInserted(const OperationRecord& record);
 
 private:
     Ui::OperationLogWidget *ui;
@@ -98,7 +98,7 @@ private:
     bool m_suppressPaginationSignal;
 
     // 帮助函数
-    void setHistoryLogData(const QList<QVariantMap>& data);
+    void setHistoryLogData(const QList<OperationRecord>& data);
     void updatePageInfoLabel();
     void applyRowBackgrounds();
     void selectAndScrollRowById(int recordId);

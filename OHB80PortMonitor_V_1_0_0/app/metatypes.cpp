@@ -8,6 +8,11 @@
 #include "tasks/sh85_self_check_task.h"
 #include "tasks/read_vefc_flow_unit_medium_status_task.h"
 #include "logdatabases/dbtypes.h"
+#include "alarminfo.h"
+#include "alarmrecord.h"
+#include "operationrecord.h"
+#include "communicaterecord.h"
+#include "deviceparamrecord.h"
 
 void MetaTypes::registerTypes()
 {
@@ -33,6 +38,18 @@ void MetaTypes::registerTypes()
     // 注册 LogDB::WriteResult，用于 WriteSqlDBCon::taskCompleted 跨线程信号
     qRegisterMetaType<LogDB::WriteResult>("LogDB::WriteResult");
     qRegisterMetaType<QList<QVariantMap>>("QList<QVariantMap>");
+
+    // 注册 4 个数据库表对应的记录类型，以及 AlarmInfo（含 AlarmRecord）
+    // 用于 AlarmDispatchTask / OperationDispatchTask 等跨线程信号传递
+    qRegisterMetaType<AlarmRecord>("AlarmRecord");
+    qRegisterMetaType<OperationRecord>("OperationRecord");
+    qRegisterMetaType<CommunicateRecord>("CommunicateRecord");
+    qRegisterMetaType<DeviceParamRecord>("DeviceParamRecord");
+    qRegisterMetaType<AlarmInfo>("AlarmInfo");
+    qRegisterMetaType<QList<AlarmRecord>>("QList<AlarmRecord>");
+    qRegisterMetaType<QList<OperationRecord>>("QList<OperationRecord>");
+    qRegisterMetaType<QList<CommunicateRecord>>("QList<CommunicateRecord>");
+    qRegisterMetaType<QList<DeviceParamRecord>>("QList<DeviceParamRecord>");
 
     qDebug() << "All meta types registered successfully";
 }

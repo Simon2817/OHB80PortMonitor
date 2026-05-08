@@ -7,6 +7,7 @@
 #include <QByteArray>
 #include "communicatelogsqllogic.h"
 #include "writesqldbcon.h"
+#include "communicaterecord.h"
 
 namespace LogDB {
 
@@ -30,15 +31,15 @@ public:
 
     // 查询接口
     // sortOrder 控制按 send_time 的排序方向，默认降序（最新在前）
-    QList<QVariantMap> queryPageWithConditions(const QString& commandId,
-                                               const QString& qrCode,
-                                               int execStatus,
-                                               int retryCount,
-                                               const QString& startTime,
-                                               const QString& endTime,
-                                               int pageSize,
-                                               int pageNumber,
-                                               SortOrder sortOrder = SortOrder::Desc);
+    QList<CommunicateRecord> queryPageWithConditions(const QString& commandId,
+                                                   const QString& qrCode,
+                                                   int execStatus,
+                                                   int retryCount,
+                                                   const QString& startTime,
+                                                   const QString& endTime,
+                                                   int pageSize,
+                                                   int pageNumber,
+                                                   SortOrder sortOrder = SortOrder::Desc);
 
     int queryTotalCount();
 
@@ -74,10 +75,8 @@ public:
 
 signals:
     // 实时事件：本 DBCon 提交的 INSERT 已成功落库
-    // row 中字段对应 communicate_log 表列：send_time / response_time / command_id /
-    //   qr_code / exec_status / retry_count / send_frame / response_frame / description
-    // 注意：不包含自增主键 id（提交侧无法在本接口拿到它）
-    void recordInserted(const QVariantMap& row);
+    // 携带 CommunicateRecord（包含 communicate_log 表所有字段）
+    void recordInserted(const CommunicateRecord& record);
 
 private slots:
     void onWriteTaskCompleted(const WriteResult& result);

@@ -118,7 +118,7 @@ void CommunicateLogQueryTask::executeQuery()
 
     // 有条件查询：当前页中所有满足条件的记录
     if (m_pageNumber > 0) {
-        QList<QVariantMap> pageRecords = m_db->queryPageWithConditions(
+        QList<CommunicateRecord> pageRecords = m_db->queryPageWithConditions(
             m_commandId, m_qrCode, m_execStatus, m_retryCount,
             m_startTime, m_endTime,
             m_pageSize, m_pageNumber,

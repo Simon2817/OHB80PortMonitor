@@ -96,6 +96,9 @@ signals:
     // 警报已解决（携带带有 resolvedTime 的完整 info）
     void alarmResolved(const AlarmInfo& info);
 
+    // 警报日志插入完成信号（携带 AlarmRecord）
+    void alarmLogInserted(const AlarmRecord& record);
+
 private:
     // 把 AlarmInfo 写入 alarm_log（INSERT）
     void persistInsert(const AlarmInfo& info);

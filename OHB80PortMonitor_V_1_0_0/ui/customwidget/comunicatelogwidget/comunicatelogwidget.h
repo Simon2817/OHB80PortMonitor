@@ -2,10 +2,10 @@
 #define COMUNICATELOGWIDGET_H
 
 #include <QWidget>
-#include <QVariantMap>
 #include <QHash>
 #include <QVector>
 #include <QStringList>
+#include "communicaterecord.h"
 #include "modbustcpmastermanager/modbuscommand/modbuscommand.h"
 
 namespace Ui {
@@ -40,7 +40,7 @@ private slots:
     void onSearchClicked();
     void onSetTimeClicked();
     void onPaginationPageChanged(int page);
-    void onPageWithConditionsResult(const QList<QVariantMap>& records);
+    void onPageWithConditionsResult(const QList<CommunicateRecord>& records);
     void onTotalCountWithConditionsResult(int totalCount);
 
 private:
@@ -59,7 +59,7 @@ private:
     QString m_lastEndTime;
 
     void submitQuery(int page);
-    void setHistoryLogData(const QList<QVariantMap>& data);
+    void setHistoryLogData(const QList<CommunicateRecord>& data);
 
     // 初始化 live log 表（建立 model + 表头）
     void initLiveLog();

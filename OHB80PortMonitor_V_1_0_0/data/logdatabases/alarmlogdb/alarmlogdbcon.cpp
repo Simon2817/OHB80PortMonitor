@@ -66,17 +66,18 @@ void AlarmLogDBCon::onWriteTaskCompleted(const WriteResult& result)
         // params 顺序与 SQL ((alarm_level, occur_time, qr_code, alarm_type,
         //                    is_resolved, resolve_time, description, user_permission)) 严格对齐
         if (result.params.size() < 8) return;
-        QVariantMap row;
-        row[QStringLiteral("alarm_level")]      = result.params.at(0);
-        row[QStringLiteral("occur_time")]       = result.params.at(1);
-        row[QStringLiteral("qr_code")]          = result.params.at(2);
-        row[QStringLiteral("alarm_type")]       = result.params.at(3);
-        row[QStringLiteral("is_resolved")]      = result.params.at(4);
-        row[QStringLiteral("resolve_time")]     = result.params.at(5);
-        row[QStringLiteral("description")]      = result.params.at(6);
-        row[QStringLiteral("user_permission")]  = result.params.at(7);
 
-        emit recordInserted(row);
+        AlarmRecord record;
+        record.alarmLevel      = result.params.at(0).toInt();
+        record.occurTime       = result.params.at(1).toString();
+        record.qrCode          = result.params.at(2).toString();
+        record.alarmType       = result.params.at(3).toInt();  // alarm_type 列为 TEXT，但存储为数字字符串
+        record.isResolved      = result.params.at(4).toInt();
+        record.resolveTime     = result.params.at(5).toString();
+        record.description     = result.params.at(6).toString();
+        record.userPermission  = result.params.at(7).toInt();
+
+        emit recordInserted(record);
         return;
     }
 
@@ -92,7 +93,7 @@ void AlarmLogDBCon::onWriteTaskCompleted(const WriteResult& result)
     }
 }
 
-QList<QVariantMap> AlarmLogDBCon::queryPageWithConditions(int alarmLevel,
+QList<AlarmRecord> AlarmLogDBCon::queryPageWithConditions(int alarmLevel,
                                                           const QString& qrCode,
                                                           const QString& alarmType,
                                                           int isResolved,
@@ -101,10 +102,10 @@ QList<QVariantMap> AlarmLogDBCon::queryPageWithConditions(int alarmLevel,
                                                           int pageSize,
                                                           int pageNumber)
 {
-    QList<QVariantMap> results;
+    QList<QVariantMap> varResults;
     QMetaObject::invokeMethod(m_sqlLogic, "queryPageWithConditions",
                               Qt::BlockingQueuedConnection,
-                              Q_RETURN_ARG(QList<QVariantMap>, results),
+                              Q_RETURN_ARG(QList<QVariantMap>, varResults),
                               Q_ARG(int, alarmLevel),
                               Q_ARG(QString, qrCode),
                               Q_ARG(QString, alarmType),
@@ -113,6 +114,23 @@ QList<QVariantMap> AlarmLogDBCon::queryPageWithConditions(int alarmLevel,
                               Q_ARG(QString, endTime),
                               Q_ARG(int, pageSize),
                               Q_ARG(int, pageNumber));
+
+    // 转换 QVariantMap 为 AlarmRecord
+    QList<AlarmRecord> results;
+    results.reserve(varResults.size());
+    for (const QVariantMap& row : varResults) {
+        AlarmRecord rec;
+        rec.id              = row.value(QStringLiteral("id")).toInt();
+        rec.alarmLevel      = row.value(QStringLiteral("alarm_level")).toInt();
+        rec.occurTime       = row.value(QStringLiteral("occur_time")).toString();
+        rec.qrCode          = row.value(QStringLiteral("qr_code")).toString();
+        rec.alarmType       = row.value(QStringLiteral("alarm_type")).toInt();
+        rec.isResolved      = row.value(QStringLiteral("is_resolved")).toInt();
+        rec.resolveTime     = row.value(QStringLiteral("resolve_time")).toString();
+        rec.description     = row.value(QStringLiteral("description")).toString();
+        rec.userPermission  = row.value(QStringLiteral("user_permission")).toInt();
+        results.append(rec);
+    }
     return results;
 }
 

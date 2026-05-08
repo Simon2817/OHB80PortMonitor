@@ -118,7 +118,7 @@ void OperationLogQueryTask::executeQuery()
     if (isCancelled()) { emit finished(false, "Cancelled"); return; }
 
     // 2. 范围内分页：该页全部记录（用于显示）
-    QList<QVariantMap> currentPageRecords =
+    QList<OperationRecord> currentPageRecords =
         m_db->queryPaginationInRange(m_startTime, m_endTime, m_pageSize, targetPage);
     emit currentPageResult(currentPageRecords);
     if (isCancelled()) { emit finished(false, "Cancelled"); return; }
@@ -130,13 +130,11 @@ void OperationLogQueryTask::executeQuery()
         // 不能直接套用——这里改为对当前页记录在内存里按条件过滤。
         const int logType = m_logType;
         const QString kw = m_keyword.toLower();
-        for (const QVariantMap& rec : currentPageRecords) {
-            const int recLogType = rec.value("log_type").toInt();
-            const QString desc = rec.value("description").toString();
-            const bool typeOK = (logType == -1) || (recLogType == logType);
-            const bool kwOK   = kw.isEmpty() || desc.toLower().contains(kw);
+        for (const OperationRecord& rec : currentPageRecords) {
+            const bool typeOK = (logType == -1) || (rec.logType == logType);
+            const bool kwOK   = kw.isEmpty() || rec.description.toLower().contains(kw);
             if (typeOK && kwOK) {
-                matchedIds.append(rec.value("id").toInt());
+                matchedIds.append(rec.id);
             }
         }
     }

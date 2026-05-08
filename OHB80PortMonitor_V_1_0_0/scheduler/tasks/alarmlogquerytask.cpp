@@ -110,7 +110,7 @@ void AlarmLogQueryTask::executeQuery()
 
     // 有条件查询：当前页中所有满足条件的记录
     if (m_pageNumber > 0) {
-        QList<QVariantMap> pageRecords = m_db->queryPageWithConditions(
+        QList<AlarmRecord> pageRecords = m_db->queryPageWithConditions(
             m_alarmLevel, m_qrCode, m_alarmType, m_isResolved,
             m_startTime, m_endTime,
             m_pageSize, m_pageNumber);

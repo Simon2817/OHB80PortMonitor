@@ -89,9 +89,8 @@ release/set_vefc_gas_type_task.o
 release/set_ui_refresh_time_task.o
 release/read_vefc_flow_unit_medium_status_task.o
 release/alarm_dispatch_task.o
-release/running_logger_task.o
+release/operation_dispatch_task.o
 release/user_management_task.o
-release/tip_label_task.o
 release/modbustcpmastermanager.o
 release/modbustcpmasterpool.o
 release/modbuscommand.o
@@ -193,9 +192,8 @@ release/moc_set_vefc_gas_type_task.o
 release/moc_set_ui_refresh_time_task.o
 release/moc_read_vefc_flow_unit_medium_status_task.o
 release/moc_alarm_dispatch_task.o
-release/moc_running_logger_task.o
+release/moc_operation_dispatch_task.o
 release/moc_user_management_task.o
-release/moc_tip_label_task.o
 release/moc_modbustcpmastermanager.o
 release/moc_modbustcpmasterpool.o
 release/moc_modbustcpmaster.o

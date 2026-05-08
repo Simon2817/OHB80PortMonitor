@@ -78,23 +78,37 @@ void OperationLogDBCon::onWriteTaskCompleted(const WriteResult& result)
 
     // params 顺序与 SQL ((occur_time, log_type, description, user_permission)) 严格对齐
     if (result.params.size() < 4) return;
-    QVariantMap row;
-    row[QStringLiteral("occur_time")]      = result.params.at(0);
-    row[QStringLiteral("log_type")]        = result.params.at(1);
-    row[QStringLiteral("description")]     = result.params.at(2);
-    row[QStringLiteral("user_permission")] = result.params.at(3);
 
-    emit recordInserted(row);
+    OperationRecord record;
+    record.occurTime       = result.params.at(0).toString();
+    record.logType         = result.params.at(1).toInt();
+    record.description     = result.params.at(2).toString();
+    record.userPermission  = result.params.at(3).toInt();
+
+    emit recordInserted(record);
 }
 
-QList<QVariantMap> OperationLogDBCon::queryPagination(int pageSize, int pageNumber)
+QList<OperationRecord> OperationLogDBCon::queryPagination(int pageSize, int pageNumber)
 {
-    QList<QVariantMap> results;
+    QList<QVariantMap> varResults;
     QMetaObject::invokeMethod(m_sqlLogic, "queryPagination",
                               Qt::BlockingQueuedConnection,
-                              Q_RETURN_ARG(QList<QVariantMap>, results),
+                              Q_RETURN_ARG(QList<QVariantMap>, varResults),
                               Q_ARG(int, pageSize),
                               Q_ARG(int, pageNumber));
+
+    // 转换 QVariantMap 为 OperationRecord
+    QList<OperationRecord> results;
+    results.reserve(varResults.size());
+    for (const QVariantMap& row : varResults) {
+        OperationRecord rec;
+        rec.id              = row.value(QStringLiteral("id")).toInt();
+        rec.occurTime       = row.value(QStringLiteral("occur_time")).toString();
+        rec.logType         = row.value(QStringLiteral("log_type")).toInt();
+        rec.description     = row.value(QStringLiteral("description")).toString();
+        rec.userPermission  = row.value(QStringLiteral("user_permission")).toInt();
+        results.append(rec);
+    }
     return results;
 }
 
@@ -107,17 +121,29 @@ int OperationLogDBCon::queryTotalCount()
     return count;
 }
 
-QList<QVariantMap> OperationLogDBCon::queryPaginationInRange(const QString& startTime, const QString& endTime,
+QList<OperationRecord> OperationLogDBCon::queryPaginationInRange(const QString& startTime, const QString& endTime,
                                                               int pageSize, int pageNumber)
 {
-    QList<QVariantMap> results;
+    QList<QVariantMap> varResults;
     QMetaObject::invokeMethod(m_sqlLogic, "queryPaginationInRange",
                               Qt::BlockingQueuedConnection,
-                              Q_RETURN_ARG(QList<QVariantMap>, results),
+                              Q_RETURN_ARG(QList<QVariantMap>, varResults),
                               Q_ARG(QString, startTime),
                               Q_ARG(QString, endTime),
                               Q_ARG(int, pageSize),
                               Q_ARG(int, pageNumber));
+
+    QList<OperationRecord> results;
+    results.reserve(varResults.size());
+    for (const QVariantMap& row : varResults) {
+        OperationRecord rec;
+        rec.id              = row.value(QStringLiteral("id")).toInt();
+        rec.occurTime       = row.value(QStringLiteral("occur_time")).toString();
+        rec.logType         = row.value(QStringLiteral("log_type")).toInt();
+        rec.description     = row.value(QStringLiteral("description")).toString();
+        rec.userPermission  = row.value(QStringLiteral("user_permission")).toInt();
+        results.append(rec);
+    }
     return results;
 }
 
@@ -146,20 +172,32 @@ int OperationLogDBCon::queryRecordPageInRange(int recordId, const QString& start
     return page;
 }
 
-QList<QVariantMap> OperationLogDBCon::queryPageWithConditions(const QString& startTime, const QString& endTime,
+QList<OperationRecord> OperationLogDBCon::queryPageWithConditions(const QString& startTime, const QString& endTime,
                                                           int logType, const QString& keyword,
                                                           int pageSize, int pageNumber)
 {
-    QList<QVariantMap> results;
+    QList<QVariantMap> varResults;
     QMetaObject::invokeMethod(m_sqlLogic, "queryPageWithConditions",
                               Qt::BlockingQueuedConnection,
-                              Q_RETURN_ARG(QList<QVariantMap>, results),
+                              Q_RETURN_ARG(QList<QVariantMap>, varResults),
                               Q_ARG(QString, startTime),
                               Q_ARG(QString, endTime),
                               Q_ARG(int, logType),
                               Q_ARG(QString, keyword),
                               Q_ARG(int, pageSize),
                               Q_ARG(int, pageNumber));
+
+    QList<OperationRecord> results;
+    results.reserve(varResults.size());
+    for (const QVariantMap& row : varResults) {
+        OperationRecord rec;
+        rec.id              = row.value(QStringLiteral("id")).toInt();
+        rec.occurTime       = row.value(QStringLiteral("occur_time")).toString();
+        rec.logType         = row.value(QStringLiteral("log_type")).toInt();
+        rec.description     = row.value(QStringLiteral("description")).toString();
+        rec.userPermission  = row.value(QStringLiteral("user_permission")).toInt();
+        results.append(rec);
+    }
     return results;
 }
 

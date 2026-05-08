@@ -44,7 +44,7 @@ INCLUDEPATH += $$PWD/historycalendardialog
 include($$PWD/comunicatelogwidget/comunicatelogwidget.pri)
 INCLUDEPATH += $$PWD/comunicatelogwidget
 
-# runningloggerwidget [DEPRECATED] 由 RunningLoggerTask + OperationLogDBCon 接管
+# runningloggerwidget [DEPRECATED] 由 OperationDispatchTask + OperationLogDBCon 接管
 # include($$PWD/runningloggerwidget/runningloggerwidget.pri)
 # INCLUDEPATH += $$PWD/runningloggerwidget
 

@@ -3,6 +3,7 @@
 
 #include "scheduler/scheduler_task.h"
 #include "communicatelogdbcon.h"
+#include "communicaterecord.h"
 #include "dbtypes.h"
 
 class CommunicateLogQueryTask : public SchedulerTask
@@ -31,7 +32,7 @@ public:
 
 signals:
     // 有条件查询：当前页中所有满足条件的记录
-    void pageWithConditionsResult(const QList<QVariantMap>& records);
+    void pageWithConditionsResult(const QList<CommunicateRecord>& records);
 
     // 有条件查询：总记录数
     void totalCountWithConditionsResult(int totalCount);

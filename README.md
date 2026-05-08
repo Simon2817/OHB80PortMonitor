@@ -8,6 +8,340 @@
 
 ## 更新日志
 
+### 2026-05-08 - Simon
+**Record 类型重构完成：DBCon 查询接口与 UI Widgets 全面升级**
+
+#### 修改内容
+
+**1. DBCon 查询接口返回类型更新**
+- `AlarmLogDBCon::queryPageWithConditions` 返回 `QList<AlarmRecord>` 而非 `QList<QVariantMap>`
+- `OperationLogDBCon::queryPagination/queryPaginationInRange/queryPageWithConditions` 返回 `QList<OperationRecord>`
+- `CommunicateLogDBCon::queryPageWithConditions` 返回 `QList<CommunicateRecord>`
+- `DeviceParamLogDBCon::queryPageWithConditions` 返回 `QList<DeviceParamRecord>`
+- DBCon 层负责 QVariantMap → Record 转换
+
+**2. 查询任务信号更新**
+- `AlarmLogQueryTask::pageWithConditionsResult` 信号返回 `QList<AlarmRecord>`
+- `OperationLogQueryTask::currentPageResult` 信号返回 `QList<OperationRecord>`
+- `CommunicateLogQueryTask::pageWithConditionsResult` 信号返回 `QList<CommunicateRecord>`
+
+**3. UI Widgets 全面更新**
+- `AlarmLogWidget` 使用 `AlarmRecord` 类型
+  - `onPageWithConditionsResult(const QList<AlarmRecord>&)`
+  - `onRecordInserted(const AlarmRecord&)`
+  - `setHistoryLogData(const QList<AlarmRecord>&)`
+  - `loadUnresolvedToLiveLog()` 查询接口更新
+- `OperationLogWidget` 使用 `OperationRecord` 类型
+  - `onCurrentPageResult(const QList<OperationRecord>&)`
+  - `onRecordInserted(const OperationRecord&)`
+  - `setHistoryLogData(const QList<OperationRecord>&)`
+- `ComunicateLogWidget` 使用 `CommunicateRecord` 类型
+  - `onPageWithConditionsResult(const QList<CommunicateRecord>&)`
+  - `setHistoryLogData(const QList<CommunicateRecord>&)`
+
+**4. AlarmDispatchTask 修复**
+- `loadActiveFromDb()` 方法更新：`QList<QVariantMap>` → `QList<AlarmRecord>`
+- 字段访问方式：`row.value("xxx")` → `row.xxx`
+
+**5. Record 类注释优化**
+- `operationrecord.h` - 添加清晰字段注释（主键、日志类型、操作描述、用户权限等）
+- `deviceparamrecord.h` - 添加清晰字段注释（设备二维码、记录时间、各压力/流量参数、FOUP 状态等）
+- `communicaterecord.h` - 添加清晰字段注释（发送/响应时间、命令ID、执行状态、重试次数、帧数据等）
+- 所有注释格式统一，包含字段含义、时间格式、枚举值说明
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/alarmlogdb/alarmlogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/alarmlogdb/alarmlogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/operationlogdb/operationlogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/operationlogdb/operationlogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/communicatelogdb/communicatelogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/communicatelogdb/communicatelogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/deviceparamlogdb/deviceparamlogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/deviceparamlogdb/deviceparamlogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarmlogquerytask.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarmlogquerytask.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operationlogquerytask.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operationlogquerytask.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/communicatelogquerytask.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/communicatelogquerytask.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/operationlogwidget/operationlogwidget.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/operationlogwidget/operationlogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/comunicatelogwidget/comunicatelogwidget.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/comunicatelogwidget/comunicatelogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/classes/operationrecord.h`
+  - `OHB80PortMonitor_V_1_0_0/classes/deviceparamrecord.h`
+  - `OHB80PortMonitor_V_1_0_0/classes/communicaterecord.h`
+
+---
+
+### 2026-05-08 - Simon
+**架构调整：引入 Record 类型，替代 QVariantMap 传递数据库记录**
+
+#### 背景
+为提高类型安全性和代码可读性，为四个数据库表（alarm_log / operation_log / communicate_log / device_param_log）引入对应的 Record 类（AlarmRecord / OperationRecord / CommunicateRecord / DeviceParamRecord）。这些 Record 类与数据库表结构严格对齐，替代原有的 QVariantMap 传递方式。
+
+#### 修改内容
+
+**1. 创建 Record 类**
+- 新增 `classes/alarmrecord.h` - 与 alarm_log 表对齐
+- 新增 `classes/operationrecord.h` - 与 operation_log 表对齐
+- 新增 `classes/communicaterecord.h` - 与 communicate_log 表对齐
+- 新增 `classes/deviceparamrecord.h` - 与 device_param_log 表对齐
+- 所有 Record 类包含 reset() 方法，使用 Q_DECLARE_METATYPE 注册
+
+**2. AlarmInfo 重构**
+- AlarmInfo 现在包含 AlarmRecord 作为成员变量
+- 与数据库表重合的字段（id/alarmLevel/alarmType/qrCode/occurTime/resolveTime/isResolved/description/userPermission）全部由 record 持有
+- 业务字段（alarmSource/alarmId）保留在 AlarmInfo
+- 访问方式：info.record.alarmLevel / info.record.qrCode 等
+- 更新 generateAlarmId() 使用 record 字段
+
+**3. AlarmDispatchTask 更新**
+- normalize() / submitAlarm() / submitResolve() 使用 info.record.xxx 访问字段
+- alarmLogInserted 信号改为携带 AlarmRecord 而非单独字段
+
+**4. OperationDispatchTask 更新**
+- log() 方法构造 OperationRecord 并发出 operationLogInserted 信号
+
+**5. DBCon 信号层改造**
+- AlarmLogDBCon::recordInserted 信号改为携带 AlarmRecord
+- OperationLogDBCon::recordInserted 信号改为携带 OperationRecord
+- CommunicateLogDBCon::recordInserted 信号改为携带 CommunicateRecord
+- DeviceParamLogDBCon 新增 recordInserted 信号携带 DeviceParamRecord
+- onWriteTaskCompleted() 实现改为构造 Record 并发出
+
+**6. UIDemo6 更新**
+- connectTipLabelTask() 中信号处理改为从 Record 提取字段
+
+**7. NetworkStatusTask 更新**
+- 使用 info.record.xxx 访问 AlarmInfo 字段
+
+**8. metatypes 注册**
+- 注册 AlarmRecord / OperationRecord / CommunicateRecord / DeviceParamRecord
+- 注册 QList<AlarmRecord> / QList<OperationRecord> / QList<CommunicateRecord> / QList<DeviceParamRecord>
+- 注册 AlarmInfo
+
+**9. classes.pri 更新**
+- 添加 4 个 Record 头文件
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/classes/alarmrecord.h`（新增）
+  - `OHB80PortMonitor_V_1_0_0/classes/operationrecord.h`（新增）
+  - `OHB80PortMonitor_V_1_0_0/classes/communicaterecord.h`（新增）
+  - `OHB80PortMonitor_V_1_0_0/classes/deviceparamrecord.h`（新增）
+  - `OHB80PortMonitor_V_1_0_0/classes/alarminfo.h`
+  - `OHB80PortMonitor_V_1_0_0/classes/alarminfo.cpp`
+  - `OHB80PortMonitor_V_1_0_0/classes/classes.pri`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operation_dispatch_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operation_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/network_status_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/alarmlogdb/alarmlogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/alarmlogdb/alarmlogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/operationlogdb/operationlogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/operationlogdb/operationlogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/communicatelogdb/communicatelogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/communicatelogdb/communicatelogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/deviceparamlogdb/deviceparamlogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/deviceparamlogdb/deviceparamlogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/uidemo6.cpp`
+  - `OHB80PortMonitor_V_1_0_0/app/metatypes.cpp`
+
+---
+
+### 2026-05-08 - Simon
+**架构调整：移除 TipLabelTask，直接由 OperationDispatchTask 和 AlarmDispatchTask 发出信号**
+
+#### 背景
+为简化架构，移除中间层 TipLabelTask，改为直接由 OperationDispatchTask 和 AlarmDispatchTask 在数据库插入完成后发出信号，供 UIDemo6 的 ScrollingTipLabel 接收显示。
+
+#### 修改内容
+
+**1. 删除 TipLabelTask**
+- 删除 `scheduler/tasks/tip_label_task.{h,cpp}` 文件
+- 从 `scheduler/scheduler.pri` 中移除 TipLabelTask 引用
+
+**2. OperationDispatchTask 添加信号**
+- 新增信号：`operationLogInserted(const QString& occurTime, int logType, const QString& message)`
+- 在 `log()` 方法中插入数据库后发出该信号
+
+**3. AlarmDispatchTask 添加信号**
+- 新增信号：`alarmLogInserted(const QString& occurTime, int alarmLevel, const QString& alarmType, const QString& description)`
+- 在 `persistInsert()` 方法中插入数据库后发出该信号
+
+**4. UIDemo6 连接信号**
+- 修改 `connectTipLabelTask()` 方法，连接 OperationDispatchTask 和 AlarmDispatchTask 的信号
+- 将信号转换为 ScrollingTipLabel 需要的格式并调用对应方法
+
+**5. SharedData 清理**
+- 移除 TipLabelTask 相关的头文件引用和静态成员
+- 移除 `getTipLabelTask()` 方法
+
+**6. MonitorDataTask 清理**
+- 移除 TipLabelTask 头文件引用
+- 移除对 TipLabelTask 的调用
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/tip_label_task.h`（删除）
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/tip_label_task.cpp`（删除）
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operation_dispatch_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operation_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/scheduler.pri`
+  - `OHB80PortMonitor_V_1_0_0/app/shareddata.h`
+  - `OHB80PortMonitor_V_1_0_0/app/shareddata.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/monitor_data_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/monitor_data_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/uidemo6.cpp`
+
+---
+
+### 2026-05-08 - Simon
+**架构调整：引入 Record 类型，替代 QVariantMap 传递数据库记录**
+
+#### 背景
+为提高类型安全性和代码可读性，为四个数据库表（alarm_log / operation_log / communicate_log / device_param_log）引入对应的 Record 类（AlarmRecord / OperationRecord / CommunicateRecord / DeviceParamRecord）。这些 Record 类与数据库表结构严格对齐，替代原有的 QVariantMap 传递方式。
+
+#### 修改内容
+
+**1. 创建 Record 类**
+- 新增 `classes/alarmrecord.h` - 与 alarm_log 表对齐
+- 新增 `classes/operationrecord.h` - 与 operation_log 表对齐
+- 新增 `classes/communicaterecord.h` - 与 communicate_log 表对齐
+- 新增 `classes/deviceparamrecord.h` - 与 device_param_log 表对齐
+- 所有 Record 类包含 reset() 方法，使用 Q_DECLARE_METATYPE 注册
+
+**2. AlarmInfo 重构**
+- AlarmInfo 现在包含 AlarmRecord 作为成员变量
+- 与数据库表重合的字段（id/alarmLevel/alarmType/qrCode/occurTime/resolveTime/isResolved/description/userPermission）全部由 record 持有
+- 业务字段（alarmSource/alarmId）保留在 AlarmInfo
+- 访问方式：info.record.alarmLevel / info.record.qrCode 等
+- 更新 generateAlarmId() 使用 record 字段
+
+**3. AlarmDispatchTask 更新**
+- normalize() / submitAlarm() / submitResolve() 使用 info.record.xxx 访问字段
+- alarmLogInserted 信号改为携带 AlarmRecord 而非单独字段
+
+**4. OperationDispatchTask 更新**
+- log() 方法构造 OperationRecord 并发出 operationLogInserted 信号
+
+**5. DBCon 信号层改造**
+- AlarmLogDBCon::recordInserted 信号改为携带 AlarmRecord
+- OperationLogDBCon::recordInserted 信号改为携带 OperationRecord
+- CommunicateLogDBCon::recordInserted 信号改为携带 CommunicateRecord
+- DeviceParamLogDBCon 新增 recordInserted 信号携带 DeviceParamRecord
+- onWriteTaskCompleted() 实现改为构造 Record 并发出
+
+**6. UIDemo6 更新**
+- connectTipLabelTask() 中信号处理改为从 Record 提取字段
+
+**7. NetworkStatusTask 更新**
+- 使用 info.record.xxx 访问 AlarmInfo 字段
+
+**8. metatypes 注册**
+- 注册 AlarmRecord / OperationRecord / CommunicateRecord / DeviceParamRecord
+- 注册 QList<AlarmRecord> / QList<OperationRecord> / QList<CommunicateRecord> / QList<DeviceParamRecord>
+- 注册 AlarmInfo
+
+**9. classes.pri 更新**
+- 添加 4 个 Record 头文件
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/classes/alarmrecord.h`（新增）
+  - `OHB80PortMonitor_V_1_0_0/classes/operationrecord.h`（新增）
+  - `OHB80PortMonitor_V_1_0_0/classes/communicaterecord.h`（新增）
+  - `OHB80PortMonitor_V_1_0_0/classes/deviceparamrecord.h`（新增）
+  - `OHB80PortMonitor_V_1_0_0/classes/alarminfo.h`
+  - `OHB80PortMonitor_V_1_0_0/classes/alarminfo.cpp`
+  - `OHB80PortMonitor_V_1_0_0/classes/classes.pri`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operation_dispatch_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operation_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/network_status_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/alarmlogdb/alarmlogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/alarmlogdb/alarmlogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/operationlogdb/operationlogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/operationlogdb/operationlogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/communicatelogdb/communicatelogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/communicatelogdb/communicatelogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/deviceparamlogdb/deviceparamlogdbcon.h`
+  - `OHB80PortMonitor_V_1_0_0/data/logdatabases/deviceparamlogdb/deviceparamlogdbcon.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/uidemo6.cpp`
+  - `OHB80PortMonitor_V_1_0_0/app/metatypes.cpp`
+
+#### 待完成
+- 查询任务（AlarmLogQueryTask/OperationLogQueryTask/CommunicateLogQueryTask）返回 QList<Record> 而非 QList<QVariantMap）✓
+- DBCon 查询接口返回 QList<Record> 而非 QList<QVariantMap> ✓
+- UI widgets（AlarmLogWidget/OperationLogWidget/ComunicateLogWidget）使用 Record 类型 ✓
+
+---
+
+### 2026-05-08 - Simon
+**命名统一：OperationLogDispatchTask 重命名为 OperationDispatchTask**
+
+#### 背景
+为与 `AlarmDispatchTask` 命名方式保持一致，去掉 `OperationLogDispatchTask` 中的 `log` 后缀，统一为 `OperationDispatchTask`。
+
+#### 修改内容
+
+**1. 文件重命名**
+- `scheduler/tasks/operation_log_dispatch_task.h` → `scheduler/tasks/operation_dispatch_task.h`
+- `scheduler/tasks/operation_log_dispatch_task.cpp` → `scheduler/tasks/operation_dispatch_task.cpp`
+
+**2. 类名更新**
+- 类名：`OperationLogDispatchTask` → `OperationDispatchTask`
+- 宏定义：`OPERATION_LOG_DISPATCH_TASK_H` → `OPERATION_DISPATCH_TASK_H`
+- taskType() 返回值：`"OperationLogDispatchTask"` → `"OperationDispatchTask"`
+- 调试输出：`[OperationLogDispatchTask]` → `[OperationDispatchTask]`
+
+**3. SharedData 接口更新**
+- 函数名：`getOperationLogDispatchTask()` → `getOperationDispatchTask()`
+- 静态成员：`s_operationLogDispatchTask` → `s_operationDispatchTask`
+- 注释：`操作日志调度任务` → `操作调度任务`
+
+**4. 构建文件更新**
+- `scheduler/scheduler.pri`：更新头文件和源文件引用路径
+
+**5. 全局引用更新**
+- 所有 include 语句：`#include "scheduler/tasks/operation_log_dispatch_task.h"` → `#include "scheduler/tasks/operation_dispatch_task.h"`
+- 所有函数调用：`SharedData::getOperationLogDispatchTask()` → `SharedData::getOperationDispatchTask()`
+- 所有类型声明：`OperationLogDispatchTask*` → `OperationDispatchTask*`
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operation_dispatch_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operation_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/scheduler.pri`
+  - `OHB80PortMonitor_V_1_0_0/app/shareddata.h`
+  - `OHB80PortMonitor_V_1_0_0/app/shareddata.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/monitor_data_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/network_status_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/logindialog.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/changepassworddialog.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/useraccountlabel/useraccountlabel.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/humidityoffsetsettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/idlepurgesettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/purgeflowsettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/pneumaticvalvepressuresettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/sh85selfchecksettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget/uirefreshtimesettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget/vefcflowunitmediumstatuswidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget/vefcgastypesettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/customwidget.pri`
+  - `README.md`
+
+---
+
 ### 2026-05-07 - Simon
 **移除 alarm_log.customer_visible 字段（全链路清理）**
 
@@ -175,7 +509,7 @@
 - **`AlarmLogQueryTask`**：警报日志多条件（级别 / qrCode / 类型 / 是否解决 / 客户可见 / 时间区间）分页查询任务
 - **`CommunicateLogQueryTask`**：通讯日志多条件（commandId / qrCode / 执行状态 / 重试次数 / 时间区间 / 排序方向）分页查询任务
 - **`OperationLogQueryTask`**：运行日志范围 + 条件分页查询任务，支持关键词高亮、全局顺序号显示、跨页 Pre/Next 跳转
-- **`RunningLoggerTask`**：运行日志采集常驻任务，取代旧 `RunningLoggerCollector`；业务侧任意线程调用 `logMessage / logWarn / logError` 直接落库，无需独立缓冲队列
+- **`OperationDispatchTask`**：操作调度常驻任务，取代旧 `RunningLoggerCollector`；业务侧任意线程调用 `logMessage / logWarn / logError` 直接落库，无需独立缓冲队列
 
 **4. UI 层 — 三个新控件替换旧控件**
 

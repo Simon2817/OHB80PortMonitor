@@ -6,6 +6,7 @@
 #include <QVariantMap>
 #include "operationlogsqllogic.h"
 #include "writesqldbcon.h"
+#include "operationrecord.h"
 
 namespace LogDB {
 
@@ -28,14 +29,14 @@ public:
     void cleanup();
 
     // 查询接口
-    QList<QVariantMap> queryPagination(int pageSize, int pageNumber);
+    QList<OperationRecord> queryPagination(int pageSize, int pageNumber);
     int queryTotalCount();
-    QList<QVariantMap> queryPaginationInRange(const QString& startTime, const QString& endTime,
+    QList<OperationRecord> queryPaginationInRange(const QString& startTime, const QString& endTime,
                                                int pageSize, int pageNumber);
     int queryTotalCountInRange(const QString& startTime, const QString& endTime);
     int queryRecordPageInRange(int recordId, const QString& startTime, const QString& endTime,
                                int pageSize);
-    QList<QVariantMap> queryPageWithConditions(const QString& startTime, const QString& endTime,
+    QList<OperationRecord> queryPageWithConditions(const QString& startTime, const QString& endTime,
                                                 int logType, const QString& keyword,
                                                 int pageSize, int pageNumber);
     int queryTotalCountWithConditions(const QString& startTime, const QString& endTime,
@@ -67,8 +68,8 @@ public:
 
 signals:
     // 实时事件：本 DBCon 提交的 INSERT 已成功落库
-    // row 字段对应 operation_log 表列：occur_time / log_type / description
-    void recordInserted(const QVariantMap& row);
+    // 携带 OperationRecord（包含 operation_log 表所有字段）
+    void recordInserted(const OperationRecord& record);
 
 private slots:
     void onWriteTaskCompleted(const WriteResult& result);

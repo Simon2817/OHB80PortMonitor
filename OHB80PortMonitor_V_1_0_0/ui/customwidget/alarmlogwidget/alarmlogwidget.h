@@ -2,7 +2,7 @@
 #define ALARMLOGWIDGET_H
 
 #include <QWidget>
-#include <QVariantMap>
+#include "alarmrecord.h"
 
 namespace Ui {
 class AlarmLogWidget;
@@ -26,9 +26,9 @@ private slots:
     void onSetStartTimeClicked();
     void onSetResolvedTimeClicked();
     void onPaginationPageChanged(int page);
-    void onPageWithConditionsResult(const QList<QVariantMap>& records);
+    void onPageWithConditionsResult(const QList<AlarmRecord>& records);
     void onTotalCountWithConditionsResult(int totalCount);
-    void onRecordInserted(const QVariantMap& row);
+    void onRecordInserted(const AlarmRecord& record);
     void onRecordResolved(const QString& qrCode,
                           const QString& alarmType,
                           const QString& resolveTime);
@@ -50,7 +50,7 @@ private:
     QString m_lastEndTime;
 
     void submitQuery(int page);
-    void setHistoryLogData(const QList<QVariantMap>& data);
+    void setHistoryLogData(const QList<AlarmRecord>& data);
 
     // 初始化 live log 表（建立 model + 表头 + 订阅 DBCon::recordInserted）
     void initLiveLog();

@@ -3,7 +3,7 @@
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/set_vefc_gas_type_task.h"
 #include "app/shareddata.h"
-#include "scheduler/tasks/running_logger_task.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 
@@ -136,7 +136,7 @@ void VEFCGasTypeSettingWidget::submitTask(const QStringList &qrcodes, int gasTyp
                             .arg(failedQrCodes.count())
                             .arg(failList));
 
-                    SharedData::getRunningLoggerTask()->logMessage(
+                    SharedData::getOperationDispatchTask()->logMessage(
                         QString("[VEFC Gas Type] Set %1 failed on device(s): %2")
                             .arg(gasName).arg(failList));
                 }

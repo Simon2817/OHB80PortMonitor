@@ -6,7 +6,8 @@
 #include "app.h"
 #include "usermanager.h"
 #include "app/shareddata.h"
-#include "scheduler/tasks/tip_label_task.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
+#include "scheduler/tasks/alarm_dispatch_task.h"
 #include "ui/customwidget/scrollingtiplabel/scrollingtiplabel.h"
 
 UIDemo6::UIDemo6(QWidget *parent) :
@@ -146,23 +147,38 @@ bool UIDemo6::getDoubleClickMaximize() const
 
 void UIDemo6::connectTipLabelTask()
 {
-    TipLabelTask* task = SharedData::getTipLabelTask();
-    if (!task) {
-        qWarning() << "[UIDemo6] TipLabelTask not available, skip connection";
-        return;
+    // 连接 OperationDispatchTask 的操作日志插入信号
+    OperationDispatchTask* operationTask = SharedData::getOperationDispatchTask();
+    if (operationTask) {
+        connect(operationTask, &OperationDispatchTask::operationLogInserted,
+                this, [this](const OperationRecord& rec) {
+                    QString logTypeStr;
+                    if (rec.logType == 0) logTypeStr = "INFO";
+                    else if (rec.logType == 1) logTypeStr = "WARN";
+                    else if (rec.logType == 2) logTypeStr = "ERROR";
+                    ui->scrollingTipLabel->submitOperationLog({rec.occurTime, logTypeStr, rec.description});
+                }, Qt::QueuedConnection);
     }
 
-    connect(task, &TipLabelTask::alarmLogReady,
-            ui->scrollingTipLabel, &ScrollingTipLabel::submitAlarmLog,
-            Qt::QueuedConnection);
-    connect(task, &TipLabelTask::alarmResolvedReady,
-            ui->scrollingTipLabel, &ScrollingTipLabel::submitAlarmResolved,
-            Qt::QueuedConnection);
-    connect(task, &TipLabelTask::operationLogReady,
-            ui->scrollingTipLabel, &ScrollingTipLabel::submitOperationLog,
-            Qt::QueuedConnection);
+    // 连接 AlarmDispatchTask 的警报日志插入信号
+    AlarmDispatchTask* alarmTask = SharedData::getAlarmDispatchTask();
+    if (alarmTask) {
+        connect(alarmTask, &AlarmDispatchTask::alarmPublished,
+                this, [this](const AlarmInfo& info) {
+                    QString alarmLevelStr = QString::number(info.record.alarmLevel);
+                    QString alarmTypeStr = QString::number(info.record.alarmType);
+                    ui->scrollingTipLabel->submitAlarmLog(
+                        {info.record.occurTime, alarmLevelStr, alarmTypeStr, info.record.description},
+                        info.record.id);
+                }, Qt::QueuedConnection);
 
-    qDebug() << "[UIDemo6] TipLabelTask signals connected to scrollingTipLabel";
+        connect(alarmTask, &AlarmDispatchTask::alarmResolved,
+                this, [this](const AlarmInfo& info) {
+                    ui->scrollingTipLabel->submitAlarmResolved(info.record.id);
+                }, Qt::QueuedConnection);
+    }
+
+    qDebug() << "[UIDemo6] OperationDispatchTask and AlarmDispatchTask signals connected to scrollingTipLabel";
 }
 
 void UIDemo6::registerWidgetPermissions()

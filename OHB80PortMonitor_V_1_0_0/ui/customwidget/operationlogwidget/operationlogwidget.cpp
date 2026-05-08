@@ -78,18 +78,17 @@ void OperationLogWidget::initLiveLog()
     }
 }
 
-void OperationLogWidget::onRecordInserted(const QVariantMap& row)
+void OperationLogWidget::onRecordInserted(const OperationRecord& record)
 {
     auto* model = qobject_cast<QStandardItemModel*>(ui->tableViewLiveLog->model());
     if (!model) return;
 
-    const int logTypeVal = row.value("log_type").toInt();
-    const QString logTypeText = LogDB::operationLogTypeName(logTypeVal);
+    const QString logTypeText = LogDB::operationLogTypeName(record.logType);
 
     QList<QStandardItem*> items;
-    items << new QStandardItem(row.value("occur_time").toString())
+    items << new QStandardItem(record.occurTime)
           << new QStandardItem(logTypeText)
-          << new QStandardItem(row.value("description").toString());
+          << new QStandardItem(record.description);
 
     model->insertRow(0, items);
     while (model->rowCount() > kLiveLogMaxRows) {
@@ -277,7 +276,7 @@ void OperationLogWidget::onPaginationPageChanged(int page)
     submitQueryTask(page, 0);
 }
 
-void OperationLogWidget::onCurrentPageResult(const QList<QVariantMap>& records)
+void OperationLogWidget::onCurrentPageResult(const QList<OperationRecord>& records)
 {
     setHistoryLogData(records);
 }
@@ -501,7 +500,7 @@ void OperationLogWidget::updatePrevNextButtonsEnabled()
     ui->pushButtonNext->setEnabled(canNext);
 }
 
-void OperationLogWidget::setHistoryLogData(const QList<QVariantMap>& data)
+void OperationLogWidget::setHistoryLogData(const QList<OperationRecord>& data)
 {
     QStandardItemModel* model = qobject_cast<QStandardItemModel*>(ui->tableViewHistoryLog->model());
     if (!model) {
@@ -519,13 +518,11 @@ void OperationLogWidget::setHistoryLogData(const QList<QVariantMap>& data)
     model->setHorizontalHeaderLabels(headers);
 
     for (int row = 0; row < data.size(); ++row) {
-        const QVariantMap& record = data[row];
-        auto* itemTime    = new QStandardItem(record.value("occur_time").toString());
-        auto* itemLogType = new QStandardItem(
-            LogDB::operationLogTypeName(record.value("log_type").toInt()));
-        auto* itemDesc    = new QStandardItem(record.value("description").toString());
-        const int recordId = record.value("id").toInt();
-        itemTime->setData(recordId, Qt::UserRole);
+        const OperationRecord& record = data[row];
+        auto* itemTime    = new QStandardItem(record.occurTime);
+        auto* itemLogType = new QStandardItem(LogDB::operationLogTypeName(record.logType));
+        auto* itemDesc    = new QStandardItem(record.description);
+        itemTime->setData(record.id, Qt::UserRole);
         model->setItem(row, 0, itemTime);
         model->setItem(row, 1, itemLogType);
         model->setItem(row, 2, itemDesc);

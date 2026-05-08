@@ -1,5 +1,9 @@
 HEADERS += \
     $$PWD/alarminfo.h \
+    $$PWD/alarmrecord.h \
+    $$PWD/operationrecord.h \
+    $$PWD/communicaterecord.h \
+    $$PWD/deviceparamrecord.h \
     $$PWD/bayofohbinfo.h \
     $$PWD/foupofohbinfo.h \
     $$PWD/setofohbinfo.h

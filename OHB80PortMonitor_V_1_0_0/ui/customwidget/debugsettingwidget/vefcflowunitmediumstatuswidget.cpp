@@ -3,7 +3,7 @@
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/read_vefc_flow_unit_medium_status_task.h"
 #include "app/shareddata.h"
-#include "scheduler/tasks/running_logger_task.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 
@@ -139,7 +139,7 @@ void VEFCFlowUnitMediumStatusWidget::submitTask(const QStringList &qrcodes)
                         QString("%1/%2 device(s) passed.\n\nFailures:\n%3")
                             .arg(successCount).arg(results.size()).arg(detail));
 
-                    SharedData::getRunningLoggerTask()->logMessage(
+                    SharedData::getOperationDispatchTask()->logMessage(
                         QString("[VEFC Flow Unit/Medium] %1/%2 passed; failures: %3")
                             .arg(successCount).arg(results.size()).arg(failureLines.join("; ")));
                 }

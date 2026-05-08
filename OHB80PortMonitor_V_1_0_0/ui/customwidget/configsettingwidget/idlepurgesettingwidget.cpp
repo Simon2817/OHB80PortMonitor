@@ -1,7 +1,7 @@
 #include "idlepurgesettingwidget.h"
 #include "../settingwidget/settingitemwidget.h"
 #include "scheduler/scheduler.h"
-#include "scheduler/tasks/running_logger_task.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "app/shareddata.h"
 
 #include <QDebug>
@@ -178,7 +178,7 @@ void IdlePurgeSettingWidget::submitCommand(SettingItemWidget *item,
                     const QString logMsg =
                         QString("[Idle Purge] Set %1 = %2 failed on device(s): %3")
                             .arg(propertyName).arg(setValue).arg(failList);
-                    SharedData::getRunningLoggerTask()->logMessage(logMsg);
+                    SharedData::getOperationDispatchTask()->logMessage(logMsg);
                 }
             });
 

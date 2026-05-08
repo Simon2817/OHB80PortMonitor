@@ -344,7 +344,7 @@ void ComunicateLogWidget::submitQuery(int page)
     Scheduler::instance()->submitTask(task);
 }
 
-void ComunicateLogWidget::onPageWithConditionsResult(const QList<QVariantMap>& records)
+void ComunicateLogWidget::onPageWithConditionsResult(const QList<CommunicateRecord>& records)
 {
     setHistoryLogData(records);
 }
@@ -360,7 +360,7 @@ void ComunicateLogWidget::onTotalCountWithConditionsResult(int totalCount)
              << " 总记录数:" << totalCount;
 }
 
-void ComunicateLogWidget::setHistoryLogData(const QList<QVariantMap>& data)
+void ComunicateLogWidget::setHistoryLogData(const QList<CommunicateRecord>& data)
 {
     QStandardItemModel* model = qobject_cast<QStandardItemModel*>(ui->tableViewHistoryLog->model());
     if (!model) {
@@ -381,17 +381,17 @@ void ComunicateLogWidget::setHistoryLogData(const QList<QVariantMap>& data)
     model->setHorizontalHeaderLabels(headers);
 
     for (int row = 0; row < data.size(); ++row) {
-        const QVariantMap& r = data[row];
-        model->setItem(row, 0, new QStandardItem(r.value("id").toString()));
-        model->setItem(row, 1, new QStandardItem(r.value("send_time").toString()));
-        model->setItem(row, 2, new QStandardItem(r.value("response_time").toString()));
-        model->setItem(row, 3, new QStandardItem(r.value("command_id").toString()));
-        model->setItem(row, 4, new QStandardItem(r.value("qr_code").toString()));
-        model->setItem(row, 5, new QStandardItem(r.value("exec_status").toString()));
-        model->setItem(row, 6, new QStandardItem(r.value("retry_count").toString()));
-        model->setItem(row, 7, new QStandardItem(r.value("send_frame").toString()));
-        model->setItem(row, 8, new QStandardItem(r.value("response_frame").toString()));
-        model->setItem(row, 9, new QStandardItem(r.value("description").toString()));
+        const CommunicateRecord& r = data[row];
+        model->setItem(row, 0, new QStandardItem(QString::number(r.id)));
+        model->setItem(row, 1, new QStandardItem(r.sendTime));
+        model->setItem(row, 2, new QStandardItem(r.responseTime));
+        model->setItem(row, 3, new QStandardItem(r.commandId));
+        model->setItem(row, 4, new QStandardItem(r.qrCode));
+        model->setItem(row, 5, new QStandardItem(QString::number(r.execStatus)));
+        model->setItem(row, 6, new QStandardItem(QString::number(r.retryCount)));
+        model->setItem(row, 7, new QStandardItem(QString::fromUtf8(r.sendFrame)));
+        model->setItem(row, 8, new QStandardItem(QString::fromUtf8(r.responseFrame)));
+        model->setItem(row, 9, new QStandardItem(r.description));
     }
 
     ui->tableViewHistoryLog->resizeColumnsToContents();
