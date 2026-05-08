@@ -35,7 +35,8 @@ public:
         PurgeTime5Min,      // 充气大于等于5分钟
         PurgeTime10Min,     // 充气大于10分钟
         PurgeTime20Min,     // 充气大于20分钟
-        PurgeTime30Min      // 充气大于30分钟
+        PurgeTime30Min,     // 充气大于30分钟
+        Disable             // 禁用状态（灰色）
     };
 
 

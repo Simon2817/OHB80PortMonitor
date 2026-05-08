@@ -140,26 +140,29 @@ void MonitorDataTask::onCommunicationRecorded(ModbusCommand cmd, const QString& 
         }
     }
 
-    // 写入 CommunicateLogDBCon（SQLite 持久化）
-    if (LogDB::CommunicateLogDBCon* db = LogDB::DatabaseManager::instance().communicateLogCon()) {
-        QString respTimeStr = cmd.responseMs > 0
-            ? QDateTime::fromMSecsSinceEpoch(cmd.responseMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))
-            : QString();
+    // ReadIdlePurgeAll 指令不写入数据库，不发送信号给 UI
+    if (cmd.id != QStringLiteral("ReadIdlePurgeAll")) {
+        // 写入 CommunicateLogDBCon（SQLite 持久化）
+        if (LogDB::CommunicateLogDBCon* db = LogDB::DatabaseManager::instance().communicateLogCon()) {
+            QString respTimeStr = cmd.responseMs > 0
+                ? QDateTime::fromMSecsSinceEpoch(cmd.responseMs).toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))
+                : QString();
 
-        db->insertRecord(
-            sentTimeStr,
-            respTimeStr,
-            cmd.id,
-            masterId,
-            execStatus,
-            retryCount,
-            cmd.request.rawBytes,
-            cmd.response.rawBytes,
-            description);
+            db->insertRecord(
+                sentTimeStr,
+                respTimeStr,
+                cmd.id,
+                masterId,
+                execStatus,
+                retryCount,
+                cmd.request.rawBytes,
+                cmd.response.rawBytes,
+                description);
+        }
+
+        // 转发 communicationCompleted 信号供 UI 更新实时日志
+        emit communicationCompleted(cmd, masterId, description);
     }
-
-    // 转发 communicationCompleted 信号供 UI 更新实时日志
-    emit communicationCompleted(cmd, masterId, description);
 
     // 通讯失败时上报运行日志到 OperationDispatchTask
     if (execStatus != 0) {
@@ -211,54 +214,54 @@ void MonitorDataTask::updateFoupInfo(const QString& masterId, const QString& com
     }
 
     if (commandId == "ReadFoupStatus") {
-        foup->inletPressure    = data.value("inletPressure").toDouble();
-        foup->negativePressure = data.value("negativePressure").toDouble();
-        foup->inletFlow        = data.value("inletFlow").toDouble();
-        foup->RH               = data.value("humidity").toDouble();
-        foup->temperature      = data.value("temperature").toDouble();
-        foup->purgeTimeSec     = data.value("purgeTimeSec").toUInt();
-        foup->oldFoupIn = foup->foupIn;
-        foup->foupIn    = data.value("foupIn").toBool();
+        foup->setInletPressure(data.value("inletPressure").toDouble());
+        foup->setNegativePressure(data.value("negativePressure").toDouble());
+        foup->setInletFlow(data.value("inletFlow").toDouble());
+        foup->setRH(data.value("humidity").toDouble());
+        foup->setTemperature(data.value("temperature").toDouble());
+        foup->setPurgeTimeSec(data.value("purgeTimeSec").toUInt());
+        foup->setOldFoupIn(foup->foupIn());
+        foup->setFoupIn(data.value("foupIn").toBool());
 
         // FOUP out → in：设置 startTime 为当前时间
-        if (!foup->oldFoupIn && foup->foupIn) {
-            foup->startTime = QTime::currentTime();
+        if (!foup->oldFoupIn() && foup->foupIn()) {
+            foup->setStartTime(QTime::currentTime());
         }
         // FOUP in → out：重置相关字段
-        else if (foup->oldFoupIn && !foup->foupIn) {
-            foup->startTime = QTime(0, 0, 0);
-            foup->purgeTimeSec = 0;
+        else if (foup->oldFoupIn() && !foup->foupIn()) {
+            foup->setStartTime(QTime(0, 0, 0));
+            foup->setPurgeTimeSec(0);
         }
     } else if (commandId == "ReadIdlePurgeAll") {
-        foup->idlePurgeEnabled   = data.value("idlePurgeEnabled").toBool();
-        foup->idleState          = static_cast<IdleState>(data.value("idleState").toInt());
-        foup->idleWorkingTimeSec = static_cast<quint16>(data.value("idleWorkingTimeSec").toUInt());
+        foup->setIdlePurgeEnabled(data.value("idlePurgeEnabled").toBool());
+        foup->setIdleState(static_cast<IdleState>(data.value("idleState").toInt()));
+        foup->setIdleWorkingTimeSec(static_cast<quint16>(data.value("idleWorkingTimeSec").toUInt()));
         qDebug() << "[MonitorDataTask][ReadIdlePurgeAll] 设备=" << masterId
-                 << "idlePurgeEnabled=" << foup->idlePurgeEnabled
-                 << "idleState=" << static_cast<int>(foup->idleState)
-                 << "idleWorkingTimeSec=" << foup->idleWorkingTimeSec;
+                 << "idlePurgeEnabled=" << foup->idlePurgeEnabled()
+                 << "idleState=" << static_cast<int>(foup->idleState())
+                 << "idleWorkingTimeSec=" << foup->idleWorkingTimeSec();
     } else if (commandId == "ReadIdlePurgeEnable") {
-        foup->idlePurgeEnabled = data.value("idlePurgeEnabled").toBool();
+        foup->setIdlePurgeEnabled(data.value("idlePurgeEnabled").toBool());
     } else if (commandId == "ReadIdlePurgeStatus") {
-        foup->idleState = static_cast<IdleState>(data.value("idleState").toInt());
+        foup->setIdleState(static_cast<IdleState>(data.value("idleState").toInt()));
     } else if (commandId == "ReadIdlePurgeWorkingTime") {
-        foup->idleWorkingTimeSec = static_cast<quint16>(data.value("idleWorkingTimeSec").toUInt());
+        foup->setIdleWorkingTimeSec(static_cast<quint16>(data.value("idleWorkingTimeSec").toUInt()));
     }
 
-    if (foup->foupIn)
+    if (foup->foupIn())
     {
-        foup->idleWorkingTimeSec = 0;
-        foup->idleState = IdleState::Idle;
+        foup->setIdleWorkingTimeSec(0);
+        foup->setIdleState(IdleState::Idle);
     } else{
         // FOUP in → out：重置 purge 相关字段
-        foup->startTime = QTime(0, 0, 0);
-        foup->purgeTimeSec = 0;
+        foup->setStartTime(QTime(0, 0, 0));
+        foup->setPurgeTimeSec(0);
     }
 
-    if (!foup->idlePurgeEnabled)
+    if (!foup->idlePurgeEnabled())
     {
-        foup->idleState = IdleState::Idle;
-        foup->idleWorkingTimeSec = 0;
+        foup->setIdleState(IdleState::Idle);
+        foup->setIdleWorkingTimeSec(0);
     }
 }
 

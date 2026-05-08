@@ -55,7 +55,7 @@ void CommunicationRecorder::onTick()
 
         // 根据 Foup 在位状态决定阈值
         FoupOfOHBInfo* foup = SharedData::getFoupByQRCode(masterId);
-        int threshold = (foup && foup->foupIn) ? THRESHOLD_FOUP_IN_MS
+        int threshold = (foup && foup->foupIn()) ? THRESHOLD_FOUP_IN_MS
                                                : THRESHOLD_FOUP_OUT_MS;
 
         if (counter >= threshold) {

@@ -9,6 +9,60 @@
 ## 更新日志
 
 ### 2026-05-08 - Simon
+**FoupOfOHBInfo 类重构：成员变量私有化 + Enable 机制**
+
+#### 修改内容
+
+**1. FoupOfOHBInfo 类封装重构**
+- 将所有成员变量从 public 移到 private 区域
+- 所有成员变量添加 m_ 前缀（m_qrCode、m_portId、m_ip 等）
+- 为所有 19 个变量添加 getter 方法（如 qrCode()、portId() 等）
+- 为所有变量添加 setter 方法（如 setQrCode()、setPortId() 等）
+- 更新构造函数、拷贝构造函数和赋值运算符使用 m_ 前缀变量
+
+**2. Enable 机制**
+- 新增 m_enable 成员变量（bool 类型，true=可用，false=不可用）
+- 当 m_enable == false 时，大部分 getter 方法返回 0 或空值
+  - 数值类型（int、double、quint16、quint32）返回 0
+  - bool 类型返回 false
+  - QString 类型返回 ""
+  - QTime 类型返回 QTime(0, 0, 0) 即 00:00:00
+  - IdleState 类型返回 IdleState::Stopped
+- 以下四个 getter 方法不受 enable 影响，始终返回实际值：
+  - qrCode()、portId()、ip()、port()
+- enable() 方法始终返回实际值，用于查询禁用状态
+
+**3. FrameDevice Disable 状态**
+- 在 DeviceStatus 枚举中新增 Disable 状态
+- StatusColorMap 中添加 Disable 对应的灰色映射（QColor(128, 128, 128)）
+- Disable 状态字体颜色设为白色，与灰色背景形成对比
+- updateFoupInfo() 方法中添加 enable 检测逻辑
+  - 当 Foup 类型且 enable() == false 时，设置状态为 Disable
+
+**4. 全局更新所有使用 FoupOfOHBInfo 的文件**
+- framedevice.cpp：所有直接访问改为 getter/setter 方法
+- monitor_data_task.cpp：所有赋值改为 setter，读取改为 getter
+- network_status_task.cpp：hasAlarm、alarmId、qrCode、startTime 改为 getter/setter
+- devicemonitorwidget.cpp：所有字段访问改为 getter 方法
+- setofohbinfo.cpp：qrCode、inletPressure、RH 改为 getter 方法
+- shareddata.cpp：初始化时使用 setter 方法，读取时使用 getter 方法
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/classes/foupofohbinfo.h`
+  - `OHB80PortMonitor_V_1_0_0/classes/foupofohbinfo.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/overheadcranetrack/framedevice.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/overheadcranetrack/framedevice.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/overheadcranetrack/devicemonitorwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/overheadcranetrack/cranemapwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/classes/setofohbinfo.cpp`
+  - `OHB80PortMonitor_V_1_0_0/app/shareddata.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/monitor_data_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/network_status_task.cpp`
+
+---
+
+### 2026-05-08 - Simon
 **Record 类型重构完成：DBCon 查询接口与 UI Widgets 全面升级**
 
 #### 修改内容

@@ -282,7 +282,7 @@ void Graph::FoupLevelGraphBuilder::createFoupDevices(int nodeId, const QPointF& 
         m_logger.log(m_loggerFileName, Level::INFO,
                      "{}创建Foup设备: SET_ID={}, Foup[{}], qrCode={}, 坐标=({}, {})",
                      loggerPre, nodeId, i,
-                     foups[i].qrCode.toStdString(),
+                     foups[i].qrCode().toStdString(),
                      actualPos.x(), actualPos.y());
     }
     

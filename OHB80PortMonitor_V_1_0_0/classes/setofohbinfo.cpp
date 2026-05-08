@@ -49,7 +49,7 @@ const FoupOfOHBInfo& SetOfOHBInfo::getFoupByQRCode(const QString& qrCode) const
 {
     for (int i = 0; i < m_foups.size(); i++)
     {
-        if (m_foups[i].qrCode == qrCode)
+        if (m_foups[i].qrCode() == qrCode)
             return m_foups[i];
     }
     // 返回一个默认的空对象
@@ -61,7 +61,7 @@ FoupOfOHBInfo& SetOfOHBInfo::getFoupByQRCode(const QString& qrCode)
 {
     for (int i = 0; i < m_foups.size(); i++)
     {
-        if (m_foups[i].qrCode == qrCode)
+        if (m_foups[i].qrCode() == qrCode)
             return m_foups[i];
     }
     // 返回一个默认的空对象
@@ -73,7 +73,7 @@ bool SetOfOHBInfo::setFoupByQRCode(const QString& qrCode, const FoupOfOHBInfo& f
 {
     for (int i = 0; i < m_foups.size(); i++)
     {
-        if (m_foups[i].qrCode == qrCode || m_foups[i].qrCode.isEmpty())
+        if (m_foups[i].qrCode() == qrCode || m_foups[i].qrCode().isEmpty())
         {
             m_foups[i] = foupInfo;
             updateSetId(); // 更新Set ID
@@ -124,8 +124,8 @@ void SetOfOHBInfo::updateSetId()
     // 查找第一个有效的QR码
     QString firstQR;
     for (const auto& foup : m_foups) {
-        if (!foup.qrCode.isEmpty()) {
-            firstQR = foup.qrCode;
+        if (!foup.qrCode().isEmpty()) {
+            firstQR = foup.qrCode();
             break;
         }
     }
@@ -133,8 +133,8 @@ void SetOfOHBInfo::updateSetId()
     // 查找最后一个有效的QR码
     QString lastQR;
     for (int i = m_foups.size() - 1; i >= 0; --i) {
-        if (!m_foups[i].qrCode.isEmpty()) {
-            lastQR = m_foups[i].qrCode;
+        if (!m_foups[i].qrCode().isEmpty()) {
+            lastQR = m_foups[i].qrCode();
             break;
         }
     }
@@ -157,16 +157,16 @@ QString SetOfOHBInfo::getInletPressureRange() const
     
     auto minIt = std::min_element(m_foups.begin(), m_foups.end(), 
         [](const FoupOfOHBInfo& a, const FoupOfOHBInfo& b) {
-            return a.inletPressure < b.inletPressure;
+            return a.inletPressure() < b.inletPressure();
         });
     
     auto maxIt = std::max_element(m_foups.begin(), m_foups.end(), 
         [](const FoupOfOHBInfo& a, const FoupOfOHBInfo& b) {
-            return a.inletPressure < b.inletPressure;
+            return a.inletPressure() < b.inletPressure();
         });
     
-    double minPressure = minIt->inletPressure;
-    double maxPressure = maxIt->inletPressure;
+    double minPressure = minIt->inletPressure();
+    double maxPressure = maxIt->inletPressure();
     
     return QString("%1~%2Mpa").arg(minPressure, 0, 'f', 2).arg(maxPressure, 0, 'f', 2);
 }
@@ -179,7 +179,7 @@ QString SetOfOHBInfo::getInletFlowAverage() const
     
     double totalFlow = 0.0;
     for (const auto& foup : m_foups) {
-        totalFlow += foup.inletFlow;
+        totalFlow += foup.inletFlow();
     }
     
     double averageFlow = totalFlow / m_foups.size();
@@ -194,16 +194,16 @@ QString SetOfOHBInfo::getRHRange() const
     
     auto minIt = std::min_element(m_foups.begin(), m_foups.end(), 
         [](const FoupOfOHBInfo& a, const FoupOfOHBInfo& b) {
-            return a.RH < b.RH;
+            return a.RH() < b.RH();
         });
     
     auto maxIt = std::max_element(m_foups.begin(), m_foups.end(), 
         [](const FoupOfOHBInfo& a, const FoupOfOHBInfo& b) {
-            return a.RH < b.RH;
+            return a.RH() < b.RH();
         });
     
-    double minRH = minIt->RH;
-    double maxRH = maxIt->RH;
+    double minRH = minIt->RH();
+    double maxRH = maxIt->RH();
     
     return QString("%1~%2%").arg(minRH, 0, 'f', 2).arg(maxRH, 0, 'f', 2);
 }

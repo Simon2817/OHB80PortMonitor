@@ -5,7 +5,7 @@
 
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/operationlogdb/operationlogdbcon.h"
-#include "logdatabases/dbtypes.h"
+
 
 OperationDispatchTask::OperationDispatchTask(QObject* parent)
     : SchedulerTask(parent)

@@ -15,7 +15,8 @@ const QMap<FrameDevice::DeviceStatus, QColor> FrameDevice::StatusColorMap = {
     {DeviceStatus::PurgeTime5Min, QColor(135, 206, 250)}, // 比浅蓝色深一点
     {DeviceStatus::PurgeTime10Min, QColor(70, 130, 180)},  // 钢蓝色
     {DeviceStatus::PurgeTime20Min, QColor(25, 25, 112)},    // 深午夜蓝
-    {DeviceStatus::PurgeTime30Min, QColor(50, 205, 50)}    // 浅绿色
+    {DeviceStatus::PurgeTime30Min, QColor(50, 205, 50)},    // 浅绿色
+    {DeviceStatus::Disable, QColor(128, 128, 128)}         // 禁用灰色
 };
 
 FrameDevice::FrameDevice(QWidget *parent)
@@ -68,7 +69,8 @@ void FrameDevice::setDeviceStatus(DeviceStatus status)
     QString textColor;
     if (status == DeviceStatus::PurgeTime10Min || 
         status == DeviceStatus::PurgeTime20Min || 
-        status == DeviceStatus::Alarm) {
+        status == DeviceStatus::Alarm ||
+        status == DeviceStatus::Disable) {
         textColor = "color: rgb(255, 255, 255);"; // 白色字体
     } else {
         textColor = ""; // 保持默认字体颜色
@@ -101,17 +103,17 @@ FrameDevice::DeviceStatus FrameDevice::calculateStatusByPurgeTime(QSharedPointer
     }
 
     // 如果有警报，返回 Alarm 状态
-    if (foupInfo->hasAlarm) {
+    if (foupInfo->hasAlarm()) {
         return DeviceStatus::Alarm;
     }
 
     // 如果 Foup 不在位，返回 FoupOut
-    if (!foupInfo->foupIn) {
+    if (!foupInfo->foupIn()) {
         return DeviceStatus::FoupOut;
     }
 
     // Foup 在位，根据 purgeTimeSec 计算状态
-    double purgeTimeMin = foupInfo->purgeTimeSec / 60.0; // 秒转分钟
+    double purgeTimeMin = foupInfo->purgeTimeSec() / 60.0; // 秒转分钟
 
     if (purgeTimeMin >= 30.0) {
         return DeviceStatus::PurgeTime30Min;
@@ -241,10 +243,10 @@ void FrameDevice::setFoupOfOHBInfo(QSharedPointer<FoupOfOHBInfo> foupInfo)
     m_foupInfo = foupInfo;
     if (m_foupInfo) {
         // 更新UI显示Foup信息
-        setLabIDValueText(m_foupInfo->qrCode);
-        setLabInletPressureValue(m_foupInfo->inletPressure);
-        setLabInletFlowValue(m_foupInfo->inletFlow);
-        setLabRHValue(m_foupInfo->RH);
+        setLabIDValueText(m_foupInfo->qrCode());
+        setLabInletPressureValue(m_foupInfo->inletPressure());
+        setLabInletFlowValue(m_foupInfo->inletFlow());
+        setLabRHValue(m_foupInfo->RH());
     }
 }
 
@@ -266,16 +268,22 @@ void FrameDevice::updateFoupInfo()
     if (!m_foupInfo) {
         return;
     }
-    
-    // 更新数据显示
-    setLabInletPressureValue(m_foupInfo->inletPressure);
-    setLabInletFlowValue(m_foupInfo->inletFlow);
-    setLabRHValue(m_foupInfo->RH);
 
-    // 仅针对 Foup 类型：根据 FoupOfOHBInfo 计算状态并设置背景颜色
+    // 更新数据显示
+    setLabInletPressureValue(m_foupInfo->inletPressure());
+    setLabInletFlowValue(m_foupInfo->inletFlow());
+    setLabRHValue(m_foupInfo->RH());
+
+    // 仅针对 Foup 类型：检测 enable 变量
     if (m_deviceType == DeviceType::Foup) {
-        DeviceStatus status = calculateStatusByPurgeTime(m_foupInfo);
-        setDeviceStatus(status);
+        if (!m_foupInfo->enable()) {
+            // enable 为 false，设置背景颜色为灰色
+            setDeviceStatus(DeviceStatus::Disable);
+        } else {
+            // enable 为 true，根据 FoupOfOHBInfo 计算状态并设置背景颜色
+            DeviceStatus status = calculateStatusByPurgeTime(m_foupInfo);
+            setDeviceStatus(status);
+        }
     }
 }
 
@@ -295,7 +303,7 @@ void FrameDevice::updateSetInfo()
     const QVector<FoupOfOHBInfo>& foups = m_setInfo->getFoups();
     bool hasAlarmFoup = false;
     for (const auto& foup : foups) {
-        if (foup.hasAlarm) {
+        if (foup.hasAlarm()) {
             hasAlarmFoup = true;
             break;
         }
@@ -346,7 +354,7 @@ void FrameDevice::mousePressEvent(QMouseEvent *event)
             uiId = m_setInfo->getUiId();
         } else if (m_deviceType == DeviceType::Foup && m_foupInfo) {
             // Foup 使用 qrCode 的哈希值作为 uiId
-            uiId = qHash(m_foupInfo->qrCode);
+            uiId = qHash(m_foupInfo->qrCode());
         }
         emit deviceClicked(m_deviceType, uiId);
     }
@@ -358,7 +366,7 @@ void FrameDevice::mouseDoubleClickEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton && m_deviceType == DeviceType::Set && m_setInfo) {
         const QVector<FoupOfOHBInfo>& foups = m_setInfo->getFoups();
         if (!foups.isEmpty()) {
-            QString firstFoupQrCode = foups.first().qrCode;
+            QString firstFoupQrCode = foups.first().qrCode();
             int uiId = m_setInfo->getUiId();
             emit setDeviceDoubleClicked(uiId, firstFoupQrCode);
         }

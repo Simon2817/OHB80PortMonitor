@@ -42,24 +42,26 @@ SharedData::SharedData() {
             QVector<FoupOfOHBInfo> foups;
             for (int j = 0; j < 4; ++j) {
                 FoupOfOHBInfo foup;
-                foup.qrCode = qrCodeInfos.at(index);
-                foup.ip = networkInfos.at(index).ip;
-                foup.port = networkInfos.at(index++).port;
-                foup.inletPressure = 0;
-                foup.inletFlow = 0;
-                foup.RH = 0;
-                foup.foupIn = false;
-                foup.hasAlarm = true;
+                foup.setQrCode(qrCodeInfos.at(index));
+                foup.setIp(networkInfos.at(index).ip);
+                foup.setPort(networkInfos.at(index++).port);
+                foup.setInletPressure(0);
+                foup.setInletFlow(0);
+                foup.setRH(0);
+                foup.setFoupIn(false);
+                foup.setHasAlarm(true);
+                if (j == 0 && i == 0)
+                    foup.setEnable(false);
                 foups.append(foup);
 
                 // static int num = 0;
                 // if (!foup.ip.isEmpty() && foup.port > 0 && num <= 0) {
-                if (!foup.ip.isEmpty() && foup.port > 0) {
-                    ModbusTcpMasterManager::instance().addMaster(foup.ip, foup.port, foup.qrCode);
+                if (!foup.ip().isEmpty() && foup.port() > 0) {
+                    ModbusTcpMasterManager::instance().addMaster(foup.ip(), foup.port(), foup.qrCode());
                     // num++;
                 }
                 else {
-                    qDebug() << "Invalid IP or port for foup:" << foup.qrCode;
+                    qDebug() << "Invalid IP or port for foup:" << foup.qrCode();
                 }
             }
             
@@ -95,8 +97,8 @@ QStringList SharedData::getAllQrcodes()
     QStringList qrcodes;
     for (const SetOfOHBInfo& setInfo : setOfOHBInfoList) {
         for (const FoupOfOHBInfo& foup : setInfo.getFoups()) {
-            if (!foup.qrCode.isEmpty()) {
-                qrcodes << foup.qrCode;
+            if (!foup.qrCode().isEmpty()) {
+                qrcodes << foup.qrCode();
             }
         }
     }
@@ -110,7 +112,7 @@ FoupOfOHBInfo* SharedData::getFoupByQRCode(const QString& qrCode)
         SetOfOHBInfo& setInfo = setOfOHBInfoList[i];
         QVector<FoupOfOHBInfo>& foups = setInfo.getFoups();
         for (int j = 0; j < foups.size(); ++j) {
-            if (foups[j].qrCode == qrCode) {
+            if (foups[j].qrCode() == qrCode) {
                 // 返回指向该 Foup 的指针
                 return &foups[j];
             }

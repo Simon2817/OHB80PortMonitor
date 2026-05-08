@@ -46,7 +46,7 @@ void NetworkStatusTask::start()
     m_initCheckTask->start();
 
     ModbusTcpMasterManager &manager = ModbusTcpMasterManager::instance();
-    QStringList ids = manager.masterIds();
+    const QStringList ids = manager.masterIds();
 
     // 启动所有 ModbusTcpMaster
     for (const QString &id : ids) {
@@ -58,7 +58,7 @@ void NetworkStatusTask::start()
         manager.startMaster(id, ModbusConnecter::ConnectionMode::AutoReconnect);
         qDebug() << "[Scheduler][NetworkStatusTask] 设备" << id << "(" << ipPortStr << ") 已启动自动重连";
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
-            QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 已启动自动重连").arg(id).arg(ipPortStr).toStdString());
+            QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 已启动自动重连").arg(id, ipPortStr).toStdString());
     }
 
     for (const QString &id : ids) {
@@ -71,7 +71,7 @@ void NetworkStatusTask::start()
         if (!connecter) {
             qWarning() << "[Scheduler][NetworkStatusTask] 设备" << id << "(" << ipPortStr << ") 的 ModbusConnecter 为空，跳过";
             LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
-                QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 的 ModbusConnecter 为空，跳过").arg(id).arg(ipPortStr).toStdString());
+                QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 的 ModbusConnecter 为空，跳过").arg(id, ipPortStr).toStdString());
             continue;
         }
 
@@ -83,12 +83,12 @@ void NetworkStatusTask::start()
         FoupOfOHBInfo* foup = SharedData::getFoupByQRCode(id);
         if (foup) {
             if (currentStatus == ModbusConnecter::ConnectionStatus::Connected) {
-                foup->hasAlarm = false;
-                foup->alarmId.clear();
+                foup->setHasAlarm(false);
+                foup->setAlarmId("");
                 qDebug() << "[Scheduler][NetworkStatusTask] 设备" << id << "(" << ipPortStr << ") 初始状态已连接，告警已清除";
             } else {
-                foup->hasAlarm = true;
-                foup->alarmId = "111";
+                foup->setHasAlarm(true);
+                foup->setAlarmId("111");
                 qDebug() << "[Scheduler][NetworkStatusTask] 设备" << id << "(" << ipPortStr << ") 初始状态未连接，设置告警";
             }
         }
@@ -158,41 +158,57 @@ void NetworkStatusTask::onStatusChanged(ModbusConnecter::ConnectionStatus status
 
     qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "(" << ipPortStr << ") 连接状态变更:" << statusStr;
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
-        QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接状态变更: %3").arg(masterId).arg(ipPortStr).arg(statusStr).toStdString());
+        QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接状态变更: %3").arg(masterId, ipPortStr, statusStr).toStdString());
 
     // 当连接断开或出错时，设置告警
     FoupOfOHBInfo* foup = SharedData::getFoupByQRCode(masterId);
     if (!foup) {
         qWarning() << "[Scheduler][NetworkStatusTask] 未找到设备" << masterId << "(" << ipPortStr << ") 对应的 FoupOfOHBInfo";
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
-            QString("[Scheduler][NetworkStatusTask] 未找到设备 %1 (%2) 对应的 FoupOfOHBInfo").arg(masterId).arg(ipPortStr).toStdString());
+            QString("[Scheduler][NetworkStatusTask] 未找到设备 %1 (%2) 对应的 FoupOfOHBInfo").arg(masterId, ipPortStr).toStdString());
         return;
     }
 
     if (status == ModbusConnecter::ConnectionStatus::Connected) {
         // 连接成功：清除告警
-        foup->hasAlarm = false;
-        foup->alarmId.clear();
+        foup->setHasAlarm(false);
+        foup->setAlarmId("");
         qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "(" << ipPortStr << ") 连接成功，告警已清除";
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
-            QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接成功，告警已清除").arg(masterId).arg(ipPortStr).toStdString());
+            QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接成功，告警已清除").arg(masterId, ipPortStr).toStdString());
+
+        // 解决设备离线告警
+        if (AlarmDispatchTask* dispatcher = SharedData::getAlarmDispatchTask()) {
+            const int alarmType   = static_cast<int>(AlarmType::DeviceOffline);
+            const int alarmSource = static_cast<int>(AlarmSource::Device);
+            dispatcher->submitResolve(alarmType, alarmSource, masterId);
+        }
 
         // 连接成功后下发 WriteQRCode 指令
         submitWriteQRCode(masterId);
     } else {
         // 断开或出错：设置告警
-        foup->hasAlarm = true;
+        foup->setHasAlarm(true);
         // 用新 AlarmInfo 规则生成 alarmId（设备类型 = DeviceOffline，来源 = Device + qrCode）
         AlarmInfo probe;
         probe.record.alarmType   = static_cast<int>(AlarmType::DeviceOffline);
         probe.alarmSource        = static_cast<int>(AlarmSource::Device);
-        probe.record.qrCode      = foup->qrCode;
+        probe.record.qrCode      = foup->qrCode();
         probe.record.alarmLevel  = alarmTypeToLevel(probe.record.alarmType);
-        foup->alarmId = probe.generateAlarmId();
-        foup->startTime = QTime(0, 0, 0);
-        qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "(" << ipPortStr << ") 连接异常，已设置告警 alarmId=" << foup->alarmId;
+        foup->setAlarmId(probe.generateAlarmId());
+        foup->setStartTime(QTime(0, 0, 0));
+        qDebug() << "[Scheduler][NetworkStatusTask] 设备" << masterId << "(" << ipPortStr << ") 连接异常，已设置告警 alarmId=" << foup->alarmId();
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
-            QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接异常，已设置告警 alarmId=%3").arg(masterId).arg(ipPortStr).arg(foup->alarmId).toStdString());
+            QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接异常，已设置告警 alarmId=%3").arg(masterId, ipPortStr, foup->alarmId()).toStdString());
+
+        // 上报设备离线告警
+        if (AlarmDispatchTask* dispatcher = SharedData::getAlarmDispatchTask()) {
+            dispatcher->submitAlarm(
+                static_cast<int>(AlarmType::DeviceOffline),
+                static_cast<int>(AlarmSource::Device),
+                masterId,
+                QStringLiteral("Device %1 connection lost").arg(masterId));
+        }
     }
 }
 

@@ -904,7 +904,7 @@ void CraneMapWidget::handleDeviceClicked(FrameDevice::DeviceType deviceType, int
         } else if (deviceType == FrameDevice::DeviceType::Foup && device->getDeviceType() == FrameDevice::DeviceType::Foup) {
             // Foup 使用 qrCode 的哈希值作为 uiId
             auto foupInfo = device->getFoupOfOHBInfo();
-            deviceUiId = foupInfo ? qHash(foupInfo->qrCode) : -1;
+            deviceUiId = foupInfo ? qHash(foupInfo->qrCode()) : -1;
         }
         
         if (deviceUiId == uiId) {
