@@ -7,7 +7,8 @@ HEADERS += \
     $$PWD/cycliccommandissuer.h \
     $$PWD/initialcommandissuer.h \
     $$PWD/periodiccommandsender.h \
-    $$PWD/firmwareupgrader.h
+    $$PWD/firmwareupgrader.h \
+    $$PWD/sh85selfchecker.h
 
 SOURCES += \
     $$PWD/modbustcpmaster.cpp \
@@ -17,4 +18,5 @@ SOURCES += \
     $$PWD/cycliccommandissuer.cpp \
     $$PWD/initialcommandissuer.cpp \
     $$PWD/periodiccommandsender.cpp \
-    $$PWD/firmwareupgrader.cpp
+    $$PWD/firmwareupgrader.cpp \
+    $$PWD/sh85selfchecker.cpp

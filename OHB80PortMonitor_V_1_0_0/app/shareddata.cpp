@@ -50,15 +50,15 @@ SharedData::SharedData() {
                 foup.setRH(0);
                 foup.setFoupIn(false);
                 foup.setHasAlarm(true);
-                if (j == 0 && i == 0)
-                    foup.setEnable(false);
+                // if (j == 0 && i == 0)
+                    // foup.setEnable(false);
                 foups.append(foup);
 
-                // static int num = 0;
-                // if (!foup.ip.isEmpty() && foup.port > 0 && num <= 0) {
-                if (!foup.ip().isEmpty() && foup.port() > 0) {
+                static int num = 0;
+                if (!foup.ip().isEmpty() && foup.port() > 0 && num <= 0) {
+                // if (!foup.ip().isEmpty() && foup.port() > 0) {
                     ModbusTcpMasterManager::instance().addMaster(foup.ip(), foup.port(), foup.qrCode());
-                    // num++;
+                    num++;
                 }
                 else {
                     qDebug() << "Invalid IP or port for foup:" << foup.qrCode();

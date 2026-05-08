@@ -3,6 +3,7 @@
 #include "scheduler/scheduler.h"
 #include "qrcodeconfig.h"
 #include "scheduler/tasks/operation_dispatch_task.h"
+#include "modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 #include "app/shareddata.h"
@@ -155,7 +156,7 @@ void SH85SelfCheckSettingWidget::onStatusChanged(const QString &text, const QStr
 }
 
 void SH85SelfCheckSettingWidget::onAllFinished(bool success,
-                                               SH85SelfCheckTask::Result result,
+                                               SH85SelfChecker::Result result,
                                                const QString &qrcode)
 {
     if (qrcode != m_runningQrcode) return;
@@ -200,17 +201,21 @@ void SH85SelfCheckSettingWidget::resetButton()
     m_deviceIdSpinBox->setEnabled(true);
 }
 
-QString SH85SelfCheckSettingWidget::resultToFriendlyText(SH85SelfCheckTask::Result r)
+QString SH85SelfCheckSettingWidget::resultToFriendlyText(SH85SelfChecker::Result r)
 {
     switch (r) {
-    case SH85SelfCheckTask::Result::Success:                   return "Self-check OK";
-    case SH85SelfCheckTask::Result::NetworkError:              return "Network Error";
-    case SH85SelfCheckTask::Result::DeviceNotEntered:          return "Device not in self-check";
-    case SH85SelfCheckTask::Result::HumidityExceeded:          return "Humidity exceeded threshold";
-    case SH85SelfCheckTask::Result::SensorCommError:           return "SH85 sensor comm error";
-    case SH85SelfCheckTask::Result::ThresholdParamError:       return "Threshold parameter error";
-    case SH85SelfCheckTask::Result::SelfCheckFunctionAbnormal: return "Self-check function abnormal";
-    case SH85SelfCheckTask::Result::Cancelled:                 return "Cancelled";
+    case SH85SelfChecker::Result::Success:                  return "Self-check OK";
+    case SH85SelfChecker::Result::StartCommandFailed:
+    case SH85SelfChecker::Result::ReadEarlyCommandFailed:
+    case SH85SelfChecker::Result::ReadPollCommandFailed:
+        return "Network Error";
+    case SH85SelfChecker::Result::DeviceNotEntered:          return "Device not in self-check";
+    case SH85SelfChecker::Result::FirmwareAbnormal:          return "Firmware abnormal";
+    case SH85SelfChecker::Result::HumidityExceeded:          return "Humidity exceeded threshold";
+    case SH85SelfChecker::Result::SensorCommError:           return "SH85 sensor comm error";
+    case SH85SelfChecker::Result::ThresholdParamError:       return "Threshold parameter error";
+    case SH85SelfChecker::Result::Timeout:                   return "Self-check timeout";
+    case SH85SelfChecker::Result::Cancelled:                 return "Cancelled";
     }
     return "Unknown";
 }

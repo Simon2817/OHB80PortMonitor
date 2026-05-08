@@ -9,6 +9,67 @@
 ## 更新日志
 
 ### 2026-05-08 - Simon
+**新增 SH85SelfChecker：将 SH85 自检功能下沉到 data 层（每个 master 一个自检器）**
+
+#### 背景
+为支持多设备并行自检，将原本仅存在于 `SH85SelfCheckTask`（scheduler 层）中的自检流程下沉到 data 层，作为 `ModbusTcpMaster` 的子控件存在。每个 master 自带一个 `SH85SelfChecker`，与 `connector` / `sender` / `periodicSender` 等子控件保持一致的获取方式（`master->selfChecker()`）。
+
+#### 修改内容
+
+**1. 新增 SH85SelfChecker 类**
+- 位置：`data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.{h,cpp}`
+- 状态机驱动整套自检流程，无需依赖 SchedulerTask，可被任意线程调用
+- 7 个状态：Idle / StartingSelfCheck / WaitingPhase1 / ReadingStatusEarly / WaitingPhase2 / PollingStatus / Done
+- 11 种结果：Success / StartCommandFailed / ReadEarlyCommandFailed / DeviceNotEntered / FirmwareAbnormal / ReadPollCommandFailed / HumidityExceeded / SensorCommError / ThresholdParamError / Timeout / Cancelled
+
+**2. 自检流程（共约 70s）**
+- 阶段 0：下发 `StartSelfCheck`（`maxRetryCount=0`，不允许超时重发）
+  - 失败 → `errorOccurred(StartCommandFailed)`
+- 阶段 1：等待 5s，下发 `ReadSelfCheckStatus`
+  - 失败 → `errorOccurred(ReadEarlyCommandFailed)`
+  - `CH_1 == 0` → `errorOccurred(DeviceNotEntered)`（设备未进入自检功能）
+  - `CH_1 != 0 && CH_1 != 1` → `errorOccurred(FirmwareAbnormal)`（底层固件异常）
+  - `CH_1 == 1` → 进入阶段 2
+- 阶段 2：等待 55s，进入 10s 轮询窗口循环下发 `ReadSelfCheckStatus`
+  - 失败 → `errorOccurred(ReadPollCommandFailed)`
+  - `CH_1 == 0` → `errorOccurred(FirmwareAbnormal)`
+  - `CH_1 == 1` → 继续轮询
+  - `CH_1 == 2` → `finished(success=true, Success)`
+  - `CH_1 == 3` → `errorOccurred(HumidityExceeded)`
+  - `CH_1 == 4` → `errorOccurred(SensorCommError)`
+  - `CH_1 == 5` → `errorOccurred(ThresholdParamError)`
+- 兜底：10s 轮询窗口超时 → `errorOccurred(Timeout)`
+
+**3. 公共接口**
+- `bool start()`：启动自检（前置条件不满足直接返回 false 不发信号）
+- `void stop()`：主动取消，仅发出 `finished(Cancelled)`
+- `bool isRunning()` / `State currentState()`
+- 信号：`started` / `stateChanged` / `errorOccurred` / `finished`
+
+**4. ModbusTcpMaster 集成**
+- 构造时创建 `m_selfChecker = new SH85SelfChecker(this, this);`
+- 新增 `SH85SelfChecker* selfChecker() const` getter
+- 头文件添加 `class SH85SelfChecker;` 前向声明
+
+**5. 实现细节**
+- 通过 `ModbusTcpMasterManager::instance().commandPool()` 获取指令模板（与 `SH85SelfCheckTask` 一致）
+- 通过 `QMetaObject::invokeMethod(sender, ..., Qt::QueuedConnection)` 跨线程提交指令
+- 通过 `m_pendingUuid` 过滤 `commandFinished` 信号，确保只处理自身下发的响应
+- 三个 `QTimer` 单次触发实现 5s/55s/10s 阶段时序
+- `cleanup()` 在结束 / 取消时统一停止定时器并断开 sender 连接
+
+#### 影响范围
+- 新增文件：
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h`
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.cpp`
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h`
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.pri`
+
+---
+
+### 2026-05-08 - Simon
 **FoupOfOHBInfo 类重构：成员变量私有化 + Enable 机制**
 
 #### 修改内容

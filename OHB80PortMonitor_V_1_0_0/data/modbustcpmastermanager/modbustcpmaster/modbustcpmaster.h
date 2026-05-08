@@ -12,6 +12,7 @@
 #include "periodiccommandsender.h"
 
 class FirmwareUpgrader;
+class SH85SelfChecker;
 
 // ============================================================
 // ModbusTcpMaster - Modbus TCP 主控对象
@@ -146,6 +147,13 @@ public:
     FirmwareUpgrader* firmwareUpgrader() const;
 
     /**
+     * @brief 获取 SH85 自检器
+     * @return SH85SelfChecker 指针
+     * @details 自检器作为 master 子控件存在，外部可调用 start()/stop() 启停自检
+     */
+    SH85SelfChecker* selfChecker() const;
+
+    /**
      * @brief 获取设备 IP 地址
      * @return IP 地址字符串
      */
@@ -255,6 +263,7 @@ private:
 
     QString m_firmwareVersion;             // 固件版本号
     FirmwareUpgrader* m_firmwareUpgrader = nullptr; // 固件升级器
+    SH85SelfChecker* m_selfChecker = nullptr;       // SH85 自检器
 };
 
 #endif // MODBUSTCPMASTER_H

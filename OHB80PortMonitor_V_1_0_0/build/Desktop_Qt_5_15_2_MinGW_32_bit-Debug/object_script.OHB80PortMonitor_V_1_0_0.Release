@@ -106,6 +106,7 @@ release/cycliccommandissuer.o
 release/initialcommandissuer.o
 release/periodiccommandsender.o
 release/firmwareupgrader.o
+release/sh85selfchecker.o
 release/databasemanager.o
 release/dbconnectionhelper.o
 release/logcleanupscheduler.o
@@ -204,6 +205,7 @@ release/moc_cycliccommandissuer.o
 release/moc_initialcommandissuer.o
 release/moc_periodiccommandsender.o
 release/moc_firmwareupgrader.o
+release/moc_sh85selfchecker.o
 release/moc_logcleanupscheduler.o
 release/moc_alarmlogdbcon.o
 release/moc_alarmlogsqllogic.o

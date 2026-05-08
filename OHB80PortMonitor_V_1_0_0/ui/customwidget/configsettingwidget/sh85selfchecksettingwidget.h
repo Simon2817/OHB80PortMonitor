@@ -3,6 +3,7 @@
 
 #include "settingwidget.h"
 #include "scheduler/tasks/sh85_self_check_task.h"
+#include "modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h"
 
 #include <QSpinBox>
 #include <QPushButton>
@@ -35,7 +36,7 @@ private slots:
     void onCountdownTick(int remainingSeconds, const QString &qrcode);
     void onStatusChanged(const QString &text, const QString &qrcode);
     void onAllFinished(bool success,
-                       SH85SelfCheckTask::Result result,
+                       SH85SelfChecker::Result result,
                        const QString &qrcode);
 
 private:
@@ -46,7 +47,7 @@ private:
     void submitSelfCheckTask(const QString &qrcode);
     void resetButton();
 
-    static QString resultToFriendlyText(SH85SelfCheckTask::Result r);
+    static QString resultToFriendlyText(SH85SelfChecker::Result r);
 
 private:
     // 控件指针

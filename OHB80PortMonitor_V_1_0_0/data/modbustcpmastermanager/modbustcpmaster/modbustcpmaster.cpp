@@ -1,5 +1,6 @@
 #include "modbustcpmaster.h"
 #include "firmwareupgrader.h"
+#include "sh85selfchecker.h"
 #include "loggermanager.h"
 #include "app/applogger.h"
 #include <QDebug>
@@ -21,6 +22,7 @@ ModbusTcpMaster::ModbusTcpMaster(const QString& ip, quint16 port, const QString&
 
     createInitialIssuerIfNeeded();
     m_firmwareUpgrader = new FirmwareUpgrader(this, this);
+    m_selfChecker = new SH85SelfChecker(this, this);
 
     connect(m_connector, &ModbusConnecter::statusChanged,
             this, &ModbusTcpMaster::onConnectionStatusChanged);
@@ -82,6 +84,11 @@ QString ModbusTcpMaster::firmwareVersion() const
 FirmwareUpgrader* ModbusTcpMaster::firmwareUpgrader() const
 {
     return m_firmwareUpgrader;
+}
+
+SH85SelfChecker* ModbusTcpMaster::selfChecker() const
+{
+    return m_selfChecker;
 }
 
 void ModbusTcpMaster::onConnectionStatusChanged(ModbusConnecter::ConnectionStatus status, const QString& /*masterId*/)

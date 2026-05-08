@@ -106,6 +106,7 @@ debug/cycliccommandissuer.o
 debug/initialcommandissuer.o
 debug/periodiccommandsender.o
 debug/firmwareupgrader.o
+debug/sh85selfchecker.o
 debug/databasemanager.o
 debug/dbconnectionhelper.o
 debug/logcleanupscheduler.o
@@ -204,6 +205,7 @@ debug/moc_cycliccommandissuer.o
 debug/moc_initialcommandissuer.o
 debug/moc_periodiccommandsender.o
 debug/moc_firmwareupgrader.o
+debug/moc_sh85selfchecker.o
 debug/moc_logcleanupscheduler.o
 debug/moc_alarmlogdbcon.o
 debug/moc_alarmlogsqllogic.o

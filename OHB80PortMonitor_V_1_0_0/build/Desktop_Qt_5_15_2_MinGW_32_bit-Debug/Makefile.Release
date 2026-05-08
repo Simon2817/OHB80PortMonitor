@@ -158,6 +158,7 @@ SOURCES       = ..\..\main.cpp \
 		..\..\data\modbustcpmastermanager\modbustcpmaster\initialcommandissuer.cpp \
 		..\..\data\modbustcpmastermanager\modbustcpmaster\periodiccommandsender.cpp \
 		..\..\data\modbustcpmastermanager\modbustcpmaster\firmwareupgrader.cpp \
+		..\..\data\modbustcpmastermanager\modbustcpmaster\sh85selfchecker.cpp \
 		..\..\data\logdatabases\databasemanager.cpp \
 		..\..\data\logdatabases\dbconnectionhelper.cpp \
 		..\..\data\logdatabases\logcleanupscheduler.cpp \
@@ -255,6 +256,7 @@ SOURCES       = ..\..\main.cpp \
 		release\moc_initialcommandissuer.cpp \
 		release\moc_periodiccommandsender.cpp \
 		release\moc_firmwareupgrader.cpp \
+		release\moc_sh85selfchecker.cpp \
 		release\moc_logcleanupscheduler.cpp \
 		release\moc_alarmlogdbcon.cpp \
 		release\moc_alarmlogsqllogic.cpp \
@@ -374,6 +376,7 @@ OBJECTS       = release/main.o \
 		release/initialcommandissuer.o \
 		release/periodiccommandsender.o \
 		release/firmwareupgrader.o \
+		release/sh85selfchecker.o \
 		release/databasemanager.o \
 		release/dbconnectionhelper.o \
 		release/logcleanupscheduler.o \
@@ -472,6 +475,7 @@ OBJECTS       = release/main.o \
 		release/moc_initialcommandissuer.o \
 		release/moc_periodiccommandsender.o \
 		release/moc_firmwareupgrader.o \
+		release/moc_sh85selfchecker.o \
 		release/moc_logcleanupscheduler.o \
 		release/moc_alarmlogdbcon.o \
 		release/moc_alarmlogsqllogic.o \
@@ -699,6 +703,7 @@ DIST          = D:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_
 		..\..\data\modbustcpmastermanager\modbustcpmaster\initialcommandissuer.h \
 		..\..\data\modbustcpmastermanager\modbustcpmaster\periodiccommandsender.h \
 		..\..\data\modbustcpmastermanager\modbustcpmaster\firmwareupgrader.h \
+		..\..\data\modbustcpmastermanager\modbustcpmaster\sh85selfchecker.h \
 		..\..\data\logdatabases\databasemanager.h \
 		..\..\data\logdatabases\dbconnectionhelper.h \
 		..\..\data\logdatabases\dbtypes.h \
@@ -829,6 +834,7 @@ DIST          = D:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_
 		..\..\data\modbustcpmastermanager\modbustcpmaster\initialcommandissuer.cpp \
 		..\..\data\modbustcpmastermanager\modbustcpmaster\periodiccommandsender.cpp \
 		..\..\data\modbustcpmastermanager\modbustcpmaster\firmwareupgrader.cpp \
+		..\..\data\modbustcpmastermanager\modbustcpmaster\sh85selfchecker.cpp \
 		..\..\data\logdatabases\databasemanager.cpp \
 		..\..\data\logdatabases\dbconnectionhelper.cpp \
 		..\..\data\logdatabases\logcleanupscheduler.cpp \
@@ -869,13 +875,13 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) OHB80PortMonitor_V_1_0_0.zip $(SOURCES) $(DIST) ..\..\..\..\OHB80PortMonitor_V_1_0_0.pro C:\Qt\5.15.2\mingw81_32\mkspecs\features\spec_pre.prf C:\Qt\5.15.2\mingw81_32\mkspecs\qdevice.pri C:\Qt\5.15.2\mingw81_32\mkspecs\features\device_config.prf C:\Qt\5.15.2\mingw81_32\mkspecs\common\sanitize.conf C:\Qt\5.15.2\mingw81_32\mkspecs\common\gcc-base.conf C:\Qt\5.15.2\mingw81_32\mkspecs\common\g++-base.conf C:\Qt\5.15.2\mingw81_32\mkspecs\common\angle.conf C:\Qt\5.15.2\mingw81_32\mkspecs\features\win32\windows_vulkan_sdk.prf C:\Qt\5.15.2\mingw81_32\mkspecs\common\windows-vulkan.conf C:\Qt\5.15.2\mingw81_32\mkspecs\common\g++-win32.conf C:\Qt\5.15.2\mingw81_32\mkspecs\common\windows-desktop.conf C:\Qt\5.15.2\mingw81_32\mkspecs\qconfig.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3danimation.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3danimation_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickanimation.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickanimation_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickscene2d.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickscene2d_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3drender.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axbase.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axserver.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_core.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_core_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_dbus.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_designer.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_edid_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_gui.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_help.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_help_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_location.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_location_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_network.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_network_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_nfc.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_opengl.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_positioning.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_positioningquick.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_positioningquick_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qml.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmlmodels.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmlmodels_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmlworkerscript.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmlworkerscript_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quick.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quicktemplates2.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_remoteobjects.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_remoteobjects_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_repparser.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_repparser_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_scxml.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_sensors.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_serialport.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_sql.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_svg.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_testlib.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_uitools.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_websockets.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_widgets.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_winextras.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_xml.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\features\qt_functions.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\qt_config.prf C:\Qt\5.15.2\mingw81_32\mkspecs\win32-g++\qmake.conf C:\Qt\5.15.2\mingw81_32\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\5.15.2\mingw81_32\mkspecs\features\exclusive_builds.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\toolchain.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\default_pre.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\win32\default_pre.prf ..\..\app\app.pri ..\..\config\config.pri ..\..\tool\loggermananger\spdlog\spdlog.pri ..\..\tool\loggermananger\loggermananger.pri ..\..\tool\qthelper\qthelper.pri ..\..\tool\binfilereader\binfilereader.pri ..\..\tool\communicationrecorder\communicationrecorder.pri ..\..\tool\tool.pri ..\..\ui\customwidget\overheadcranetrack\overheadcranetrack.pri ..\..\ui\customwidget\settingwidget\settingwidget.pri ..\..\ui\customwidget\debugsettingwidget\debugsettingwidget.pri ..\..\ui\customwidget\configsettingwidget\configsettingwidget.pri ..\..\ui\customwidget\loggerwidget\loggerwidget.pri ..\..\ui\customwidget\alarmlogwidget\alarmlogwidget.pri ..\..\ui\customwidget\historycalendardialog\historycalendardialog.pri ..\..\ui\customwidget\comunicatelogwidget\comunicatelogwidget.pri ..\..\ui\customwidget\operationlogwidget\operationlogwidget.pri ..\..\ui\customwidget\useraccountlabel\useraccountlabel.pri ..\..\ui\customwidget\paginationwidget\paginationwidget.pri ..\..\ui\customwidget\waitdialog\waitdialog.pri ..\..\ui\customwidget\datetimesetdialog\datetimesetdialog.pri ..\..\ui\customwidget\scrollingtiplabel\scrollingtiplabel.pri ..\..\ui\customwidget\customwidget.pri ..\..\ui\ui.pri ..\..\scheduler\scheduler.pri ..\..\data\modbustcpmastermanager\modbuscommand\modbuscommand.pri ..\..\data\modbustcpmastermanager\modbustcpmaster\modbustcpmaster.pri ..\..\data\modbustcpmastermanager\modbustcpmastermanager.pri ..\..\data\logdatabases\alarmlogdb\alarmlogdb.pri ..\..\data\logdatabases\communicatelogdb\communicatelogdb.pri ..\..\data\logdatabases\deviceparamlogdb\deviceparamlogdb.pri ..\..\data\logdatabases\operationlogdb\operationlogdb.pri ..\..\data\logdatabases\writesqldb\writesqldb.pri ..\..\data\logdatabases\logdatabases.pri ..\..\data\usermanager\usermanager.pri ..\..\data\data.pri ..\..\classes\classes.pri C:\Qt\5.15.2\mingw81_32\mkspecs\features\resolve_config.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\exclusive_builds_post.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\default_post.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\build_pass.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\qml_debug.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\precompile_header.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\warn_on.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\qt.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\resources_functions.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\resources.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\moc.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\win32\opengl.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\uic.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\qmake_use.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\file_copies.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\win32\windows.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\testcase_targets.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\exceptions.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\yacc.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\lex.prf ..\..\OHB80PortMonitor_V_1_0_0.pro ..\..\resource\main.qrc ..\..\resource\qss.qrc C:\Qt\5.15.2\mingw81_32\lib\Qt5PrintSupport.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Widgets.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Gui.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Concurrent.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5SerialPort.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5SerialBus.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Network.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Xml.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Sql.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Core.prl C:\Qt\5.15.2\mingw81_32\lib\qtmain.prl   ..\..\resource\main.qrc ..\..\resource\qss.qrc C:\Qt\5.15.2\mingw81_32\mkspecs\features\data\dummy.cpp ..\..\head.h ..\..\app\alarmtype.h ..\..\app\app.h ..\..\app\appconfig.h ..\..\app\applogger.h ..\..\app\customlogger.h ..\..\app\shareddata.h ..\..\app\metatypes.h ..\..\config\firmwareconfig.h ..\..\config\networkconfig.h ..\..\config\qrcodeconfig.h ..\..\config\userinfoconfig.h ..\..\tool\loggermananger\loggermanager.h ..\..\tool\loggermananger\spdlog\async.h ..\..\tool\loggermananger\spdlog\async_logger-inl.h ..\..\tool\loggermananger\spdlog\async_logger.h ..\..\tool\loggermananger\spdlog\cfg\argv.h ..\..\tool\loggermananger\spdlog\cfg\env.h ..\..\tool\loggermananger\spdlog\cfg\helpers-inl.h ..\..\tool\loggermananger\spdlog\cfg\helpers.h ..\..\tool\loggermananger\spdlog\common-inl.h ..\..\tool\loggermananger\spdlog\common.h ..\..\tool\loggermananger\spdlog\details\backtracer-inl.h ..\..\tool\loggermananger\spdlog\details\backtracer.h ..\..\tool\loggermananger\spdlog\details\circular_q.h ..\..\tool\loggermananger\spdlog\details\console_globals.h ..\..\tool\loggermananger\spdlog\details\file_helper-inl.h ..\..\tool\loggermananger\spdlog\details\file_helper.h ..\..\tool\loggermananger\spdlog\details\fmt_helper.h ..\..\tool\loggermananger\spdlog\details\log_msg-inl.h ..\..\tool\loggermananger\spdlog\details\log_msg.h ..\..\tool\loggermananger\spdlog\details\log_msg_buffer-inl.h ..\..\tool\loggermananger\spdlog\details\log_msg_buffer.h ..\..\tool\loggermananger\spdlog\details\mpmc_blocking_q.h ..\..\tool\loggermananger\spdlog\details\null_mutex.h ..\..\tool\loggermananger\spdlog\details\os-inl.h ..\..\tool\loggermananger\spdlog\details\os.h ..\..\tool\loggermananger\spdlog\details\periodic_worker-inl.h ..\..\tool\loggermananger\spdlog\details\periodic_worker.h ..\..\tool\loggermananger\spdlog\details\registry-inl.h ..\..\tool\loggermananger\spdlog\details\registry.h ..\..\tool\loggermananger\spdlog\details\synchronous_factory.h ..\..\tool\loggermananger\spdlog\details\tcp_client-windows.h ..\..\tool\loggermananger\spdlog\details\tcp_client.h ..\..\tool\loggermananger\spdlog\details\thread_pool-inl.h ..\..\tool\loggermananger\spdlog\details\thread_pool.h ..\..\tool\loggermananger\spdlog\details\udp_client-windows.h ..\..\tool\loggermananger\spdlog\details\udp_client.h ..\..\tool\loggermananger\spdlog\details\windows_include.h ..\..\tool\loggermananger\spdlog\fmt\bin_to_hex.h ..\..\tool\loggermananger\spdlog\fmt\bundled\args.h ..\..\tool\loggermananger\spdlog\fmt\bundled\base.h ..\..\tool\loggermananger\spdlog\fmt\bundled\chrono.h ..\..\tool\loggermananger\spdlog\fmt\bundled\color.h ..\..\tool\loggermananger\spdlog\fmt\bundled\compile.h ..\..\tool\loggermananger\spdlog\fmt\bundled\core.h ..\..\tool\loggermananger\spdlog\fmt\bundled\format-inl.h ..\..\tool\loggermananger\spdlog\fmt\bundled\format.h ..\..\tool\loggermananger\spdlog\fmt\bundled\os.h ..\..\tool\loggermananger\spdlog\fmt\bundled\ostream.h ..\..\tool\loggermananger\spdlog\fmt\bundled\printf.h ..\..\tool\loggermananger\spdlog\fmt\bundled\ranges.h ..\..\tool\loggermananger\spdlog\fmt\bundled\std.h ..\..\tool\loggermananger\spdlog\fmt\bundled\xchar.h ..\..\tool\loggermananger\spdlog\fmt\chrono.h ..\..\tool\loggermananger\spdlog\fmt\compile.h ..\..\tool\loggermananger\spdlog\fmt\fmt.h ..\..\tool\loggermananger\spdlog\fmt\ostr.h ..\..\tool\loggermananger\spdlog\fmt\ranges.h ..\..\tool\loggermananger\spdlog\fmt\std.h ..\..\tool\loggermananger\spdlog\fmt\xchar.h ..\..\tool\loggermananger\spdlog\formatter.h ..\..\tool\loggermananger\spdlog\fwd.h ..\..\tool\loggermananger\spdlog\logger-inl.h ..\..\tool\loggermananger\spdlog\logger.h ..\..\tool\loggermananger\spdlog\mdc.h ..\..\tool\loggermananger\spdlog\pattern_formatter-inl.h ..\..\tool\loggermananger\spdlog\pattern_formatter.h ..\..\tool\loggermananger\spdlog\sinks\android_sink.h ..\..\tool\loggermananger\spdlog\sinks\ansicolor_sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\ansicolor_sink.h ..\..\tool\loggermananger\spdlog\sinks\base_sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\base_sink.h ..\..\tool\loggermananger\spdlog\sinks\basic_file_sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\basic_file_sink.h ..\..\tool\loggermananger\spdlog\sinks\callback_sink.h ..\..\tool\loggermananger\spdlog\sinks\daily_file_sink.h ..\..\tool\loggermananger\spdlog\sinks\dist_sink.h ..\..\tool\loggermananger\spdlog\sinks\dup_filter_sink.h ..\..\tool\loggermananger\spdlog\sinks\hourly_file_sink.h ..\..\tool\loggermananger\spdlog\sinks\kafka_sink.h ..\..\tool\loggermananger\spdlog\sinks\mongo_sink.h ..\..\tool\loggermananger\spdlog\sinks\msvc_sink.h ..\..\tool\loggermananger\spdlog\sinks\null_sink.h ..\..\tool\loggermananger\spdlog\sinks\ostream_sink.h ..\..\tool\loggermananger\spdlog\sinks\qt_sinks.h ..\..\tool\loggermananger\spdlog\sinks\ringbuffer_sink.h ..\..\tool\loggermananger\spdlog\sinks\rotating_file_sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\rotating_file_sink.h ..\..\tool\loggermananger\spdlog\sinks\sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\sink.h ..\..\tool\loggermananger\spdlog\sinks\stdout_color_sinks-inl.h ..\..\tool\loggermananger\spdlog\sinks\stdout_color_sinks.h ..\..\tool\loggermananger\spdlog\sinks\stdout_sinks-inl.h ..\..\tool\loggermananger\spdlog\sinks\stdout_sinks.h ..\..\tool\loggermananger\spdlog\sinks\syslog_sink.h ..\..\tool\loggermananger\spdlog\sinks\systemd_sink.h ..\..\tool\loggermananger\spdlog\sinks\tcp_sink.h ..\..\tool\loggermananger\spdlog\sinks\udp_sink.h ..\..\tool\loggermananger\spdlog\sinks\win_eventlog_sink.h ..\..\tool\loggermananger\spdlog\sinks\wincolor_sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\wincolor_sink.h ..\..\tool\loggermananger\spdlog\spdlog-inl.h ..\..\tool\loggermananger\spdlog\spdlog.h ..\..\tool\loggermananger\spdlog\stopwatch.h ..\..\tool\loggermananger\spdlog\tweakme.h ..\..\tool\loggermananger\spdlog\version.h ..\..\tool\qthelper\qthelper.h ..\..\tool\binfilereader\binfilereader.h ..\..\tool\communicationrecorder\communicationrecorder.h ..\..\ui\alarmpage.h ..\..\ui\chartpage.h ..\..\ui\communicatepage.h ..\..\ui\configpage.h ..\..\ui\debugpage.h ..\..\ui\homepage.h ..\..\ui\uidemo6.h ..\..\ui\logindialog.h ..\..\ui\changepassworddialog.h ..\..\ui\customwidget\quiwidget.h ..\..\ui\customwidget\overheadcranetrack\cranemapwidget.h ..\..\ui\customwidget\overheadcranetrack\devicemonitorwidget.h ..\..\ui\customwidget\overheadcranetrack\drawcommand.h ..\..\ui\customwidget\overheadcranetrack\fouplevelgraphbuilder.h ..\..\ui\customwidget\overheadcranetrack\framedevice.h ..\..\ui\customwidget\overheadcranetrack\framedevicepool.h ..\..\ui\customwidget\overheadcranetrack\graphadjacencymultilist.h ..\..\ui\customwidget\overheadcranetrack\graphconfigparser.h ..\..\ui\customwidget\overheadcranetrack\graphedge.h ..\..\ui\customwidget\overheadcranetrack\graphnode.h ..\..\ui\customwidget\overheadcranetrack\scrollcontroller.h ..\..\ui\customwidget\overheadcranetrack\setlevelgraphbuilder.h ..\..\ui\customwidget\overheadcranetrack\tablewidgetmanager.h ..\..\ui\customwidget\overheadcranetrack\zoomcontroller.h ..\..\ui\customwidget\settingwidget\settingitemwidget.h ..\..\ui\customwidget\settingwidget\settingwidget.h ..\..\ui\customwidget\debugsettingwidget\firmwareupdateconfigsettingwidget.h ..\..\ui\customwidget\debugsettingwidget\firmwareupdatesettingwidget.h ..\..\ui\customwidget\debugsettingwidget\firmwareupdatewidget.h ..\..\ui\customwidget\debugsettingwidget\vefcgastypesettingwidget.h ..\..\ui\customwidget\debugsettingwidget\uirefreshtimesettingwidget.h ..\..\ui\customwidget\debugsettingwidget\vefcflowunitmediumstatuswidget.h ..\..\ui\customwidget\configsettingwidget\idlepurgesettingwidget.h ..\..\ui\customwidget\configsettingwidget\pneumaticvalvepressuresettingwidget.h ..\..\ui\customwidget\configsettingwidget\sh85selfchecksettingwidget.h ..\..\ui\customwidget\configsettingwidget\humidityoffsetsettingwidget.h ..\..\ui\customwidget\configsettingwidget\purgeflowsettingwidget.h ..\..\ui\customwidget\loggerwidget\csvio.h ..\..\ui\customwidget\loggerwidget\historyquery.h ..\..\ui\customwidget\loggerwidget\itemstyle.h ..\..\ui\customwidget\loggerwidget\loadmoreitemwidget.h ..\..\ui\customwidget\loggerwidget\logfilesystem.h ..\..\ui\customwidget\loggerwidget\loggerwidget.h ..\..\ui\customwidget\loggerwidget\logicalfilesystem.h ..\..\ui\customwidget\loggerwidget\logitemdelegate.h ..\..\ui\customwidget\loggerwidget\logpagemodel.h ..\..\ui\customwidget\loggerwidget\lrucache.h ..\..\ui\customwidget\loggerwidget\pagetable.h ..\..\ui\customwidget\alarmlogwidget\alarmlogwidget.h ..\..\ui\customwidget\historycalendardialog\highlightcalendar.h ..\..\ui\customwidget\historycalendardialog\historycalendardialog.h ..\..\ui\customwidget\comunicatelogwidget\comunicatelogwidget.h ..\..\ui\customwidget\operationlogwidget\operationlogwidget.h ..\..\ui\customwidget\useraccountlabel\useraccountlabel.h ..\..\ui\customwidget\paginationwidget\paginationwidget.h ..\..\ui\customwidget\waitdialog\waitdialog.h ..\..\ui\customwidget\datetimesetdialog\datetimesetdialog.h ..\..\ui\customwidget\scrollingtiplabel\scrollingtiplabel.h ..\..\scheduler\scheduler_task.h ..\..\scheduler\scheduler.h ..\..\scheduler\tasks\alarmlogquerytask.h ..\..\scheduler\tasks\communicatelogquerytask.h ..\..\scheduler\tasks\monitor_data_task.h ..\..\scheduler\tasks\operationlogquerytask.h ..\..\scheduler\tasks\send_command_task.h ..\..\scheduler\tasks\init_check_task.h ..\..\scheduler\tasks\network_status_task.h ..\..\scheduler\tasks\set_firmware_config_task.h ..\..\scheduler\tasks\firmware_upgrade_task.h ..\..\scheduler\tasks\set_idle_purge_task.h ..\..\scheduler\tasks\set_pneumatic_valve_pressure_task.h ..\..\scheduler\tasks\sh85_self_check_task.h ..\..\scheduler\tasks\set_humidity_offset_task.h ..\..\scheduler\tasks\set_purge_flow_task.h ..\..\scheduler\tasks\set_vefc_gas_type_task.h ..\..\scheduler\tasks\set_ui_refresh_time_task.h ..\..\scheduler\tasks\read_vefc_flow_unit_medium_status_task.h ..\..\scheduler\tasks\alarm_dispatch_task.h ..\..\scheduler\tasks\operation_dispatch_task.h ..\..\scheduler\tasks\user_management_task.h ..\..\data\modbustcpmastermanager\modbustcpmastermanager.h ..\..\data\modbustcpmastermanager\modbustcpmasterpool.h ..\..\data\modbustcpmastermanager\modbuscommand\modbuscommand.h ..\..\data\modbustcpmastermanager\modbuscommand\commandpool.h ..\..\data\modbustcpmastermanager\modbuscommand\modbusconfigparser.h ..\..\data\modbustcpmastermanager\modbuscommand\modbuscrc.h ..\..\data\modbustcpmastermanager\modbuscommand\commandresponseparser.h ..\..\data\modbustcpmastermanager\modbustcpmaster\modbustcpmaster.h ..\..\data\modbustcpmastermanager\modbustcpmaster\modbusconnecter.h ..\..\data\modbustcpmastermanager\modbustcpmaster\modbuscommandsender.h ..\..\data\modbustcpmastermanager\modbustcpmaster\modbuscommandreceiver.h ..\..\data\modbustcpmastermanager\modbustcpmaster\cycliccommandissuer.h ..\..\data\modbustcpmastermanager\modbustcpmaster\initialcommandissuer.h ..\..\data\modbustcpmastermanager\modbustcpmaster\periodiccommandsender.h ..\..\data\modbustcpmastermanager\modbustcpmaster\firmwareupgrader.h ..\..\data\logdatabases\databasemanager.h ..\..\data\logdatabases\dbconnectionhelper.h ..\..\data\logdatabases\dbtypes.h ..\..\data\logdatabases\logcleanupscheduler.h ..\..\data\logdatabases\sqlmapper.h ..\..\data\logdatabases\alarmlogdb\alarmlogdbcon.h ..\..\data\logdatabases\alarmlogdb\alarmlogsqllogic.h ..\..\data\logdatabases\communicatelogdb\communicatelogdbcon.h ..\..\data\logdatabases\communicatelogdb\communicatelogsqllogic.h ..\..\data\logdatabases\deviceparamlogdb\deviceparamlogdbcon.h ..\..\data\logdatabases\deviceparamlogdb\deviceparamlogsqllogic.h ..\..\data\logdatabases\operationlogdb\operationlogdbcon.h ..\..\data\logdatabases\operationlogdb\operationlogsqllogic.h ..\..\data\logdatabases\writesqldb\writesqldbcon.h ..\..\data\usermanager\usermanager.h ..\..\classes\alarminfo.h ..\..\classes\alarmrecord.h ..\..\classes\operationrecord.h ..\..\classes\communicaterecord.h ..\..\classes\deviceparamrecord.h ..\..\classes\bayofohbinfo.h ..\..\classes\foupofohbinfo.h ..\..\classes\setofohbinfo.h  ..\..\main.cpp ..\..\app\app.cpp ..\..\app\appconfig.cpp ..\..\app\applogger.cpp ..\..\app\customlogger.cpp ..\..\app\shareddata.cpp ..\..\app\metatypes.cpp ..\..\config\firmwareconfig.cpp ..\..\config\networkconfig.cpp ..\..\config\qrcodeconfig.cpp ..\..\config\userinfoconfig.cpp ..\..\tool\loggermananger\loggermanager.cpp ..\..\tool\loggermananger\spdlog\async.cpp ..\..\tool\loggermananger\spdlog\bundled_fmtlib_format.cpp ..\..\tool\loggermananger\spdlog\cfg.cpp ..\..\tool\loggermananger\spdlog\color_sinks.cpp ..\..\tool\loggermananger\spdlog\file_sinks.cpp ..\..\tool\loggermananger\spdlog\spdlog.cpp ..\..\tool\loggermananger\spdlog\stdout_sinks.cpp ..\..\tool\qthelper\qthelper.cpp ..\..\tool\binfilereader\binfilereader.cpp ..\..\tool\communicationrecorder\communicationrecorder.cpp ..\..\ui\alarmpage.cpp ..\..\ui\chartpage.cpp ..\..\ui\communicatepage.cpp ..\..\ui\configpage.cpp ..\..\ui\debugpage.cpp ..\..\ui\homepage.cpp ..\..\ui\uidemo6.cpp ..\..\ui\logindialog.cpp ..\..\ui\changepassworddialog.cpp ..\..\ui\customwidget\quiwidget.cpp ..\..\ui\customwidget\overheadcranetrack\cranemapwidget.cpp ..\..\ui\customwidget\overheadcranetrack\devicemonitorwidget.cpp ..\..\ui\customwidget\overheadcranetrack\fouplevelgraphbuilder.cpp ..\..\ui\customwidget\overheadcranetrack\framedevice.cpp ..\..\ui\customwidget\overheadcranetrack\framedevicepool.cpp ..\..\ui\customwidget\overheadcranetrack\graphconfigparser.cpp ..\..\ui\customwidget\overheadcranetrack\scrollcontroller.cpp ..\..\ui\customwidget\overheadcranetrack\setlevelgraphbuilder.cpp ..\..\ui\customwidget\overheadcranetrack\tablewidgetmanager.cpp ..\..\ui\customwidget\overheadcranetrack\zoomcontroller.cpp ..\..\ui\customwidget\settingwidget\settingitemwidget.cpp ..\..\ui\customwidget\settingwidget\settingwidget.cpp ..\..\ui\customwidget\debugsettingwidget\firmwareupdateconfigsettingwidget.cpp ..\..\ui\customwidget\debugsettingwidget\firmwareupdatesettingwidget.cpp ..\..\ui\customwidget\debugsettingwidget\firmwareupdatewidget.cpp ..\..\ui\customwidget\debugsettingwidget\vefcgastypesettingwidget.cpp ..\..\ui\customwidget\debugsettingwidget\uirefreshtimesettingwidget.cpp ..\..\ui\customwidget\debugsettingwidget\vefcflowunitmediumstatuswidget.cpp ..\..\ui\customwidget\configsettingwidget\idlepurgesettingwidget.cpp ..\..\ui\customwidget\configsettingwidget\pneumaticvalvepressuresettingwidget.cpp ..\..\ui\customwidget\configsettingwidget\sh85selfchecksettingwidget.cpp ..\..\ui\customwidget\configsettingwidget\humidityoffsetsettingwidget.cpp ..\..\ui\customwidget\configsettingwidget\purgeflowsettingwidget.cpp ..\..\ui\customwidget\loggerwidget\csvio.cpp ..\..\ui\customwidget\loggerwidget\loadmoreitemwidget.cpp ..\..\ui\customwidget\loggerwidget\logfilesystem.cpp ..\..\ui\customwidget\loggerwidget\loggerwidget.cpp ..\..\ui\customwidget\loggerwidget\logicalfilesystem.cpp ..\..\ui\customwidget\loggerwidget\logitemdelegate.cpp ..\..\ui\customwidget\loggerwidget\logpagemodel.cpp ..\..\ui\customwidget\alarmlogwidget\alarmlogwidget.cpp ..\..\ui\customwidget\historycalendardialog\highlightcalendar.cpp ..\..\ui\customwidget\historycalendardialog\historycalendardialog.cpp ..\..\ui\customwidget\comunicatelogwidget\comunicatelogwidget.cpp ..\..\ui\customwidget\operationlogwidget\operationlogwidget.cpp ..\..\ui\customwidget\useraccountlabel\useraccountlabel.cpp ..\..\ui\customwidget\paginationwidget\paginationwidget.cpp ..\..\ui\customwidget\waitdialog\waitdialog.cpp ..\..\ui\customwidget\datetimesetdialog\datetimesetdialog.cpp ..\..\ui\customwidget\scrollingtiplabel\scrollingtiplabel.cpp ..\..\scheduler\scheduler.cpp ..\..\scheduler\tasks\alarmlogquerytask.cpp ..\..\scheduler\tasks\communicatelogquerytask.cpp ..\..\scheduler\tasks\monitor_data_task.cpp ..\..\scheduler\tasks\operationlogquerytask.cpp ..\..\scheduler\tasks\send_command_task.cpp ..\..\scheduler\tasks\init_check_task.cpp ..\..\scheduler\tasks\network_status_task.cpp ..\..\scheduler\tasks\set_firmware_config_task.cpp ..\..\scheduler\tasks\firmware_upgrade_task.cpp ..\..\scheduler\tasks\set_idle_purge_task.cpp ..\..\scheduler\tasks\set_pneumatic_valve_pressure_task.cpp ..\..\scheduler\tasks\sh85_self_check_task.cpp ..\..\scheduler\tasks\set_humidity_offset_task.cpp ..\..\scheduler\tasks\set_purge_flow_task.cpp ..\..\scheduler\tasks\set_vefc_gas_type_task.cpp ..\..\scheduler\tasks\set_ui_refresh_time_task.cpp ..\..\scheduler\tasks\read_vefc_flow_unit_medium_status_task.cpp ..\..\scheduler\tasks\alarm_dispatch_task.cpp ..\..\scheduler\tasks\operation_dispatch_task.cpp ..\..\scheduler\tasks\user_management_task.cpp ..\..\data\modbustcpmastermanager\modbustcpmastermanager.cpp ..\..\data\modbustcpmastermanager\modbustcpmasterpool.cpp ..\..\data\modbustcpmastermanager\modbuscommand\modbuscommand.cpp ..\..\data\modbustcpmastermanager\modbuscommand\commandpool.cpp ..\..\data\modbustcpmastermanager\modbuscommand\modbusconfigparser.cpp ..\..\data\modbustcpmastermanager\modbuscommand\modbuscrc.cpp ..\..\data\modbustcpmastermanager\modbuscommand\commandresponseparser.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\modbustcpmaster.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\modbusconnecter.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\modbuscommandsender.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\modbuscommandreceiver.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\cycliccommandissuer.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\initialcommandissuer.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\periodiccommandsender.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\firmwareupgrader.cpp ..\..\data\logdatabases\databasemanager.cpp ..\..\data\logdatabases\dbconnectionhelper.cpp ..\..\data\logdatabases\logcleanupscheduler.cpp ..\..\data\logdatabases\sqlmapper.cpp ..\..\data\logdatabases\alarmlogdb\alarmlogdbcon.cpp ..\..\data\logdatabases\alarmlogdb\alarmlogsqllogic.cpp ..\..\data\logdatabases\communicatelogdb\communicatelogdbcon.cpp ..\..\data\logdatabases\communicatelogdb\communicatelogsqllogic.cpp ..\..\data\logdatabases\deviceparamlogdb\deviceparamlogdbcon.cpp ..\..\data\logdatabases\deviceparamlogdb\deviceparamlogsqllogic.cpp ..\..\data\logdatabases\operationlogdb\operationlogdbcon.cpp ..\..\data\logdatabases\operationlogdb\operationlogsqllogic.cpp ..\..\data\logdatabases\writesqldb\writesqldbcon.cpp ..\..\data\usermanager\usermanager.cpp ..\..\classes\alarminfo.cpp ..\..\classes\bayofohbinfo.cpp ..\..\classes\foupofohbinfo.cpp ..\..\classes\setofohbinfo.cpp ..\..\ui\alarmpage.ui ..\..\ui\chartpage.ui ..\..\ui\communicatepage.ui ..\..\ui\configpage.ui ..\..\ui\debugpage.ui ..\..\ui\homepage.ui ..\..\ui\uidemo6.ui ..\..\ui\customwidget\overheadcranetrack\framedevice.ui ..\..\ui\customwidget\debugsettingwidget\firmwareupdatewidget.ui ..\..\ui\customwidget\loggerwidget\loggerwidget.ui ..\..\ui\customwidget\alarmlogwidget\alarmlogwidget.ui ..\..\ui\customwidget\historycalendardialog\historycalendardialog.ui ..\..\ui\customwidget\comunicatelogwidget\comunicatelogwidget.ui ..\..\ui\customwidget\operationlogwidget\operationlogwidget.ui ..\..\ui\customwidget\paginationwidget\paginationwidget.ui ..\..\ui\customwidget\datetimesetdialog\datetimesetdialog.ui    
+	$(ZIP) OHB80PortMonitor_V_1_0_0.zip $(SOURCES) $(DIST) ..\..\..\..\OHB80PortMonitor_V_1_0_0.pro C:\Qt\5.15.2\mingw81_32\mkspecs\features\spec_pre.prf C:\Qt\5.15.2\mingw81_32\mkspecs\qdevice.pri C:\Qt\5.15.2\mingw81_32\mkspecs\features\device_config.prf C:\Qt\5.15.2\mingw81_32\mkspecs\common\sanitize.conf C:\Qt\5.15.2\mingw81_32\mkspecs\common\gcc-base.conf C:\Qt\5.15.2\mingw81_32\mkspecs\common\g++-base.conf C:\Qt\5.15.2\mingw81_32\mkspecs\common\angle.conf C:\Qt\5.15.2\mingw81_32\mkspecs\features\win32\windows_vulkan_sdk.prf C:\Qt\5.15.2\mingw81_32\mkspecs\common\windows-vulkan.conf C:\Qt\5.15.2\mingw81_32\mkspecs\common\g++-win32.conf C:\Qt\5.15.2\mingw81_32\mkspecs\common\windows-desktop.conf C:\Qt\5.15.2\mingw81_32\mkspecs\qconfig.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3danimation.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3danimation_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickanimation.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickanimation_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickscene2d.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3dquickscene2d_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3drender.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axbase.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axserver.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_core.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_core_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_dbus.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_designer.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_edid_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_gui.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_help.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_help_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_location.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_location_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_network.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_network_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_nfc.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_opengl.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_positioning.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_positioningquick.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_positioningquick_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qml.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmlmodels.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmlmodels_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmlworkerscript.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qmlworkerscript_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quick.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quicktemplates2.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_remoteobjects.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_remoteobjects_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_repparser.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_repparser_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_scxml.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_sensors.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_serialport.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_sql.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_svg.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_testlib.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_uitools.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_websockets.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_widgets.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_winextras.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_xml.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\5.15.2\mingw81_32\mkspecs\features\qt_functions.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\qt_config.prf C:\Qt\5.15.2\mingw81_32\mkspecs\win32-g++\qmake.conf C:\Qt\5.15.2\mingw81_32\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\5.15.2\mingw81_32\mkspecs\features\exclusive_builds.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\toolchain.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\default_pre.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\win32\default_pre.prf ..\..\app\app.pri ..\..\config\config.pri ..\..\tool\loggermananger\spdlog\spdlog.pri ..\..\tool\loggermananger\loggermananger.pri ..\..\tool\qthelper\qthelper.pri ..\..\tool\binfilereader\binfilereader.pri ..\..\tool\communicationrecorder\communicationrecorder.pri ..\..\tool\tool.pri ..\..\ui\customwidget\overheadcranetrack\overheadcranetrack.pri ..\..\ui\customwidget\settingwidget\settingwidget.pri ..\..\ui\customwidget\debugsettingwidget\debugsettingwidget.pri ..\..\ui\customwidget\configsettingwidget\configsettingwidget.pri ..\..\ui\customwidget\loggerwidget\loggerwidget.pri ..\..\ui\customwidget\alarmlogwidget\alarmlogwidget.pri ..\..\ui\customwidget\historycalendardialog\historycalendardialog.pri ..\..\ui\customwidget\comunicatelogwidget\comunicatelogwidget.pri ..\..\ui\customwidget\operationlogwidget\operationlogwidget.pri ..\..\ui\customwidget\useraccountlabel\useraccountlabel.pri ..\..\ui\customwidget\paginationwidget\paginationwidget.pri ..\..\ui\customwidget\waitdialog\waitdialog.pri ..\..\ui\customwidget\datetimesetdialog\datetimesetdialog.pri ..\..\ui\customwidget\scrollingtiplabel\scrollingtiplabel.pri ..\..\ui\customwidget\customwidget.pri ..\..\ui\ui.pri ..\..\scheduler\scheduler.pri ..\..\data\modbustcpmastermanager\modbuscommand\modbuscommand.pri ..\..\data\modbustcpmastermanager\modbustcpmaster\modbustcpmaster.pri ..\..\data\modbustcpmastermanager\modbustcpmastermanager.pri ..\..\data\logdatabases\alarmlogdb\alarmlogdb.pri ..\..\data\logdatabases\communicatelogdb\communicatelogdb.pri ..\..\data\logdatabases\deviceparamlogdb\deviceparamlogdb.pri ..\..\data\logdatabases\operationlogdb\operationlogdb.pri ..\..\data\logdatabases\writesqldb\writesqldb.pri ..\..\data\logdatabases\logdatabases.pri ..\..\data\usermanager\usermanager.pri ..\..\data\data.pri ..\..\classes\classes.pri C:\Qt\5.15.2\mingw81_32\mkspecs\features\resolve_config.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\exclusive_builds_post.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\default_post.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\build_pass.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\qml_debug.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\precompile_header.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\warn_on.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\qt.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\resources_functions.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\resources.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\moc.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\win32\opengl.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\uic.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\qmake_use.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\file_copies.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\win32\windows.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\testcase_targets.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\exceptions.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\yacc.prf C:\Qt\5.15.2\mingw81_32\mkspecs\features\lex.prf ..\..\OHB80PortMonitor_V_1_0_0.pro ..\..\resource\main.qrc ..\..\resource\qss.qrc C:\Qt\5.15.2\mingw81_32\lib\Qt5PrintSupport.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Widgets.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Gui.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Concurrent.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5SerialPort.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5SerialBus.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Network.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Xml.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Sql.prl C:\Qt\5.15.2\mingw81_32\lib\Qt5Core.prl C:\Qt\5.15.2\mingw81_32\lib\qtmain.prl   ..\..\resource\main.qrc ..\..\resource\qss.qrc C:\Qt\5.15.2\mingw81_32\mkspecs\features\data\dummy.cpp ..\..\head.h ..\..\app\alarmtype.h ..\..\app\app.h ..\..\app\appconfig.h ..\..\app\applogger.h ..\..\app\customlogger.h ..\..\app\shareddata.h ..\..\app\metatypes.h ..\..\config\firmwareconfig.h ..\..\config\networkconfig.h ..\..\config\qrcodeconfig.h ..\..\config\userinfoconfig.h ..\..\tool\loggermananger\loggermanager.h ..\..\tool\loggermananger\spdlog\async.h ..\..\tool\loggermananger\spdlog\async_logger-inl.h ..\..\tool\loggermananger\spdlog\async_logger.h ..\..\tool\loggermananger\spdlog\cfg\argv.h ..\..\tool\loggermananger\spdlog\cfg\env.h ..\..\tool\loggermananger\spdlog\cfg\helpers-inl.h ..\..\tool\loggermananger\spdlog\cfg\helpers.h ..\..\tool\loggermananger\spdlog\common-inl.h ..\..\tool\loggermananger\spdlog\common.h ..\..\tool\loggermananger\spdlog\details\backtracer-inl.h ..\..\tool\loggermananger\spdlog\details\backtracer.h ..\..\tool\loggermananger\spdlog\details\circular_q.h ..\..\tool\loggermananger\spdlog\details\console_globals.h ..\..\tool\loggermananger\spdlog\details\file_helper-inl.h ..\..\tool\loggermananger\spdlog\details\file_helper.h ..\..\tool\loggermananger\spdlog\details\fmt_helper.h ..\..\tool\loggermananger\spdlog\details\log_msg-inl.h ..\..\tool\loggermananger\spdlog\details\log_msg.h ..\..\tool\loggermananger\spdlog\details\log_msg_buffer-inl.h ..\..\tool\loggermananger\spdlog\details\log_msg_buffer.h ..\..\tool\loggermananger\spdlog\details\mpmc_blocking_q.h ..\..\tool\loggermananger\spdlog\details\null_mutex.h ..\..\tool\loggermananger\spdlog\details\os-inl.h ..\..\tool\loggermananger\spdlog\details\os.h ..\..\tool\loggermananger\spdlog\details\periodic_worker-inl.h ..\..\tool\loggermananger\spdlog\details\periodic_worker.h ..\..\tool\loggermananger\spdlog\details\registry-inl.h ..\..\tool\loggermananger\spdlog\details\registry.h ..\..\tool\loggermananger\spdlog\details\synchronous_factory.h ..\..\tool\loggermananger\spdlog\details\tcp_client-windows.h ..\..\tool\loggermananger\spdlog\details\tcp_client.h ..\..\tool\loggermananger\spdlog\details\thread_pool-inl.h ..\..\tool\loggermananger\spdlog\details\thread_pool.h ..\..\tool\loggermananger\spdlog\details\udp_client-windows.h ..\..\tool\loggermananger\spdlog\details\udp_client.h ..\..\tool\loggermananger\spdlog\details\windows_include.h ..\..\tool\loggermananger\spdlog\fmt\bin_to_hex.h ..\..\tool\loggermananger\spdlog\fmt\bundled\args.h ..\..\tool\loggermananger\spdlog\fmt\bundled\base.h ..\..\tool\loggermananger\spdlog\fmt\bundled\chrono.h ..\..\tool\loggermananger\spdlog\fmt\bundled\color.h ..\..\tool\loggermananger\spdlog\fmt\bundled\compile.h ..\..\tool\loggermananger\spdlog\fmt\bundled\core.h ..\..\tool\loggermananger\spdlog\fmt\bundled\format-inl.h ..\..\tool\loggermananger\spdlog\fmt\bundled\format.h ..\..\tool\loggermananger\spdlog\fmt\bundled\os.h ..\..\tool\loggermananger\spdlog\fmt\bundled\ostream.h ..\..\tool\loggermananger\spdlog\fmt\bundled\printf.h ..\..\tool\loggermananger\spdlog\fmt\bundled\ranges.h ..\..\tool\loggermananger\spdlog\fmt\bundled\std.h ..\..\tool\loggermananger\spdlog\fmt\bundled\xchar.h ..\..\tool\loggermananger\spdlog\fmt\chrono.h ..\..\tool\loggermananger\spdlog\fmt\compile.h ..\..\tool\loggermananger\spdlog\fmt\fmt.h ..\..\tool\loggermananger\spdlog\fmt\ostr.h ..\..\tool\loggermananger\spdlog\fmt\ranges.h ..\..\tool\loggermananger\spdlog\fmt\std.h ..\..\tool\loggermananger\spdlog\fmt\xchar.h ..\..\tool\loggermananger\spdlog\formatter.h ..\..\tool\loggermananger\spdlog\fwd.h ..\..\tool\loggermananger\spdlog\logger-inl.h ..\..\tool\loggermananger\spdlog\logger.h ..\..\tool\loggermananger\spdlog\mdc.h ..\..\tool\loggermananger\spdlog\pattern_formatter-inl.h ..\..\tool\loggermananger\spdlog\pattern_formatter.h ..\..\tool\loggermananger\spdlog\sinks\android_sink.h ..\..\tool\loggermananger\spdlog\sinks\ansicolor_sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\ansicolor_sink.h ..\..\tool\loggermananger\spdlog\sinks\base_sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\base_sink.h ..\..\tool\loggermananger\spdlog\sinks\basic_file_sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\basic_file_sink.h ..\..\tool\loggermananger\spdlog\sinks\callback_sink.h ..\..\tool\loggermananger\spdlog\sinks\daily_file_sink.h ..\..\tool\loggermananger\spdlog\sinks\dist_sink.h ..\..\tool\loggermananger\spdlog\sinks\dup_filter_sink.h ..\..\tool\loggermananger\spdlog\sinks\hourly_file_sink.h ..\..\tool\loggermananger\spdlog\sinks\kafka_sink.h ..\..\tool\loggermananger\spdlog\sinks\mongo_sink.h ..\..\tool\loggermananger\spdlog\sinks\msvc_sink.h ..\..\tool\loggermananger\spdlog\sinks\null_sink.h ..\..\tool\loggermananger\spdlog\sinks\ostream_sink.h ..\..\tool\loggermananger\spdlog\sinks\qt_sinks.h ..\..\tool\loggermananger\spdlog\sinks\ringbuffer_sink.h ..\..\tool\loggermananger\spdlog\sinks\rotating_file_sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\rotating_file_sink.h ..\..\tool\loggermananger\spdlog\sinks\sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\sink.h ..\..\tool\loggermananger\spdlog\sinks\stdout_color_sinks-inl.h ..\..\tool\loggermananger\spdlog\sinks\stdout_color_sinks.h ..\..\tool\loggermananger\spdlog\sinks\stdout_sinks-inl.h ..\..\tool\loggermananger\spdlog\sinks\stdout_sinks.h ..\..\tool\loggermananger\spdlog\sinks\syslog_sink.h ..\..\tool\loggermananger\spdlog\sinks\systemd_sink.h ..\..\tool\loggermananger\spdlog\sinks\tcp_sink.h ..\..\tool\loggermananger\spdlog\sinks\udp_sink.h ..\..\tool\loggermananger\spdlog\sinks\win_eventlog_sink.h ..\..\tool\loggermananger\spdlog\sinks\wincolor_sink-inl.h ..\..\tool\loggermananger\spdlog\sinks\wincolor_sink.h ..\..\tool\loggermananger\spdlog\spdlog-inl.h ..\..\tool\loggermananger\spdlog\spdlog.h ..\..\tool\loggermananger\spdlog\stopwatch.h ..\..\tool\loggermananger\spdlog\tweakme.h ..\..\tool\loggermananger\spdlog\version.h ..\..\tool\qthelper\qthelper.h ..\..\tool\binfilereader\binfilereader.h ..\..\tool\communicationrecorder\communicationrecorder.h ..\..\ui\alarmpage.h ..\..\ui\chartpage.h ..\..\ui\communicatepage.h ..\..\ui\configpage.h ..\..\ui\debugpage.h ..\..\ui\homepage.h ..\..\ui\uidemo6.h ..\..\ui\logindialog.h ..\..\ui\changepassworddialog.h ..\..\ui\customwidget\quiwidget.h ..\..\ui\customwidget\overheadcranetrack\cranemapwidget.h ..\..\ui\customwidget\overheadcranetrack\devicemonitorwidget.h ..\..\ui\customwidget\overheadcranetrack\drawcommand.h ..\..\ui\customwidget\overheadcranetrack\fouplevelgraphbuilder.h ..\..\ui\customwidget\overheadcranetrack\framedevice.h ..\..\ui\customwidget\overheadcranetrack\framedevicepool.h ..\..\ui\customwidget\overheadcranetrack\graphadjacencymultilist.h ..\..\ui\customwidget\overheadcranetrack\graphconfigparser.h ..\..\ui\customwidget\overheadcranetrack\graphedge.h ..\..\ui\customwidget\overheadcranetrack\graphnode.h ..\..\ui\customwidget\overheadcranetrack\scrollcontroller.h ..\..\ui\customwidget\overheadcranetrack\setlevelgraphbuilder.h ..\..\ui\customwidget\overheadcranetrack\tablewidgetmanager.h ..\..\ui\customwidget\overheadcranetrack\zoomcontroller.h ..\..\ui\customwidget\settingwidget\settingitemwidget.h ..\..\ui\customwidget\settingwidget\settingwidget.h ..\..\ui\customwidget\debugsettingwidget\firmwareupdateconfigsettingwidget.h ..\..\ui\customwidget\debugsettingwidget\firmwareupdatesettingwidget.h ..\..\ui\customwidget\debugsettingwidget\firmwareupdatewidget.h ..\..\ui\customwidget\debugsettingwidget\vefcgastypesettingwidget.h ..\..\ui\customwidget\debugsettingwidget\uirefreshtimesettingwidget.h ..\..\ui\customwidget\debugsettingwidget\vefcflowunitmediumstatuswidget.h ..\..\ui\customwidget\configsettingwidget\idlepurgesettingwidget.h ..\..\ui\customwidget\configsettingwidget\pneumaticvalvepressuresettingwidget.h ..\..\ui\customwidget\configsettingwidget\sh85selfchecksettingwidget.h ..\..\ui\customwidget\configsettingwidget\humidityoffsetsettingwidget.h ..\..\ui\customwidget\configsettingwidget\purgeflowsettingwidget.h ..\..\ui\customwidget\loggerwidget\csvio.h ..\..\ui\customwidget\loggerwidget\historyquery.h ..\..\ui\customwidget\loggerwidget\itemstyle.h ..\..\ui\customwidget\loggerwidget\loadmoreitemwidget.h ..\..\ui\customwidget\loggerwidget\logfilesystem.h ..\..\ui\customwidget\loggerwidget\loggerwidget.h ..\..\ui\customwidget\loggerwidget\logicalfilesystem.h ..\..\ui\customwidget\loggerwidget\logitemdelegate.h ..\..\ui\customwidget\loggerwidget\logpagemodel.h ..\..\ui\customwidget\loggerwidget\lrucache.h ..\..\ui\customwidget\loggerwidget\pagetable.h ..\..\ui\customwidget\alarmlogwidget\alarmlogwidget.h ..\..\ui\customwidget\historycalendardialog\highlightcalendar.h ..\..\ui\customwidget\historycalendardialog\historycalendardialog.h ..\..\ui\customwidget\comunicatelogwidget\comunicatelogwidget.h ..\..\ui\customwidget\operationlogwidget\operationlogwidget.h ..\..\ui\customwidget\useraccountlabel\useraccountlabel.h ..\..\ui\customwidget\paginationwidget\paginationwidget.h ..\..\ui\customwidget\waitdialog\waitdialog.h ..\..\ui\customwidget\datetimesetdialog\datetimesetdialog.h ..\..\ui\customwidget\scrollingtiplabel\scrollingtiplabel.h ..\..\scheduler\scheduler_task.h ..\..\scheduler\scheduler.h ..\..\scheduler\tasks\alarmlogquerytask.h ..\..\scheduler\tasks\communicatelogquerytask.h ..\..\scheduler\tasks\monitor_data_task.h ..\..\scheduler\tasks\operationlogquerytask.h ..\..\scheduler\tasks\send_command_task.h ..\..\scheduler\tasks\init_check_task.h ..\..\scheduler\tasks\network_status_task.h ..\..\scheduler\tasks\set_firmware_config_task.h ..\..\scheduler\tasks\firmware_upgrade_task.h ..\..\scheduler\tasks\set_idle_purge_task.h ..\..\scheduler\tasks\set_pneumatic_valve_pressure_task.h ..\..\scheduler\tasks\sh85_self_check_task.h ..\..\scheduler\tasks\set_humidity_offset_task.h ..\..\scheduler\tasks\set_purge_flow_task.h ..\..\scheduler\tasks\set_vefc_gas_type_task.h ..\..\scheduler\tasks\set_ui_refresh_time_task.h ..\..\scheduler\tasks\read_vefc_flow_unit_medium_status_task.h ..\..\scheduler\tasks\alarm_dispatch_task.h ..\..\scheduler\tasks\operation_dispatch_task.h ..\..\scheduler\tasks\user_management_task.h ..\..\data\modbustcpmastermanager\modbustcpmastermanager.h ..\..\data\modbustcpmastermanager\modbustcpmasterpool.h ..\..\data\modbustcpmastermanager\modbuscommand\modbuscommand.h ..\..\data\modbustcpmastermanager\modbuscommand\commandpool.h ..\..\data\modbustcpmastermanager\modbuscommand\modbusconfigparser.h ..\..\data\modbustcpmastermanager\modbuscommand\modbuscrc.h ..\..\data\modbustcpmastermanager\modbuscommand\commandresponseparser.h ..\..\data\modbustcpmastermanager\modbustcpmaster\modbustcpmaster.h ..\..\data\modbustcpmastermanager\modbustcpmaster\modbusconnecter.h ..\..\data\modbustcpmastermanager\modbustcpmaster\modbuscommandsender.h ..\..\data\modbustcpmastermanager\modbustcpmaster\modbuscommandreceiver.h ..\..\data\modbustcpmastermanager\modbustcpmaster\cycliccommandissuer.h ..\..\data\modbustcpmastermanager\modbustcpmaster\initialcommandissuer.h ..\..\data\modbustcpmastermanager\modbustcpmaster\periodiccommandsender.h ..\..\data\modbustcpmastermanager\modbustcpmaster\firmwareupgrader.h ..\..\data\modbustcpmastermanager\modbustcpmaster\sh85selfchecker.h ..\..\data\logdatabases\databasemanager.h ..\..\data\logdatabases\dbconnectionhelper.h ..\..\data\logdatabases\dbtypes.h ..\..\data\logdatabases\logcleanupscheduler.h ..\..\data\logdatabases\sqlmapper.h ..\..\data\logdatabases\alarmlogdb\alarmlogdbcon.h ..\..\data\logdatabases\alarmlogdb\alarmlogsqllogic.h ..\..\data\logdatabases\communicatelogdb\communicatelogdbcon.h ..\..\data\logdatabases\communicatelogdb\communicatelogsqllogic.h ..\..\data\logdatabases\deviceparamlogdb\deviceparamlogdbcon.h ..\..\data\logdatabases\deviceparamlogdb\deviceparamlogsqllogic.h ..\..\data\logdatabases\operationlogdb\operationlogdbcon.h ..\..\data\logdatabases\operationlogdb\operationlogsqllogic.h ..\..\data\logdatabases\writesqldb\writesqldbcon.h ..\..\data\usermanager\usermanager.h ..\..\classes\alarminfo.h ..\..\classes\alarmrecord.h ..\..\classes\operationrecord.h ..\..\classes\communicaterecord.h ..\..\classes\deviceparamrecord.h ..\..\classes\bayofohbinfo.h ..\..\classes\foupofohbinfo.h ..\..\classes\setofohbinfo.h  ..\..\main.cpp ..\..\app\app.cpp ..\..\app\appconfig.cpp ..\..\app\applogger.cpp ..\..\app\customlogger.cpp ..\..\app\shareddata.cpp ..\..\app\metatypes.cpp ..\..\config\firmwareconfig.cpp ..\..\config\networkconfig.cpp ..\..\config\qrcodeconfig.cpp ..\..\config\userinfoconfig.cpp ..\..\tool\loggermananger\loggermanager.cpp ..\..\tool\loggermananger\spdlog\async.cpp ..\..\tool\loggermananger\spdlog\bundled_fmtlib_format.cpp ..\..\tool\loggermananger\spdlog\cfg.cpp ..\..\tool\loggermananger\spdlog\color_sinks.cpp ..\..\tool\loggermananger\spdlog\file_sinks.cpp ..\..\tool\loggermananger\spdlog\spdlog.cpp ..\..\tool\loggermananger\spdlog\stdout_sinks.cpp ..\..\tool\qthelper\qthelper.cpp ..\..\tool\binfilereader\binfilereader.cpp ..\..\tool\communicationrecorder\communicationrecorder.cpp ..\..\ui\alarmpage.cpp ..\..\ui\chartpage.cpp ..\..\ui\communicatepage.cpp ..\..\ui\configpage.cpp ..\..\ui\debugpage.cpp ..\..\ui\homepage.cpp ..\..\ui\uidemo6.cpp ..\..\ui\logindialog.cpp ..\..\ui\changepassworddialog.cpp ..\..\ui\customwidget\quiwidget.cpp ..\..\ui\customwidget\overheadcranetrack\cranemapwidget.cpp ..\..\ui\customwidget\overheadcranetrack\devicemonitorwidget.cpp ..\..\ui\customwidget\overheadcranetrack\fouplevelgraphbuilder.cpp ..\..\ui\customwidget\overheadcranetrack\framedevice.cpp ..\..\ui\customwidget\overheadcranetrack\framedevicepool.cpp ..\..\ui\customwidget\overheadcranetrack\graphconfigparser.cpp ..\..\ui\customwidget\overheadcranetrack\scrollcontroller.cpp ..\..\ui\customwidget\overheadcranetrack\setlevelgraphbuilder.cpp ..\..\ui\customwidget\overheadcranetrack\tablewidgetmanager.cpp ..\..\ui\customwidget\overheadcranetrack\zoomcontroller.cpp ..\..\ui\customwidget\settingwidget\settingitemwidget.cpp ..\..\ui\customwidget\settingwidget\settingwidget.cpp ..\..\ui\customwidget\debugsettingwidget\firmwareupdateconfigsettingwidget.cpp ..\..\ui\customwidget\debugsettingwidget\firmwareupdatesettingwidget.cpp ..\..\ui\customwidget\debugsettingwidget\firmwareupdatewidget.cpp ..\..\ui\customwidget\debugsettingwidget\vefcgastypesettingwidget.cpp ..\..\ui\customwidget\debugsettingwidget\uirefreshtimesettingwidget.cpp ..\..\ui\customwidget\debugsettingwidget\vefcflowunitmediumstatuswidget.cpp ..\..\ui\customwidget\configsettingwidget\idlepurgesettingwidget.cpp ..\..\ui\customwidget\configsettingwidget\pneumaticvalvepressuresettingwidget.cpp ..\..\ui\customwidget\configsettingwidget\sh85selfchecksettingwidget.cpp ..\..\ui\customwidget\configsettingwidget\humidityoffsetsettingwidget.cpp ..\..\ui\customwidget\configsettingwidget\purgeflowsettingwidget.cpp ..\..\ui\customwidget\loggerwidget\csvio.cpp ..\..\ui\customwidget\loggerwidget\loadmoreitemwidget.cpp ..\..\ui\customwidget\loggerwidget\logfilesystem.cpp ..\..\ui\customwidget\loggerwidget\loggerwidget.cpp ..\..\ui\customwidget\loggerwidget\logicalfilesystem.cpp ..\..\ui\customwidget\loggerwidget\logitemdelegate.cpp ..\..\ui\customwidget\loggerwidget\logpagemodel.cpp ..\..\ui\customwidget\alarmlogwidget\alarmlogwidget.cpp ..\..\ui\customwidget\historycalendardialog\highlightcalendar.cpp ..\..\ui\customwidget\historycalendardialog\historycalendardialog.cpp ..\..\ui\customwidget\comunicatelogwidget\comunicatelogwidget.cpp ..\..\ui\customwidget\operationlogwidget\operationlogwidget.cpp ..\..\ui\customwidget\useraccountlabel\useraccountlabel.cpp ..\..\ui\customwidget\paginationwidget\paginationwidget.cpp ..\..\ui\customwidget\waitdialog\waitdialog.cpp ..\..\ui\customwidget\datetimesetdialog\datetimesetdialog.cpp ..\..\ui\customwidget\scrollingtiplabel\scrollingtiplabel.cpp ..\..\scheduler\scheduler.cpp ..\..\scheduler\tasks\alarmlogquerytask.cpp ..\..\scheduler\tasks\communicatelogquerytask.cpp ..\..\scheduler\tasks\monitor_data_task.cpp ..\..\scheduler\tasks\operationlogquerytask.cpp ..\..\scheduler\tasks\send_command_task.cpp ..\..\scheduler\tasks\init_check_task.cpp ..\..\scheduler\tasks\network_status_task.cpp ..\..\scheduler\tasks\set_firmware_config_task.cpp ..\..\scheduler\tasks\firmware_upgrade_task.cpp ..\..\scheduler\tasks\set_idle_purge_task.cpp ..\..\scheduler\tasks\set_pneumatic_valve_pressure_task.cpp ..\..\scheduler\tasks\sh85_self_check_task.cpp ..\..\scheduler\tasks\set_humidity_offset_task.cpp ..\..\scheduler\tasks\set_purge_flow_task.cpp ..\..\scheduler\tasks\set_vefc_gas_type_task.cpp ..\..\scheduler\tasks\set_ui_refresh_time_task.cpp ..\..\scheduler\tasks\read_vefc_flow_unit_medium_status_task.cpp ..\..\scheduler\tasks\alarm_dispatch_task.cpp ..\..\scheduler\tasks\operation_dispatch_task.cpp ..\..\scheduler\tasks\user_management_task.cpp ..\..\data\modbustcpmastermanager\modbustcpmastermanager.cpp ..\..\data\modbustcpmastermanager\modbustcpmasterpool.cpp ..\..\data\modbustcpmastermanager\modbuscommand\modbuscommand.cpp ..\..\data\modbustcpmastermanager\modbuscommand\commandpool.cpp ..\..\data\modbustcpmastermanager\modbuscommand\modbusconfigparser.cpp ..\..\data\modbustcpmastermanager\modbuscommand\modbuscrc.cpp ..\..\data\modbustcpmastermanager\modbuscommand\commandresponseparser.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\modbustcpmaster.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\modbusconnecter.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\modbuscommandsender.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\modbuscommandreceiver.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\cycliccommandissuer.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\initialcommandissuer.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\periodiccommandsender.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\firmwareupgrader.cpp ..\..\data\modbustcpmastermanager\modbustcpmaster\sh85selfchecker.cpp ..\..\data\logdatabases\databasemanager.cpp ..\..\data\logdatabases\dbconnectionhelper.cpp ..\..\data\logdatabases\logcleanupscheduler.cpp ..\..\data\logdatabases\sqlmapper.cpp ..\..\data\logdatabases\alarmlogdb\alarmlogdbcon.cpp ..\..\data\logdatabases\alarmlogdb\alarmlogsqllogic.cpp ..\..\data\logdatabases\communicatelogdb\communicatelogdbcon.cpp ..\..\data\logdatabases\communicatelogdb\communicatelogsqllogic.cpp ..\..\data\logdatabases\deviceparamlogdb\deviceparamlogdbcon.cpp ..\..\data\logdatabases\deviceparamlogdb\deviceparamlogsqllogic.cpp ..\..\data\logdatabases\operationlogdb\operationlogdbcon.cpp ..\..\data\logdatabases\operationlogdb\operationlogsqllogic.cpp ..\..\data\logdatabases\writesqldb\writesqldbcon.cpp ..\..\data\usermanager\usermanager.cpp ..\..\classes\alarminfo.cpp ..\..\classes\bayofohbinfo.cpp ..\..\classes\foupofohbinfo.cpp ..\..\classes\setofohbinfo.cpp ..\..\ui\alarmpage.ui ..\..\ui\chartpage.ui ..\..\ui\communicatepage.ui ..\..\ui\configpage.ui ..\..\ui\debugpage.ui ..\..\ui\homepage.ui ..\..\ui\uidemo6.ui ..\..\ui\customwidget\overheadcranetrack\framedevice.ui ..\..\ui\customwidget\debugsettingwidget\firmwareupdatewidget.ui ..\..\ui\customwidget\loggerwidget\loggerwidget.ui ..\..\ui\customwidget\alarmlogwidget\alarmlogwidget.ui ..\..\ui\customwidget\historycalendardialog\historycalendardialog.ui ..\..\ui\customwidget\comunicatelogwidget\comunicatelogwidget.ui ..\..\ui\customwidget\operationlogwidget\operationlogwidget.ui ..\..\ui\customwidget\paginationwidget\paginationwidget.ui ..\..\ui\customwidget\datetimesetdialog\datetimesetdialog.ui    
 
 clean: compiler_clean 
 	-$(DEL_FILE) release\main.o release\app.o release\appconfig.o release\applogger.o release\customlogger.o release\shareddata.o release\metatypes.o release\firmwareconfig.o release\networkconfig.o release\qrcodeconfig.o release\userinfoconfig.o release\loggermanager.o release\async.o release\bundled_fmtlib_format.o release\cfg.o release\color_sinks.o release\file_sinks.o release\spdlog.o release\stdout_sinks.o release\qthelper.o release\binfilereader.o release\communicationrecorder.o release\alarmpage.o release\chartpage.o release\communicatepage.o release\configpage.o release\debugpage.o release\homepage.o release\uidemo6.o release\logindialog.o release\changepassworddialog.o release\quiwidget.o release\cranemapwidget.o release\devicemonitorwidget.o release\fouplevelgraphbuilder.o release\framedevice.o release\framedevicepool.o release\graphconfigparser.o release\scrollcontroller.o release\setlevelgraphbuilder.o release\tablewidgetmanager.o release\zoomcontroller.o release\settingitemwidget.o release\settingwidget.o release\firmwareupdateconfigsettingwidget.o release\firmwareupdatesettingwidget.o release\firmwareupdatewidget.o release\vefcgastypesettingwidget.o release\uirefreshtimesettingwidget.o release\vefcflowunitmediumstatuswidget.o release\idlepurgesettingwidget.o release\pneumaticvalvepressuresettingwidget.o release\sh85selfchecksettingwidget.o release\humidityoffsetsettingwidget.o release\purgeflowsettingwidget.o release\csvio.o release\loadmoreitemwidget.o release\logfilesystem.o release\loggerwidget.o release\logicalfilesystem.o release\logitemdelegate.o release\logpagemodel.o release\alarmlogwidget.o release\highlightcalendar.o release\historycalendardialog.o release\comunicatelogwidget.o release\operationlogwidget.o release\useraccountlabel.o release\paginationwidget.o release\waitdialog.o release\datetimesetdialog.o release\scrollingtiplabel.o release\scheduler.o release\alarmlogquerytask.o release\communicatelogquerytask.o release\monitor_data_task.o release\operationlogquerytask.o
-	-$(DEL_FILE) release\send_command_task.o release\init_check_task.o release\network_status_task.o release\set_firmware_config_task.o release\firmware_upgrade_task.o release\set_idle_purge_task.o release\set_pneumatic_valve_pressure_task.o release\sh85_self_check_task.o release\set_humidity_offset_task.o release\set_purge_flow_task.o release\set_vefc_gas_type_task.o release\set_ui_refresh_time_task.o release\read_vefc_flow_unit_medium_status_task.o release\alarm_dispatch_task.o release\operation_dispatch_task.o release\user_management_task.o release\modbustcpmastermanager.o release\modbustcpmasterpool.o release\modbuscommand.o release\commandpool.o release\modbusconfigparser.o release\modbuscrc.o release\commandresponseparser.o release\modbustcpmaster.o release\modbusconnecter.o release\modbuscommandsender.o release\modbuscommandreceiver.o release\cycliccommandissuer.o release\initialcommandissuer.o release\periodiccommandsender.o release\firmwareupgrader.o release\databasemanager.o release\dbconnectionhelper.o release\logcleanupscheduler.o release\sqlmapper.o release\alarmlogdbcon.o release\alarmlogsqllogic.o release\communicatelogdbcon.o release\communicatelogsqllogic.o release\deviceparamlogdbcon.o release\deviceparamlogsqllogic.o release\operationlogdbcon.o release\operationlogsqllogic.o release\writesqldbcon.o release\usermanager.o release\alarminfo.o release\bayofohbinfo.o release\foupofohbinfo.o release\setofohbinfo.o release\qrc_main.o release\qrc_qss.o release\moc_binfilereader.o release\moc_communicationrecorder.o release\moc_alarmpage.o release\moc_chartpage.o release\moc_communicatepage.o release\moc_configpage.o release\moc_debugpage.o release\moc_homepage.o release\moc_uidemo6.o release\moc_logindialog.o release\moc_changepassworddialog.o release\moc_quiwidget.o release\moc_cranemapwidget.o release\moc_devicemonitorwidget.o release\moc_framedevice.o release\moc_framedevicepool.o release\moc_scrollcontroller.o release\moc_zoomcontroller.o release\moc_settingitemwidget.o release\moc_settingwidget.o
-	-$(DEL_FILE) release\moc_firmwareupdateconfigsettingwidget.o release\moc_firmwareupdatesettingwidget.o release\moc_firmwareupdatewidget.o release\moc_vefcgastypesettingwidget.o release\moc_uirefreshtimesettingwidget.o release\moc_vefcflowunitmediumstatuswidget.o release\moc_idlepurgesettingwidget.o release\moc_pneumaticvalvepressuresettingwidget.o release\moc_sh85selfchecksettingwidget.o release\moc_humidityoffsetsettingwidget.o release\moc_purgeflowsettingwidget.o release\moc_loadmoreitemwidget.o release\moc_logfilesystem.o release\moc_loggerwidget.o release\moc_logicalfilesystem.o release\moc_logpagemodel.o release\moc_alarmlogwidget.o release\moc_highlightcalendar.o release\moc_historycalendardialog.o release\moc_comunicatelogwidget.o release\moc_operationlogwidget.o release\moc_useraccountlabel.o release\moc_paginationwidget.o release\moc_waitdialog.o release\moc_datetimesetdialog.o release\moc_scrollingtiplabel.o release\moc_scheduler_task.o release\moc_scheduler.o release\moc_alarmlogquerytask.o release\moc_communicatelogquerytask.o release\moc_monitor_data_task.o release\moc_operationlogquerytask.o release\moc_send_command_task.o release\moc_init_check_task.o release\moc_network_status_task.o release\moc_set_firmware_config_task.o release\moc_firmware_upgrade_task.o release\moc_set_idle_purge_task.o release\moc_set_pneumatic_valve_pressure_task.o release\moc_sh85_self_check_task.o release\moc_set_humidity_offset_task.o release\moc_set_purge_flow_task.o release\moc_set_vefc_gas_type_task.o release\moc_set_ui_refresh_time_task.o release\moc_read_vefc_flow_unit_medium_status_task.o release\moc_alarm_dispatch_task.o release\moc_operation_dispatch_task.o release\moc_user_management_task.o release\moc_modbustcpmastermanager.o release\moc_modbustcpmasterpool.o release\moc_modbustcpmaster.o release\moc_modbusconnecter.o release\moc_modbuscommandsender.o release\moc_modbuscommandreceiver.o release\moc_cycliccommandissuer.o release\moc_initialcommandissuer.o release\moc_periodiccommandsender.o
-	-$(DEL_FILE) release\moc_firmwareupgrader.o release\moc_logcleanupscheduler.o release\moc_alarmlogdbcon.o release\moc_alarmlogsqllogic.o release\moc_communicatelogdbcon.o release\moc_communicatelogsqllogic.o release\moc_deviceparamlogdbcon.o release\moc_deviceparamlogsqllogic.o release\moc_operationlogdbcon.o release\moc_operationlogsqllogic.o release\moc_writesqldbcon.o release\moc_usermanager.o
+	-$(DEL_FILE) release\send_command_task.o release\init_check_task.o release\network_status_task.o release\set_firmware_config_task.o release\firmware_upgrade_task.o release\set_idle_purge_task.o release\set_pneumatic_valve_pressure_task.o release\sh85_self_check_task.o release\set_humidity_offset_task.o release\set_purge_flow_task.o release\set_vefc_gas_type_task.o release\set_ui_refresh_time_task.o release\read_vefc_flow_unit_medium_status_task.o release\alarm_dispatch_task.o release\operation_dispatch_task.o release\user_management_task.o release\modbustcpmastermanager.o release\modbustcpmasterpool.o release\modbuscommand.o release\commandpool.o release\modbusconfigparser.o release\modbuscrc.o release\commandresponseparser.o release\modbustcpmaster.o release\modbusconnecter.o release\modbuscommandsender.o release\modbuscommandreceiver.o release\cycliccommandissuer.o release\initialcommandissuer.o release\periodiccommandsender.o release\firmwareupgrader.o release\sh85selfchecker.o release\databasemanager.o release\dbconnectionhelper.o release\logcleanupscheduler.o release\sqlmapper.o release\alarmlogdbcon.o release\alarmlogsqllogic.o release\communicatelogdbcon.o release\communicatelogsqllogic.o release\deviceparamlogdbcon.o release\deviceparamlogsqllogic.o release\operationlogdbcon.o release\operationlogsqllogic.o release\writesqldbcon.o release\usermanager.o release\alarminfo.o release\bayofohbinfo.o release\foupofohbinfo.o release\setofohbinfo.o release\qrc_main.o release\qrc_qss.o release\moc_binfilereader.o release\moc_communicationrecorder.o release\moc_alarmpage.o release\moc_chartpage.o release\moc_communicatepage.o release\moc_configpage.o release\moc_debugpage.o release\moc_homepage.o release\moc_uidemo6.o release\moc_logindialog.o release\moc_changepassworddialog.o release\moc_quiwidget.o release\moc_cranemapwidget.o release\moc_devicemonitorwidget.o release\moc_framedevice.o release\moc_framedevicepool.o release\moc_scrollcontroller.o release\moc_zoomcontroller.o release\moc_settingitemwidget.o
+	-$(DEL_FILE) release\moc_settingwidget.o release\moc_firmwareupdateconfigsettingwidget.o release\moc_firmwareupdatesettingwidget.o release\moc_firmwareupdatewidget.o release\moc_vefcgastypesettingwidget.o release\moc_uirefreshtimesettingwidget.o release\moc_vefcflowunitmediumstatuswidget.o release\moc_idlepurgesettingwidget.o release\moc_pneumaticvalvepressuresettingwidget.o release\moc_sh85selfchecksettingwidget.o release\moc_humidityoffsetsettingwidget.o release\moc_purgeflowsettingwidget.o release\moc_loadmoreitemwidget.o release\moc_logfilesystem.o release\moc_loggerwidget.o release\moc_logicalfilesystem.o release\moc_logpagemodel.o release\moc_alarmlogwidget.o release\moc_highlightcalendar.o release\moc_historycalendardialog.o release\moc_comunicatelogwidget.o release\moc_operationlogwidget.o release\moc_useraccountlabel.o release\moc_paginationwidget.o release\moc_waitdialog.o release\moc_datetimesetdialog.o release\moc_scrollingtiplabel.o release\moc_scheduler_task.o release\moc_scheduler.o release\moc_alarmlogquerytask.o release\moc_communicatelogquerytask.o release\moc_monitor_data_task.o release\moc_operationlogquerytask.o release\moc_send_command_task.o release\moc_init_check_task.o release\moc_network_status_task.o release\moc_set_firmware_config_task.o release\moc_firmware_upgrade_task.o release\moc_set_idle_purge_task.o release\moc_set_pneumatic_valve_pressure_task.o release\moc_sh85_self_check_task.o release\moc_set_humidity_offset_task.o release\moc_set_purge_flow_task.o release\moc_set_vefc_gas_type_task.o release\moc_set_ui_refresh_time_task.o release\moc_read_vefc_flow_unit_medium_status_task.o release\moc_alarm_dispatch_task.o release\moc_operation_dispatch_task.o release\moc_user_management_task.o release\moc_modbustcpmastermanager.o release\moc_modbustcpmasterpool.o release\moc_modbustcpmaster.o release\moc_modbusconnecter.o release\moc_modbuscommandsender.o release\moc_modbuscommandreceiver.o release\moc_cycliccommandissuer.o release\moc_initialcommandissuer.o
+	-$(DEL_FILE) release\moc_periodiccommandsender.o release\moc_firmwareupgrader.o release\moc_sh85selfchecker.o release\moc_logcleanupscheduler.o release\moc_alarmlogdbcon.o release\moc_alarmlogsqllogic.o release\moc_communicatelogdbcon.o release\moc_communicatelogsqllogic.o release\moc_deviceparamlogdbcon.o release\moc_deviceparamlogsqllogic.o release\moc_operationlogdbcon.o release\moc_operationlogsqllogic.o release\moc_writesqldbcon.o release\moc_usermanager.o
 	-$(DEL_FILE) release\OHB80PortMonitor_V_1_0_0_resource_res.o
 
 distclean: clean 
@@ -1253,10 +1259,10 @@ compiler_moc_predefs_clean:
 release/moc_predefs.h: C:/Qt/5.15.2/mingw81_32/mkspecs/features/data/dummy.cpp
 	g++ -fno-keep-inline-dllexport -O2 -std=gnu++1z -Wall -Wextra -Wextra -dM -E -o release\moc_predefs.h C:\Qt\5.15.2\mingw81_32\mkspecs\features\data\dummy.cpp
 
-compiler_moc_header_make_all: release/moc_binfilereader.cpp release/moc_communicationrecorder.cpp release/moc_alarmpage.cpp release/moc_chartpage.cpp release/moc_communicatepage.cpp release/moc_configpage.cpp release/moc_debugpage.cpp release/moc_homepage.cpp release/moc_uidemo6.cpp release/moc_logindialog.cpp release/moc_changepassworddialog.cpp release/moc_quiwidget.cpp release/moc_cranemapwidget.cpp release/moc_devicemonitorwidget.cpp release/moc_framedevice.cpp release/moc_framedevicepool.cpp release/moc_scrollcontroller.cpp release/moc_zoomcontroller.cpp release/moc_settingitemwidget.cpp release/moc_settingwidget.cpp release/moc_firmwareupdateconfigsettingwidget.cpp release/moc_firmwareupdatesettingwidget.cpp release/moc_firmwareupdatewidget.cpp release/moc_vefcgastypesettingwidget.cpp release/moc_uirefreshtimesettingwidget.cpp release/moc_vefcflowunitmediumstatuswidget.cpp release/moc_idlepurgesettingwidget.cpp release/moc_pneumaticvalvepressuresettingwidget.cpp release/moc_sh85selfchecksettingwidget.cpp release/moc_humidityoffsetsettingwidget.cpp release/moc_purgeflowsettingwidget.cpp release/moc_loadmoreitemwidget.cpp release/moc_logfilesystem.cpp release/moc_loggerwidget.cpp release/moc_logicalfilesystem.cpp release/moc_logpagemodel.cpp release/moc_alarmlogwidget.cpp release/moc_highlightcalendar.cpp release/moc_historycalendardialog.cpp release/moc_comunicatelogwidget.cpp release/moc_operationlogwidget.cpp release/moc_useraccountlabel.cpp release/moc_paginationwidget.cpp release/moc_waitdialog.cpp release/moc_datetimesetdialog.cpp release/moc_scrollingtiplabel.cpp release/moc_scheduler_task.cpp release/moc_scheduler.cpp release/moc_alarmlogquerytask.cpp release/moc_communicatelogquerytask.cpp release/moc_monitor_data_task.cpp release/moc_operationlogquerytask.cpp release/moc_send_command_task.cpp release/moc_init_check_task.cpp release/moc_network_status_task.cpp release/moc_set_firmware_config_task.cpp release/moc_firmware_upgrade_task.cpp release/moc_set_idle_purge_task.cpp release/moc_set_pneumatic_valve_pressure_task.cpp release/moc_sh85_self_check_task.cpp release/moc_set_humidity_offset_task.cpp release/moc_set_purge_flow_task.cpp release/moc_set_vefc_gas_type_task.cpp release/moc_set_ui_refresh_time_task.cpp release/moc_read_vefc_flow_unit_medium_status_task.cpp release/moc_alarm_dispatch_task.cpp release/moc_operation_dispatch_task.cpp release/moc_user_management_task.cpp release/moc_modbustcpmastermanager.cpp release/moc_modbustcpmasterpool.cpp release/moc_modbustcpmaster.cpp release/moc_modbusconnecter.cpp release/moc_modbuscommandsender.cpp release/moc_modbuscommandreceiver.cpp release/moc_cycliccommandissuer.cpp release/moc_initialcommandissuer.cpp release/moc_periodiccommandsender.cpp release/moc_firmwareupgrader.cpp release/moc_logcleanupscheduler.cpp release/moc_alarmlogdbcon.cpp release/moc_alarmlogsqllogic.cpp release/moc_communicatelogdbcon.cpp release/moc_communicatelogsqllogic.cpp release/moc_deviceparamlogdbcon.cpp release/moc_deviceparamlogsqllogic.cpp release/moc_operationlogdbcon.cpp release/moc_operationlogsqllogic.cpp release/moc_writesqldbcon.cpp release/moc_usermanager.cpp
+compiler_moc_header_make_all: release/moc_binfilereader.cpp release/moc_communicationrecorder.cpp release/moc_alarmpage.cpp release/moc_chartpage.cpp release/moc_communicatepage.cpp release/moc_configpage.cpp release/moc_debugpage.cpp release/moc_homepage.cpp release/moc_uidemo6.cpp release/moc_logindialog.cpp release/moc_changepassworddialog.cpp release/moc_quiwidget.cpp release/moc_cranemapwidget.cpp release/moc_devicemonitorwidget.cpp release/moc_framedevice.cpp release/moc_framedevicepool.cpp release/moc_scrollcontroller.cpp release/moc_zoomcontroller.cpp release/moc_settingitemwidget.cpp release/moc_settingwidget.cpp release/moc_firmwareupdateconfigsettingwidget.cpp release/moc_firmwareupdatesettingwidget.cpp release/moc_firmwareupdatewidget.cpp release/moc_vefcgastypesettingwidget.cpp release/moc_uirefreshtimesettingwidget.cpp release/moc_vefcflowunitmediumstatuswidget.cpp release/moc_idlepurgesettingwidget.cpp release/moc_pneumaticvalvepressuresettingwidget.cpp release/moc_sh85selfchecksettingwidget.cpp release/moc_humidityoffsetsettingwidget.cpp release/moc_purgeflowsettingwidget.cpp release/moc_loadmoreitemwidget.cpp release/moc_logfilesystem.cpp release/moc_loggerwidget.cpp release/moc_logicalfilesystem.cpp release/moc_logpagemodel.cpp release/moc_alarmlogwidget.cpp release/moc_highlightcalendar.cpp release/moc_historycalendardialog.cpp release/moc_comunicatelogwidget.cpp release/moc_operationlogwidget.cpp release/moc_useraccountlabel.cpp release/moc_paginationwidget.cpp release/moc_waitdialog.cpp release/moc_datetimesetdialog.cpp release/moc_scrollingtiplabel.cpp release/moc_scheduler_task.cpp release/moc_scheduler.cpp release/moc_alarmlogquerytask.cpp release/moc_communicatelogquerytask.cpp release/moc_monitor_data_task.cpp release/moc_operationlogquerytask.cpp release/moc_send_command_task.cpp release/moc_init_check_task.cpp release/moc_network_status_task.cpp release/moc_set_firmware_config_task.cpp release/moc_firmware_upgrade_task.cpp release/moc_set_idle_purge_task.cpp release/moc_set_pneumatic_valve_pressure_task.cpp release/moc_sh85_self_check_task.cpp release/moc_set_humidity_offset_task.cpp release/moc_set_purge_flow_task.cpp release/moc_set_vefc_gas_type_task.cpp release/moc_set_ui_refresh_time_task.cpp release/moc_read_vefc_flow_unit_medium_status_task.cpp release/moc_alarm_dispatch_task.cpp release/moc_operation_dispatch_task.cpp release/moc_user_management_task.cpp release/moc_modbustcpmastermanager.cpp release/moc_modbustcpmasterpool.cpp release/moc_modbustcpmaster.cpp release/moc_modbusconnecter.cpp release/moc_modbuscommandsender.cpp release/moc_modbuscommandreceiver.cpp release/moc_cycliccommandissuer.cpp release/moc_initialcommandissuer.cpp release/moc_periodiccommandsender.cpp release/moc_firmwareupgrader.cpp release/moc_sh85selfchecker.cpp release/moc_logcleanupscheduler.cpp release/moc_alarmlogdbcon.cpp release/moc_alarmlogsqllogic.cpp release/moc_communicatelogdbcon.cpp release/moc_communicatelogsqllogic.cpp release/moc_deviceparamlogdbcon.cpp release/moc_deviceparamlogsqllogic.cpp release/moc_operationlogdbcon.cpp release/moc_operationlogsqllogic.cpp release/moc_writesqldbcon.cpp release/moc_usermanager.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) release\moc_binfilereader.cpp release\moc_communicationrecorder.cpp release\moc_alarmpage.cpp release\moc_chartpage.cpp release\moc_communicatepage.cpp release\moc_configpage.cpp release\moc_debugpage.cpp release\moc_homepage.cpp release\moc_uidemo6.cpp release\moc_logindialog.cpp release\moc_changepassworddialog.cpp release\moc_quiwidget.cpp release\moc_cranemapwidget.cpp release\moc_devicemonitorwidget.cpp release\moc_framedevice.cpp release\moc_framedevicepool.cpp release\moc_scrollcontroller.cpp release\moc_zoomcontroller.cpp release\moc_settingitemwidget.cpp release\moc_settingwidget.cpp release\moc_firmwareupdateconfigsettingwidget.cpp release\moc_firmwareupdatesettingwidget.cpp release\moc_firmwareupdatewidget.cpp release\moc_vefcgastypesettingwidget.cpp release\moc_uirefreshtimesettingwidget.cpp release\moc_vefcflowunitmediumstatuswidget.cpp release\moc_idlepurgesettingwidget.cpp release\moc_pneumaticvalvepressuresettingwidget.cpp release\moc_sh85selfchecksettingwidget.cpp release\moc_humidityoffsetsettingwidget.cpp release\moc_purgeflowsettingwidget.cpp release\moc_loadmoreitemwidget.cpp release\moc_logfilesystem.cpp release\moc_loggerwidget.cpp release\moc_logicalfilesystem.cpp release\moc_logpagemodel.cpp release\moc_alarmlogwidget.cpp release\moc_highlightcalendar.cpp release\moc_historycalendardialog.cpp release\moc_comunicatelogwidget.cpp release\moc_operationlogwidget.cpp release\moc_useraccountlabel.cpp release\moc_paginationwidget.cpp release\moc_waitdialog.cpp release\moc_datetimesetdialog.cpp release\moc_scrollingtiplabel.cpp release\moc_scheduler_task.cpp release\moc_scheduler.cpp release\moc_alarmlogquerytask.cpp release\moc_communicatelogquerytask.cpp release\moc_monitor_data_task.cpp release\moc_operationlogquerytask.cpp release\moc_send_command_task.cpp release\moc_init_check_task.cpp release\moc_network_status_task.cpp release\moc_set_firmware_config_task.cpp release\moc_firmware_upgrade_task.cpp release\moc_set_idle_purge_task.cpp
-	-$(DEL_FILE) release\moc_set_pneumatic_valve_pressure_task.cpp release\moc_sh85_self_check_task.cpp release\moc_set_humidity_offset_task.cpp release\moc_set_purge_flow_task.cpp release\moc_set_vefc_gas_type_task.cpp release\moc_set_ui_refresh_time_task.cpp release\moc_read_vefc_flow_unit_medium_status_task.cpp release\moc_alarm_dispatch_task.cpp release\moc_operation_dispatch_task.cpp release\moc_user_management_task.cpp release\moc_modbustcpmastermanager.cpp release\moc_modbustcpmasterpool.cpp release\moc_modbustcpmaster.cpp release\moc_modbusconnecter.cpp release\moc_modbuscommandsender.cpp release\moc_modbuscommandreceiver.cpp release\moc_cycliccommandissuer.cpp release\moc_initialcommandissuer.cpp release\moc_periodiccommandsender.cpp release\moc_firmwareupgrader.cpp release\moc_logcleanupscheduler.cpp release\moc_alarmlogdbcon.cpp release\moc_alarmlogsqllogic.cpp release\moc_communicatelogdbcon.cpp release\moc_communicatelogsqllogic.cpp release\moc_deviceparamlogdbcon.cpp release\moc_deviceparamlogsqllogic.cpp release\moc_operationlogdbcon.cpp release\moc_operationlogsqllogic.cpp release\moc_writesqldbcon.cpp release\moc_usermanager.cpp
+	-$(DEL_FILE) release\moc_set_pneumatic_valve_pressure_task.cpp release\moc_sh85_self_check_task.cpp release\moc_set_humidity_offset_task.cpp release\moc_set_purge_flow_task.cpp release\moc_set_vefc_gas_type_task.cpp release\moc_set_ui_refresh_time_task.cpp release\moc_read_vefc_flow_unit_medium_status_task.cpp release\moc_alarm_dispatch_task.cpp release\moc_operation_dispatch_task.cpp release\moc_user_management_task.cpp release\moc_modbustcpmastermanager.cpp release\moc_modbustcpmasterpool.cpp release\moc_modbustcpmaster.cpp release\moc_modbusconnecter.cpp release\moc_modbuscommandsender.cpp release\moc_modbuscommandreceiver.cpp release\moc_cycliccommandissuer.cpp release\moc_initialcommandissuer.cpp release\moc_periodiccommandsender.cpp release\moc_firmwareupgrader.cpp release\moc_sh85selfchecker.cpp release\moc_logcleanupscheduler.cpp release\moc_alarmlogdbcon.cpp release\moc_alarmlogsqllogic.cpp release\moc_communicatelogdbcon.cpp release\moc_communicatelogsqllogic.cpp release\moc_deviceparamlogdbcon.cpp release\moc_deviceparamlogsqllogic.cpp release\moc_operationlogdbcon.cpp release\moc_operationlogsqllogic.cpp release\moc_writesqldbcon.cpp release\moc_usermanager.cpp
 release/moc_binfilereader.cpp: ../../tool/binfilereader/binfilereader.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QObject \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qobject.h \
@@ -5354,13 +5360,30 @@ release/moc_sh85selfchecksettingwidget.cpp: ../../ui/customwidget/configsettingw
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QtGlobal \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/QTcpSocket \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtcpsocket.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetworkglobal.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetwork-config.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qabstractsocket.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbusconnecter.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandreceiver.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMutex \
+		../../data/modbustcpmastermanager/modbustcpmaster/initialcommandissuer.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/cycliccommandissuer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
+		../../data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/QSpinBox \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qspinbox.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractspinbox.h \
@@ -6267,7 +6290,9 @@ release/moc_alarmlogwidget.cpp: ../../ui/customwidget/alarmlogwidget/alarmlogwid
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
+		../../classes/alarmrecord.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
 		release/mocinclude.opt \
 		release/moc_predefs.h \
 		C:/Qt/5.15.2/mingw81_32/bin/moc.exe
@@ -6603,15 +6628,15 @@ release/moc_comunicatelogwidget.cpp: ../../ui/customwidget/comunicatelogwidget/c
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
-		../../data/modbustcpmastermanager/modbuscommand/modbuscommand.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QByteArray \
+		../../classes/communicaterecord.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QByteArray \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
+		../../data/modbustcpmastermanager/modbuscommand/modbuscommand.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QtGlobal \
 		release/mocinclude.opt \
 		release/moc_predefs.h \
@@ -6722,12 +6747,12 @@ release/moc_operationlogwidget.cpp: ../../ui/customwidget/operationlogwidget/ope
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
-		../../data/logdatabases/dbtypes.h \
+		../../classes/operationrecord.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariant \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
+		../../data/logdatabases/dbtypes.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariant \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QPair \
 		release/mocinclude.opt \
@@ -8536,13 +8561,30 @@ release/moc_sh85_self_check_task.cpp: ../../scheduler/tasks/sh85_self_check_task
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QtGlobal \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/QTcpSocket \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtcpsocket.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetworkglobal.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetwork-config.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qabstractsocket.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbusconnecter.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandreceiver.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMutex \
+		../../data/modbustcpmastermanager/modbustcpmaster/initialcommandissuer.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/cycliccommandissuer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
+		../../data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
 		release/mocinclude.opt \
 		release/moc_predefs.h \
 		C:/Qt/5.15.2/mingw81_32/bin/moc.exe
@@ -10145,6 +10187,89 @@ release/moc_firmwareupgrader.cpp: ../../data/modbustcpmastermanager/modbustcpmas
 		C:/Qt/5.15.2/mingw81_32/bin/moc.exe
 	C:\Qt\5.15.2\mingw81_32\bin\moc.exe $(DEFINES) --include D:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/build/Desktop_Qt_5_15_2_MinGW_32_bit-Debug/release/moc_predefs.h @release/mocinclude.opt ..\..\data\modbustcpmastermanager\modbustcpmaster\firmwareupgrader.h -o release\moc_firmwareupgrader.cpp
 
+release/moc_sh85selfchecker.cpp: ../../data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qglobal.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qconfig-bootstrapped.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qconfig.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtcore-config.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qsysinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qlogging.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qflags.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qatomic.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qmutex.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qnumeric.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qversiontagging.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QObject \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qobject.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qobjectdefs.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qnamespace.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstring.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qchar.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbytearray.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qrefcount.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qarraydata.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringliteral.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringalgorithms.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringview.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qlist.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qalgorithms.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qiterator.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qhashfunctions.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qpair.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qvector.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qcontainertools_impl.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qpoint.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbytearraylist.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringlist.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qregexp.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringmatcher.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qcoreevent.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qscopedpointer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qmetatype.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qvarlengtharray.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qcontainerfwd.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qobject_impl.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
+		../../data/modbustcpmastermanager/modbuscommand/modbuscommand.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QByteArray \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qmap.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdebug.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qhash.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtextstream.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qiodevice.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qlocale.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qvariant.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qshareddata.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qset.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qcontiguouscache.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qsharedpointer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QtGlobal \
+		release/mocinclude.opt \
+		release/moc_predefs.h \
+		C:/Qt/5.15.2/mingw81_32/bin/moc.exe
+	C:\Qt\5.15.2\mingw81_32\bin\moc.exe $(DEFINES) --include D:/Project/CYTC_Project/OHB80PortMonitor/OHB80PortMonitor_V_1_0_0/build/Desktop_Qt_5_15_2_MinGW_32_bit-Debug/release/moc_predefs.h @release/mocinclude.opt ..\..\data\modbustcpmastermanager\modbustcpmaster\sh85selfchecker.h -o release\moc_sh85selfchecker.cpp
+
 release/moc_logcleanupscheduler.cpp: ../../data/logdatabases/logcleanupscheduler.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QObject \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qobject.h \
@@ -11276,7 +11401,9 @@ ui_alarmpage.h: ../../ui/alarmpage.ui \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap
+		../../classes/alarmrecord.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType
 	C:\Qt\5.15.2\mingw81_32\bin\uic.exe ..\..\ui\alarmpage.ui -o ui_alarmpage.h
 
 ui_chartpage.h: ../../ui/chartpage.ui \
@@ -11389,15 +11516,15 @@ ui_communicatepage.h: ../../ui/communicatepage.ui \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
-		../../data/modbustcpmastermanager/modbuscommand/modbuscommand.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QByteArray \
+		../../classes/communicaterecord.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QByteArray \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
+		../../data/modbustcpmastermanager/modbuscommand/modbuscommand.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QtGlobal
 	C:\Qt\5.15.2\mingw81_32\bin\uic.exe ..\..\ui\communicatepage.ui -o ui_communicatepage.h
 
@@ -13858,6 +13985,10 @@ release/app.o: ../../app/app.cpp ../../app/app.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../tool/qthelper/qthelper.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QByteArray \
 		../../app/metatypes.h \
@@ -13894,7 +14025,6 @@ release/app.o: ../../app/app.cpp ../../app/app.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtSql/qtsqlglobal.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtSql/qtsql-config.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDate \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariant \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantList \
 		../../data/logdatabases/sqlmapper.h \
@@ -14286,6 +14416,10 @@ release/shareddata.o: ../../app/shareddata.cpp ../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qlocale.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qset.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qcontiguouscache.h \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../app/appconfig.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSettings \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qsettings.h \
@@ -14428,6 +14562,9 @@ release/metatypes.o: ../../app/metatypes.cpp ../../app/metatypes.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QtGlobal \
 		../../data/modbustcpmastermanager/modbustcpmaster/firmwareupgrader.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
 		../../ui/customwidget/loggerwidget/pagetable.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDate \
@@ -14436,12 +14573,20 @@ release/metatypes.o: ../../app/metatypes.cpp ../../app/metatypes.h \
 		../../scheduler/scheduler_task.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QUuid \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/quuid.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandreceiver.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMutex \
+		../../data/modbustcpmastermanager/modbustcpmaster/initialcommandissuer.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/cycliccommandissuer.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
+		../../data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h \
 		../../scheduler/tasks/read_vefc_flow_unit_medium_status_task.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QAtomicInt \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
 		../../data/logdatabases/dbtypes.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariant \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QPair \
@@ -15710,6 +15855,7 @@ release/communicationrecorder.o: ../../tool/communicationrecorder/communicationr
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
+		../../classes/setofohbinfo.h \
 		../../classes/foupofohbinfo.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
@@ -15845,18 +15991,23 @@ release/alarmpage.o: ../../ui/alarmpage.cpp ../../ui/alarmpage.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qlayoutitem.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qgridlayout.h \
 		../../ui/customwidget/alarmlogwidget/alarmlogwidget.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
+		../../classes/alarmrecord.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../app/alarmtype.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QPair \
 		../../scheduler/tasks/network_status_task.h \
 		../../scheduler/scheduler_task.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QUuid \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/quuid.h \
 		../../scheduler/tasks/init_check_task.h \
@@ -15867,7 +16018,6 @@ release/alarmpage.o: ../../ui/alarmpage.cpp ../../ui/alarmpage.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
 		../../scheduler/tasks/alarm_dispatch_task.h \
 		../../classes/alarminfo.h \
-		../../classes/alarmrecord.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMutex
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\alarmpage.o ..\..\ui\alarmpage.cpp
 
@@ -16120,11 +16270,16 @@ release/communicatepage.o: ../../ui/communicatepage.cpp ../../ui/communicatepage
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qlayoutitem.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qgridlayout.h \
 		../../ui/customwidget/comunicatelogwidget/comunicatelogwidget.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
+		../../classes/communicaterecord.h \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../scheduler/tasks/monitor_data_task.h \
 		../../scheduler/scheduler_task.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QObject \
@@ -16144,7 +16299,6 @@ release/communicatepage.o: ../../ui/communicatepage.cpp ../../ui/communicatepage
 		C:/Qt/5.15.2/mingw81_32/include/QtSql/qtsqlglobal.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtSql/qtsql-config.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDate \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantList \
 		../../data/logdatabases/sqlmapper.h \
 		../../data/logdatabases/dbtypes.h \
@@ -16159,7 +16313,6 @@ release/communicatepage.o: ../../ui/communicatepage.cpp ../../ui/communicatepage
 		../../classes/operationrecord.h \
 		../../data/logdatabases/communicatelogdb/communicatelogdbcon.h \
 		../../data/logdatabases/communicatelogdb/communicatelogsqllogic.h \
-		../../classes/communicaterecord.h \
 		../../data/logdatabases/alarmlogdb/alarmlogdbcon.h \
 		../../data/logdatabases/alarmlogdb/alarmlogsqllogic.h \
 		../../classes/alarmrecord.h \
@@ -16352,6 +16505,24 @@ release/configpage.o: ../../ui/configpage.cpp ../../ui/configpage.h \
 		../../ui/customwidget/configsettingwidget/pneumaticvalvepressuresettingwidget.h \
 		../../ui/customwidget/configsettingwidget/sh85selfchecksettingwidget.h \
 		../../scheduler/tasks/sh85_self_check_task.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/QTcpSocket \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtcpsocket.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetworkglobal.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetwork-config.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qabstractsocket.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbusconnecter.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandreceiver.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMutex \
+		../../data/modbustcpmastermanager/modbustcpmaster/initialcommandissuer.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/cycliccommandissuer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
+		../../data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
 		../../ui/customwidget/configsettingwidget/humidityoffsetsettingwidget.h \
@@ -17553,6 +17724,10 @@ release/logindialog.o: ../../ui/logindialog.cpp ../../ui/logindialog.h \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/QVBoxLayout \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qboxlayout.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qlayout.h \
@@ -17702,6 +17877,10 @@ release/changepassworddialog.o: ../../ui/changepassworddialog.cpp ../../ui/chang
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/QVBoxLayout \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qboxlayout.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qlayout.h \
@@ -19539,6 +19718,10 @@ release/graphconfigparser.o: ../../ui/customwidget/overheadcranetrack/graphconfi
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QFile \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfile.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
@@ -21308,6 +21491,10 @@ release/vefcgastypesettingwidget.o: ../../ui/customwidget/debugsettingwidget/vef
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../scheduler/tasks/operation_dispatch_task.h \
 		../../classes/operationrecord.h \
 		../../app/applogger.h \
@@ -21547,6 +21734,10 @@ release/uirefreshtimesettingwidget.o: ../../ui/customwidget/debugsettingwidget/u
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../scheduler/tasks/operation_dispatch_task.h \
 		../../classes/operationrecord.h \
 		../../app/applogger.h \
@@ -21786,6 +21977,10 @@ release/vefcflowunitmediumstatuswidget.o: ../../ui/customwidget/debugsettingwidg
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../scheduler/tasks/operation_dispatch_task.h \
 		../../classes/operationrecord.h \
 		../../app/applogger.h \
@@ -22034,6 +22229,10 @@ release/idlepurgesettingwidget.o: ../../ui/customwidget/configsettingwidget/idle
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDebug \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/QMessageBox \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qmessagebox.h \
@@ -22211,6 +22410,10 @@ release/pneumaticvalvepressuresettingwidget.o: ../../ui/customwidget/configsetti
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../scheduler/tasks/operation_dispatch_task.h \
 		../../classes/operationrecord.h \
 		../../app/applogger.h \
@@ -22403,13 +22606,30 @@ release/sh85selfchecksettingwidget.o: ../../ui/customwidget/configsettingwidget/
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QtGlobal \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/QTcpSocket \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtcpsocket.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetworkglobal.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetwork-config.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qabstractsocket.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbusconnecter.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandreceiver.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMutex \
+		../../data/modbustcpmastermanager/modbustcpmaster/initialcommandissuer.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/cycliccommandissuer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
+		../../data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/QSpinBox \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qspinbox.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractspinbox.h \
@@ -22443,12 +22663,7 @@ release/sh85selfchecksettingwidget.o: ../../ui/customwidget/configsettingwidget/
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QThread \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qthread.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdeadlinetimer.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMutex \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
 		../../config/qrcodeconfig.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		../../scheduler/tasks/operation_dispatch_task.h \
 		../../classes/operationrecord.h \
 		../../app/applogger.h \
@@ -22513,6 +22728,10 @@ release/sh85selfchecksettingwidget.o: ../../ui/customwidget/configsettingwidget/
 		../../tool/loggermananger/spdlog/sinks/rotating_file_sink-inl.h \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDebug \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/QMessageBox \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qmessagebox.h \
@@ -22691,6 +22910,10 @@ release/humidityoffsetsettingwidget.o: ../../ui/customwidget/configsettingwidget
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../scheduler/tasks/operation_dispatch_task.h \
 		../../classes/operationrecord.h \
 		../../app/applogger.h \
@@ -22930,6 +23153,10 @@ release/purgeflowsettingwidget.o: ../../ui/customwidget/configsettingwidget/purg
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../scheduler/tasks/operation_dispatch_task.h \
 		../../classes/operationrecord.h \
 		../../app/applogger.h \
@@ -23935,7 +24162,9 @@ release/alarmlogwidget.o: ../../ui/customwidget/alarmlogwidget/alarmlogwidget.cp
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
+		../../classes/alarmrecord.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
 		ui_alarmlogwidget.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariant \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/QApplication \
@@ -24000,13 +24229,12 @@ release/alarmlogwidget.o: ../../ui/customwidget/alarmlogwidget/alarmlogwidget.cp
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../app/alarmtype.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QPair \
 		../../scheduler/scheduler.h \
 		../../scheduler/scheduler_task.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QObject \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QUuid \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/quuid.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QThread \
@@ -24032,7 +24260,6 @@ release/alarmlogwidget.o: ../../ui/customwidget/alarmlogwidget/alarmlogwidget.cp
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QWaitCondition \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qwaitcondition.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDeadlineTimer \
-		../../classes/alarmrecord.h \
 		../../data/logdatabases/databasemanager.h \
 		../../data/logdatabases/operationlogdb/operationlogdbcon.h \
 		../../data/logdatabases/operationlogdb/operationlogsqllogic.h \
@@ -24422,15 +24649,15 @@ release/comunicatelogwidget.o: ../../ui/customwidget/comunicatelogwidget/comunic
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
-		../../data/modbustcpmastermanager/modbuscommand/modbuscommand.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QByteArray \
+		../../classes/communicaterecord.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QByteArray \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
+		../../data/modbustcpmastermanager/modbuscommand/modbuscommand.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QtGlobal \
 		ui_comunicatelogwidget.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariant \
@@ -24496,6 +24723,7 @@ release/comunicatelogwidget.o: ../../ui/customwidget/comunicatelogwidget/comunic
 		../../scheduler/scheduler.h \
 		../../scheduler/scheduler_task.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QObject \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QUuid \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/quuid.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QThread \
@@ -24522,7 +24750,6 @@ release/comunicatelogwidget.o: ../../ui/customwidget/comunicatelogwidget/comunic
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QWaitCondition \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qwaitcondition.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDeadlineTimer \
-		../../classes/communicaterecord.h \
 		../../ui/customwidget/datetimesetdialog/datetimesetdialog.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/QDialog \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qdialog.h \
@@ -24541,6 +24768,9 @@ release/comunicatelogwidget.o: ../../ui/customwidget/comunicatelogwidget/comunic
 		../../classes/deviceparamrecord.h \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
 		../../data/modbustcpmastermanager/modbustcpmastermanager.h \
 		../../data/modbustcpmastermanager/modbustcpmaster/modbusconnecter.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
@@ -24659,12 +24889,12 @@ release/operationlogwidget.o: ../../ui/customwidget/operationlogwidget/operation
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
-		../../data/logdatabases/dbtypes.h \
+		../../classes/operationrecord.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariant \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
+		../../data/logdatabases/dbtypes.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariant \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QPair \
 		ui_operationlogwidget.h \
@@ -24738,6 +24968,7 @@ release/operationlogwidget.o: ../../ui/customwidget/operationlogwidget/operation
 		../../scheduler/scheduler.h \
 		../../scheduler/scheduler_task.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QObject \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QUuid \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/quuid.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QThread \
@@ -24762,7 +24993,6 @@ release/operationlogwidget.o: ../../ui/customwidget/operationlogwidget/operation
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QWaitCondition \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qwaitcondition.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDeadlineTimer \
-		../../classes/operationrecord.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QAtomicInt \
 		../../data/logdatabases/databasemanager.h \
 		../../data/logdatabases/communicatelogdb/communicatelogdbcon.h \
@@ -24929,6 +25159,10 @@ release/useraccountlabel.o: ../../ui/customwidget/useraccountlabel/useraccountla
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/QPixmap \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/QMouseEvent \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/QPainter \
@@ -25933,6 +26167,10 @@ release/monitor_data_task.o: ../../scheduler/tasks/monitor_data_task.cpp ../../s
 		../../data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../app/applogger.h \
 		../../tool/loggermananger/loggermanager.h \
 		../../tool/loggermananger/spdlog/spdlog.h \
@@ -25993,10 +26231,6 @@ release/monitor_data_task.o: ../../scheduler/tasks/monitor_data_task.cpp ../../s
 		../../tool/loggermananger/spdlog/sinks/base_sink.h \
 		../../tool/loggermananger/spdlog/sinks/base_sink-inl.h \
 		../../tool/loggermananger/spdlog/sinks/rotating_file_sink-inl.h \
-		../../classes/setofohbinfo.h \
-		../../classes/foupofohbinfo.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../data/logdatabases/databasemanager.h \
 		../../data/logdatabases/operationlogdb/operationlogdbcon.h \
 		../../data/logdatabases/operationlogdb/operationlogsqllogic.h \
@@ -26620,6 +26854,10 @@ release/network_status_task.o: ../../scheduler/tasks/network_status_task.cpp ../
 		../../data/modbustcpmastermanager/modbuscommand/commandpool.h \
 		../../app/shareddata.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../app/applogger.h \
 		../../app/alarmtype.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QPair \
@@ -26682,9 +26920,6 @@ release/network_status_task.o: ../../scheduler/tasks/network_status_task.cpp ../
 		../../tool/loggermananger/spdlog/sinks/base_sink.h \
 		../../tool/loggermananger/spdlog/sinks/base_sink-inl.h \
 		../../tool/loggermananger/spdlog/sinks/rotating_file_sink-inl.h \
-		../../classes/foupofohbinfo.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		../../classes/alarminfo.h \
 		../../classes/alarmrecord.h \
 		../../scheduler/tasks/operation_dispatch_task.h \
@@ -27514,65 +27749,35 @@ release/sh85_self_check_task.o: ../../scheduler/tasks/sh85_self_check_task.cpp .
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QtGlobal \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
-		../../data/modbustcpmastermanager/modbustcpmastermanager.h \
-		../../data/modbustcpmastermanager/modbustcpmaster/modbusconnecter.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/QTcpSocket \
 		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtcpsocket.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetworkglobal.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetwork-config.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qabstractsocket.h \
-		../../data/modbustcpmastermanager/modbustcpmasterpool.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QThread \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qthread.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdeadlinetimer.h \
-		../../data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbusconnecter.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
 		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandreceiver.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
 		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMutex \
 		../../data/modbustcpmastermanager/modbustcpmaster/initialcommandissuer.h \
 		../../data/modbustcpmastermanager/modbustcpmaster/cycliccommandissuer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
 		../../data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h \
-		../../data/modbustcpmastermanager/modbuscommand/commandpool.h \
-		../../data/modbustcpmastermanager/modbuscommand/commandresponseparser.h \
-		../../data/logdatabases/databasemanager.h \
-		../../data/logdatabases/operationlogdb/operationlogdbcon.h \
-		../../data/logdatabases/operationlogdb/operationlogsqllogic.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtSql/QSqlDatabase \
-		C:/Qt/5.15.2/mingw81_32/include/QtSql/qsqldatabase.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtSql/qtsqlglobal.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtSql/qtsql-config.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDate \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariant \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariantList \
-		../../data/logdatabases/sqlmapper.h \
-		../../data/logdatabases/dbtypes.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QPair \
-		../../data/logdatabases/writesqldb/writesqldbcon.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QWaitCondition \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qwaitcondition.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDeadlineTimer \
-		../../classes/operationrecord.h \
-		../../data/logdatabases/communicatelogdb/communicatelogdbcon.h \
-		../../data/logdatabases/communicatelogdb/communicatelogsqllogic.h \
-		../../classes/communicaterecord.h \
-		../../data/logdatabases/alarmlogdb/alarmlogdbcon.h \
-		../../data/logdatabases/alarmlogdb/alarmlogsqllogic.h \
-		../../classes/alarmrecord.h \
-		../../data/logdatabases/deviceparamlogdb/deviceparamlogdbcon.h \
-		../../data/logdatabases/deviceparamlogdb/deviceparamlogsqllogic.h \
-		../../classes/deviceparamrecord.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
+		../../data/modbustcpmastermanager/modbustcpmastermanager.h \
+		../../data/modbustcpmastermanager/modbustcpmasterpool.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QThread \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qthread.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdeadlinetimer.h \
 		../../app/applogger.h \
 		../../tool/loggermananger/loggermanager.h \
 		../../tool/loggermananger/spdlog/spdlog.h \
@@ -27633,8 +27838,7 @@ release/sh85_self_check_task.o: ../../scheduler/tasks/sh85_self_check_task.cpp .
 		../../tool/loggermananger/spdlog/sinks/base_sink.h \
 		../../tool/loggermananger/spdlog/sinks/base_sink-inl.h \
 		../../tool/loggermananger/spdlog/sinks/rotating_file_sink-inl.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDebug \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDateTime
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\sh85_self_check_task.o ..\..\scheduler\tasks\sh85_self_check_task.cpp
 
 release/set_humidity_offset_task.o: ../../scheduler/tasks/set_humidity_offset_task.cpp ../../scheduler/tasks/set_humidity_offset_task.h \
@@ -29887,6 +30091,9 @@ release/modbustcpmaster.o: ../../data/modbustcpmastermanager/modbustcpmaster/mod
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
 		../../data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h \
 		../../data/modbustcpmastermanager/modbustcpmaster/firmwareupgrader.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
 		../../tool/loggermananger/loggermanager.h \
 		../../tool/loggermananger/spdlog/spdlog.h \
 		../../tool/loggermananger/spdlog/common.h \
@@ -30967,6 +31174,171 @@ release/firmwareupgrader.o: ../../data/modbustcpmastermanager/modbustcpmaster/fi
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdeadlinetimer.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\firmwareupgrader.o ..\..\data\modbustcpmastermanager\modbustcpmaster\firmwareupgrader.cpp
+
+release/sh85selfchecker.o: ../../data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.cpp ../../data/modbustcpmastermanager/modbustcpmaster/sh85selfchecker.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QElapsedTimer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qelapsedtimer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qglobal.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qconfig-bootstrapped.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qconfig.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtcore-config.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qsysinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qlogging.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qflags.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qatomic.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qmutex.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qnumeric.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qversiontagging.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QObject \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qobject.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qobjectdefs.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qnamespace.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstring.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qchar.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbytearray.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qrefcount.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qarraydata.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringliteral.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringalgorithms.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringview.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qlist.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qalgorithms.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qiterator.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qhashfunctions.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qpair.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qvector.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qcontainertools_impl.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qpoint.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbytearraylist.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringlist.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qregexp.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstringmatcher.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qcoreevent.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qscopedpointer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qmetatype.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qvarlengtharray.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qcontainerfwd.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qobject_impl.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
+		../../data/modbustcpmastermanager/modbuscommand/modbuscommand.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QByteArray \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMap \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qmap.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdebug.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qhash.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtextstream.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qiodevice.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qlocale.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qvariant.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qshareddata.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qset.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qcontiguouscache.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qsharedpointer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QtGlobal \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/QTcpSocket \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtcpsocket.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetworkglobal.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetwork-config.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qabstractsocket.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbusconnecter.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandreceiver.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVector \
+		../../data/modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMutex \
+		../../data/modbustcpmastermanager/modbustcpmaster/initialcommandissuer.h \
+		../../data/modbustcpmastermanager/modbustcpmaster/cycliccommandissuer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
+		../../data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h \
+		../../data/modbustcpmastermanager/modbustcpmastermanager.h \
+		../../data/modbustcpmastermanager/modbustcpmasterpool.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QThread \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qthread.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdeadlinetimer.h \
+		../../data/modbustcpmastermanager/modbuscommand/commandpool.h \
+		../../tool/loggermananger/loggermanager.h \
+		../../tool/loggermananger/spdlog/spdlog.h \
+		../../tool/loggermananger/spdlog/common.h \
+		../../tool/loggermananger/spdlog/details/null_mutex.h \
+		../../tool/loggermananger/spdlog/tweakme.h \
+		../../tool/loggermananger/spdlog/fmt/fmt.h \
+		../../tool/loggermananger/spdlog/fmt/bundled/format.h \
+		../../tool/loggermananger/spdlog/fmt/bundled/base.h \
+		../../tool/loggermananger/spdlog/fmt/bundled/format-inl.h \
+		../../tool/loggermananger/spdlog/fmt/xchar.h \
+		../../tool/loggermananger/spdlog/fmt/bundled/xchar.h \
+		../../tool/loggermananger/spdlog/fmt/bundled/color.h \
+		../../tool/loggermananger/spdlog/fmt/bundled/ostream.h \
+		../../tool/loggermananger/spdlog/fmt/bundled/chrono.h \
+		../../tool/loggermananger/spdlog/fmt/bundled/ranges.h \
+		../../tool/loggermananger/spdlog/common-inl.h \
+		../../tool/loggermananger/spdlog/details/registry.h \
+		../../tool/loggermananger/spdlog/details/periodic_worker.h \
+		../../tool/loggermananger/spdlog/details/periodic_worker-inl.h \
+		../../tool/loggermananger/spdlog/details/registry-inl.h \
+		../../tool/loggermananger/spdlog/logger.h \
+		../../tool/loggermananger/spdlog/details/backtracer.h \
+		../../tool/loggermananger/spdlog/details/circular_q.h \
+		../../tool/loggermananger/spdlog/details/log_msg_buffer.h \
+		../../tool/loggermananger/spdlog/details/log_msg.h \
+		../../tool/loggermananger/spdlog/details/log_msg-inl.h \
+		../../tool/loggermananger/spdlog/details/os.h \
+		../../tool/loggermananger/spdlog/details/os-inl.h \
+		../../tool/loggermananger/spdlog/details/windows_include.h \
+		../../tool/loggermananger/spdlog/details/log_msg_buffer-inl.h \
+		../../tool/loggermananger/spdlog/details/backtracer-inl.h \
+		../../tool/loggermananger/spdlog/logger-inl.h \
+		../../tool/loggermananger/spdlog/pattern_formatter.h \
+		../../tool/loggermananger/spdlog/formatter.h \
+		../../tool/loggermananger/spdlog/pattern_formatter-inl.h \
+		../../tool/loggermananger/spdlog/details/fmt_helper.h \
+		../../tool/loggermananger/spdlog/mdc.h \
+		../../tool/loggermananger/spdlog/sinks/sink.h \
+		../../tool/loggermananger/spdlog/sinks/sink-inl.h \
+		../../tool/loggermananger/spdlog/sinks/wincolor_sink.h \
+		../../tool/loggermananger/spdlog/details/console_globals.h \
+		../../tool/loggermananger/spdlog/sinks/wincolor_sink-inl.h \
+		../../tool/loggermananger/spdlog/sinks/ansicolor_sink.h \
+		../../tool/loggermananger/spdlog/sinks/ansicolor_sink-inl.h \
+		../../tool/loggermananger/spdlog/details/synchronous_factory.h \
+		../../tool/loggermananger/spdlog/version.h \
+		../../tool/loggermananger/spdlog/spdlog-inl.h \
+		../../tool/loggermananger/spdlog/async.h \
+		../../tool/loggermananger/spdlog/async_logger.h \
+		../../tool/loggermananger/spdlog/async_logger-inl.h \
+		../../tool/loggermananger/spdlog/details/thread_pool.h \
+		../../tool/loggermananger/spdlog/details/mpmc_blocking_q.h \
+		../../tool/loggermananger/spdlog/details/thread_pool-inl.h \
+		../../tool/loggermananger/spdlog/sinks/rotating_file_sink.h \
+		../../tool/loggermananger/spdlog/details/file_helper.h \
+		../../tool/loggermananger/spdlog/details/file_helper-inl.h \
+		../../tool/loggermananger/spdlog/sinks/base_sink.h \
+		../../tool/loggermananger/spdlog/sinks/base_sink-inl.h \
+		../../tool/loggermananger/spdlog/sinks/rotating_file_sink-inl.h \
+		../../app/applogger.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\sh85selfchecker.o ..\..\data\modbustcpmastermanager\modbustcpmaster\sh85selfchecker.cpp
 
 release/databasemanager.o: ../../data/logdatabases/databasemanager.cpp ../../data/logdatabases/databasemanager.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
@@ -32758,6 +33130,9 @@ release/moc_periodiccommandsender.o: release/moc_periodiccommandsender.cpp
 
 release/moc_firmwareupgrader.o: release/moc_firmwareupgrader.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_firmwareupgrader.o release\moc_firmwareupgrader.cpp
+
+release/moc_sh85selfchecker.o: release/moc_sh85selfchecker.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_sh85selfchecker.o release\moc_sh85selfchecker.cpp
 
 release/moc_logcleanupscheduler.o: release/moc_logcleanupscheduler.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_logcleanupscheduler.o release\moc_logcleanupscheduler.cpp
