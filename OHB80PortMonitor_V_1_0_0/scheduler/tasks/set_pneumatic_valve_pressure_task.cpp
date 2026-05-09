@@ -7,6 +7,8 @@
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 #include "app/applogger.h"
+#include "app/shareddata.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "loggermanager.h"
 
 #include <QDebug>
@@ -97,6 +99,14 @@ void SetPneumaticValvePressureTask::start()
         QString("[Scheduler][SetPneumaticValvePressureTask] 压力 %1 bar 转寄存器值 %2 (0x%3)")
             .arg(m_pressureBar).arg(regVal)
             .arg(QString::number(regVal, 16).toUpper()).toStdString());
+
+    // 写入运行日志：任务启动
+    auto* opTaskStart = SharedData::getOperationDispatchTask();
+    if (opTaskStart) {
+        opTaskStart->log(OperationDispatchTask::MsgType::Message,
+                         QString("SetPneumaticValvePressure task started: %1 bar for %2 devices")
+                             .arg(m_pressureBar).arg(m_qrcodes.size()), 0);
+    }
 
     for (const QString &id : m_qrcodes) {
         ModbusTcpMaster *master = mgr.getMaster(id);
@@ -316,6 +326,18 @@ void SetPneumaticValvePressureTask::forceFinish()
         allSuccess ? Level::INFO : Level::WARN,
         QString("[Scheduler][SetPneumaticValvePressureTask] 压力 %1 bar 设置完成: %2 台成功，%3 台失败")
             .arg(m_pressureBar).arg(m_successCount).arg(m_failedQrCodes.count()).toStdString());
+
+    // 写入运行日志：任务完成
+    auto* opTaskEnd = SharedData::getOperationDispatchTask();
+    if (opTaskEnd) {
+        const QString desc = allSuccess
+            ? QString("SetPneumaticValvePressure %1 bar task completed: %2 devices succeeded")
+                  .arg(m_pressureBar).arg(m_successCount)
+            : QString("SetPneumaticValvePressure %1 bar task failed: %2 succeeded, %3 failed")
+                  .arg(m_pressureBar).arg(m_successCount).arg(m_failedQrCodes.count());
+        opTaskEnd->log(allSuccess ? OperationDispatchTask::MsgType::Message
+                                  : OperationDispatchTask::MsgType::Warn, desc, 0);
+    }
 }
 
 QByteArray SetPneumaticValvePressureTask::buildRegisterValue(quint16 value) const

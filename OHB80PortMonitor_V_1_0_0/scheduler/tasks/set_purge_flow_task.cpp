@@ -7,6 +7,8 @@
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 #include "app/applogger.h"
+#include "app/shareddata.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "loggermanager.h"
 
 #include <QDebug>
@@ -87,6 +89,14 @@ void SetPurgeFlowTask::start()
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
         QString("[Scheduler][SetPurgeFlowTask] flow %1 → regVal %2")
             .arg(m_flowValue).arg(regVal).toStdString());
+
+    // 写入运行日志：任务启动
+    auto* opTaskStart = SharedData::getOperationDispatchTask();
+    if (opTaskStart) {
+        opTaskStart->log(OperationDispatchTask::MsgType::Message,
+                         QString("SetPurgeFlow task started: flow=%1 for %2 devices")
+                             .arg(m_flowValue).arg(m_qrcodes.size()), 0);
+    }
 
     for (const QString &id : m_qrcodes) {
         ModbusTcpMaster *master = mgr.getMaster(id);
@@ -268,6 +278,18 @@ void SetPurgeFlowTask::forceFinish()
         allSuccess ? Level::INFO : Level::WARN,
         QString("[Scheduler][SetPurgeFlowTask] 任务结束: flow=%1 %2 台成功，%3 台失败")
             .arg(m_flowValue).arg(m_successCount).arg(m_failedQrCodes.count()).toStdString());
+
+    // 写入运行日志：任务完成
+    auto* opTaskEnd = SharedData::getOperationDispatchTask();
+    if (opTaskEnd) {
+        const QString desc = allSuccess
+            ? QString("SetPurgeFlow flow=%1 task completed: %2 devices succeeded")
+                  .arg(m_flowValue).arg(m_successCount)
+            : QString("SetPurgeFlow flow=%1 task failed: %2 succeeded, %3 failed")
+                  .arg(m_flowValue).arg(m_successCount).arg(m_failedQrCodes.count());
+        opTaskEnd->log(allSuccess ? OperationDispatchTask::MsgType::Message
+                                  : OperationDispatchTask::MsgType::Warn, desc, 0);
+    }
 }
 
 QByteArray SetPurgeFlowTask::buildRegisterValue(quint16 value) const

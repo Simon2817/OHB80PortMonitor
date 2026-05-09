@@ -27,7 +27,7 @@
 #include "configpage.h"
 #include "debugpage.h"
 #include "homepage.h"
-#include "runningloggerwidget.h"
+#include "scrollingtiplabel.h"
 #include "useraccountlabel.h"
 
 QT_BEGIN_NAMESPACE
@@ -40,7 +40,7 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QLabel *labIco;
     QLabel *labTitle;
-    RunningLoggerWidget *runningLoggerWidget;
+    ScrollingTipLabel *scrollingTipLabel;
     QSpacerItem *horizontalSpacer;
     UserAccountLabel *useraccountLab;
     QWidget *widgetMenu;
@@ -118,10 +118,11 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(labIco->sizePolicy().hasHeightForWidth());
         labIco->setSizePolicy(sizePolicy1);
-        labIco->setMinimumSize(QSize(0, 0));
+        labIco->setMinimumSize(QSize(40, 40));
+        labIco->setMaximumSize(QSize(40, 40));
         labIco->setStyleSheet(QString::fromUtf8(""));
-        labIco->setPixmap(QPixmap(QString::fromUtf8(":/image/logo.jpg")));
-        labIco->setScaledContents(false);
+        labIco->setPixmap(QPixmap(QString::fromUtf8(":/image/huaxin.png")));
+        labIco->setScaledContents(true);
         labIco->setAlignment(Qt::AlignCenter);
 
         horizontalLayout_2->addWidget(labIco);
@@ -138,12 +139,12 @@ public:
 
         horizontalLayout_2->addWidget(labTitle);
 
-        runningLoggerWidget = new RunningLoggerWidget(widgetTitle);
-        runningLoggerWidget->setObjectName(QString::fromUtf8("runningLoggerWidget"));
-        runningLoggerWidget->setMinimumSize(QSize(500, 0));
-        runningLoggerWidget->setMaximumSize(QSize(500, 16777215));
+        scrollingTipLabel = new ScrollingTipLabel(widgetTitle);
+        scrollingTipLabel->setObjectName(QString::fromUtf8("scrollingTipLabel"));
+        scrollingTipLabel->setMinimumSize(QSize(500, 0));
+        scrollingTipLabel->setMaximumSize(QSize(500, 35));
 
-        horizontalLayout_2->addWidget(runningLoggerWidget);
+        horizontalLayout_2->addWidget(scrollingTipLabel);
 
         horizontalSpacer = new QSpacerItem(20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
@@ -415,6 +416,7 @@ public:
         UIDemo6->setWindowTitle(QCoreApplication::translate("UIDemo6", "Dialog", nullptr));
         labIco->setText(QString());
         labTitle->setText(QString());
+        scrollingTipLabel->setText(QString());
         btnMenu->setText(QString());
 #if QT_CONFIG(tooltip)
         btnMenu_Min->setToolTip(QCoreApplication::translate("UIDemo6", "\346\234\200\345\260\217\345\214\226", nullptr));

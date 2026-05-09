@@ -28,6 +28,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QToolButton *btnIdelPurge;
     QToolButton *btnPneumaticValvePressure;
+    QToolButton *btnSH85PeriodicSelfCheck;
     QToolButton *btnSH85SelfCheck;
     QToolButton *btnHumidityOffset;
     QToolButton *btnPurgeFlow;
@@ -63,6 +64,11 @@ public:
         btnPneumaticValvePressure->setObjectName(QString::fromUtf8("btnPneumaticValvePressure"));
 
         horizontalLayout->addWidget(btnPneumaticValvePressure);
+
+        btnSH85PeriodicSelfCheck = new QToolButton(widgetTop);
+        btnSH85PeriodicSelfCheck->setObjectName(QString::fromUtf8("btnSH85PeriodicSelfCheck"));
+
+        horizontalLayout->addWidget(btnSH85PeriodicSelfCheck);
 
         btnSH85SelfCheck = new QToolButton(widgetTop);
         btnSH85SelfCheck->setObjectName(QString::fromUtf8("btnSH85SelfCheck"));
@@ -120,6 +126,7 @@ public:
         ConfigPage->setWindowTitle(QCoreApplication::translate("ConfigPage", "Form", nullptr));
         btnIdelPurge->setText(QCoreApplication::translate("ConfigPage", "Idle Purge", nullptr));
         btnPneumaticValvePressure->setText(QCoreApplication::translate("ConfigPage", "Pneumatic Valve", nullptr));
+        btnSH85PeriodicSelfCheck->setText(QCoreApplication::translate("ConfigPage", "SH85 Periodic", nullptr));
         btnSH85SelfCheck->setText(QCoreApplication::translate("ConfigPage", "SH85 Self-check", nullptr));
         btnHumidityOffset->setText(QCoreApplication::translate("ConfigPage", "Humidity Offset", nullptr));
         btnPurgeFlow->setText(QCoreApplication::translate("ConfigPage", "Purge Flow", nullptr));

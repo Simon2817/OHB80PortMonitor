@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+class OperationLogWidget;
+
 namespace Ui {
 class UIDemo6;
 }
@@ -25,6 +27,7 @@ private:
     bool max;
     QRect location;
     bool doubleClickMaximize;  // 是否允许双击标题栏最大化/还原
+    OperationLogWidget* m_operationLogWindow = nullptr;
 
 public:
     // 设置是否允许双击标题栏最大化/还原
@@ -42,6 +45,7 @@ protected:
 private slots:
     void initForm();
     void buttonClick();
+    void onScrollingTipLabelClicked();
 
 private slots:
     void on_btnMenu_Min_clicked();

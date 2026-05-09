@@ -16,6 +16,15 @@ void AlarmDispatchTask::start()
 {
     setState(Running);
     loadActiveFromDb();
+
+    // 连接 DB 写入完成信号，用于在解决落库后 emit alarmResolvePersisted
+    auto* db = LogDB::DatabaseManager::instance().alarmLogCon();
+    if (db) {
+        connect(db, &LogDB::AlarmLogDBCon::recordResolved,
+                this, &AlarmDispatchTask::onAlarmDBRecordResolved,
+                Qt::QueuedConnection);
+    }
+
     qDebug() << "[AlarmDispatchTask] started, active=" << activeCount();
     emit progress(0, QStringLiteral("Alarm dispatcher running, active=%1").arg(activeCount()));
 }
@@ -68,6 +77,16 @@ QString AlarmDispatchTask::submitAlarm(int alarmType,
 QString AlarmDispatchTask::submitAlarm(AlarmInfo info)
 {
     normalize(info);
+
+    // NoNeed 类型（如所有 SH85 自检报警）：直接落库，不参与活跃跟踪与去重
+    const int resolvedStatus = alarmTypeToResolvedStatus(info.record.alarmType);
+    if (resolvedStatus == static_cast<int>(AlarmResolvedStatus::NoNeed)) {
+        info.record.isResolved  = resolvedStatus;
+        info.record.resolveTime.clear();
+        persistInsert(info);
+        emit alarmPublished(info);
+        return info.alarmId;
+    }
 
     {
         QMutexLocker locker(&m_mutex);
@@ -238,4 +257,40 @@ void AlarmDispatchTask::persistResolve(const AlarmInfo& info)
     db->updateResolve(info.record.qrCode,
                       QString::number(info.record.alarmType),
                       info.record.resolveTime);
+}
+
+// =====================================================================
+// DB 写入完成回调：查询完整记录并 emit alarmResolvePersisted
+// =====================================================================
+void AlarmDispatchTask::onAlarmDBRecordResolved(const QString& qrCode, const QString& alarmType, const QString& resolveTime)
+{
+    auto* db = LogDB::DatabaseManager::instance().alarmLogCon();
+    if (!db) return;
+
+    // 查询该 (qrCode, alarmType, isResolved=1, resolveTime) 的完整记录
+    const QList<AlarmRecord> records = db->queryPageWithConditions(
+        /*alarmLevel*/ -1,
+        /*qrCode*/ qrCode,
+        /*alarmType*/ alarmType,
+        /*isResolved*/ 1,
+        /*startTime*/ QString(),
+        /*endTime*/ QString(),
+        /*pageSize*/ 1,
+        /*pageNumber*/ 1);
+
+    if (records.isEmpty()) {
+        qWarning() << "[AlarmDispatchTask] resolve record not found after DB write:"
+                   << qrCode << alarmType << resolveTime;
+        return;
+    }
+
+    // 取最新的一条（按 resolveTime 匹配）
+    for (const AlarmRecord& rec : records) {
+        if (rec.resolveTime == resolveTime) {
+            emit alarmResolvePersisted(rec);
+            return;
+        }
+    }
+    qWarning() << "[AlarmDispatchTask] resolve record with matching resolveTime not found:"
+               << qrCode << alarmType << resolveTime;
 }

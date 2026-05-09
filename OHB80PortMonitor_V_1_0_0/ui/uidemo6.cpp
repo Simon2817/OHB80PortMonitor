@@ -9,6 +9,7 @@
 #include "scheduler/tasks/operation_dispatch_task.h"
 #include "scheduler/tasks/alarm_dispatch_task.h"
 #include "ui/customwidget/scrollingtiplabel/scrollingtiplabel.h"
+#include "ui/customwidget/operationlogwidget/operationlogwidget.h"
 
 UIDemo6::UIDemo6(QWidget *parent) :
     QDialog(parent),
@@ -20,6 +21,10 @@ UIDemo6::UIDemo6(QWidget *parent) :
     
     // 初始化双击标题栏最大化功能，默认启用
     this->doubleClickMaximize = true;
+
+    // 连接 OperationDispatchTask / AlarmDispatchTask 到 scrollingTipLabel
+    // App::initialize()（含 initScheduler）在 UIDemo6 创建前已完成，任务均已就绪
+    this->connectTipLabelTask();
 }
 
 UIDemo6::~UIDemo6()
@@ -135,6 +140,19 @@ void UIDemo6::on_btnMenu_Close_clicked()
     emit requestClose();
 }
 
+void UIDemo6::onScrollingTipLabelClicked()
+{
+    if (!m_operationLogWindow) {
+        m_operationLogWindow = new OperationLogWidget(this);
+        m_operationLogWindow->setWindowFlags(Qt::Window);
+        m_operationLogWindow->setAttribute(Qt::WA_DeleteOnClose, false);
+        m_operationLogWindow->setWindowTitle("Operation Logger");
+    }
+    m_operationLogWindow->show();
+    m_operationLogWindow->raise();
+    m_operationLogWindow->activateWindow();
+}
+
 void UIDemo6::setDoubleClickMaximize(bool enabled)
 {
     this->doubleClickMaximize = enabled;
@@ -152,11 +170,7 @@ void UIDemo6::connectTipLabelTask()
     if (operationTask) {
         connect(operationTask, &OperationDispatchTask::operationLogInserted,
                 this, [this](const OperationRecord& rec) {
-                    QString logTypeStr;
-                    if (rec.logType == 0) logTypeStr = "INFO";
-                    else if (rec.logType == 1) logTypeStr = "WARN";
-                    else if (rec.logType == 2) logTypeStr = "ERROR";
-                    ui->scrollingTipLabel->submitOperationLog({rec.occurTime, logTypeStr, rec.description});
+                    ui->scrollingTipLabel->submitOperationLog(rec);
                 }, Qt::QueuedConnection);
     }
 
@@ -165,18 +179,21 @@ void UIDemo6::connectTipLabelTask()
     if (alarmTask) {
         connect(alarmTask, &AlarmDispatchTask::alarmPublished,
                 this, [this](const AlarmInfo& info) {
-                    QString alarmLevelStr = QString::number(info.record.alarmLevel);
-                    QString alarmTypeStr = QString::number(info.record.alarmType);
-                    ui->scrollingTipLabel->submitAlarmLog(
-                        {info.record.occurTime, alarmLevelStr, alarmTypeStr, info.record.description},
-                        info.record.id);
+                    // NoNeed 类型（如 SH85 自检告警）不需要在滚动公告栏显示
+                    if (info.record.isResolved == static_cast<int>(AlarmResolvedStatus::NoNeed)) return;
+                    ui->scrollingTipLabel->submitAlarmLog(info.record);
                 }, Qt::QueuedConnection);
 
-        connect(alarmTask, &AlarmDispatchTask::alarmResolved,
-                this, [this](const AlarmInfo& info) {
-                    ui->scrollingTipLabel->submitAlarmResolved(info.record.id);
+        // 连接 DB 写入完成后的解决信号，使用 (qrCode, alarmType) 复合 key 移除
+        connect(alarmTask, &AlarmDispatchTask::alarmResolvePersisted,
+                this, [this](const AlarmRecord& record) {
+                    ui->scrollingTipLabel->submitAlarmResolved(record);
                 }, Qt::QueuedConnection);
     }
+
+    // 点击公告栏打开运行日志窗口
+    connect(ui->scrollingTipLabel, &ScrollingTipLabel::clicked,
+            this, &UIDemo6::onScrollingTipLabelClicked);
 
     qDebug() << "[UIDemo6] OperationDispatchTask and AlarmDispatchTask signals connected to scrollingTipLabel";
 }

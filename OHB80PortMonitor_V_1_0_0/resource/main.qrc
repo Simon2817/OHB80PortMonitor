@@ -15,7 +15,6 @@
         <file>image/gametest_focus.png</file>
         <file>image/infoextend.png</file>
         <file>image/infoextend_focus.png</file>
-        <file>image/logo.png</file>
         <file>image/main_about.png</file>
         <file>image/main_company.png</file>
         <file>image/main_config.png</file>
@@ -49,14 +48,13 @@
         <file>image/alarmpage_focus.png</file>
         <file>image/configpage.png</file>
         <file>image/configpage_focus.png</file>
-        <file>image/main.ico</file>
         <file>image/chartpage.png</file>
         <file>image/chartpage_focus.png</file>
         <file>image/debugpage.png</file>
         <file>image/debugpage_focus.png</file>
-        <file>image/logo.jpg</file>
         <file>image/communicatepage.png</file>
         <file>image/communicatepage_focus.png</file>
         <file>image/useraccount.png</file>
+        <file>image/huaxin.png</file>
     </qresource>
 </RCC>

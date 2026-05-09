@@ -201,13 +201,16 @@ void NetworkStatusTask::onStatusChanged(ModbusConnecter::ConnectionStatus status
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
             QString("[Scheduler][NetworkStatusTask] 设备 %1 (%2) 连接异常，已设置告警 alarmId=%3").arg(masterId, ipPortStr, foup->alarmId()).toStdString());
 
-        // 上报设备离线告警
-        if (AlarmDispatchTask* dispatcher = SharedData::getAlarmDispatchTask()) {
-            dispatcher->submitAlarm(
-                static_cast<int>(AlarmType::DeviceOffline),
-                static_cast<int>(AlarmSource::Device),
-                masterId,
-                QStringLiteral("Device %1 connection lost").arg(masterId));
+        // 仅当从「已连接」跌落时才上报设备离线告警，
+        // 避免启动阶段 Disconnected→Connecting 过渡状态误触发
+        if (lastStatus == ModbusConnecter::ConnectionStatus::Connected) {
+            if (AlarmDispatchTask* dispatcher = SharedData::getAlarmDispatchTask()) {
+                dispatcher->submitAlarm(
+                    static_cast<int>(AlarmType::DeviceOffline),
+                    static_cast<int>(AlarmSource::Device),
+                    masterId,
+                    QStringLiteral("Device %1 connection lost").arg(masterId));
+            }
         }
     }
 }

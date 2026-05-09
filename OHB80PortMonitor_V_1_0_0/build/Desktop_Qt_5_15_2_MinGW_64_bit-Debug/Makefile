@@ -235,24 +235,34 @@ Makefile: ../../OHB80PortMonitor_V_1_0_0.pro C:/Qt/5.15.2/mingw81_64/mkspecs/win
 		../../tool/qthelper/qthelper.pri \
 		../../tool/binfilereader/binfilereader.pri \
 		../../tool/communicationrecorder/communicationrecorder.pri \
-		../../tool/usermanager/usermanager.pri \
 		../../tool/tool.pri \
 		../../ui/customwidget/overheadcranetrack/overheadcranetrack.pri \
 		../../ui/customwidget/settingwidget/settingwidget.pri \
 		../../ui/customwidget/debugsettingwidget/debugsettingwidget.pri \
 		../../ui/customwidget/configsettingwidget/configsettingwidget.pri \
 		../../ui/customwidget/loggerwidget/loggerwidget.pri \
-		../../ui/customwidget/alarmloggerwidget/alarmloggerwidget.pri \
+		../../ui/customwidget/alarmlogwidget/alarmlogwidget.pri \
 		../../ui/customwidget/historycalendardialog/historycalendardialog.pri \
-		../../ui/customwidget/communicateloggerwidget/communicateloggerwidget.pri \
-		../../ui/customwidget/runningloggerwidget/runningloggerwidget.pri \
+		../../ui/customwidget/comunicatelogwidget/comunicatelogwidget.pri \
+		../../ui/customwidget/operationlogwidget/operationlogwidget.pri \
 		../../ui/customwidget/useraccountlabel/useraccountlabel.pri \
+		../../ui/customwidget/paginationwidget/paginationwidget.pri \
+		../../ui/customwidget/waitdialog/waitdialog.pri \
+		../../ui/customwidget/datetimesetdialog/datetimesetdialog.pri \
+		../../ui/customwidget/scrollingtiplabel/scrollingtiplabel.pri \
 		../../ui/customwidget/customwidget.pri \
 		../../ui/ui.pri \
 		../../scheduler/scheduler.pri \
 		../../data/modbustcpmastermanager/modbuscommand/modbuscommand.pri \
 		../../data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.pri \
 		../../data/modbustcpmastermanager/modbustcpmastermanager.pri \
+		../../data/logdatabases/alarmlogdb/alarmlogdb.pri \
+		../../data/logdatabases/communicatelogdb/communicatelogdb.pri \
+		../../data/logdatabases/deviceparamlogdb/deviceparamlogdb.pri \
+		../../data/logdatabases/operationlogdb/operationlogdb.pri \
+		../../data/logdatabases/writesqldb/writesqldb.pri \
+		../../data/logdatabases/logdatabases.pri \
+		../../data/usermanager/usermanager.pri \
 		../../data/data.pri \
 		../../classes/classes.pri \
 		C:/Qt/5.15.2/mingw81_64/mkspecs/features/resolve_config.prf \
@@ -283,6 +293,7 @@ Makefile: ../../OHB80PortMonitor_V_1_0_0.pro C:/Qt/5.15.2/mingw81_64/mkspecs/win
 		C:/Qt/5.15.2/mingw81_64/lib/Qt5SerialBus.prl \
 		C:/Qt/5.15.2/mingw81_64/lib/Qt5Network.prl \
 		C:/Qt/5.15.2/mingw81_64/lib/Qt5Xml.prl \
+		C:/Qt/5.15.2/mingw81_64/lib/Qt5Sql.prl \
 		C:/Qt/5.15.2/mingw81_64/lib/Qt5Core.prl \
 		C:/Qt/5.15.2/mingw81_64/lib/qtmain.prl \
 		C:/Qt/5.15.2/mingw81_64/mkspecs/features/build_pass.prf \
@@ -454,24 +465,34 @@ C:/Qt/5.15.2/mingw81_64/mkspecs/features/win32/default_pre.prf:
 ../../tool/qthelper/qthelper.pri:
 ../../tool/binfilereader/binfilereader.pri:
 ../../tool/communicationrecorder/communicationrecorder.pri:
-../../tool/usermanager/usermanager.pri:
 ../../tool/tool.pri:
 ../../ui/customwidget/overheadcranetrack/overheadcranetrack.pri:
 ../../ui/customwidget/settingwidget/settingwidget.pri:
 ../../ui/customwidget/debugsettingwidget/debugsettingwidget.pri:
 ../../ui/customwidget/configsettingwidget/configsettingwidget.pri:
 ../../ui/customwidget/loggerwidget/loggerwidget.pri:
-../../ui/customwidget/alarmloggerwidget/alarmloggerwidget.pri:
+../../ui/customwidget/alarmlogwidget/alarmlogwidget.pri:
 ../../ui/customwidget/historycalendardialog/historycalendardialog.pri:
-../../ui/customwidget/communicateloggerwidget/communicateloggerwidget.pri:
-../../ui/customwidget/runningloggerwidget/runningloggerwidget.pri:
+../../ui/customwidget/comunicatelogwidget/comunicatelogwidget.pri:
+../../ui/customwidget/operationlogwidget/operationlogwidget.pri:
 ../../ui/customwidget/useraccountlabel/useraccountlabel.pri:
+../../ui/customwidget/paginationwidget/paginationwidget.pri:
+../../ui/customwidget/waitdialog/waitdialog.pri:
+../../ui/customwidget/datetimesetdialog/datetimesetdialog.pri:
+../../ui/customwidget/scrollingtiplabel/scrollingtiplabel.pri:
 ../../ui/customwidget/customwidget.pri:
 ../../ui/ui.pri:
 ../../scheduler/scheduler.pri:
 ../../data/modbustcpmastermanager/modbuscommand/modbuscommand.pri:
 ../../data/modbustcpmastermanager/modbustcpmaster/modbustcpmaster.pri:
 ../../data/modbustcpmastermanager/modbustcpmastermanager.pri:
+../../data/logdatabases/alarmlogdb/alarmlogdb.pri:
+../../data/logdatabases/communicatelogdb/communicatelogdb.pri:
+../../data/logdatabases/deviceparamlogdb/deviceparamlogdb.pri:
+../../data/logdatabases/operationlogdb/operationlogdb.pri:
+../../data/logdatabases/writesqldb/writesqldb.pri:
+../../data/logdatabases/logdatabases.pri:
+../../data/usermanager/usermanager.pri:
 ../../data/data.pri:
 ../../classes/classes.pri:
 C:/Qt/5.15.2/mingw81_64/mkspecs/features/resolve_config.prf:
@@ -502,6 +523,7 @@ C:/Qt/5.15.2/mingw81_64/lib/Qt5SerialPort.prl:
 C:/Qt/5.15.2/mingw81_64/lib/Qt5SerialBus.prl:
 C:/Qt/5.15.2/mingw81_64/lib/Qt5Network.prl:
 C:/Qt/5.15.2/mingw81_64/lib/Qt5Xml.prl:
+C:/Qt/5.15.2/mingw81_64/lib/Qt5Sql.prl:
 C:/Qt/5.15.2/mingw81_64/lib/Qt5Core.prl:
 C:/Qt/5.15.2/mingw81_64/lib/qtmain.prl:
 C:/Qt/5.15.2/mingw81_64/mkspecs/features/build_pass.prf:

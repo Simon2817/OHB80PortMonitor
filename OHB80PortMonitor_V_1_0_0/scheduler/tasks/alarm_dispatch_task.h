@@ -99,6 +99,10 @@ signals:
     // 警报日志插入完成信号（携带 AlarmRecord）
     void alarmLogInserted(const AlarmRecord& record);
 
+    // 警报解决已落库信号（DB UPDATE 完成后 emit，携带完整 AlarmRecord 含 id）
+    // 用于 UI 端（如 scrollingTipLabel）根据 id 从队列中移除
+    void alarmResolvePersisted(const AlarmRecord& record);
+
 private:
     // 把 AlarmInfo 写入 alarm_log（INSERT）
     void persistInsert(const AlarmInfo& info);
@@ -112,6 +116,9 @@ private:
     // 启动时从 alarm_log 表加载所有 is_resolved=0 的记录到 m_active，
     // 让本次启动能继续监控上一次未解决的警报（避免重复 INSERT、可对其 submitResolve）
     void loadActiveFromDb();
+
+    // DB 写入完成回调：检测到 update_resolve 完成后查询完整记录并 emit alarmResolvePersisted
+    void onAlarmDBRecordResolved(const QString& qrCode, const QString& alarmType, const QString& resolveTime);
 
     QHash<QString, AlarmInfo> m_active;
     mutable QMutex            m_mutex;

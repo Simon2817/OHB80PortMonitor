@@ -8,7 +8,7 @@
 #include <QWidget>
 
 // 权限级别枚举（数值越大权限越高，可直接比较大小）
-enum class UserPermission {
+enum UserPermission : int {
     Guest    = 0,   // 游客
     Normal   = 1,   // 普通用户
     Debug    = 2,   // 调试用户

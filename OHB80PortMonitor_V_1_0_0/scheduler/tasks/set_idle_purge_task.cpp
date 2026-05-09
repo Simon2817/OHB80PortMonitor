@@ -7,6 +7,8 @@
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 #include "app/applogger.h"
+#include "app/shareddata.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "loggermanager.h"
 
 #include <QTimer>
@@ -85,6 +87,14 @@ void SetIdlePurgeTask::start()
     }
 
     const QByteArray regValue = buildRegisterValue(m_value);
+
+    // 写入运行日志：任务启动
+    auto* opTaskStart = SharedData::getOperationDispatchTask();
+    if (opTaskStart) {
+        opTaskStart->log(OperationDispatchTask::MsgType::Message,
+                         QString("SetIdlePurge task started: %1 = %2")
+                             .arg(propertyToString(m_property)).arg(m_value), 0);
+    }
 
     for (const QString &id : masterIds) {
         ModbusTcpMaster *master = mgr.getMaster(id);
@@ -320,6 +330,18 @@ void SetIdlePurgeTask::forceFinish()
         QString("[Scheduler][SetIdlePurgeTask] %1 设置完成: %2 台成功，%3 台失败")
             .arg(propertyToString(m_property)).arg(m_successCount)
             .arg(m_failedQrCodes.count()).toStdString());
+
+    // 写入运行日志：任务完成
+    auto* opTaskEnd = SharedData::getOperationDispatchTask();
+    if (opTaskEnd) {
+        const QString desc = allSuccess
+            ? QString("SetIdlePurge %1 task completed: %2 devices succeeded")
+                  .arg(propertyToString(m_property)).arg(m_successCount)
+            : QString("SetIdlePurge %1 task failed: %2 succeeded, %3 failed")
+                  .arg(propertyToString(m_property)).arg(m_successCount).arg(m_failedQrCodes.count());
+        opTaskEnd->log(allSuccess ? OperationDispatchTask::MsgType::Message
+                                  : OperationDispatchTask::MsgType::Warn, desc, 0);
+    }
 }
 
 QString SetIdlePurgeTask::commandIdForProperty(IdlePurgeProperty p) const

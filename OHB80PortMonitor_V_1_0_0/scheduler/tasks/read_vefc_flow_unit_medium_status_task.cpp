@@ -7,6 +7,8 @@
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 #include "app/applogger.h"
+#include "app/shareddata.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "loggermanager.h"
 
 #include <QDebug>
@@ -50,6 +52,12 @@ void ReadVEFCFlowUnitAndMediumStatusTask::start()
         setState(Failed);
         emit allFinished(false, 0, {});
         emit finished(false, "ReadVEFCFlowUnitAndMediumStatusTask: qrcode 列表为空");
+        // 写入运行日志：失败原因
+        auto* opTask = SharedData::getOperationDispatchTask();
+        if (opTask) {
+            opTask->log(OperationDispatchTask::MsgType::Warn,
+                       "ReadVEFCStatus task failed: device identification failed", 0);
+        }
         return;
     }
 
@@ -59,6 +67,12 @@ void ReadVEFCFlowUnitAndMediumStatusTask::start()
         setState(Failed);
         emit allFinished(false, 0, {});
         emit finished(false, QString("ReadVEFCFlowUnitAndMediumStatusTask: 指令 '%1' 不存在").arg(kCmdId));
+        // 写入运行日志：失败原因
+        auto* opTask = SharedData::getOperationDispatchTask();
+        if (opTask) {
+            opTask->log(OperationDispatchTask::MsgType::Warn,
+                       "ReadVEFCStatus task failed: feature not implemented", 0);
+        }
         return;
     }
 
@@ -68,6 +82,13 @@ void ReadVEFCFlowUnitAndMediumStatusTask::start()
         st.qrcode     = id;
         st.commFailed = true;
         m_resultMap.insert(id, st);
+    }
+
+    // 写入运行日志：任务启动
+    auto* opTaskStart = SharedData::getOperationDispatchTask();
+    if (opTaskStart) {
+        opTaskStart->log(OperationDispatchTask::MsgType::Message,
+                         QString("ReadVEFCStatus task started: %1 devices").arg(m_qrcodes.size()), 0);
     }
 
     for (const QString &id : m_qrcodes) {
@@ -221,6 +242,19 @@ void ReadVEFCFlowUnitAndMediumStatusTask::onTimeout()
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
         QString("[Scheduler][ReadVEFCFlowUnitAndMediumStatusTask] 超时，剩余 %1 台设备未响应")
             .arg(m_pendingMap.size()).toStdString());
+
+    // 写入运行日志：超时原因
+    auto* opTask = SharedData::getOperationDispatchTask();
+    if (opTask) {
+        QStringList failedDevices;
+        for (const QString &qr : m_pendingMap.values()) {
+            failedDevices << qr;
+        }
+        const QString desc = QString("ReadVEFCStatus task timeout: %1 devices did not respond (%2)")
+            .arg(failedDevices.size()).arg(failedDevices.join(", "));
+        opTask->log(OperationDispatchTask::MsgType::Error, desc, 0);
+    }
+
     forceFinish();
 }
 
@@ -263,6 +297,39 @@ void ReadVEFCFlowUnitAndMediumStatusTask::forceFinish()
         allSuccess ? Level::INFO : Level::WARN,
         QString("[Scheduler][ReadVEFCFlowUnitAndMediumStatusTask] 任务结束: %1/%2 台通过")
             .arg(successCount).arg(m_qrcodes.size()).toStdString());
+
+    // 写入运行日志：任务完成
+    auto* opTaskEnd = SharedData::getOperationDispatchTask();
+    if (opTaskEnd) {
+        if (allSuccess) {
+            const QString desc = QString("ReadVEFCStatus task completed: %1/%2 devices succeeded")
+                .arg(successCount).arg(m_qrcodes.size());
+            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
+        } else {
+            // 收集失败设备及其原因
+            QStringList failedInfo;
+            for (const QString &id : m_qrcodes) {
+                if (m_resultMap.contains(id)) {
+                    const DeviceStatus &st = m_resultMap[id];
+                    if (st.commFailed) {
+                        QString reason;
+                        if (st.unitRaw == 0 && st.mediumRaw == 0) {
+                            reason = "communication failed";
+                        } else {
+                            QStringList issues;
+                            if (!st.unitOk) issues << "unit abnormal";
+                            if (!st.mediumOk) issues << "medium abnormal";
+                            reason = issues.join(", ");
+                        }
+                        failedInfo << QString("%1 (%2)").arg(id).arg(reason);
+                    }
+                }
+            }
+            const QString desc = QString("ReadVEFCStatus task failed: %1/%2 devices succeeded. Failed devices: %3")
+                .arg(successCount).arg(m_qrcodes.size()).arg(failedInfo.join("; "));
+            opTaskEnd->log(OperationDispatchTask::MsgType::Error, desc, 0);
+        }
+    }
 }
 
 void ReadVEFCFlowUnitAndMediumStatusTask::disconnectAll()

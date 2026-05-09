@@ -6,12 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>730</width>
-    <height>429</height>
+    <width>800</width>
+    <height>548</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -35,6 +50,9 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="tabLiveLog">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
       <attribute name="title">
        <string>Live Log</string>
       </attribute>
@@ -64,8 +82,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>718</width>
-            <height>395</height>
+            <width>788</width>
+            <height>514</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -94,6 +112,9 @@
       </layout>
      </widget>
      <widget class="QWidget" name="tabHistoryLog">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
       <attribute name="title">
        <string>History</string>
       </attribute>
@@ -115,6 +136,12 @@
        </property>
        <item>
         <widget class="QWidget" name="widget_6" native="true">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>116</height>
+          </size>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <property name="spacing">
            <number>2</number>
@@ -133,6 +160,18 @@
           </property>
           <item>
            <widget class="QCheckBox" name="checkBoxAll">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="text">
              <string>All</string>
             </property>
@@ -140,6 +179,18 @@
           </item>
           <item>
            <widget class="QWidget" name="widget_3" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <property name="spacing">
               <number>2</number>
@@ -158,6 +209,18 @@
              </property>
              <item>
               <widget class="QCheckBox" name="checkBoxLogType">
+               <property name="minimumSize">
+                <size>
+                 <width>120</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>120</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Log Type</string>
                </property>
@@ -172,6 +235,19 @@
                 </size>
                </property>
               </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>
@@ -196,23 +272,16 @@
              </property>
              <item>
               <widget class="QCheckBox" name="checkBoxRecordTime">
+               <property name="maximumSize">
+                <size>
+                 <width>120</width>
+                 <height>120</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Record Time：</string>
                </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
              <item>
               <widget class="QLineEdit" name="lineEditRecordStartTime">
@@ -228,7 +297,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label">
+              <widget class="QLabel" name="lab_1">
                <property name="text">
                 <string>To</string>
                </property>
@@ -255,16 +324,47 @@
                  <height>0</height>
                 </size>
                </property>
+               <property name="maximumSize">
+                <size>
+                 <width>120</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Set</string>
                </property>
               </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>
           </item>
           <item>
            <widget class="QWidget" name="widget_7" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <property name="spacing">
               <number>6</number>
@@ -299,6 +399,12 @@
                  <height>0</height>
                 </size>
                </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>120</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Search</string>
                </property>
@@ -321,9 +427,22 @@
              <item>
               <widget class="QLabel" name="labelPageInfo">
                <property name="text">
-                <string>0/100</string>
+                <string>0/0</string>
                </property>
               </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
              <item>
               <spacer name="horizontalSpacer">
@@ -354,8 +473,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>718</width>
-            <height>250</height>
+            <width>788</width>
+            <height>350</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">

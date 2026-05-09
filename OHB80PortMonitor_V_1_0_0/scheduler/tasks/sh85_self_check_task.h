@@ -66,6 +66,7 @@ private:
     // ---- 私有方法 ----
     bool ensureMaster();              // 校验 master
     void finishWith(bool success, SH85SelfChecker::Result result, const QString &uiText);
+    void writeCompletionLog(bool success, SH85SelfChecker::Result result); // 写入运行/警报日志
     static QString resultToText(SH85SelfChecker::Result r);
 
     // ---- 成员 ----

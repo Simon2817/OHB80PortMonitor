@@ -1,6 +1,8 @@
 #include "scrollingtiplabel.h"
 
 #include <QFontMetrics>
+#include "app/alarmtype.h"
+#include "data/logdatabases/dbtypes.h"
 
 ScrollingTipLabel::ScrollingTipLabel(QWidget *parent)
     : QLabel(parent)
@@ -20,60 +22,66 @@ ScrollingTipLabel::~ScrollingTipLabel()
     stopScrolling();
 }
 
-void ScrollingTipLabel::submitAlarmLog(const QStringList& operationLog, int alarmRecordId)
+void ScrollingTipLabel::mousePressEvent(QMouseEvent* event)
 {
-    // 存储警报日志
-    m_alarmLogs[alarmRecordId] = operationLog;
-    m_alarmQueue.enqueue(alarmRecordId);
+    if (event->button() == Qt::LeftButton)
+        emit clicked();
+    QLabel::mousePressEvent(event);
+}
 
-    // 更新显示
+static QString makeAlarmKey(const AlarmRecord& record)
+{
+    return QStringLiteral("%1|%2").arg(record.qrCode).arg(record.alarmType);
+}
+
+void ScrollingTipLabel::submitAlarmLog(const AlarmRecord& record)
+{
+    const QString key = makeAlarmKey(record);
+    m_alarmLogs[key] = record;
+    if (!m_alarmQueue.contains(key))
+        m_alarmQueue.enqueue(key);
+
     updateDisplay();
 }
 
-void ScrollingTipLabel::submitAlarmResolved(int alarmRecordId)
+void ScrollingTipLabel::submitAlarmResolved(const AlarmRecord& record)
 {
+    const QString key = makeAlarmKey(record);
+
     // 从警报队列中移除对应的警报记录
-    QQueue<int> newQueue;
+    QQueue<QString> newQueue;
     while (!m_alarmQueue.isEmpty()) {
-        int id = m_alarmQueue.dequeue();
-        if (id != alarmRecordId) {
-            newQueue.enqueue(id);
+        QString k = m_alarmQueue.dequeue();
+        if (k != key) {
+            newQueue.enqueue(k);
         }
     }
     m_alarmQueue = newQueue;
 
     // 从映射中移除
-    m_alarmLogs.remove(alarmRecordId);
+    m_alarmLogs.remove(key);
 
     // 更新显示
     updateDisplay();
 }
 
-void ScrollingTipLabel::submitOperationLog(const QStringList& operationLog)
+void ScrollingTipLabel::submitOperationLog(const OperationRecord& record)
 {
-    // 替换当前 OperationLog 记录
-    m_operationLog = operationLog;
-
-    // 更新显示
+    m_operationLog = record;
     updateDisplay();
 }
 
-QStringList ScrollingTipLabel::getCurrentDisplayLog()
+QString ScrollingTipLabel::getCurrentDisplayText()
 {
-    // 警报队列不空，返回最后一个警报
-    if (!m_alarmQueue.isEmpty()) {
-        int lastAlarmId = m_alarmQueue.last();
-        return m_alarmLogs.value(lastAlarmId);
-    }
+    if (!m_alarmQueue.isEmpty())
+        return formatAlarmRecord(m_alarmLogs.value(m_alarmQueue.last()));
 
-    // 警报队列为空，返回 OperationLog 记录
-    return m_operationLog;
+    return formatOperationRecord(m_operationLog);
 }
 
 void ScrollingTipLabel::updateDisplay()
 {
-    QStringList log = getCurrentDisplayLog();
-    QString text = formatLogToString(log);
+    QString text = getCurrentDisplayText();
 
     if (text.isEmpty()) {
         setText("");
@@ -157,21 +165,25 @@ void ScrollingTipLabel::stopScrolling()
     m_scrollOffset = 0;
 }
 
-QString ScrollingTipLabel::formatLogToString(const QStringList& log)
+QString ScrollingTipLabel::formatAlarmRecord(const AlarmRecord& record) const
 {
-    if (log.isEmpty()) {
-        return "";
-    }
+    if (record.occurTime.isEmpty() && record.description.isEmpty())
+        return {};
+    return QString("[%1][%2] %3: %4")
+        .arg(record.occurTime,
+             alarmLevelName(record.alarmLevel),
+             alarmTypeName(record.alarmType),
+             record.description);
+}
 
-    // 假设 QStringList 格式为: [时间, 日志类型, 描述]
-    // 根据实际格式调整
-    if (log.size() >= 3) {
-        return QString("[%1] %2: %3").arg(log[0], log[1], log[2]);
-    } else if (log.size() == 1) {
-        return log[0];
-    }
-
-    return log.join(" ");
+QString ScrollingTipLabel::formatOperationRecord(const OperationRecord& record) const
+{
+    if (record.occurTime.isEmpty() && record.description.isEmpty())
+        return {};
+    return QString("[%1] %2: %3")
+        .arg(record.occurTime,
+             LogDB::operationLogTypeName(record.logType),
+             record.description);
 }
 
 void ScrollingTipLabel::onScrollTimer()

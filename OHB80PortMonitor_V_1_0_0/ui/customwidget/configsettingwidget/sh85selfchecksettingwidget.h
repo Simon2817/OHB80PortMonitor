@@ -29,6 +29,15 @@ public:
     explicit SH85SelfCheckSettingWidget(QWidget *parent = nullptr);
     ~SH85SelfCheckSettingWidget();
 
+    // 设置控件是否可用（false 时整个控件不可用）
+    void setEnabled(bool enabled);
+
+    // 返回是否处于自检工作中
+    bool isRunning() const;
+
+signals:
+    void runningStateChanged(bool running);  // 自检状态变化信号
+
 private slots:
     void onCheckBtnClicked();
 

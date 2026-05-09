@@ -905,7 +905,6 @@ debug/qrc_main.cpp: ../../resource/main.qrc \
 		C:/Qt/5.15.2/mingw81_32/bin/rcc.exe \
 		../../resource/main.ico \
 		../../resource/image/wifitest_focus.png \
-		../../resource/image/main.ico \
 		../../resource/image/speedtest.png \
 		../../resource/image/troublecheck.png \
 		../../resource/image/main_person.png \
@@ -913,7 +912,6 @@ debug/qrc_main.cpp: ../../resource/main.qrc \
 		../../resource/image/alarmpage_focus.png \
 		../../resource/image/widgets.qm \
 		../../resource/image/Font\ Awesome\ Cheatsheet.png \
-		../../resource/image/logo.png \
 		../../resource/image/configpage_focus.png \
 		../../resource/image/chartpage.png \
 		../../resource/image/infoextend_focus.png \
@@ -937,6 +935,7 @@ debug/qrc_main.cpp: ../../resource/main.qrc \
 		../../resource/image/msg_info.png \
 		../../resource/image/titlemenu.png \
 		../../resource/image/communicatepage_focus.png \
+		../../resource/image/huaxin.png \
 		../../resource/image/chartpage_focus.png \
 		../../resource/image/communicatepage.png \
 		../../resource/image/main_company.png \
@@ -956,7 +955,6 @@ debug/qrc_main.cpp: ../../resource/main.qrc \
 		../../resource/image/configpage.png \
 		../../resource/image/debugpage_focus.png \
 		../../resource/image/infoextend.png \
-		../../resource/image/logo.jpg \
 		../../resource/font/fa-regular-400.ttf \
 		../../resource/font/pe-icon-set-weather.ttf \
 		../../resource/font/fontawesome-webfont.ttf \
@@ -7313,12 +7311,17 @@ debug/moc_scrollingtiplabel.cpp: ../../ui/customwidget/scrollingtiplabel/scrolli
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/QMouseEvent \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
+		../../classes/operationrecord.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
+		../../classes/alarmrecord.h \
 		debug/mocinclude.opt \
 		debug/moc_predefs.h \
 		C:/Qt/5.15.2/mingw81_32/bin/moc.exe
@@ -12696,12 +12699,17 @@ ui_uidemo6.h: ../../ui/uidemo6.ui \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/QMouseEvent \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
+		../../classes/operationrecord.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
+		../../classes/alarmrecord.h
 	C:\Qt\5.15.2\mingw81_32\bin\uic.exe ..\..\ui\uidemo6.ui -o ui_uidemo6.h
 
 ui_framedevice.h: ../../ui/customwidget/overheadcranetrack/framedevice.ui \
@@ -17178,8 +17186,11 @@ debug/uidemo6.o: ../../ui/uidemo6.cpp ../../ui/uidemo6.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qstandardpaths.h \
 		../../app/applogger.h \
 		../../ui/customwidget/scrollingtiplabel/scrollingtiplabel.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
+		../../classes/operationrecord.h \
+		../../classes/alarmrecord.h \
 		../../ui/customwidget/useraccountlabel/useraccountlabel.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/QMenu \
 		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qmenu.h \
@@ -17452,7 +17463,6 @@ debug/uidemo6.o: ../../ui/uidemo6.cpp ../../ui/uidemo6.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qsslcipher.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qssldiffiehellmanparameters.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qsslellipticcurve.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
 		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qsslkey.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qudpsocket.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtNetwork/qtnetworkversion.h \
@@ -17568,13 +17578,14 @@ debug/uidemo6.o: ../../ui/uidemo6.cpp ../../ui/uidemo6.h \
 		../../scheduler/tasks/operation_dispatch_task.h \
 		../../scheduler/scheduler_task.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QUuid \
-		../../classes/operationrecord.h \
 		../../scheduler/tasks/alarm_dispatch_task.h \
 		../../classes/alarminfo.h \
 		../../app/alarmtype.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QPair \
-		../../classes/alarmrecord.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMutex
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMutex \
+		../../ui/customwidget/operationlogwidget/operationlogwidget.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSet \
+		../../data/logdatabases/dbtypes.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\uidemo6.o ..\..\ui\uidemo6.cpp
 
 debug/logindialog.o: ../../ui/logindialog.cpp ../../ui/logindialog.h \
@@ -25675,13 +25686,23 @@ debug/scrollingtiplabel.o: ../../ui/customwidget/scrollingtiplabel/scrollingtipl
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtCore/QStringList \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/QMouseEvent \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QQueue \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qqueue.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTimer \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qtimer.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qbasictimer.h \
-		C:/Qt/5.15.2/mingw81_32/include/QtGui/QFontMetrics
+		../../classes/operationrecord.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QString \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QMetaType \
+		../../classes/alarmrecord.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/QFontMetrics \
+		../../app/alarmtype.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QList \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QPair \
+		../../data/logdatabases/dbtypes.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QVariant
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\scrollingtiplabel.o ..\..\ui\customwidget\scrollingtiplabel\scrollingtiplabel.cpp
 
 debug/scheduler.o: ../../scheduler/scheduler.cpp ../../scheduler/scheduler.h \
@@ -27778,6 +27799,20 @@ debug/sh85_self_check_task.o: ../../scheduler/tasks/sh85_self_check_task.cpp ../
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qthread.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdeadlinetimer.h \
 		../../app/applogger.h \
+		../../app/shareddata.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QSharedPointer \
+		../../classes/setofohbinfo.h \
+		../../classes/foupofohbinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QTime \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
+		../../scheduler/tasks/alarm_dispatch_task.h \
+		../../classes/alarminfo.h \
+		../../app/alarmtype.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QPair \
+		../../classes/alarmrecord.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QHash \
+		../../scheduler/tasks/operation_dispatch_task.h \
+		../../classes/operationrecord.h \
 		../../tool/loggermananger/loggermanager.h \
 		../../tool/loggermananger/spdlog/spdlog.h \
 		../../tool/loggermananger/spdlog/common.h \
@@ -27837,6 +27872,48 @@ debug/sh85_self_check_task.o: ../../scheduler/tasks/sh85_self_check_task.cpp ../
 		../../tool/loggermananger/spdlog/sinks/base_sink.h \
 		../../tool/loggermananger/spdlog/sinks/base_sink-inl.h \
 		../../tool/loggermananger/spdlog/sinks/rotating_file_sink-inl.h \
+		../../tool/usermanager/usermanager.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/QPointer \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qpointer.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/QWidget \
+		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qwidget.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtguiglobal.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtgui-config.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qwindowdefs.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qmargins.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qpaintdevice.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qrect.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qsize.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qpalette.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qcolor.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qrgb.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qrgba64.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qbrush.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qmatrix.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qpolygon.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qregion.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qdatastream.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qline.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtransform.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qimage.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qpixelformat.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qpixmap.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qfont.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qfontmetrics.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qfontinfo.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtWidgets/qsizepolicy.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qcursor.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qkeysequence.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qevent.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qurl.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qurlquery.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfile.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
+		C:/Qt/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
 		C:/Qt/5.15.2/mingw81_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\sh85_self_check_task.o ..\..\scheduler\tasks\sh85_self_check_task.cpp
 

@@ -41,7 +41,7 @@ public:
     bool isPersistent() const override { return true; }
 
     // 通用入口（线程安全）
-    void log(MsgType type, const QString& message);
+    void log(MsgType type, const QString& message, int userPermission = 0);
 
     // 便捷入口（线程安全）
     void logMessage(const QString& message);

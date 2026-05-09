@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include <QLabel>
 
-enum class UserPermission;
+enum UserPermission : int;
 
 class LoginDialog : public QDialog
 {

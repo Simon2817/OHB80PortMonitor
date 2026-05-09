@@ -2,6 +2,7 @@
 #include "ui_configpage.h"
 #include "customwidget/configsettingwidget/idlepurgesettingwidget.h"
 #include "customwidget/configsettingwidget/pneumaticvalvepressuresettingwidget.h"
+#include "customwidget/configsettingwidget/sh85periodicselfchecksettingwidget.h"
 #include "customwidget/configsettingwidget/sh85selfchecksettingwidget.h"
 #include "customwidget/configsettingwidget/humidityoffsetsettingwidget.h"
 #include "customwidget/configsettingwidget/purgeflowsettingwidget.h"
@@ -12,6 +13,7 @@ ConfigPage::ConfigPage(QWidget *parent)
     , ui(new Ui::ConfigPage)
     , m_idlePurgeWidget(nullptr)
     , m_pneumaticValvePressureWidget(nullptr)
+    , m_sh85PeriodicSelfCheckWidget(nullptr)
     , m_sh85SelfCheckWidget(nullptr)
     , m_humidityOffsetWidget(nullptr)
     , m_purgeFlowWidget(nullptr)
@@ -35,8 +37,15 @@ void ConfigPage::initUI()
     m_pneumaticValvePressureWidget = new PneumaticValvePressureSettingWidget(this);
     ui->scrollAreaWidgetContents->layout()->addWidget(m_pneumaticValvePressureWidget);
 
+    m_sh85PeriodicSelfCheckWidget = new SH85PeriodicSelfCheckSettingWidget(this);
+    ui->scrollAreaWidgetContents->layout()->addWidget(m_sh85PeriodicSelfCheckWidget);
+    connect(m_sh85PeriodicSelfCheckWidget, &SH85PeriodicSelfCheckSettingWidget::runningStateChanged,
+            this, &ConfigPage::onPeriodicSelfCheckRunningStateChanged);
+
     m_sh85SelfCheckWidget = new SH85SelfCheckSettingWidget(this);
     ui->scrollAreaWidgetContents->layout()->addWidget(m_sh85SelfCheckWidget);
+    connect(m_sh85SelfCheckWidget, &SH85SelfCheckSettingWidget::runningStateChanged,
+            this, &ConfigPage::onSelfCheckRunningStateChanged);
 
     m_humidityOffsetWidget = new HumidityOffsetSettingWidget(this);
     ui->scrollAreaWidgetContents->layout()->addWidget(m_humidityOffsetWidget);
@@ -74,6 +83,8 @@ void ConfigPage::navBtnClicked()
         targetWidget = m_idlePurgeWidget;
     } else if (objName == "btnPneumaticValvePressure") {
         targetWidget = m_pneumaticValvePressureWidget;
+    } else if (objName == "btnSH85PeriodicSelfCheck") {
+        targetWidget = m_sh85PeriodicSelfCheckWidget;
     } else if (objName == "btnSH85SelfCheck") {
         targetWidget = m_sh85SelfCheckWidget;
     } else if (objName == "btnHumidityOffset") {
@@ -85,5 +96,25 @@ void ConfigPage::navBtnClicked()
     if (targetWidget) {
         QPoint pos = targetWidget->mapTo(ui->scrollAreaWidgetContents, QPoint(0, 0));
         ui->scrollArea->verticalScrollBar()->setValue(pos.y());
+    }
+}
+
+// ============================================================
+// 协调 SH85 自检控件
+// ============================================================
+
+void ConfigPage::onSelfCheckRunningStateChanged(bool running)
+{
+    // 手动自检状态变化时，禁用/启用定期自检控件
+    if (m_sh85PeriodicSelfCheckWidget) {
+        m_sh85PeriodicSelfCheckWidget->setEnabled(!running);
+    }
+}
+
+void ConfigPage::onPeriodicSelfCheckRunningStateChanged(bool running)
+{
+    // 定期自检状态变化时，禁用/启用手动自检控件
+    if (m_sh85SelfCheckWidget) {
+        m_sh85SelfCheckWidget->setEnabled(!running);
     }
 }

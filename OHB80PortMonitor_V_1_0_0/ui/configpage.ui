@@ -68,6 +68,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QToolButton" name="btnSH85PeriodicSelfCheck">
+        <property name="text">
+         <string>SH85 Periodic</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QToolButton" name="btnSH85SelfCheck">
         <property name="text">
          <string>SH85 Self-check</string>

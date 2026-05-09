@@ -7,6 +7,8 @@
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 #include "app/applogger.h"
+#include "app/shareddata.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "loggermanager.h"
 
 #include <QDebug>
@@ -124,6 +126,14 @@ void SetHumidityOffsetTask::start()
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
         QString("[Scheduler][SetHumidityOffsetTask] 子指令配置 thresholdSet=%1 (%2%%) offsetSet=%3 (%4%%)")
             .arg(m_thresholdSet).arg(m_thresholdPct).arg(m_offsetSet).arg(m_offsetPct).toStdString());
+
+    // 写入运行日志：任务启动
+    auto* opTaskStart = SharedData::getOperationDispatchTask();
+    if (opTaskStart) {
+        opTaskStart->log(OperationDispatchTask::MsgType::Message,
+                         QString("SetHumidityOffset task started: threshold=%1%% offset=%2%% for %3 devices")
+                             .arg(m_thresholdPct).arg(m_offsetPct).arg(m_qrcodes.size()), 0);
+    }
 
     auto fillCmd = [](ModbusCommand &cmd, const QByteArray &regBytes) {
         cmd.module = CommandModule::BusinessCommandIssuer;
@@ -403,6 +413,18 @@ void SetHumidityOffsetTask::forceFinish()
             .arg(m_successCount).arg(m_failedQrCodes.count())
             .arg(m_thresholdSet).arg(m_thresholdPct)
             .arg(m_offsetSet).arg(m_offsetPct).toStdString());
+
+    // 写入运行日志：任务完成
+    auto* opTaskEnd = SharedData::getOperationDispatchTask();
+    if (opTaskEnd) {
+        const QString desc = allSuccess
+            ? QString("SetHumidityOffset task completed: %1 devices succeeded")
+                  .arg(m_successCount)
+            : QString("SetHumidityOffset task failed: %1 succeeded, %2 failed")
+                  .arg(m_successCount).arg(m_failedQrCodes.count());
+        opTaskEnd->log(allSuccess ? OperationDispatchTask::MsgType::Message
+                                  : OperationDispatchTask::MsgType::Warn, desc, 0);
+    }
 }
 
 QByteArray SetHumidityOffsetTask::buildRegisterValue(quint16 value) const

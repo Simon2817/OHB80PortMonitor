@@ -42,7 +42,7 @@ void OperationDispatchTask::logError(const QString& message)
     log(MsgType::Error, message);
 }
 
-void OperationDispatchTask::log(MsgType type, const QString& message)
+void OperationDispatchTask::log(MsgType type, const QString& message, int userPermission)
 {
     auto* db = LogDB::DatabaseManager::instance().operationLogCon();
     if (!db) {
@@ -56,12 +56,13 @@ void OperationDispatchTask::log(MsgType type, const QString& message)
     const QString occurTime =
         QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"));
 
-    db->insertRecord(occurTime, logType, message);
+    db->insertRecord(occurTime, logType, message, userPermission);
 
     // 发出插入完成信号，供 UI 接收显示
     OperationRecord record;
-    record.occurTime   = occurTime;
-    record.logType     = logType;
-    record.description = message;
+    record.occurTime      = occurTime;
+    record.logType        = logType;
+    record.description    = message;
+    record.userPermission = userPermission;
     emit operationLogInserted(record);
 }

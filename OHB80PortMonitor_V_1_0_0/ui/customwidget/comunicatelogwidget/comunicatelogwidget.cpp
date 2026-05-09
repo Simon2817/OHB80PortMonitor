@@ -12,6 +12,8 @@
 #include "modbustcpmastermanager/modbustcpmastermanager.h"
 #include "modbustcpmastermanager/modbuscommand/commandpool.h"
 #include <QHeaderView>
+#include <QScroller>
+#include <QScrollerProperties>
 
 // 固定列头（包含完整的通讯日志字段）
 const QStringList ComunicateLogWidget::kLiveHeaders = {
@@ -75,6 +77,20 @@ ComunicateLogWidget::ComunicateLogWidget(QWidget *parent)
     // history log 表：最后一列拉伸充满剩余宽度
     ui->tableViewHistoryLog->horizontalHeader()->setStretchLastSection(true);
     ui->tableViewHistoryLog->verticalHeader()->setVisible(false);
+
+    // 启用触摸/鼠标拖动滚动手势（支持触屏滑动表格）
+    auto enableTouchScroll = [](QAbstractItemView* view) {
+        if (!view) return;
+        QScroller::grabGesture(view->viewport(), QScroller::LeftMouseButtonGesture);
+        QScroller* scroller = QScroller::scroller(view->viewport());
+        QScrollerProperties props = scroller->scrollerProperties();
+        props.setScrollMetric(QScrollerProperties::DragStartDistance, 0.005);
+        props.setScrollMetric(QScrollerProperties::OvershootDragResistanceFactor, 0.3);
+        props.setScrollMetric(QScrollerProperties::OvershootScrollDistanceFactor, 0.1);
+        scroller->setScrollerProperties(props);
+    };
+    enableTouchScroll(ui->tableViewLiveLog);
+    enableTouchScroll(ui->tableViewHistoryLog);
 }
 
 void ComunicateLogWidget::initLiveLog()

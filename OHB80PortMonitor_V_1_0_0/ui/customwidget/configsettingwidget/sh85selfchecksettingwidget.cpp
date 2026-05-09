@@ -111,6 +111,8 @@ void SH85SelfCheckSettingWidget::submitSelfCheckTask(const QString &qrcode)
     m_deviceIdSpinBox->setEnabled(false);
     m_selfCheckItem->setStatusWaiting();
 
+    emit runningStateChanged(true);
+
     auto *task = new SH85SelfCheckTask(qrcode);
 
     connect(task, &SH85SelfCheckTask::countdownTick,
@@ -162,6 +164,8 @@ void SH85SelfCheckSettingWidget::onAllFinished(bool success,
     if (qrcode != m_runningQrcode) return;
     m_runningQrcode.clear();
 
+    emit runningStateChanged(false);
+
     const QString friendly = resultToFriendlyText(result);
 
     if (success) {
@@ -176,10 +180,6 @@ void SH85SelfCheckSettingWidget::onAllFinished(bool success,
             this,
             "Self-check Failed",
             QString("SH85 self-check failed on device [%1]:\n%2").arg(qrcode).arg(friendly));
-
-        const QString logMsg =
-            QString("[SH85 Self-check] Failed on device %1: %2").arg(qrcode).arg(friendly);
-        SharedData::getOperationDispatchTask()->logMessage(logMsg);
     }
 
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(),
@@ -218,4 +218,22 @@ QString SH85SelfCheckSettingWidget::resultToFriendlyText(SH85SelfChecker::Result
     case SH85SelfChecker::Result::Cancelled:                 return "Cancelled";
     }
     return "Unknown";
+}
+
+// ============================================================
+// enable 方法
+// ============================================================
+
+void SH85SelfCheckSettingWidget::setEnabled(bool enabled)
+{
+    QWidget::setEnabled(enabled);
+
+    // 禁用/启用所有子控件
+    if (m_deviceIdItem) m_deviceIdItem->setEnabled(enabled);
+    if (m_selfCheckItem) m_selfCheckItem->setEnabled(enabled);
+}
+
+bool SH85SelfCheckSettingWidget::isRunning() const
+{
+    return !m_runningQrcode.isEmpty();
 }

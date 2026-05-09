@@ -13,7 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include "alarmloggerwidget.h"
+#include "alarmlogwidget.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -21,7 +21,7 @@ class Ui_AlarmPage
 {
 public:
     QVBoxLayout *verticalLayout;
-    AlarmLoggerWidget *alarmLoggerWidget;
+    AlarmLogWidget *alarmLoggerWidget;
 
     void setupUi(QWidget *AlarmPage)
     {
@@ -32,7 +32,7 @@ public:
         verticalLayout->setSpacing(3);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(3, 3, 3, 3);
-        alarmLoggerWidget = new AlarmLoggerWidget(AlarmPage);
+        alarmLoggerWidget = new AlarmLogWidget(AlarmPage);
         alarmLoggerWidget->setObjectName(QString::fromUtf8("alarmLoggerWidget"));
 
         verticalLayout->addWidget(alarmLoggerWidget);

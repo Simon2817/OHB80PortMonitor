@@ -45,6 +45,31 @@ bool OperationLogSqlLogic::initializeDatabase()
         return false;
     }
 
+    // 向后兼容迁移：若 operation_log 表缺少 user_permission 列则补加
+    {
+        QSqlQuery pragma(m_database);
+        pragma.exec(QStringLiteral("PRAGMA table_info(operation_log)"));
+        bool hasUserPermission = false;
+        while (pragma.next()) {
+            if (pragma.value(QStringLiteral("name")).toString()
+                    == QStringLiteral("user_permission")) {
+                hasUserPermission = true;
+                break;
+            }
+        }
+        if (!hasUserPermission) {
+            QSqlQuery migrate(m_database);
+            if (!migrate.exec(QStringLiteral(
+                    "ALTER TABLE operation_log "
+                    "ADD COLUMN user_permission INTEGER NOT NULL DEFAULT 0"))) {
+                qWarning() << "[OperationLogSqlLogic] 迁移 user_permission 列失败:"
+                           << migrate.lastError().text();
+            } else {
+                qDebug() << "[OperationLogSqlLogic] 迁移完成：已添加 user_permission 列";
+            }
+        }
+    }
+
     // 初始化清理调度器
     initializeCleanupScheduler();
 

@@ -2,9 +2,13 @@
 #define SCROLLINGTIPLABEL_H
 
 #include <QLabel>
-#include <QStringList>
+#include <QHash>
+#include <QMouseEvent>
 #include <QQueue>
 #include <QTimer>
+
+#include "classes/operationrecord.h"
+#include "classes/alarmrecord.h"
 
 // ====================================================================
 // ScrollingTipLabel — 滚动公告栏控件
@@ -20,12 +24,12 @@
 //     2. m_operationLog: 存放一条 OperationLogDBCon 记录（QStringList）
 //
 //   公开接口：
-//     - submitAlarmLog(const QStringList& operationLog, int alarmRecordId)
-//       提交一个警报日志
+//     - submitAlarmLog(const AlarmRecord& record)
+//       提交一个警报日志（使用 record.id 作为唯一标识）
 //     - submitAlarmResolved(int alarmRecordId)
 //       提交一个警报已解决日志
-//     - submitOperationLog(const QStringList& operationLog)
-//       提交一个 OperationLogDBCon 记录
+//     - submitOperationLog(const OperationRecord& record)
+//       提交一个运行日志记录
 //
 //   私有方法：
 //     - getCurrentDisplayLog()
@@ -50,21 +54,24 @@ public:
     explicit ScrollingTipLabel(QWidget *parent = nullptr);
     ~ScrollingTipLabel();
 
-    // 提交一个警报日志
-    // operationLog: OperationLogDBCon 记录（QStringList）
-    // alarmRecordId: AlarmLogDBCon 的警报记录的主键 id
-    void submitAlarmLog(const QStringList& operationLog, int alarmRecordId);
+    // 提交一个警报日志（使用 (qrCode, alarmType) 复合 key 唯一标识）
+    void submitAlarmLog(const AlarmRecord& record);
 
-    // 提交一个警报已解决日志
-    // alarmRecordId: AlarmLogDBCon 的警报记录的主键 id
-    void submitAlarmResolved(int alarmRecordId);
+    // 提交一个警报已解决日志（按 (qrCode, alarmType) 移除）
+    void submitAlarmResolved(const AlarmRecord& record);
 
-    // 提交一个 OperationLogDBCon 记录
-    void submitOperationLog(const QStringList& operationLog);
+    // 提交一个运行日志记录
+    void submitOperationLog(const OperationRecord& record);
+
+signals:
+    void clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent* event) override;
 
 private:
-    // 获取当前待显示的日志
-    QStringList getCurrentDisplayLog();
+    // 获取当前待显示的文本
+    QString getCurrentDisplayText();
 
     // 更新显示内容
     void updateDisplay();
@@ -77,16 +84,19 @@ private:
     void stopScrolling();
 
     // 格式化日志为显示字符串
-    QString formatLogToString(const QStringList& log);
+    QString formatAlarmRecord(const AlarmRecord& record) const;
+    QString formatOperationRecord(const OperationRecord& record) const;
 
 private slots:
     void onScrollTimer();
 
 private:
     // 管理对象
-    QQueue<int>      m_alarmQueue;       // 警报队列，存放 AlarmLogDBCon 的主键 id
-    QStringList      m_operationLog;     // 存放一条 OperationLogDBCon 记录
-    QHash<int, QStringList> m_alarmLogs;  // alarmRecordId -> operationLog 映射
+    // key 为 "qrCode|alarmType"，在 submit 与 resolve 时均能由 AlarmRecord 直接构造，
+    // 避免依赖异步 DB 主键 id 导致提交/解决两端 key 对不上
+    QQueue<QString>            m_alarmQueue;    // 警报队列，存放复合 key
+    OperationRecord            m_operationLog;  // 当前运行日志记录
+    QHash<QString, AlarmRecord> m_alarmLogs;    // key -> AlarmRecord 映射
 
     // 滚动相关
     QTimer          *m_scrollTimer = nullptr;

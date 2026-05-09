@@ -118,10 +118,11 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(labIco->sizePolicy().hasHeightForWidth());
         labIco->setSizePolicy(sizePolicy1);
-        labIco->setMinimumSize(QSize(0, 0));
+        labIco->setMinimumSize(QSize(40, 40));
+        labIco->setMaximumSize(QSize(40, 40));
         labIco->setStyleSheet(QString::fromUtf8(""));
-        labIco->setPixmap(QPixmap(QString::fromUtf8(":/image/logo.jpg")));
-        labIco->setScaledContents(false);
+        labIco->setPixmap(QPixmap(QString::fromUtf8(":/image/huaxin.png")));
+        labIco->setScaledContents(true);
         labIco->setAlignment(Qt::AlignCenter);
 
         horizontalLayout_2->addWidget(labIco);

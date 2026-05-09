@@ -9,9 +9,13 @@
 #include <QDebug>
 #include <QTableView>
 #include <QTimer>
+#include <QScroller>
+#include <QScrollerProperties>
 
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/operationlogquerytask.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
+#include "app/shareddata.h"
 #include "paginationwidget.h"
 #include "databasemanager.h"
 #include "operationlogdb/operationlogdbcon.h"
@@ -63,6 +67,24 @@ OperationLogWidget::OperationLogWidget(QWidget *parent)
     }
 
     initLiveLog();
+
+    // history log 表：最后一列拉伸充满剩余宽度
+    ui->tableViewHistoryLog->horizontalHeader()->setStretchLastSection(true);
+    ui->tableViewHistoryLog->verticalHeader()->setVisible(false);
+
+    // 启用触摸/鼠标拖动滚动手势（支持触屏滑动表格）
+    auto enableTouchScroll = [](QAbstractItemView* view) {
+        if (!view) return;
+        QScroller::grabGesture(view->viewport(), QScroller::LeftMouseButtonGesture);
+        QScroller* scroller = QScroller::scroller(view->viewport());
+        QScrollerProperties props = scroller->scrollerProperties();
+        props.setScrollMetric(QScrollerProperties::DragStartDistance, 0.005);
+        props.setScrollMetric(QScrollerProperties::OvershootDragResistanceFactor, 0.3);
+        props.setScrollMetric(QScrollerProperties::OvershootScrollDistanceFactor, 0.1);
+        scroller->setScrollerProperties(props);
+    };
+    enableTouchScroll(ui->tableViewLiveLog);
+    enableTouchScroll(ui->tableViewHistoryLog);
 }
 
 void OperationLogWidget::initLiveLog()
@@ -70,11 +92,16 @@ void OperationLogWidget::initLiveLog()
     // 表头与历史查询表保持一致（除 id 列——live log 无法提供）
     auto* model = new QStandardItemModel(this);
     model->setHorizontalHeaderLabels({"Occur Time", "Log Type", "Description"});
-    ui->tableViewLiveLog->setModel(model);
 
-    if (auto* db = LogDB::DatabaseManager::instance().operationLogCon()) {
-        connect(db, &LogDB::OperationLogDBCon::recordInserted,
-                this, &OperationLogWidget::onRecordInserted);
+    ui->tableViewLiveLog->setModel(model);
+    ui->tableViewLiveLog->setModel(model);
+    ui->tableViewLiveLog->horizontalHeader()->setStretchLastSection(true);
+    ui->tableViewLiveLog->verticalHeader()->setVisible(false);
+
+    // 订阅 OperationDispatchTask 的即时信号，实现实时显示
+    if (auto* opTask = SharedData::getOperationDispatchTask()) {
+        connect(opTask, &OperationDispatchTask::operationLogInserted,
+                this, &OperationLogWidget::onRecordInserted, Qt::QueuedConnection);
     }
 }
 
@@ -90,10 +117,14 @@ void OperationLogWidget::onRecordInserted(const OperationRecord& record)
           << new QStandardItem(logTypeText)
           << new QStandardItem(record.description);
 
-    model->insertRow(0, items);
+    // 按时间顺序追加到末尾（最新在底部）
+    model->appendRow(items);
     while (model->rowCount() > kLiveLogMaxRows) {
-        model->removeRow(model->rowCount() - 1);
+        model->removeRow(0);  // 从顶部删除最旧的
     }
+
+    // 自动滚动到底部（最新日志）
+    ui->tableViewLiveLog->scrollToBottom();
 }
 
 OperationLogWidget::~OperationLogWidget()
@@ -529,6 +560,10 @@ void OperationLogWidget::setHistoryLogData(const QList<OperationRecord>& data)
     }
     applyRowBackgrounds();
     ui->tableViewHistoryLog->resizeColumnsToContents();
+    // resizeColumnsToContents 会对所有列设置固定宽度，覆盖 stretch；重新启用
+    ui->tableViewHistoryLog->horizontalHeader()->setStretchLastSection(true);
+    // model->clear() 使 sizeHint 缩小后布局不会自动恢复，主动通知重新计算
+    ui->tableViewHistoryLog->updateGeometry();
 }
 
 void OperationLogWidget::selectAndScrollRowById(int recordId)
