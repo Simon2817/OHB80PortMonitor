@@ -2,6 +2,7 @@
 
 #include <QDateTime>
 #include <QDebug>
+#include <QMutexLocker>
 
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/operationlogdb/operationlogdbcon.h"
@@ -64,5 +65,21 @@ void OperationDispatchTask::log(MsgType type, const QString& message, int userPe
     record.logType        = logType;
     record.description    = message;
     record.userPermission = userPermission;
+
+    // 写入最近日志环形缓存，便于 UI 订阅前已派发的日志补播
+    {
+        QMutexLocker locker(&m_recentMutex);
+        m_recentRecords.append(record);
+        while (m_recentRecords.size() > kRecentBufferMax) {
+            m_recentRecords.removeFirst();
+        }
+    }
+
     emit operationLogInserted(record);
+}
+
+QList<OperationRecord> OperationDispatchTask::recentRecords() const
+{
+    QMutexLocker locker(&m_recentMutex);
+    return m_recentRecords;
 }

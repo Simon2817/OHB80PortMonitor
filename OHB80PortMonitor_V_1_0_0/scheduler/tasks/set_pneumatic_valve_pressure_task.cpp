@@ -330,14 +330,24 @@ void SetPneumaticValvePressureTask::forceFinish()
     // 写入运行日志：任务完成
     auto* opTaskEnd = SharedData::getOperationDispatchTask();
     if (opTaskEnd) {
-        const QString desc = allSuccess
-            ? QString("SetPneumaticValvePressure %1 bar task completed: %2 devices succeeded")
-                  .arg(m_pressureBar).arg(m_successCount)
-            : QString("SetPneumaticValvePressure %1 bar task failed: %2 succeeded, %3 failed")
-                  .arg(m_pressureBar).arg(m_successCount).arg(m_failedQrCodes.count());
-        opTaskEnd->log(allSuccess ? OperationDispatchTask::MsgType::Message
-                                  : OperationDispatchTask::MsgType::Warn, desc, 0);
+        if (allSuccess) {
+            const QString desc = QString("SetPneumaticValvePressure %1 bar task completed: %2 devices succeeded")
+                  .arg(m_pressureBar).arg(m_successCount);
+            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
+        } else {
+            // 每个失败设备单独写一条日志
+            for (const QString& qr : m_failedQrCodes) {
+                logFailedDevice(opTaskEnd, qr);
+            }
+        }
     }
+}
+
+void SetPneumaticValvePressureTask::logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode)
+{
+    const QString desc = QString("SetPneumaticValvePressure %1 bar task failed: device %2")
+        .arg(m_pressureBar).arg(qrcode);
+    opTask->log(OperationDispatchTask::MsgType::Error, desc, 0);
 }
 
 QByteArray SetPneumaticValvePressureTask::buildRegisterValue(quint16 value) const

@@ -11,6 +11,8 @@
 #include <QTimer>
 #include <QVector>
 
+class OperationDispatchTask;
+
 // ====================================================================
 // SetHumidityOffsetTask — 设置湿度校准参数调度任务
 //
@@ -78,6 +80,7 @@ private:
     void tryMarkDeviceSuccess(const QString &qrcode);
     void checkAllFinished();
     void forceFinish();
+    void logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode);
 
 private:
     QVector<QString>  m_qrcodes;

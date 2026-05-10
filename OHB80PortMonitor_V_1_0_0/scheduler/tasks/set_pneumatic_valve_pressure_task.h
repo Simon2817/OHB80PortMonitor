@@ -11,6 +11,8 @@
 #include <QTimer>
 #include <QVector>
 
+class OperationDispatchTask;
+
 // ====================================================================
 // SetPneumaticValvePressureTask — 设置气控阀压力调度任务
 //
@@ -62,6 +64,7 @@ private:
     void disconnectAll();
     void checkAllFinished();
     void forceFinish();
+    void logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode);
 
 private:
     QVector<QString>  m_qrcodes;

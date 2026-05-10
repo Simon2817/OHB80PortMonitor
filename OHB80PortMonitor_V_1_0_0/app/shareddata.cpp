@@ -129,6 +129,26 @@ void SharedData::initScheduler()
     Scheduler* scheduler = Scheduler::instance();
     scheduler->start();
 
+    // 顺序说明：必须先创建并提交 OperationDispatchTask / AlarmDispatchTask
+    // 再提交 NetworkStatusTask / MonitorDataTask。
+    // 因为 NetworkStatusTask::start() 会在启动阶段就通过
+    // SharedData::getOperationDispatchTask() / getAlarmDispatchTask() 派发日志/告警，
+    // 若下游 dispatcher 尚未创建，则会丢失日志（或对 nullptr 解引用）。
+
+    // 提交操作调度任务（长驻，取代老 RunningLoggerCollector）
+    if (!s_operationDispatchTask) {
+        s_operationDispatchTask = new OperationDispatchTask();
+        QString id = scheduler->submitTask(s_operationDispatchTask);
+        qDebug() << "[SharedData] 已提交操作调度任务, TaskID:" << id;
+    }
+
+    // 提交警报调度任务（长驻，取代老 AlarmLogicSystem）
+    if (!s_alarmDispatchTask) {
+        s_alarmDispatchTask = new AlarmDispatchTask();
+        QString id = scheduler->submitTask(s_alarmDispatchTask);
+        qDebug() << "[SharedData] 已提交警报调度任务, TaskID:" << id;
+    }
+
     // 提交网络状态监控任务（长驻任务）
     // NetworkStatusTask 内部会在设备启动前先创建并管理 InitCheckTask
     if (!s_networkStatusTask) {
@@ -142,20 +162,6 @@ void SharedData::initScheduler()
         s_monitorDataTask = new MonitorDataTask();
         QString monitorTaskId = scheduler->submitTask(s_monitorDataTask);
         qDebug() << "[SharedData] 已提交监控数据任务, TaskID:" << monitorTaskId;
-    }
-
-    // 提交警报调度任务（长驻，取代老 AlarmLogicSystem）
-    if (!s_alarmDispatchTask) {
-        s_alarmDispatchTask = new AlarmDispatchTask();
-        QString id = scheduler->submitTask(s_alarmDispatchTask);
-        qDebug() << "[SharedData] 已提交警报调度任务, TaskID:" << id;
-    }
-
-    // 提交操作调度任务（长驻，取代老 RunningLoggerCollector）
-    if (!s_operationDispatchTask) {
-        s_operationDispatchTask = new OperationDispatchTask();
-        QString id = scheduler->submitTask(s_operationDispatchTask);
-        qDebug() << "[SharedData] 已提交操作调度任务, TaskID:" << id;
     }
 
     qDebug() << "[SharedData] 调度器已启动，所有常驻任务已提交";

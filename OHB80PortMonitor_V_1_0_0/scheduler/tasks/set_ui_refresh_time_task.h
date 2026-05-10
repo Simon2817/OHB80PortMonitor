@@ -11,6 +11,8 @@
 #include <QTimer>
 #include <QVector>
 
+class OperationDispatchTask;
+
 // ====================================================================
 // SetUIRefreshTimeTask — 设置 UI 页面刷新时间（下位机屏幕）
 //
@@ -57,6 +59,7 @@ private:
     void disconnectAll();
     void checkAllFinished();
     void forceFinish();
+    void logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode);
 
 private:
     QVector<QString> m_qrcodes;

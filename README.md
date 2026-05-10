@@ -9,6 +9,154 @@
 ## 更新日志
 
 ### 2026-05-10 - Simon
+**批量设备任务失败日志拆分：每个失败设备单独写一条运行日志，封装 `logFailedDevice()` 助手**
+
+#### 背景
+原有批量设备任务（Read/Set 系列）在 `forceFinish()` 中只写一条合并的失败日志（如 `task failed: 2 succeeded, 5 failed`），无法在 OperationLogWidget 中精确定位是哪些设备失败。同时合并日志只用 `Warn` 级别，颜色不够醒目。
+
+#### 修改内容
+
+**1. ReadVEFCFlowUnitAndMediumStatusTask**
+- 拆分合并失败日志：遍历 `m_resultMap` 找出 `commFailed=true` 的设备，每个设备单独写一条 `Error` 级运行日志
+- 失败原因细化：`communication failed` / `unit abnormal` / `medium abnormal` / 多个用逗号连接
+- 封装 `logFailedDevice(opTask, id, st)` 助手方法
+
+**2. Set 系列任务统一处理（6 个）**
+- `SetIdlePurgeTask` —— `SetIdlePurge {property} task failed: device {qr}`
+- `SetPurgeFlowTask` —— `SetPurgeFlow flow={x} task failed: device {qr}`
+- `SetPneumaticValvePressureTask` —— `SetPneumaticValvePressure {x} bar task failed: device {qr}`
+- `SetHumidityOffsetTask` —— `SetHumidityOffset task failed: device {qr}`
+- `SetUIRefreshTimeTask` —— 新增完成日志 + `SetUIRefreshTime log={x}s prop={y}s task failed: device {qr}`
+- `SetVEFCGasTypeTask` —— 新增完成日志 + `SetVEFCGasType gasType={x} task failed: device {qr}`
+
+**3. 统一模式**
+- `.h`：添加 `class OperationDispatchTask;` 前向声明 + `void logFailedDevice(OperationDispatchTask*, const QString&);` 私有方法
+- `.cpp`：`forceFinish()` 中根据 `allSuccess` 走分支：
+  - 成功 → 写一条 `Message` 级完成日志（保留原合并形式）
+  - 失败 → 遍历 `m_failedQrCodes` 调用 `logFailedDevice()` 写 `Error` 级日志
+- `set_ui_refresh_time_task` / `set_vefc_gas_type_task` 之前没有 `OperationDispatchTask` 日志接入，新增 `app/shareddata.h` 与 `scheduler/tasks/operation_dispatch_task.h` 的 include
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/read_vefc_flow_unit_medium_status_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_idle_purge_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_purge_flow_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_pneumatic_valve_pressure_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_humidity_offset_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_ui_refresh_time_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_vefc_gas_type_task.{h,cpp}`
+
+---
+
+### 2026-05-10 - Simon
+**OperationLogWidget 日志类型颜色编码：Warn / Error / Fatal 与 ScrollingTipLabel 风格统一**
+
+#### 修改内容
+- 新增 `logTypeForegroundColor(int)` 助手函数：
+  - `Warn` → `#f5a623`（警报黄色）
+  - `Error` / `Fatal` → `#c92a2a`（与 ScrollingTipLabel 报警色一致的暗红）
+  - 其他类型返回无效 `QColor`，使用控件默认色
+- 在 `onRecordInserted()` 实时日志和历史日志的 `appendRow` / 历史表填充处统一应用前景色（`QStandardItem::setForeground(QBrush)`）
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/operationlogwidget/operationlogwidget.cpp`
+
+---
+
+### 2026-05-10 - Simon
+**修复启动早期运行日志在 OperationLogWidget 和 ScrollingTipLabel 中丢失的问题**
+
+#### 背景
+软件启动时，NetworkStatusTask 在 App::initialize() 阶段就开始派发运行日志（如 `[WriteQRCode]`），但此时 UI 控件尚未创建：
+- UIDemo6（包含 ScrollingTipLabel）在 App::initialize() 之后才创建
+- OperationLogWidget 是懒加载，用户点击公告栏时才创建
+导致启动早期的日志信号发出时没有订阅者，日志彻底丢失。
+
+#### 修改内容
+
+**1. SharedData::initScheduler() 调整任务初始化顺序**
+- 原顺序：NetworkStatusTask → MonitorDataTask → AlarmDispatchTask → OperationDispatchTask
+- 新顺序：OperationDispatchTask → AlarmDispatchTask → NetworkStatusTask → MonitorDataTask
+- 原因：NetworkStatusTask::start() 会立即调用 SharedData::getOperationDispatchTask() / getAlarmDispatchTask() 派发日志/告警，必须先创建这两个 dispatcher
+
+**2. OperationDispatchTask 添加环形缓存机制**
+- 添加 `m_recentRecords` 环形缓存（最大 500 条）
+- 添加 `recentRecords()` 公共方法，线程安全获取最近日志
+- 每次 `log()` 写入数据库时同时写入缓存
+- 目的：为后续订阅的 UI 控件提供补播数据源
+
+**3. OperationLogWidget::initLiveLog() 补播 backlog**
+- 在 connect `operationLogInserted` 信号之前，先调用 `recentRecords()` 获取历史日志
+- 遍历 backlog 并调用 `onRecordInserted()` 补播到 live log 表
+- 确保用户打开 OperationLogWidget 时能看到启动到此刻的所有日志
+
+**4. UIDemo6::connectTipLabelTask() 补播 backlog**
+- 在 connect `operationLogInserted` 信号之前，先取 `recentRecords()` 的最后一条
+- 调用 `submitOperationLog()` 喂给 ScrollingTipLabel
+- 只取最后一条因为公告栏只显示最新一条操作日志
+
+**5. NetworkStatusTask::start() 主动触发初始已连接设备的日志**
+- 设备在信号挂接前可能已经完成连接（异步连接竞态），此时不会再触发 statusChanged 信号
+- 在 start() 中检测 `currentStatus == Connected` 时，主动调用 `submitWriteQRCode()` 和记录连接恢复日志
+- 使用 `Qt::QueuedConnection` 延迟执行，确保 OperationDispatchTask 和 UI 连接已就绪
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/app/shareddata.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operation_dispatch_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/operation_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/operationlogwidget/operationlogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/uidemo6.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/network_status_task.cpp`
+
+---
+
+### 2026-05-10 - Simon
+**AlarmDispatchTask 启动时恢复未解决警报并通知 UI，新增警报提交/解决运行日志记录**
+
+#### 修改内容
+- 在 `AlarmDispatchTask::loadActiveFromDb()` 中，为每个从数据库恢复的未解决警报：
+  - 发出 `alarmPublished` 信号，让 ScrollingTipLabel 等订阅者显示恢复的警报
+  - 调用 `OperationDispatchTask::logMessage()` 记录运行日志（直接显示警报描述）
+- 在 emit 信号前先解锁互斥锁，避免死锁（emit 可能触发回调访问 `m_active`）
+- 在 `submitAlarm()` 中添加运行日志记录（警报提交时记录描述）
+- 在 `submitResolve()` 中添加运行日志记录（警报解决时记录 `[AlarmResolved] {description}`）
+- 新增 `activeAlarms()` 方法：线程安全返回当前活跃警报快照
+- `UIDemo6::connectTipLabelTask()` 在 connect `alarmPublished` 信号前，从 `activeAlarms()` 取出活跃警报列表补播给 ScrollingTipLabel，解决启动早期由 `loadActiveFromDb()` 恢复的未解决警报在 UI 上不显示的问题
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/uidemo6.cpp`
+
+---
+
+### 2026-05-10 - Simon
+**NetworkStatusTask 新增设备离线告警运行日志记录**
+
+#### 修改内容
+
+**1. 设备离线告警解决时记录运行日志**
+- 在 `NetworkStatusTask::onStatusChanged` 中，当设备连接成功并调用 `AlarmDispatchTask::submitResolve` 解决设备离线告警后
+- 调用 `OperationDispatchTask::logMessage()` 记录运行日志
+- 日志内容：`[DeviceOffline] Device {masterId} connection restored, alarm resolved`
+
+**2. 设备离线告警提交时记录运行日志**
+- 在 `NetworkStatusTask::onStatusChanged` 中，当设备从已连接状态跌落并调用 `AlarmDispatchTask::submitAlarm` 提交设备离线告警后
+- 调用 `OperationDispatchTask::logError()` 记录错误日志
+- 日志内容：`[DeviceOffline] Device {masterId} connection lost, alarm submitted`
+
+**注意**: 后续将警报相关运行日志统一迁移到 AlarmDispatchTask 处理，NetworkStatusTask 不再重复记录。
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/network_status_task.cpp`
+
+---
+
+### 2026-05-10 - Simon
 **ScrollingTipLabel 滚动算法重构：QPainter 像素级精确滚动 + 无缝循环**
 
 #### 背景

@@ -168,6 +168,14 @@ void UIDemo6::connectTipLabelTask()
     // 连接 OperationDispatchTask 的操作日志插入信号
     OperationDispatchTask* operationTask = SharedData::getOperationDispatchTask();
     if (operationTask) {
+        // 补播：UIDemo6 在 App::initialize() 之后才创建，启动早期由 NetworkStatusTask
+        // 等任务派发的运行日志会先于 connect 发出 —— 取出最近一条直接喂给公告栏，
+        // 避免初始打开软件时公告栏显示为空。
+        const QList<OperationRecord> backlog = operationTask->recentRecords();
+        if (!backlog.isEmpty()) {
+            ui->scrollingTipLabel->submitOperationLog(backlog.last());
+        }
+
         connect(operationTask, &OperationDispatchTask::operationLogInserted,
                 this, [this](const OperationRecord& rec) {
                     ui->scrollingTipLabel->submitOperationLog(rec);
@@ -177,6 +185,15 @@ void UIDemo6::connectTipLabelTask()
     // 连接 AlarmDispatchTask 的警报日志插入信号
     AlarmDispatchTask* alarmTask = SharedData::getAlarmDispatchTask();
     if (alarmTask) {
+        // 补播：UIDemo6 在 AlarmDispatchTask::start() 之后才创建，启动早期
+        // loadActiveFromDb() 从数据库恢复的未解决警报已经 emit alarmPublished 完成，
+        // 这里把当前活跃警报快照直接喂给公告栏，避免恢复的警报在公告栏消失。
+        const QList<AlarmInfo> activeBacklog = alarmTask->activeAlarms();
+        for (const AlarmInfo& info : activeBacklog) {
+            if (info.record.isResolved == static_cast<int>(AlarmResolvedStatus::NoNeed)) continue;
+            ui->scrollingTipLabel->submitAlarmLog(info.record);
+        }
+
         connect(alarmTask, &AlarmDispatchTask::alarmPublished,
                 this, [this](const AlarmInfo& info) {
                     // NoNeed 类型（如 SH85 自检告警）不需要在滚动公告栏显示

@@ -7,6 +7,8 @@
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 #include "app/applogger.h"
+#include "app/shareddata.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "loggermanager.h"
 
 #include <QDebug>
@@ -261,6 +263,28 @@ void SetUIRefreshTimeTask::forceFinish()
         QString("[Scheduler][SetUIRefreshTimeTask] 任务结束: log=%1s prop=%2s %3 台成功，%4 台失败")
             .arg(m_logScreenSec).arg(m_propertyScreenSec)
             .arg(m_successCount).arg(m_failedQrCodes.count()).toStdString());
+
+    // 写入运行日志：任务完成
+    auto* opTaskEnd = SharedData::getOperationDispatchTask();
+    if (opTaskEnd) {
+        if (allSuccess) {
+            const QString desc = QString("SetUIRefreshTime log=%1s prop=%2s task completed: %3 devices succeeded")
+                  .arg(m_logScreenSec).arg(m_propertyScreenSec).arg(m_successCount);
+            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
+        } else {
+            // 每个失败设备单独写一条日志
+            for (const QString& qr : m_failedQrCodes) {
+                logFailedDevice(opTaskEnd, qr);
+            }
+        }
+    }
+}
+
+void SetUIRefreshTimeTask::logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode)
+{
+    const QString desc = QString("SetUIRefreshTime log=%1s prop=%2s task failed: device %3")
+        .arg(m_logScreenSec).arg(m_propertyScreenSec).arg(qrcode);
+    opTask->log(OperationDispatchTask::MsgType::Error, desc, 0);
 }
 
 QByteArray SetUIRefreshTimeTask::buildPayload() const

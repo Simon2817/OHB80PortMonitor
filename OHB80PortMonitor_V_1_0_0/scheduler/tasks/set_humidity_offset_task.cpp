@@ -417,14 +417,23 @@ void SetHumidityOffsetTask::forceFinish()
     // 写入运行日志：任务完成
     auto* opTaskEnd = SharedData::getOperationDispatchTask();
     if (opTaskEnd) {
-        const QString desc = allSuccess
-            ? QString("SetHumidityOffset task completed: %1 devices succeeded")
-                  .arg(m_successCount)
-            : QString("SetHumidityOffset task failed: %1 succeeded, %2 failed")
-                  .arg(m_successCount).arg(m_failedQrCodes.count());
-        opTaskEnd->log(allSuccess ? OperationDispatchTask::MsgType::Message
-                                  : OperationDispatchTask::MsgType::Warn, desc, 0);
+        if (allSuccess) {
+            const QString desc = QString("SetHumidityOffset task completed: %1 devices succeeded")
+                  .arg(m_successCount);
+            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
+        } else {
+            // 每个失败设备单独写一条日志
+            for (const QString& qr : m_failedQrCodes) {
+                logFailedDevice(opTaskEnd, qr);
+            }
+        }
     }
+}
+
+void SetHumidityOffsetTask::logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode)
+{
+    const QString desc = QString("SetHumidityOffset task failed: device %1").arg(qrcode);
+    opTask->log(OperationDispatchTask::MsgType::Error, desc, 0);
 }
 
 QByteArray SetHumidityOffsetTask::buildRegisterValue(quint16 value) const

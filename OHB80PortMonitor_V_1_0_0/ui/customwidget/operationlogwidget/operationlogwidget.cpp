@@ -20,6 +20,39 @@
 #include "databasemanager.h"
 #include "operationlogdb/operationlogdbcon.h"
 
+namespace {
+// 日志类型文字颜色
+// - Warn：警报黄色
+// - Error / Fatal：参考 ScrollingTipLabel 警报模式的深红色（#c92a2a）
+// - 其余：返回无效 QColor，调用方据此保持默认文字色
+QColor logTypeForegroundColor(int logType)
+{
+    switch (logType) {
+        case static_cast<int>(LogDB::OperationLogType::Warn):
+            return QColor(QStringLiteral("#f5a623"));
+        case static_cast<int>(LogDB::OperationLogType::Error):
+        case static_cast<int>(LogDB::OperationLogType::Fatal):
+            return QColor(QStringLiteral("#c92a2a"));
+        default:
+            return QColor(); // invalid
+    }
+}
+
+// 给一行三个 item 统一设置前景色（仅当 color 有效时）
+void applyLogTypeForeground(QStandardItem* itemTime,
+                            QStandardItem* itemLogType,
+                            QStandardItem* itemDesc,
+                            int logType)
+{
+    const QColor fg = logTypeForegroundColor(logType);
+    if (!fg.isValid()) return;
+    const QBrush brush(fg);
+    if (itemTime)    itemTime->setForeground(brush);
+    if (itemLogType) itemLogType->setForeground(brush);
+    if (itemDesc)    itemDesc->setForeground(brush);
+}
+} // namespace
+
 OperationLogWidget::OperationLogWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::OperationLogWidget)
@@ -100,6 +133,14 @@ void OperationLogWidget::initLiveLog()
 
     // 订阅 OperationDispatchTask 的即时信号，实现实时显示
     if (auto* opTask = SharedData::getOperationDispatchTask()) {
+        // 补播：取出本控件订阅信号之前已派发的最近日志，避免启动早期日志（如
+        // NetworkStatusTask::start() 中的 [WriteQRCode] 日志）因时序丢失。
+        // 必须在 connect 之前取，避免在补播与新增信号之间造成重复或漏包。
+        const QList<OperationRecord> backlog = opTask->recentRecords();
+        for (const OperationRecord& rec : backlog) {
+            onRecordInserted(rec);
+        }
+
         connect(opTask, &OperationDispatchTask::operationLogInserted,
                 this, &OperationLogWidget::onRecordInserted, Qt::QueuedConnection);
     }
@@ -112,10 +153,12 @@ void OperationLogWidget::onRecordInserted(const OperationRecord& record)
 
     const QString logTypeText = LogDB::operationLogTypeName(record.logType);
 
-    QList<QStandardItem*> items;
-    items << new QStandardItem(record.occurTime)
-          << new QStandardItem(logTypeText)
-          << new QStandardItem(record.description);
+    auto* itemTime    = new QStandardItem(record.occurTime);
+    auto* itemLogType = new QStandardItem(logTypeText);
+    auto* itemDesc    = new QStandardItem(record.description);
+    applyLogTypeForeground(itemTime, itemLogType, itemDesc, record.logType);
+
+    QList<QStandardItem*> items{ itemTime, itemLogType, itemDesc };
 
     // 按时间顺序追加到末尾（最新在底部）
     model->appendRow(items);
@@ -554,6 +597,7 @@ void OperationLogWidget::setHistoryLogData(const QList<OperationRecord>& data)
         auto* itemLogType = new QStandardItem(LogDB::operationLogTypeName(record.logType));
         auto* itemDesc    = new QStandardItem(record.description);
         itemTime->setData(record.id, Qt::UserRole);
+        applyLogTypeForeground(itemTime, itemLogType, itemDesc, record.logType);
         model->setItem(row, 0, itemTime);
         model->setItem(row, 1, itemLogType);
         model->setItem(row, 2, itemDesc);

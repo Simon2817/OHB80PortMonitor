@@ -4,6 +4,8 @@
 #include "../scheduler_task.h"
 #include "operationrecord.h"
 
+#include <QList>
+#include <QMutex>
 #include <QString>
 
 // ====================================================================
@@ -48,9 +50,19 @@ public:
     void logWarn(const QString& message);
     void logError(const QString& message);
 
+    // 取出最近的若干条已提交日志（线程安全）。
+    // 用于 UI 订阅前已经派发的日志补播 —— 避免 UI 控件构造时机晚于早期日志而丢失显示。
+    QList<OperationRecord> recentRecords() const;
+
 signals:
     // 操作日志插入完成信号（携带 OperationRecord）
     void operationLogInserted(const OperationRecord& record);
+
+private:
+    // 最近日志环形缓存上限
+    static constexpr int kRecentBufferMax = 500;
+    mutable QMutex m_recentMutex;
+    QList<OperationRecord> m_recentRecords;
 };
 
 #endif // OPERATION_DISPATCH_TASK_H

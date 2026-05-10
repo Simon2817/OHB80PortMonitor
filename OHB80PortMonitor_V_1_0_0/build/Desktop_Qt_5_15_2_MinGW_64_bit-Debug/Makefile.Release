@@ -25821,6 +25821,11 @@ release/scrollingtiplabel.o: ../../ui/customwidget/scrollingtiplabel/scrollingti
 		C:/Qt/5.15.2/mingw81_64/include/QtCore/QMetaType \
 		../../classes/alarmrecord.h \
 		C:/Qt/5.15.2/mingw81_64/include/QtGui/QFontMetrics \
+		C:/Qt/5.15.2/mingw81_64/include/QtGui/QPainter \
+		C:/Qt/5.15.2/mingw81_64/include/QtGui/qpainter.h \
+		C:/Qt/5.15.2/mingw81_64/include/QtGui/qtextoption.h \
+		C:/Qt/5.15.2/mingw81_64/include/QtGui/qpen.h \
+		C:/Qt/5.15.2/mingw81_64/include/QtGui/QPixmap \
 		../../app/alarmtype.h \
 		C:/Qt/5.15.2/mingw81_64/include/QtCore/QList \
 		C:/Qt/5.15.2/mingw81_64/include/QtCore/QPair \

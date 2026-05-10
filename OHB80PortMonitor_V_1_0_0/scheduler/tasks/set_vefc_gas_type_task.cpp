@@ -7,6 +7,8 @@
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 #include "app/applogger.h"
+#include "app/shareddata.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "loggermanager.h"
 
 #include <QDebug>
@@ -256,6 +258,28 @@ void SetVEFCGasTypeTask::forceFinish()
         allSuccess ? Level::INFO : Level::WARN,
         QString("[Scheduler][SetVEFCGasTypeTask] 任务结束: gasType=%1 %2 台成功，%3 台失败")
             .arg(m_gasType).arg(m_successCount).arg(m_failedQrCodes.count()).toStdString());
+
+    // 写入运行日志：任务完成
+    auto* opTaskEnd = SharedData::getOperationDispatchTask();
+    if (opTaskEnd) {
+        if (allSuccess) {
+            const QString desc = QString("SetVEFCGasType gasType=%1 task completed: %2 devices succeeded")
+                  .arg(m_gasType).arg(m_successCount);
+            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
+        } else {
+            // 每个失败设备单独写一条日志
+            for (const QString& qr : m_failedQrCodes) {
+                logFailedDevice(opTaskEnd, qr);
+            }
+        }
+    }
+}
+
+void SetVEFCGasTypeTask::logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode)
+{
+    const QString desc = QString("SetVEFCGasType gasType=%1 task failed: device %2")
+        .arg(m_gasType).arg(qrcode);
+    opTask->log(OperationDispatchTask::MsgType::Error, desc, 0);
 }
 
 QByteArray SetVEFCGasTypeTask::buildRegisterValue(quint16 value) const

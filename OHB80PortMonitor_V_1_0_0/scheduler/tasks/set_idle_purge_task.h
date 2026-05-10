@@ -10,6 +10,8 @@
 #include <QStringList>
 #include <QTimer>
 
+class OperationDispatchTask;
+
 // ====================================================================
 // SetIdlePurgeTask — 批量写入 Idle Purge 参数调度任务
 //
@@ -79,6 +81,9 @@ private:
 
     // 强制结束任务（超时或正常完成均走此路径，保证只触发一次）
     void forceFinish();
+
+    // 写入单个失败设备的运行日志（封装统一格式，避免 forceFinish 中重复代码）
+    void logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode);
 
 private:
     IdlePurgeProperty m_property;

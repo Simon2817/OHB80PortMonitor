@@ -11,6 +11,8 @@
 #include <QTimer>
 #include <QVector>
 
+class OperationDispatchTask;
+
 // ====================================================================
 // SetVEFCGasTypeTask — 写入 VEFC 气体介质类型（掉电保持）
 //
@@ -62,6 +64,7 @@ private:
     void disconnectAll();
     void checkAllFinished();
     void forceFinish();
+    void logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode);
 
 private:
     QVector<QString> m_qrcodes;

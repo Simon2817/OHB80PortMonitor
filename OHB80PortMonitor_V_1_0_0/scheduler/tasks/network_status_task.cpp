@@ -99,6 +99,15 @@ void NetworkStatusTask::start()
                             Qt::QueuedConnection);
         m_connections.append(conn);
         m_totalCount++;
+
+        // 设备在信号挂接前可能已经完成连接（异步连接竞态），此时不会再触发 statusChanged 信号
+        // 需要主动触发 WriteQRCode 下发，避免初始已连接设备的指令丢失
+        if (currentStatus == ModbusConnecter::ConnectionStatus::Connected) {
+            QMetaObject::invokeMethod(this, [this, id]() {
+                if (m_stopped) return;
+                submitWriteQRCode(id);
+            }, Qt::QueuedConnection);
+        }
     }
 
     if (m_totalCount == 0) {
@@ -182,8 +191,6 @@ void NetworkStatusTask::onStatusChanged(ModbusConnecter::ConnectionStatus status
             const int alarmType   = static_cast<int>(AlarmType::DeviceOffline);
             const int alarmSource = static_cast<int>(AlarmSource::Device);
             dispatcher->submitResolve(alarmType, alarmSource, masterId);
-            SharedData::getOperationDispatchTask()->logMessage(
-                QString("[DeviceOffline] Device %1 connection restored, alarm resolved").arg(masterId));
         }
 
         // 连接成功后下发 WriteQRCode 指令
@@ -212,8 +219,6 @@ void NetworkStatusTask::onStatusChanged(ModbusConnecter::ConnectionStatus status
                     static_cast<int>(AlarmSource::Device),
                     masterId,
                     QStringLiteral("Device %1 connection lost").arg(masterId));
-                SharedData::getOperationDispatchTask()->logError(
-                    QString("[DeviceOffline] Device %1 connection lost, alarm submitted").arg(masterId));
             }
         }
     }

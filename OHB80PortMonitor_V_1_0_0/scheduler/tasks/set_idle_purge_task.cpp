@@ -334,14 +334,24 @@ void SetIdlePurgeTask::forceFinish()
     // 写入运行日志：任务完成
     auto* opTaskEnd = SharedData::getOperationDispatchTask();
     if (opTaskEnd) {
-        const QString desc = allSuccess
-            ? QString("SetIdlePurge %1 task completed: %2 devices succeeded")
-                  .arg(propertyToString(m_property)).arg(m_successCount)
-            : QString("SetIdlePurge %1 task failed: %2 succeeded, %3 failed")
-                  .arg(propertyToString(m_property)).arg(m_successCount).arg(m_failedQrCodes.count());
-        opTaskEnd->log(allSuccess ? OperationDispatchTask::MsgType::Message
-                                  : OperationDispatchTask::MsgType::Warn, desc, 0);
+        if (allSuccess) {
+            const QString desc = QString("SetIdlePurge %1 task completed: %2 devices succeeded")
+                  .arg(propertyToString(m_property)).arg(m_successCount);
+            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
+        } else {
+            // 每个失败设备单独写一条日志
+            for (const QString& qr : m_failedQrCodes) {
+                logFailedDevice(opTaskEnd, qr);
+            }
+        }
     }
+}
+
+void SetIdlePurgeTask::logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode)
+{
+    const QString desc = QString("SetIdlePurge %1 task failed: device %2")
+        .arg(propertyToString(m_property), qrcode);
+    opTask->log(OperationDispatchTask::MsgType::Error, desc, 0);
 }
 
 QString SetIdlePurgeTask::commandIdForProperty(IdlePurgeProperty p) const

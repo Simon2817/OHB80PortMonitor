@@ -282,14 +282,24 @@ void SetPurgeFlowTask::forceFinish()
     // 写入运行日志：任务完成
     auto* opTaskEnd = SharedData::getOperationDispatchTask();
     if (opTaskEnd) {
-        const QString desc = allSuccess
-            ? QString("SetPurgeFlow flow=%1 task completed: %2 devices succeeded")
-                  .arg(m_flowValue).arg(m_successCount)
-            : QString("SetPurgeFlow flow=%1 task failed: %2 succeeded, %3 failed")
-                  .arg(m_flowValue).arg(m_successCount).arg(m_failedQrCodes.count());
-        opTaskEnd->log(allSuccess ? OperationDispatchTask::MsgType::Message
-                                  : OperationDispatchTask::MsgType::Warn, desc, 0);
+        if (allSuccess) {
+            const QString desc = QString("SetPurgeFlow flow=%1 task completed: %2 devices succeeded")
+                  .arg(m_flowValue).arg(m_successCount);
+            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
+        } else {
+            // 每个失败设备单独写一条日志
+            for (const QString& qr : m_failedQrCodes) {
+                logFailedDevice(opTaskEnd, qr);
+            }
+        }
     }
+}
+
+void SetPurgeFlowTask::logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode)
+{
+    const QString desc = QString("SetPurgeFlow flow=%1 task failed: device %2")
+        .arg(m_flowValue).arg(qrcode);
+    opTask->log(OperationDispatchTask::MsgType::Error, desc, 0);
 }
 
 QByteArray SetPurgeFlowTask::buildRegisterValue(quint16 value) const

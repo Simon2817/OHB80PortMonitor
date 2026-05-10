@@ -86,6 +86,11 @@ public:
     // 当前活跃警报数量（线程安全）
     int activeCount() const;
 
+    // 取出当前所有活跃警报的快照（线程安全）。
+    // 用于 UI 订阅 alarmPublished 信号之前的补播 —— 避免 UI 控件构造时机晚于
+    // AlarmDispatchTask::start() 时 loadActiveFromDb 已经 emit 完而丢失显示。
+    QList<AlarmInfo> activeAlarms() const;
+
     // 清空活跃集合（不写库；保留接口给跨日重置等场景）
     void clearActive();
 

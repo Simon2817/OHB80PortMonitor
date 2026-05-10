@@ -5,6 +5,8 @@
 
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/alarmlogdb/alarmlogdbcon.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
+#include "app/shareddata.h"
 
 AlarmDispatchTask::AlarmDispatchTask(QObject* parent)
     : SchedulerTask(parent)
@@ -102,6 +104,11 @@ QString AlarmDispatchTask::submitAlarm(AlarmInfo info)
     // 持久化：写 alarm_log（DBCon 内部 QueuedConnection 异步落盘）
     persistInsert(info);
 
+    // 记录运行日志：警报提交
+    if (auto* opTask = SharedData::getOperationDispatchTask()) {
+        opTask->logMessage(info.record.description);
+    }
+
     // 派发给订阅者（live log / 业务回调）
     emit alarmPublished(info);
     return info.alarmId;
@@ -127,6 +134,12 @@ void AlarmDispatchTask::submitResolve(const QString& alarmId)
     }
 
     persistResolve(resolvedInfo);
+
+    // 记录运行日志：警报解决
+    if (auto* opTask = SharedData::getOperationDispatchTask()) {
+        opTask->logMessage(QString("[AlarmResolved] %1").arg(resolvedInfo.record.description));
+    }
+
     emit alarmResolved(resolvedInfo);
 }
 
@@ -158,6 +171,12 @@ int AlarmDispatchTask::activeCount() const
 {
     QMutexLocker locker(&m_mutex);
     return m_active.size();
+}
+
+QList<AlarmInfo> AlarmDispatchTask::activeAlarms() const
+{
+    QMutexLocker locker(&m_mutex);
+    return m_active.values();
 }
 
 void AlarmDispatchTask::clearActive()
@@ -210,6 +229,16 @@ void AlarmDispatchTask::loadActiveFromDb()
         if (!m_active.contains(info.alarmId)) {
             m_active.insert(info.alarmId, info);
             ++restored;
+
+            // 发出信号让 ScrollingTipLabel 等订阅者显示恢复的警报
+            // 必须在锁外 emit，避免死锁（emit 可能触发回调访问 m_active）
+            locker.unlock();
+            emit alarmPublished(info);
+            // 记录运行日志：警报恢复
+            if (auto* opTask = SharedData::getOperationDispatchTask()) {
+                opTask->logError(info.record.description);
+            }
+            locker.relock();
         }
     }
     qDebug() << "[AlarmDispatchTask] restored" << restored

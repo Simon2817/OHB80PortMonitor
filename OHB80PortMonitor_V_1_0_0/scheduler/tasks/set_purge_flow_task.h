@@ -11,6 +11,8 @@
 #include <QTimer>
 #include <QVector>
 
+class OperationDispatchTask;
+
 // ====================================================================
 // SetPurgeFlowTask — 设置 Purge 流量大小（VEFC 流量）
 //
@@ -56,6 +58,7 @@ private:
     void disconnectAll();
     void checkAllFinished();
     void forceFinish();
+    void logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode);
 
 private:
     QVector<QString> m_qrcodes;

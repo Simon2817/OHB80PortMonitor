@@ -13,6 +13,8 @@
 #include <QTimer>
 #include <QVector>
 
+class OperationDispatchTask;
+
 // ====================================================================
 // ReadVEFCFlowUnitAndMediumStatusTask — 读取 VEFC 流量单位 / 介质配置状态
 //
@@ -62,6 +64,7 @@ private:
     void disconnectAll();
     void checkAllFinished();
     void forceFinish();
+    void logFailedDevice(OperationDispatchTask* opTask, const QString& id, const DeviceStatus& st);
 
 private:
     QVector<QString> m_qrcodes;

@@ -306,30 +306,32 @@ void ReadVEFCFlowUnitAndMediumStatusTask::forceFinish()
                 .arg(successCount).arg(m_qrcodes.size());
             opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
         } else {
-            // 收集失败设备及其原因
-            QStringList failedInfo;
+            // 每个失败设备单独写一条日志
             for (const QString &id : m_qrcodes) {
                 if (m_resultMap.contains(id)) {
                     const DeviceStatus &st = m_resultMap[id];
                     if (st.commFailed) {
-                        QString reason;
-                        if (st.unitRaw == 0 && st.mediumRaw == 0) {
-                            reason = "communication failed";
-                        } else {
-                            QStringList issues;
-                            if (!st.unitOk) issues << "unit abnormal";
-                            if (!st.mediumOk) issues << "medium abnormal";
-                            reason = issues.join(", ");
-                        }
-                        failedInfo << QString("%1 (%2)").arg(id).arg(reason);
+                        logFailedDevice(opTaskEnd, id, st);
                     }
                 }
             }
-            const QString desc = QString("ReadVEFCStatus task failed: %1/%2 devices succeeded. Failed devices: %3")
-                .arg(successCount).arg(m_qrcodes.size()).arg(failedInfo.join("; "));
-            opTaskEnd->log(OperationDispatchTask::MsgType::Error, desc, 0);
         }
     }
+}
+
+void ReadVEFCFlowUnitAndMediumStatusTask::logFailedDevice(OperationDispatchTask* opTask, const QString& id, const DeviceStatus& st)
+{
+    QString reason;
+    if (st.unitRaw == 0 && st.mediumRaw == 0) {
+        reason = "communication failed";
+    } else {
+        QStringList issues;
+        if (!st.unitOk) issues << "unit abnormal";
+        if (!st.mediumOk) issues << "medium abnormal";
+        reason = issues.join(", ");
+    }
+    const QString desc = QString("ReadVEFCStatus task failed: device %1 (%2)").arg(id, reason);
+    opTask->log(OperationDispatchTask::MsgType::Error, desc, 0);
 }
 
 void ReadVEFCFlowUnitAndMediumStatusTask::disconnectAll()
