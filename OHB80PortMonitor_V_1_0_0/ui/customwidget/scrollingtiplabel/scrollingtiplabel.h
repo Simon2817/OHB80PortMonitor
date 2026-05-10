@@ -82,6 +82,7 @@ private:
     // 滚动显示逻辑
     void startScrolling();
     void stopScrolling();
+    void renderScrollFrame();
 
     // 格式化日志为显示字符串
     QString formatAlarmRecord(const AlarmRecord& record) const;

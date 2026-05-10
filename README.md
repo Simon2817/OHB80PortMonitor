@@ -8,6 +8,73 @@
 
 ## 更新日志
 
+### 2026-05-10 - Simon
+**ScrollingTipLabel 滚动算法重构：QPainter 像素级精确滚动 + 无缝循环**
+
+#### 背景
+原有滚动实现使用字符级近似滚动，存在以下问题：
+1. 字符宽度估算不精确（固定 8 像素），滚动不平滑
+2. 使用省略号拼接，视觉效果差
+3. 初始先显示静态文本，定时器启动后跳到滚动状态，有闪烁
+4. 滚动到末尾后直接重置，没有无缝循环效果
+
+#### 修改内容
+
+**1. 滚动算法重构**
+- 使用 QPainter + QPixmap 实现像素级精确滚动
+- 绘制两个文本副本实现无缝循环
+- 第一个副本位置：xPos = -m_scrollOffset（从左边缘开始向左滚动）
+- 第二个副本位置：xPos + m_textWidth + labelWidth/2（紧跟在第一个副本之后）
+- 当 offset > textWidth + labelWidth/2 时重置为 0，第二个副本正好到达第一个副本的初始位置
+- 滚动条件：文本尾部到达标签中间时，头部从右边缘重新进入
+- 文本垂直居中显示
+
+**2. 初始渲染优化**
+- 提取 `renderScrollFrame()` 方法用于帧渲染
+- `updateDisplay()` 在启动滚动前立即调用 `renderScrollFrame()` 渲染初始帧
+- 避免先显示静态文本再跳到滚动状态的闪烁问题
+
+**3. API 更新**
+- `submitAlarmLog` 参数从 `QStringList + int` 改为 `AlarmRecord`
+- `submitAlarmResolved` 参数从 `int` 改为 `AlarmRecord`
+- `submitOperationLog` 参数从 `QStringList` 改为 `OperationRecord`
+- 使用复合 key "qrCode|alarmType" 替代主键 ID，避免依赖异步 DB 主键
+
+**4. 数据结构更新**
+- `m_alarmQueue` 类型：`QQueue<int>` → `QQueue<QString>`（存储复合 key）
+- `m_operationLog` 类型：`QStringList` → `OperationRecord`
+- `m_alarmLogs` 类型：`QHash<int, QStringList>` → `QHash<QString, AlarmRecord>`
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/scrollingtiplabel/scrollingtiplabel.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/scrollingtiplabel/scrollingtiplabel.cpp`
+  - `OHB80PortMonitor_V_1_0_0/docs/api/scrollingtiplabel.md`
+  - `OHB80PortMonitor_V_1_0_0/docs/realize/scrollingtiplabel.md`
+
+---
+
+### 2026-05-10 - Simon
+**NetworkStatusTask 新增设备离线告警运行日志记录**
+
+#### 修改内容
+
+**1. 设备离线告警解决时记录运行日志**
+- 在 `NetworkStatusTask::onStatusChanged` 中，当设备连接成功并调用 `AlarmDispatchTask::submitResolve` 解决设备离线告警后
+- 调用 `OperationDispatchTask::logMessage()` 记录运行日志
+- 日志内容：`[DeviceOffline] Device {masterId} connection restored, alarm resolved`
+
+**2. 设备离线告警提交时记录运行日志**
+- 在 `NetworkStatusTask::onStatusChanged` 中，当设备从已连接状态跌落并调用 `AlarmDispatchTask::submitAlarm` 提交设备离线告警后
+- 调用 `OperationDispatchTask::logError()` 记录错误日志
+- 日志内容：`[DeviceOffline] Device {masterId} connection lost, alarm submitted`
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/network_status_task.cpp`
+
+---
+
 ### 2026-05-08 - Simon
 **新增 SH85SelfChecker：将 SH85 自检功能下沉到 data 层（每个 master 一个自检器）**
 

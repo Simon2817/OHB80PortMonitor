@@ -1,6 +1,6 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	DISCARDABLE	"D:\\Project\\CYTC_Project\\OHB80PortMonitor\\OHB80PortMonitor_V_1_0_0\\resource\\main.ico"
+IDI_ICON1	ICON	DISCARDABLE	"E:\\OHB80PortMonitor\\OHB80PortMonitor_V_1_0_0\\resource\\main.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 0,0,0,0

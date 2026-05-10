@@ -1,6 +1,8 @@
 #include "scrollingtiplabel.h"
 
 #include <QFontMetrics>
+#include <QPainter>
+#include <QPixmap>
 #include "app/alarmtype.h"
 #include "data/logdatabases/dbtypes.h"
 
@@ -108,7 +110,8 @@ void ScrollingTipLabel::updateDisplay()
     if (m_textWidth > labelWidth) {
         m_currentText = text;
         m_scrollOffset = 0;
-        setText(text);
+        // 立即渲染初始帧（文本从左边缘开始），避免先显示静态文本再跳到滚动状态
+        renderScrollFrame();
         startScrolling();
     }
     // 字符串长度小于等于 label 显示范围，居中显示
@@ -193,32 +196,52 @@ void ScrollingTipLabel::onScrollTimer()
         return;
     }
 
-    QFontMetrics fm(font());
     int labelWidth = width();
 
     // 更新滚动偏移
     m_scrollOffset += kScrollStep;
 
-    // 检查是否滚动完毕
-    if (m_scrollOffset >= m_textWidth) {
-        // 整个字符串滚动完毕，从头开始
+    // 检查是否滚动完毕（文本尾部到达标签中间）
+    // 需要滚动到：文本宽度 + 标签宽度/2
+    if (m_scrollOffset > m_textWidth + labelWidth / 2) {
+        // 整个字符串完全滚出，从头开始
         m_scrollOffset = 0;
     }
 
-    // 计算显示的文本（使用滚动偏移）
-    QString displayText = m_currentText;
+    renderScrollFrame();
+}
 
-    // 如果文本宽度超过标签宽度，使用滚动效果
-    if (m_textWidth > labelWidth) {
-        // 简单的滚动实现：从 offset 开始显示
-        int charsToSkip = fm.horizontalAdvance(displayText.left(m_scrollOffset));
-        // 这里简化处理，实际可能需要更精确的字符级滚动
-        // 暂时使用省略号表示滚动效果
-        if (m_scrollOffset > 0) {
-            displayText = displayText.mid(m_scrollOffset / 8); // 粗略估计字符宽度
-            displayText += " ... " + m_currentText.left(m_scrollOffset / 8);
-        }
-    }
+void ScrollingTipLabel::renderScrollFrame()
+{
+    QFontMetrics fm(font());
+    int labelWidth = width();
 
-    setText(displayText);
+    // 使用 QPainter 实现像素级精确滚动
+    QPixmap pixmap(labelWidth, height());
+    pixmap.fill(Qt::transparent);
+
+    QPainter painter(&pixmap);
+    painter.setFont(font());
+    painter.setPen(palette().color(QPalette::WindowText));
+
+    // 计算文本绘制位置（从左向右方向向左滚动）
+    // offset=0: 文本左边缘对齐标签左边缘（显示 [12345...]）
+    // offset=textWidth: 文本右边缘到达标签左边缘（文本完全滚出左侧）
+    // offset=textWidth-labelWidth/2: 文本尾部字符到达标签中间
+    int xPos = -m_scrollOffset;
+
+    // 计算垂直居中位置
+    int yPos = (height() + fm.ascent() - fm.descent()) / 2;
+
+    // 绘制文本（当前副本）
+    painter.drawText(xPos, yPos, m_currentText);
+
+    // 绘制文本（下一个副本，紧跟在当前副本之后，实现无缝循环）
+    // 两个副本之间的间距为 labelWidth/2，确保尾部到达中间时头部刚好从后端出现
+    int nextXPos = xPos + m_textWidth + labelWidth / 2;
+    painter.drawText(nextXPos, yPos, m_currentText);
+
+    painter.end();
+
+    setPixmap(pixmap);
 }

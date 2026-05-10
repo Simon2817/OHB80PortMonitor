@@ -61,3 +61,50 @@
 无
 
 ---
+
+## NetworkStatusTask
+
+### 功能
+监控所有 ModbusTcpMaster 的网络连接状态，处理设备离线告警和恢复。
+
+### 运行日志（OperationDispatchTask）
+
+#### 设备离线告警解决日志
+- **位置**: `onStatusChanged()` 方法
+- **条件**: 设备从断开/连接中/错误状态变为已连接状态，且成功调用 `AlarmDispatchTask::submitResolve` 解决设备离线告警
+- **级别**: `Message`
+- **内容**: `[DeviceOffline] Device {masterId} connection restored, alarm resolved`
+- **参数**: {masterId} - 设备二维码 ID
+
+#### 设备离线告警提交日志
+- **位置**: `onStatusChanged()` 方法
+- **条件**: 设备从已连接状态跌落（变为断开/连接中/错误状态），且成功调用 `AlarmDispatchTask::submitAlarm` 提交设备离线告警
+- **级别**: `Error`
+- **内容**: `[DeviceOffline] Device {masterId} connection lost, alarm submitted`
+- **参数**: {masterId} - 设备二维码 ID
+
+#### WriteQRCode 指令下发日志
+- **位置**: `submitWriteQRCode()` 方法
+- **条件**: 设备连接成功后，成功下发 WriteQRCode 指令
+- **级别**: `Message`
+- **内容**: `[WriteQRCode] Device {masterId} → QRCode={qrcodeValue}`
+- **参数**:
+  - {masterId} - 设备二维码 ID
+  - {qrcodeValue} - 写入的二维码数值
+
+### 警报日志（AlarmDispatchTask）
+
+#### 设备离线告警提交
+- **位置**: `onStatusChanged()` 方法
+- **条件**: 设备从已连接状态跌落（变为断开/连接中/错误状态）
+- **告警类型**: `DeviceOffline`
+- **告警来源**: `Device`
+- **描述**: `Device {masterId} connection lost`
+
+#### 设备离线告警解决
+- **位置**: `onStatusChanged()` 方法
+- **条件**: 设备从断开/连接中/错误状态变为已连接状态
+- **告警类型**: `DeviceOffline`
+- **告警来源**: `Device`
+
+---

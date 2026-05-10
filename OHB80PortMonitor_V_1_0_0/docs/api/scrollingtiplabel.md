@@ -34,16 +34,16 @@ class ScrollingTipLabel : public QLabel
 提交一个警报日志。
 
 ```cpp
-void submitAlarmLog(const QStringList& operationLog, int alarmRecordId);
+void submitAlarmLog(const AlarmRecord& record);
 ```
 
 **参数：**
-- `operationLog` (const QStringList&): OperationLogDBCon 记录，格式为 QStringList
-- `alarmRecordId` (int): AlarmLogDBCon 的警报记录的主键 ID
+- `record` (const AlarmRecord&): AlarmLogDBCon 记录对象
 
 **说明：**
+- 使用复合 key "qrCode|alarmType" 作为唯一标识
 - 将警报日志存储到内部映射表 `m_alarmLogs`
-- 将警报记录 ID 加入队列 `m_alarmQueue`
+- 将警报 key 加入队列 `m_alarmQueue`
 - 触发显示更新
 
 ---
@@ -53,14 +53,14 @@ void submitAlarmLog(const QStringList& operationLog, int alarmRecordId);
 提交一个警报已解决日志。
 
 ```cpp
-void submitAlarmResolved(int alarmRecordId);
+void submitAlarmResolved(const AlarmRecord& record);
 ```
 
 **参数：**
-- `alarmRecordId` (int): AlarmLogDBCon 的警报记录的主键 ID
+- `record` (const AlarmRecord&): AlarmLogDBCon 记录对象
 
 **说明：**
-- 从警报队列 `m_alarmQueue` 中移除对应的警报记录 ID
+- 使用复合 key "qrCode|alarmType" 从警报队列 `m_alarmQueue` 中移除对应的警报记录
 - 从映射表 `m_alarmLogs` 中删除对应的警报记录
 - 触发显示更新
 
@@ -71,11 +71,11 @@ void submitAlarmResolved(int alarmRecordId);
 提交一个 OperationLogDBCon 记录。
 
 ```cpp
-void submitOperationLog(const QStringList& operationLog);
+void submitOperationLog(const OperationRecord& record);
 ```
 
 **参数：**
-- `operationLog` (const QStringList&): OperationLogDBCon 记录，格式为 QStringList
+- `record` (const OperationRecord&): OperationLogDBCon 记录对象
 
 **说明：**
 - 替换当前存储的 OperationLog 记录 `m_operationLog`
@@ -87,6 +87,8 @@ void submitOperationLog(const QStringList& operationLog);
 
 ```cpp
 #include "scrollingtiplabel.h"
+#include "classes/alarmrecord.h"
+#include "classes/operationrecord.h"
 
 // 创建控件
 auto *tipLabel = new ScrollingTipLabel(this);
@@ -94,26 +96,36 @@ tipLabel->setFixedHeight(30);
 tipLabel->setFixedWidth(400);
 
 // 提交操作日志
-tipLabel->submitOperationLog({"2026-05-07 16:00:00", "INFO", "系统启动成功"});
+OperationRecord opRecord;
+opRecord.occurTime = "2026-05-07 16:00:00";
+opRecord.logType = static_cast<int>(LogDB::OperationLogType::Message);
+opRecord.description = "系统启动成功";
+tipLabel->submitOperationLog(opRecord);
 
 // 提交警报日志
-tipLabel->submitAlarmLog({"2026-05-07 16:05:00", "ALARM", "设备连接断开"}, 1001);
+AlarmRecord alarmRecord;
+alarmRecord.qrCode = "12345";
+alarmRecord.alarmType = static_cast<int>(AlarmType::DeviceOffline);
+alarmRecord.occurTime = "2026-05-07 16:05:00";
+alarmRecord.description = "设备连接断开";
+tipLabel->submitAlarmLog(alarmRecord);
 
 // 提交警报已解决
-tipLabel->submitAlarmResolved(1001);
+tipLabel->submitAlarmResolved(alarmRecord);
 
 // 再次提交操作日志（替换之前的操作日志）
-tipLabel->submitOperationLog({"2026-05-07 16:10:00", "INFO", "设备重新连接"});
+opRecord.description = "设备重新连接";
+tipLabel->submitOperationLog(opRecord);
 ```
 
 ---
 
 ## 注意事项
 
-1. **日志格式**：假设 QStringList 格式为 `[时间, 日志类型, 描述]`，如与实际格式不符需调整 `formatLogToString()` 方法
-2. **UI 线程使用**：该控件为 UI 控件，必须在 UI 线程中使用。调度层通过信号传递日志，调度层不需要知道该模块的存在
-3. **内存管理**：警报队列和映射表会持续增长，建议定期清理已解决的警报
-4. **滚动效果**：当前滚动实现较为简单，如需更平滑的效果可使用 QGraphicsView 或自定义绘制
-5. **显示优先级**：警报日志优先级最高，只要警报队列不空，公告栏优先显示警报
-6. **自动隐藏**：当没有任何可显示的消息时，控件会自动隐藏；有新消息时自动显示
-7. **样式切换**：控件会根据当前显示的消息类型自动切换样式（警报模式/普通模式）
+1. **UI 线程使用**：该控件为 UI 控件，必须在 UI 线程中使用。调度层通过信号传递日志，调度层不需要知道该模块的存在
+2. **内存管理**：警报队列和映射表会持续增长，建议定期清理已解决的警报
+3. **滚动效果**：使用 QPainter 实现像素级精确滚动，支持无缝循环
+4. **显示优先级**：警报日志优先级最高，只要警报队列不空，公告栏优先显示警报
+5. **自动隐藏**：当没有任何可显示的消息时，控件会自动隐藏；有新消息时自动显示
+6. **样式切换**：控件会根据当前显示的消息类型自动切换样式（警报模式/普通模式）
+7. **警报标识**：使用 "qrCode|alarmType" 复合 key 作为警报唯一标识，避免依赖异步 DB 主键

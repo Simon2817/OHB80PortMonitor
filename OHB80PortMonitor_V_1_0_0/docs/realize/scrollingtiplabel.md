@@ -63,14 +63,19 @@ flowchart TD
     A[onScrollTimer 定时触发] --> B{m_currentText 为空?}
     B -->|是| C[停止滚动 stopScrolling]
     B -->|否| D[m_scrollOffset += kScrollStep]
-    D --> E{m_scrollOffset >= m_textWidth?}
+    D --> E{m_scrollOffset > textWidth + labelWidth/2?}
     E -->|是| F[重置 m_scrollOffset = 0]
     E -->|否| G[保持当前偏移]
-    F --> H[计算显示文本]
+    F --> H[renderScrollFrame]
     G --> H
-    H --> I[setText 设置文本]
-    I --> A
+    H --> A
 ```
+
+**说明：**
+- 使用 QPainter 绘制两个文本副本实现无缝循环
+- 第一个副本位置：xPos = -m_scrollOffset（从左边缘开始向左滚动）
+- 第二个副本位置：xPos + m_textWidth + labelWidth/2（紧跟在第一个副本之后）
+- 当 offset 达到 textWidth + labelWidth/2 时，第二个副本正好到达第一个副本的初始位置，无缝循环
 
 ### 获取当前待显示日志流程
 
@@ -89,44 +94,53 @@ flowchart TD
 
 ### 滚动算法
 
-滚动算法使用定时器 + 偏移量的方式实现：
+滚动算法使用 QPainter + 双副本无缝循环实现：
 
 ```cpp
-void ScrollingTipLabel::onScrollTimer()
+void ScrollingTipLabel::renderScrollFrame()
 {
-    if (m_currentText.isEmpty()) {
-        stopScrolling();
-        return;
-    }
-
     QFontMetrics fm(font());
     int labelWidth = width();
 
-    // 每次滚动增加偏移量
-    m_scrollOffset += kScrollStep;
+    // 使用 QPainter 实现像素级精确滚动
+    QPixmap pixmap(labelWidth, height());
+    pixmap.fill(Qt::transparent);
 
-    // 检查是否滚动完毕
-    if (m_scrollOffset >= m_textWidth) {
-        // 整个字符串滚动完毕，从头开始
-        m_scrollOffset = 0;
-    }
+    QPainter painter(&pixmap);
+    painter.setFont(font());
+    painter.setPen(palette().color(QPalette::WindowText));
 
-    // 计算显示文本（使用省略号表示滚动效果）
-    QString displayText = m_currentText;
-    if (m_textWidth > labelWidth) {
-        int charsToSkip = m_scrollOffset / 8; // 粗略估计字符宽度
-        displayText = displayText.mid(charsToSkip);
-        displayText += " ... " + m_currentText.left(charsToSkip);
-    }
+    // 计算文本绘制位置（从左向右方向向左滚动）
+    // offset=0: 文本左边缘对齐标签左边缘（显示 [12345...]）
+    // offset=textWidth: 文本右边缘到达标签左边缘（文本完全滚出左侧）
+    // offset=textWidth-labelWidth/2: 文本尾部字符到达标签中间
+    int xPos = -m_scrollOffset;
 
-    setText(displayText);
+    // 计算垂直居中位置
+    int yPos = (height() + fm.ascent() - fm.descent()) / 2;
+
+    // 绘制文本（当前副本）
+    painter.drawText(xPos, yPos, m_currentText);
+
+    // 绘制文本（下一个副本，紧跟在当前副本之后，实现无缝循环）
+    // 两个副本之间的间距为 labelWidth/2，确保尾部到达中间时头部刚好从后端出现
+    int nextXPos = xPos + m_textWidth + labelWidth / 2;
+    painter.drawText(nextXPos, yPos, m_currentText);
+
+    painter.end();
+
+    setPixmap(pixmap);
 }
 ```
 
 **算法特点：**
-- 每次滚动固定像素（`kScrollStep = 2`）
-- 滚动到末尾后自动循环
-- 使用省略号表示滚动效果
+- 使用 QPainter 实现像素级精确滚动（`kScrollStep = 2` 像素/帧）
+- 绘制两个文本副本实现无缝循环
+- 第一个副本从左边缘开始向左滚动（xPos = -m_scrollOffset）
+- 第二个副本位置 = 第一个副本位置 + 文本宽度 + 标签宽度/2
+- 当 offset > textWidth + labelWidth/2 时重置为 0，实现无缝循环
+- 初始帧立即渲染，避免先显示静态文本再跳到滚动状态
+- 文本垂直居中显示
 
 ---
 
@@ -136,9 +150,9 @@ void ScrollingTipLabel::onScrollTimer()
 
 | 成员变量 | 类型 | 说明 |
 |---|---|---|
-| `m_alarmQueue` | `QQueue<int>` | 警报队列，存放 AlarmLogDBCon 的主键 ID，先进先出 |
-| `m_operationLog` | `QStringList` | 存放一条 OperationLogDBCon 记录 |
-| `m_alarmLogs` | `QHash<int, QStringList>` | alarmRecordId → operationLog 映射，用于快速查找警报日志 |
+| `m_alarmQueue` | `QQueue<QString>` | 警报队列，存放复合 key "qrCode|alarmType"，先进先出 |
+| `m_operationLog` | `OperationRecord` | 存放一条 OperationLogDBCon 记录 |
+| `m_alarmLogs` | `QHash<QString, AlarmRecord>` | 复合 key → AlarmRecord 映射，用于快速查找警报日志 |
 | `m_scrollTimer` | `QTimer*` | 滚动定时器，间隔 100ms |
 | `m_scrollOffset` | `int` | 当前滚动偏移量（像素） |
 | `m_currentText` | `QString` | 当前显示的文本 |
@@ -156,11 +170,11 @@ submitAlarmLog / submitAlarmResolved / submitOperationLog
     ↓
 updateDisplay
     ↓
-getCurrentDisplayLog
+getCurrentDisplayText
     ↓
-formatLogToString
+formatAlarmRecord / formatOperationRecord
     ↓
-setText / startScrolling
+setText / renderScrollFrame / startScrolling
 ```
 
 ---
@@ -173,9 +187,12 @@ setText / startScrolling
 |---|---|
 | `QLabel` | 基类，提供文本显示功能 |
 | `QTimer` | 实现滚动定时器 |
-| `QStringList` | 存储日志记录 |
-| `QQueue<int>` | 管理警报队列 |
-| `QHash<int, QStringList>` | 管理警报日志映射 |
+| `QQueue<QString>` | 管理警报队列 |
+| `QHash<QString, AlarmRecord>` | 管理警报日志映射 |
+| `AlarmRecord` | 警报记录类型 |
+| `OperationRecord` | 操作日志记录类型 |
+| `QPainter` | 实现像素级精确滚动绘制 |
+| `QPixmap` | 滚动帧缓冲 |
 
 ### 内部依赖
 
@@ -252,20 +269,22 @@ void ScrollingTipLabel::updateDisplay()
 
 **警报已解决：**
 ```cpp
-void ScrollingTipLabel::submitAlarmResolved(int alarmRecordId)
+void ScrollingTipLabel::submitAlarmResolved(const AlarmRecord& record)
 {
-    // 从队列中移除对应 ID（需要重建队列）
-    QQueue<int> newQueue;
+    const QString key = makeAlarmKey(record);
+
+    // 从队列中移除对应 key（需要重建队列）
+    QQueue<QString> newQueue;
     while (!m_alarmQueue.isEmpty()) {
-        int id = m_alarmQueue.dequeue();
-        if (id != alarmRecordId) {
-            newQueue.enqueue(id);
+        QString k = m_alarmQueue.dequeue();
+        if (k != key) {
+            newQueue.enqueue(k);
         }
     }
     m_alarmQueue = newQueue;
 
     // 从映射中删除
-    m_alarmLogs.remove(alarmRecordId);
+    m_alarmLogs.remove(key);
 
     updateDisplay();
 }
@@ -273,10 +292,10 @@ void ScrollingTipLabel::submitAlarmResolved(int alarmRecordId)
 
 **操作日志替换：**
 ```cpp
-void ScrollingTipLabel::submitOperationLog(const QStringList& operationLog)
+void ScrollingTipLabel::submitOperationLog(const OperationRecord& record)
 {
     // 直接替换当前记录
-    m_operationLog = operationLog;
+    m_operationLog = record;
 
     updateDisplay();
 }
@@ -287,12 +306,13 @@ void ScrollingTipLabel::submitOperationLog(const QStringList& operationLog)
 ```cpp
 void ScrollingTipLabel::updateDisplay()
 {
-    QStringList log = getCurrentDisplayLog();
-    QString text = formatLogToString(log);
+    QString text = getCurrentDisplayText();
 
     if (text.isEmpty()) {
         setText("");
         stopScrolling();
+        updateStyle(false);
+        hide();  // 没有消息时隐藏控件
         return;
     }
 
@@ -313,7 +333,8 @@ void ScrollingTipLabel::updateDisplay()
     if (m_textWidth > labelWidth) {
         m_currentText = text;
         m_scrollOffset = 0;
-        setText(text);
+        // 立即渲染初始帧（文本从左边缘开始），避免先显示静态文本再跳到滚动状态
+        renderScrollFrame();
         startScrolling();
     }
     // 字符串长度小于等于 label 显示范围，居中显示
@@ -328,24 +349,27 @@ void ScrollingTipLabel::updateDisplay()
 ### 4. 日志格式化
 
 ```cpp
-QString ScrollingTipLabel::formatLogToString(const QStringList& log)
+QString ScrollingTipLabel::formatAlarmRecord(const AlarmRecord& record) const
 {
-    if (log.isEmpty()) {
-        return "";
-    }
+    if (record.occurTime.isEmpty() && record.description.isEmpty())
+        return {};
+    return QString("[%1][%2] %3: %4")
+        .arg(record.occurTime,
+             alarmLevelName(record.alarmLevel),
+             alarmTypeName(record.alarmType),
+             record.description);
+}
 
-    // 假设 QStringList 格式为: [时间, 日志类型, 描述]
-    if (log.size() >= 3) {
-        return QString("[%1] %2: %3").arg(log[0], log[1], log[2]);
-    } else if (log.size() == 1) {
-        return log[0];
-    }
-
-    return log.join(" ");
+QString ScrollingTipLabel::formatOperationRecord(const OperationRecord& record) const
+{
+    if (record.occurTime.isEmpty() && record.description.isEmpty())
+        return {};
+    return QString("[%1] %2: %3")
+        .arg(record.occurTime,
+             LogDB::operationLogTypeName(record.logType),
+             record.description);
 }
 ```
-
-**注意：** 如实际日志格式不同，需调整此方法。
 
 ---
 
