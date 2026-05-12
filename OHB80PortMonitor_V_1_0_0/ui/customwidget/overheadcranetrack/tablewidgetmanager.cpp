@@ -28,6 +28,9 @@ QTableWidget* Graph::TableWidgetManager::addTable(const QString& name, const QSt
     item.table->setRowCount(0);
     item.table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+    // 禁止编辑单元格
+    item.table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
     // 隐藏垂直表头
     item.table->verticalHeader()->hide();
 

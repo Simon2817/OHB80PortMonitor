@@ -8,6 +8,94 @@
 
 ## 更新日志
 
+### 2026-05-12 - Simon
+**Live log 行数上限与裁剪策略调整**
+
+#### 修改内容
+
+**1. OperationLogWidget**
+- `kLiveLogMaxRows` 从 500 调整为 2000
+- 新增 `kLiveLogTrimBatch = 500`
+- 当条数 > 2000 时，一次性 `removeRows(0, 500)` 批量清除最顶部的 500 条最旧记录（替代原来的逐条 `while + removeRow`）
+
+**2. AlarmLogWidget**
+- `kLiveLogMaxRows` 从 500 调整为 100
+- 当条数 > 100 时，遍历 live log，清除所有 `Is Resolved == Resolved` 或 `NoNeed` 的记录（仅保留 `Unresolved` 未解决告警）
+- 从底部向上扫描删除，避免行号偏移
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/operationlogwidget/operationlogwidget.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/operationlogwidget/operationlogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.cpp`
+
+---
+
+### 2026-05-12 - Simon
+**日志表格滚动条 handle 默认显示为 hover 色，方便用户感知滚动位置**
+
+#### 修改内容
+- 在 `AlarmLogWidget` / `ComunicateLogWidget` / `OperationLogWidget` 的 `enableTouchScroll` lambda 中追加滚动条 stylesheet
+- `QScrollBar::handle:vertical/horizontal` 背景色固定为 `#D4D0C8`（与主题 hover 色一致）
+- 在原有 styleSheet 后追加而非覆盖，避免影响其他样式
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/comunicatelogwidget/comunicatelogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/operationlogwidget/operationlogwidget.cpp`
+
+---
+
+### 2026-05-12 - Simon
+**ConfigPage / DebugPage 滚动区域支持触屏拖动滚动**
+
+#### 修改内容
+- 在 `ConfigPage::initUI()` 和 `DebugPage::initUI()` 中为 `ui->scrollArea->viewport()` 注册 `QScroller::grabGesture(... LeftMouseButtonGesture)`
+- 配置 `QScrollerProperties`：
+  - `DragStartDistance = 0.005`（更敏感的拖动起始）
+  - `OvershootDragResistanceFactor = 0.3`
+  - `OvershootScrollDistanceFactor = 0.1`
+- 与日志 widget 的触屏滚动配置保持一致
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/configpage.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/debugpage.cpp`
+
+---
+
+### 2026-05-12 - Simon
+**表格禁止编辑：统一设置所有日志相关表格为只读模式**
+
+#### 修改内容
+
+**1. TableWidgetManager**
+- 在 `addTable()` 方法中添加 `setEditTriggers(QAbstractItemView::NoEditTriggers)`
+- 确保所有通过 TableWidgetManager 创建的表格都禁止编辑单元格
+
+**2. AlarmLogWidget**
+- `tableViewLiveLog` 添加禁止编辑设置
+- `tableViewHistoryLog` 添加禁止编辑设置
+
+**3. ComunicateLogWidget**
+- `tableViewLiveLog` 添加禁止编辑设置
+- `tableViewHistoryLog` 添加禁止编辑设置
+
+**4. OperationLogWidget**
+- `tableViewLiveLog` 添加禁止编辑设置
+- `tableViewHistoryLog` 已有禁止编辑设置（无需修改）
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/overheadcranetrack/tablewidgetmanager.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/comunicatelogwidget/comunicatelogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/operationlogwidget/operationlogwidget.cpp`
+
+---
+
 ### 2026-05-10 - Simon
 **批量设备任务失败日志拆分：每个失败设备单独写一条运行日志，封装 `logFailedDevice()` 助手**
 

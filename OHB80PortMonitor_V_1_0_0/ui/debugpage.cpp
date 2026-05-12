@@ -6,6 +6,8 @@
 #include "customwidget/debugsettingwidget/uirefreshtimesettingwidget.h"
 #include "customwidget/debugsettingwidget/vefcflowunitmediumstatuswidget.h"
 #include <QScrollBar>
+#include <QScroller>
+#include <QScrollerProperties>
 
 DebugPage::DebugPage(QWidget *parent)
     : QWidget(parent)
@@ -29,7 +31,18 @@ DebugPage::~DebugPage()
 void DebugPage::initUI()
 {
     initNav();
-    
+
+    // 启用触摸/鼠标拖动滚动手势（支持触屏滑动滚动区域）
+    if (ui->scrollArea && ui->scrollArea->viewport()) {
+        QScroller::grabGesture(ui->scrollArea->viewport(), QScroller::LeftMouseButtonGesture);
+        QScroller* scroller = QScroller::scroller(ui->scrollArea->viewport());
+        QScrollerProperties props = scroller->scrollerProperties();
+        props.setScrollMetric(QScrollerProperties::DragStartDistance, 0.005);
+        props.setScrollMetric(QScrollerProperties::OvershootDragResistanceFactor, 0.3);
+        props.setScrollMetric(QScrollerProperties::OvershootScrollDistanceFactor, 0.1);
+        scroller->setScrollerProperties(props);
+    }
+
     // 固件更新配置 SettingWidget
     m_firmwareConfigWidget = new FirmwareUpdateConfigSettingWidget(this);
     ui->scrollAreaWidgetContents->layout()->addWidget(m_firmwareConfigWidget);

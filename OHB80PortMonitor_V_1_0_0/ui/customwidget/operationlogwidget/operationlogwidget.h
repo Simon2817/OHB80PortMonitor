@@ -115,8 +115,9 @@ private:
     // 初始化 live log 表（建立 model + 表头 + 订阅 DBCon::recordInserted）
     void initLiveLog();
 
-    // live log 行数上限（超过后从末尾裁剪）
-    static constexpr int kLiveLogMaxRows = 500;
+    // live log 行数上限（超过后批量裁剪最旧的 kLiveLogTrimBatch 条）
+    static constexpr int kLiveLogMaxRows   = 2000;
+    static constexpr int kLiveLogTrimBatch = 500;
 };
 
 #endif // OPERATIONLOGWIDGET_H

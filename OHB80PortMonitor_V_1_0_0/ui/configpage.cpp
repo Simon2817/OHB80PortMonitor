@@ -7,6 +7,8 @@
 #include "customwidget/configsettingwidget/humidityoffsetsettingwidget.h"
 #include "customwidget/configsettingwidget/purgeflowsettingwidget.h"
 #include <QScrollBar>
+#include <QScroller>
+#include <QScrollerProperties>
 
 ConfigPage::ConfigPage(QWidget *parent)
     : QWidget(parent)
@@ -30,6 +32,17 @@ ConfigPage::~ConfigPage()
 void ConfigPage::initUI()
 {
     initNav();
+
+    // 启用触摸/鼠标拖动滚动手势（支持触屏滑动滚动区域）
+    if (ui->scrollArea && ui->scrollArea->viewport()) {
+        QScroller::grabGesture(ui->scrollArea->viewport(), QScroller::LeftMouseButtonGesture);
+        QScroller* scroller = QScroller::scroller(ui->scrollArea->viewport());
+        QScrollerProperties props = scroller->scrollerProperties();
+        props.setScrollMetric(QScrollerProperties::DragStartDistance, 0.005);
+        props.setScrollMetric(QScrollerProperties::OvershootDragResistanceFactor, 0.3);
+        props.setScrollMetric(QScrollerProperties::OvershootScrollDistanceFactor, 0.1);
+        scroller->setScrollerProperties(props);
+    }
 
     m_idlePurgeWidget = new IdlePurgeSettingWidget(this);
     ui->scrollAreaWidgetContents->layout()->addWidget(m_idlePurgeWidget);

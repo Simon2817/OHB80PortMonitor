@@ -64,8 +64,9 @@ AlarmLogWidget::AlarmLogWidget(QWidget *parent)
     // history log 表：最后一列拉伸充满剩余宽度
     ui->tableViewHistoryLog->horizontalHeader()->setStretchLastSection(true);
     ui->tableViewHistoryLog->verticalHeader()->setVisible(false);
+    ui->tableViewHistoryLog->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    // 启用触摸/鼠标拖动滚动手势（支持触屏滑动表格）
+    // 启用触摸/鼠标拖动滚动手势（支持触屏滑动表格）同时设置滚动条默认 hover 色
     auto enableTouchScroll = [](QAbstractItemView* view) {
         if (!view) return;
         QScroller::grabGesture(view->viewport(), QScroller::LeftMouseButtonGesture);
@@ -75,6 +76,11 @@ AlarmLogWidget::AlarmLogWidget(QWidget *parent)
         props.setScrollMetric(QScrollerProperties::OvershootDragResistanceFactor, 0.3);
         props.setScrollMetric(QScrollerProperties::OvershootScrollDistanceFactor, 0.1);
         scroller->setScrollerProperties(props);
+        // 滚动条 handle 默认即为 hover 色，方便用户看到滚动位置
+        const QString scrollHandleStyle =
+            "QScrollBar::handle:vertical{background:#D4D0C8;}"
+            "QScrollBar::handle:horizontal{background:#D4D0C8;}";
+        view->setStyleSheet(view->styleSheet() + scrollHandleStyle);
     };
     enableTouchScroll(ui->tableViewLiveLog);
     enableTouchScroll(ui->tableViewHistoryLog);
@@ -91,6 +97,7 @@ void AlarmLogWidget::initLiveLog()
     ui->tableViewLiveLog->setModel(model);
     ui->tableViewLiveLog->horizontalHeader()->setStretchLastSection(true);
     ui->tableViewLiveLog->verticalHeader()->setVisible(false);
+    ui->tableViewLiveLog->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     if (auto* db = LogDB::DatabaseManager::instance().alarmLogCon()) {
         connect(db, &LogDB::AlarmLogDBCon::recordInserted,
@@ -181,8 +188,23 @@ void AlarmLogWidget::onRecordInserted(const AlarmRecord& record)
           << new QStandardItem(record.description);
 
     model->insertRow(0, items);
-    while (model->rowCount() > kLiveLogMaxRows) {
-        model->removeRow(model->rowCount() - 1);
+
+    // 行数超过上限时，清除所有已解决（Resolved）和无需解决（NoNeed）的记录
+    // 仅保留未解决（Unresolved）告警
+    // 列 4 = Is Resolved，文本由 alarmResolvedStatusName 映射
+    if (model->rowCount() > kLiveLogMaxRows) {
+        constexpr int kColIsResolved = 4;
+        const QString resolvedText = alarmResolvedStatusName(static_cast<int>(AlarmResolvedStatus::Resolved));
+        const QString noNeedText   = alarmResolvedStatusName(static_cast<int>(AlarmResolvedStatus::NoNeed));
+        // 从底部向上删除，避免行号偏移
+        for (int r = model->rowCount() - 1; r >= 0; --r) {
+            QStandardItem* it = model->item(r, kColIsResolved);
+            if (!it) continue;
+            const QString s = it->text();
+            if (s == resolvedText || s == noNeedText) {
+                model->removeRow(r);
+            }
+        }
     }
 }
 

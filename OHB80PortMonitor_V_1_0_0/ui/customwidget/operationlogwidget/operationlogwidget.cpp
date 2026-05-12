@@ -105,7 +105,7 @@ OperationLogWidget::OperationLogWidget(QWidget *parent)
     ui->tableViewHistoryLog->horizontalHeader()->setStretchLastSection(true);
     ui->tableViewHistoryLog->verticalHeader()->setVisible(false);
 
-    // 启用触摸/鼠标拖动滚动手势（支持触屏滑动表格）
+    // 启用触摸/鼠标拖动滚动手势（支持触屏滑动表格）同时设置滚动条默认 hover 色
     auto enableTouchScroll = [](QAbstractItemView* view) {
         if (!view) return;
         QScroller::grabGesture(view->viewport(), QScroller::LeftMouseButtonGesture);
@@ -115,6 +115,11 @@ OperationLogWidget::OperationLogWidget(QWidget *parent)
         props.setScrollMetric(QScrollerProperties::OvershootDragResistanceFactor, 0.3);
         props.setScrollMetric(QScrollerProperties::OvershootScrollDistanceFactor, 0.1);
         scroller->setScrollerProperties(props);
+        // 滚动条 handle 默认即为 hover 色，方便用户看到滚动位置
+        const QString scrollHandleStyle =
+            "QScrollBar::handle:vertical{background:#D4D0C8;}"
+            "QScrollBar::handle:horizontal{background:#D4D0C8;}";
+        view->setStyleSheet(view->styleSheet() + scrollHandleStyle);
     };
     enableTouchScroll(ui->tableViewLiveLog);
     enableTouchScroll(ui->tableViewHistoryLog);
@@ -130,6 +135,7 @@ void OperationLogWidget::initLiveLog()
     ui->tableViewLiveLog->setModel(model);
     ui->tableViewLiveLog->horizontalHeader()->setStretchLastSection(true);
     ui->tableViewLiveLog->verticalHeader()->setVisible(false);
+    ui->tableViewLiveLog->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     // 订阅 OperationDispatchTask 的即时信号，实现实时显示
     if (auto* opTask = SharedData::getOperationDispatchTask()) {
@@ -162,8 +168,9 @@ void OperationLogWidget::onRecordInserted(const OperationRecord& record)
 
     // 按时间顺序追加到末尾（最新在底部）
     model->appendRow(items);
-    while (model->rowCount() > kLiveLogMaxRows) {
-        model->removeRow(0);  // 从顶部删除最旧的
+    // 行数超过上限时，一次性批量裁剪掉最顶部的 kLiveLogTrimBatch 条最旧记录
+    if (model->rowCount() > kLiveLogMaxRows) {
+        model->removeRows(0, kLiveLogTrimBatch);
     }
 
     // 自动滚动到底部（最新日志）

@@ -64,15 +64,3 @@
 | 设备操作 | 6 | FirmwareUpgradeTask, InitCheckTask, ReadVEFCFlowUnitAndMediumStatusTask, SendCommandTask, SH85SelfCheckTask, UserManagementTask |
 | **合计** | **20** | |
 
----
-
-## 六、任务基类
-
-所有任务均继承自 `SchedulerTask`，统一接口：
-
-- `start()` — 启动任务
-- `stop()` — 停止任务
-- `taskType()` — 返回任务类型字符串
-- `isPersistent()` — 是否为常驻任务（默认 false）
-
-任务通过 `Scheduler::instance()->submitTask(task)` 提交到调度器执行。

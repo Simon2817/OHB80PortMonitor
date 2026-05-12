@@ -59,8 +59,8 @@ private:
     // 让本次启动能看到上一次未解决的警报。
     void loadUnresolvedToLiveLog();
 
-    // live log 行数上限（超过后从末尾裁剪）
-    static constexpr int kLiveLogMaxRows = 500;
+    // live log 行数上限（超过后清除所有已解决记录）
+    static constexpr int kLiveLogMaxRows = 100;
 };
 
 #endif // ALARMLOGWIDGET_H
