@@ -91,7 +91,12 @@ QVariantMap CommandResponseParser::parseReadFoupStatus(const ModbusCommand& cmd)
     quint32 purgeLow  = readU16BE(payload, 14);
     result["purgeTimeSec"]      = (purgeHigh << 16) | purgeLow;
 
-    // CH_9 (bytes 16-17): 预留
+    // CH_9 (bytes 16-17): 设备状态（2byte）
+    quint16 deviceStatus = readU16BE(payload, 16);
+    result["vefcStatus"]        = (deviceStatus & (1 << 0)) != 0;  // bit0: 0=OK, 1=NG
+    result["tempHumStatus"]     = (deviceStatus & (1 << 1)) != 0;  // bit1: 0=OK, 1=NG
+    result["humidityReached"]   = (deviceStatus & (1 << 2)) != 0;  // bit2: 0=OK, 1=NG
+
     return result;
 }
 

@@ -86,6 +86,12 @@ QString AlarmDispatchTask::submitAlarm(AlarmInfo info)
         info.record.isResolved  = resolvedStatus;
         info.record.resolveTime.clear();
         persistInsert(info);
+
+        // 记录运行日志：NoNeed 类型使用 Warn 级别
+        if (auto* opTask = SharedData::getOperationDispatchTask()) {
+            opTask->logWarn(info.record.description);
+        }
+
         emit alarmPublished(info);
         return info.alarmId;
     }
@@ -104,9 +110,15 @@ QString AlarmDispatchTask::submitAlarm(AlarmInfo info)
     // 持久化：写 alarm_log（DBCon 内部 QueuedConnection 异步落盘）
     persistInsert(info);
 
-    // 记录运行日志：警报提交
+    // 记录运行日志：根据告警级别调用不同日志方法
     if (auto* opTask = SharedData::getOperationDispatchTask()) {
-        opTask->logMessage(info.record.description);
+        int alarmLevel = info.record.alarmLevel;
+        if (alarmLevel == static_cast<int>(AlarmLevel::Error) ||
+            alarmLevel == static_cast<int>(AlarmLevel::Fatal)) {
+            opTask->logError(info.record.description);
+        } else {
+            opTask->logMessage(info.record.description);
+        }
     }
 
     // 派发给订阅者（live log / 业务回调）
@@ -135,9 +147,16 @@ void AlarmDispatchTask::submitResolve(const QString& alarmId)
 
     persistResolve(resolvedInfo);
 
-    // 记录运行日志：警报解决
+    // 记录运行日志：根据告警级别调用不同日志方法
     if (auto* opTask = SharedData::getOperationDispatchTask()) {
-        opTask->logMessage(QString("[AlarmResolved] %1").arg(resolvedInfo.record.description));
+        int alarmLevel = resolvedInfo.record.alarmLevel;
+        QString resolveMsg = QString("[AlarmResolved] %1").arg(resolvedInfo.record.description);
+        if (alarmLevel == static_cast<int>(AlarmLevel::Error) ||
+            alarmLevel == static_cast<int>(AlarmLevel::Fatal)) {
+            opTask->logError(resolveMsg);
+        } else {
+            opTask->logMessage(resolveMsg);
+        }
     }
 
     emit alarmResolved(resolvedInfo);

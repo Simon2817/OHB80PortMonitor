@@ -7,13 +7,16 @@
 #include "modbustcpmastermanager/modbuscommand/commandresponseparser.h"
 #include "app/shareddata.h"
 #include "app/applogger.h"
+#include "app/alarmtype.h"
 #include "loggermanager.h"
 #include "classes/setofohbinfo.h"
 #include "classes/foupofohbinfo.h"
+#include "classes/alarminfo.h"
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
 #include "logdatabases/alarmlogdb/alarmlogdbcon.h"
 #include "scheduler/tasks/operation_dispatch_task.h"
+#include "scheduler/tasks/alarm_dispatch_task.h"
 
 #include <QDebug>
 #include <QDateTime>
@@ -231,6 +234,58 @@ void MonitorDataTask::updateFoupInfo(const QString& masterId, const QString& com
         else if (foup->oldFoupIn() && !foup->foupIn()) {
             foup->setStartTime(QTime(0, 0, 0));
             foup->setPurgeTimeSec(0);
+        }
+
+        // Process device status alarms
+        bool vefcStatus = data.value("vefcStatus").toBool();
+        bool tempHumStatus = data.value("tempHumStatus").toBool();
+        bool humidityReached = data.value("humidityReached").toBool();
+
+        auto* alarmTask = SharedData::getAlarmDispatchTask();
+        if (alarmTask) {
+            QString qrCodePrefix = QStringLiteral("[qrcode: %1] ").arg(masterId);
+
+            // VEFC 异常告警
+            if (vefcStatus) {
+                alarmTask->submitAlarm(
+                    static_cast<int>(AlarmType::VEFCAbnormal),
+                    static_cast<int>(AlarmSource::Device),
+                    masterId,
+                    qrCodePrefix + QStringLiteral("VEFC Abnormal (Flow Controller Abnormal). Alarm Code:5001"));
+            } else {
+                alarmTask->submitResolve(
+                    static_cast<int>(AlarmType::VEFCAbnormal),
+                    static_cast<int>(AlarmSource::Device),
+                    masterId);
+            }
+
+            // 温湿度传感器异常告警
+            if (tempHumStatus) {
+                alarmTask->submitAlarm(
+                    static_cast<int>(AlarmType::SH85Abnormal),
+                    static_cast<int>(AlarmSource::Device),
+                    masterId,
+                    qrCodePrefix + QStringLiteral("Temperature and Humidity Sensor Abnormal. Alarm Code:5003"));
+            } else {
+                alarmTask->submitResolve(
+                    static_cast<int>(AlarmType::SH85Abnormal),
+                    static_cast<int>(AlarmSource::Device),
+                    masterId);
+            }
+
+            // 湿度未达标告警
+            if (humidityReached) {
+                alarmTask->submitAlarm(
+                    static_cast<int>(AlarmType::HumidityNotReached),
+                    static_cast<int>(AlarmSource::Device),
+                    masterId,
+                    qrCodePrefix + QStringLiteral("Humidity Not Reached (After 30min Nitrogen Purge). Alarm Code:5101"));
+            } else {
+                alarmTask->submitResolve(
+                    static_cast<int>(AlarmType::HumidityNotReached),
+                    static_cast<int>(AlarmSource::Device),
+                    masterId);
+            }
         }
     } else if (commandId == "ReadIdlePurgeAll") {
         foup->setIdlePurgeEnabled(data.value("idlePurgeEnabled").toBool());

@@ -8,6 +8,87 @@
 
 ## 更新日志
 
+### 2026-05-14 - Simon
+**Modbus 协议文档更新：ReadFoupStatus CH_9 设备状态位定义**
+
+#### 修改内容
+- `ModbusTcpMasterConfig.xml`：CH_9 从"预留"更新为设备状态位定义
+  - bit0: VEFC状态（0=OK，1=NG）
+  - bit1: 温湿度传感器（0=OK，1=NG）
+  - bit2: FOUP IN充气30min湿度是否达标（0=OK，1=NG）
+- `commandresponseparser.h`：同步更新 `parseReadFoupStatus` 注释
+- `commandresponseparser.cpp`：更新解析实现，解析 3 个设备状态位
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/bin/config/ModbusTcpMasterConfig.xml`
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbuscommand/commandresponseparser.h`
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbuscommand/commandresponseparser.cpp`
+
+---
+
+### 2026-05-14 - Simon
+**新增设备告警类型：VEFC/VEEP/SH85 异常与湿度未达标**
+
+#### 修改内容
+在 `AlarmType` 枚举中新增 4 个告警类型：
+- `VEFCAbnormal = 5001`：VEFC 异常（流量控制器异常），用户可见
+- `VEEPAbnormal = 5002`：VEEP 异常（压力控制器异常），用户可见
+- `SH85Abnormal = 5003`：85 异常（温湿度传感器异常），用户可见
+- `HumidityNotReached = 5101`：湿度未达标（充氮半小时，湿度不达标），用户可见
+
+同步更新：
+- `alarmTypeName()`：添加显示名称
+- `alarmTypeList()`：添加到 UI 下拉框列表
+- `alarmTypeToLevel()`：设置级别为 `Error`
+- `alarmTypeToResolvedStatus()`：设置解决状态为 `Unresolved`
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/app/alarmtype.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/monitor_data_task.cpp`
+
+---
+
+### 2026-05-14 - Simon
+**MonitorDataTask 添加设备状态告警检测**
+
+#### 修改内容
+- `monitor_data_task.cpp`：在 `updateFoupInfo` 函数中添加设备状态告警检测
+  - 从 ReadFoupStatus 响应中解析 CH_9 设备状态位（vefcStatus, tempHumStatus, humidityReached）
+  - 根据 CH_9 位定义触发相应告警：
+    - bit0 (vefcStatus): VEFC 异常 → VEFCAbnormal 告警
+    - bit1 (tempHumStatus): 温湿度传感器异常 → SH85Abnormal 告警
+    - bit2 (humidityReached): 湿度未达标 → HumidityNotReached 告警
+  - 状态恢复时自动解决相应告警
+  - 告警描述前添加 qrCode 前缀，格式为 `[qrcode: XXXXX]`（XXXXX 为设备编号，范围 12001~12080）
+- 添加头文件：`alarmtype.h`, `alarminfo.h`, `alarm_dispatch_task.h`
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/monitor_data_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/network_status_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/alarmpage.h`：移除冗余的 `onNetworkStatusChanged` 槽
+  - `OHB80PortMonitor_V_1_0_0/ui/alarmpage.cpp`：DeviceOffline 告警的提交/解决由 NetworkStatusTask 内部统一处理，本页移除重复订阅
+
+---
+
+### 2026-05-14 - Simon
+**AlarmDispatchTask 根据告警级别调用不同运行日志方法**
+
+#### 修改内容
+- `alarm_dispatch_task.cpp`：在 `submitAlarm` 和 `submitResolve` 函数中根据告警级别调用不同日志方法
+  - NoNeed 类型调用 `logWarn()`
+  - Error 和 Fatal 级别调用 `logError()`
+  - Info 和 Warning 级别调用 `logMessage()`
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/alarm_dispatch_task.cpp`
+
+---
+
 ### 2026-05-12 - Simon
 **Live log 行数上限与裁剪策略调整**
 

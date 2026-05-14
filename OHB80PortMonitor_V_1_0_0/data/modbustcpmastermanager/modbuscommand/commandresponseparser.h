@@ -47,7 +47,10 @@ private:
     // CH_3(4-5) 流量/100         CH_4(6-7)  湿度/100
     // CH_5(8-9) 温度/100         CH_6(10-11) FOUP在位(0/1)
     // CH_7(12-13) 充气秒高16位   CH_8(14-15) 充气秒低16位
-    // CH_9(16-17) 预留
+    // CH_9(16-17) 设备状态（2byte）：
+    //   bit0: VEFC状态（0=OK，1=NG）
+    //   bit1: 温湿度传感器（0=OK，1=NG）
+    //   bit2: FOUP IN充气30min湿度是否达标（0=OK，1=NG）
     static QVariantMap parseReadFoupStatus(const ModbusCommand& cmd);
 
     // ReadIdlePurgeEnable：1个寄存器，2字节

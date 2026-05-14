@@ -2,7 +2,6 @@
 #define ALARMPAGE_H
 
 #include <QWidget>
-#include "modbusconnecter.h"
 
 namespace Ui {
 class AlarmPage;
@@ -15,9 +14,6 @@ class AlarmPage : public QWidget
 public:
     explicit AlarmPage(QWidget *parent = nullptr);
     ~AlarmPage();
-
-private slots:
-    void onNetworkStatusChanged(ModbusConnecter::ConnectionStatus status, const QString &masterId);
 
 private:
     Ui::AlarmPage *ui;

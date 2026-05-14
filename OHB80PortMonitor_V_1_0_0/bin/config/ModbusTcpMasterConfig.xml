@@ -94,7 +94,10 @@
              CH_6: FOUP 在位状态 (1=in, 0=out)
              CH_7: FOUP IN 充气秒数 (高16位)    = (256*hi + lo)
              CH_8: FOUP IN 充气秒数 (低16位)    = (256*hi + lo)
-             CH_9: 预留
+             CH_9: 设备状态（2byte）
+                  bit0: VEFC状态（0=OK，1=NG）
+                  bit1: 温湿度传感器（0=OK，1=NG）
+                  bit2: FOUP IN充气30min湿度是否达标（0=OK，1=NG）
              ======================================== -->
         <Command id="ReadFoupStatus">
             <request>

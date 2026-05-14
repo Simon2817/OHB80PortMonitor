@@ -61,7 +61,12 @@ enum class AlarmType : int
     SH85AcceptanceHumidityExceeded = 4106,  // SH85验收，湿度超限，用户可见
     SH85AcceptanceSensorCommError = 4107,  // SH85验收，传感器通信错误，用户可见
     SH85AcceptanceThresholdParamError = 4108,  // SH85验收，阈值参数错误，用户可见
-    SH85AcceptanceTimeout = 4109   // SH85验收超时，用户不可见  
+    SH85AcceptanceTimeout = 4109,   // SH85验收超时，用户不可见
+
+    VEFCAbnormal = 5001,  // VEFC异常（流量控制器异常），用户可见
+    VEEPAbnormal = 5002,  // VEEP异常（压力控制器异常），用户可见
+    SH85Abnormal = 5003,  // 85异常（温湿度传感器异常），用户可见
+    HumidityNotReached = 5101  // 湿度未达标（充氮半小时，湿度不达标），用户可见
 };
 
 // 获取警告类型的显示名称
@@ -89,6 +94,10 @@ inline QString alarmTypeName(int type)
         case static_cast<int>(AlarmType::SH85AcceptanceSensorCommError): return QStringLiteral("SH85 Acceptance Sensor Comm Error");
         case static_cast<int>(AlarmType::SH85AcceptanceThresholdParamError): return QStringLiteral("SH85 Acceptance Threshold Param Error");
         case static_cast<int>(AlarmType::SH85AcceptanceTimeout): return QStringLiteral("SH85 Acceptance Timeout");
+        case static_cast<int>(AlarmType::VEFCAbnormal): return QStringLiteral("VEFC Abnormal");
+        case static_cast<int>(AlarmType::VEEPAbnormal): return QStringLiteral("VEEP Abnormal");
+        case static_cast<int>(AlarmType::SH85Abnormal): return QStringLiteral("SH85 Abnormal");
+        case static_cast<int>(AlarmType::HumidityNotReached): return QStringLiteral("Humidity Not Reached");
         default: return QString::number(type);
     }
 }
@@ -117,7 +126,11 @@ inline QList<QPair<QString, int>> alarmTypeList()
         { QStringLiteral("SH85 Acceptance Humidity Exceeded"), static_cast<int>(AlarmType::SH85AcceptanceHumidityExceeded) },
         { QStringLiteral("SH85 Acceptance Sensor Comm Error"), static_cast<int>(AlarmType::SH85AcceptanceSensorCommError) },
         { QStringLiteral("SH85 Acceptance Threshold Param Error"), static_cast<int>(AlarmType::SH85AcceptanceThresholdParamError) },
-        { QStringLiteral("SH85 Acceptance Timeout"), static_cast<int>(AlarmType::SH85AcceptanceTimeout) }
+        { QStringLiteral("SH85 Acceptance Timeout"), static_cast<int>(AlarmType::SH85AcceptanceTimeout) },
+        { QStringLiteral("VEFC Abnormal"), static_cast<int>(AlarmType::VEFCAbnormal) },
+        { QStringLiteral("VEEP Abnormal"), static_cast<int>(AlarmType::VEEPAbnormal) },
+        { QStringLiteral("SH85 Abnormal"), static_cast<int>(AlarmType::SH85Abnormal) },
+        { QStringLiteral("Humidity Not Reached"), static_cast<int>(AlarmType::HumidityNotReached) }
     };
 }
 
@@ -158,6 +171,11 @@ inline int alarmTypeToLevel(int type)
         case static_cast<int>(AlarmType::SH85PreCheckNotEnterSelfCheck):
         case static_cast<int>(AlarmType::SH85PreCheckStatusAbnormal):
             return static_cast<int>(AlarmLevel::Fatal);
+        case static_cast<int>(AlarmType::VEFCAbnormal):
+        case static_cast<int>(AlarmType::VEEPAbnormal):
+        case static_cast<int>(AlarmType::SH85Abnormal):
+        case static_cast<int>(AlarmType::HumidityNotReached):
+            return static_cast<int>(AlarmLevel::Error);
         default:
             return static_cast<int>(AlarmLevel::Error);
     }
@@ -239,6 +257,11 @@ inline int alarmTypeToResolvedStatus(int type)
         case static_cast<int>(AlarmType::SH85AcceptanceThresholdParamError):
         case static_cast<int>(AlarmType::SH85AcceptanceTimeout):
             return static_cast<int>(AlarmResolvedStatus::NoNeed);
+        case static_cast<int>(AlarmType::VEFCAbnormal):
+        case static_cast<int>(AlarmType::VEEPAbnormal):
+        case static_cast<int>(AlarmType::SH85Abnormal):
+        case static_cast<int>(AlarmType::HumidityNotReached):
+            return static_cast<int>(AlarmResolvedStatus::Unresolved);
         default:
             return static_cast<int>(AlarmResolvedStatus::Unresolved);
     }
