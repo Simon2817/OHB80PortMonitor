@@ -18,23 +18,26 @@
 namespace {
 constexpr const char *kCmdId          = "WriteUIRefreshTime";
 constexpr int         kTotalTimeoutMs = 5000;
-constexpr int         kPayloadBytes   = 4;
+constexpr int         kPayloadBytes   = 6;
 } // namespace
 
 SetUIRefreshTimeTask::SetUIRefreshTimeTask(const QVector<QString> &qrcodes,
-                                           int logScreenSec,
-                                           int propertyScreenSec,
+                                           int logoSec,
+                                           int paramTotalSec,
+                                           int paramSwitchSec,
                                            QObject *parent)
     : SchedulerTask(parent)
     , m_qrcodes(qrcodes)
-    , m_logScreenSec(logScreenSec)
-    , m_propertyScreenSec(propertyScreenSec)
+    , m_logoSec(logoSec)
+    , m_paramTotalSec(paramTotalSec)
+    , m_paramSwitchSec(paramSwitchSec)
 {
     qDebug() << "[Scheduler][SetUIRefreshTimeTask] 创建任务: qrcodes=" << qrcodes
-             << "logSec=" << logScreenSec << "propSec=" << propertyScreenSec;
+             << "logoSec=" << logoSec << "paramTotalSec=" << paramTotalSec
+             << "paramSwitchSec=" << paramSwitchSec;
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
-        QString("[Scheduler][SetUIRefreshTimeTask] 创建任务：设备数=%1 logSec=%2 propSec=%3")
-            .arg(qrcodes.size()).arg(logScreenSec).arg(propertyScreenSec).toStdString());
+        QString("[Scheduler][SetUIRefreshTimeTask] 创建任务：设备数=%1 logoSec=%2 paramTotalSec=%3 paramSwitchSec=%4")
+            .arg(qrcodes.size()).arg(logoSec).arg(paramTotalSec).arg(paramSwitchSec).toStdString());
 }
 
 SetUIRefreshTimeTask::~SetUIRefreshTimeTask()
@@ -56,7 +59,7 @@ void SetUIRefreshTimeTask::start()
 
     if (m_qrcodes.isEmpty()) {
         setState(Failed);
-        emit allFinished(false, 0, {}, m_logScreenSec, m_propertyScreenSec);
+        emit allFinished(false, 0, {}, m_logoSec, m_paramTotalSec, m_paramSwitchSec);
         emit finished(false, "SetUIRefreshTimeTask: qrcode 列表为空");
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
             "[Scheduler][SetUIRefreshTimeTask] qrcode 列表为空");
@@ -67,7 +70,7 @@ void SetUIRefreshTimeTask::start()
     CommandPool *pool = mgr.commandPool();
     if (!pool || !pool->contains(kCmdId)) {
         setState(Failed);
-        emit allFinished(false, 0, {}, m_logScreenSec, m_propertyScreenSec);
+        emit allFinished(false, 0, {}, m_logoSec, m_paramTotalSec, m_paramSwitchSec);
         emit finished(false, QString("SetUIRefreshTimeTask: 指令 '%1' 不存在").arg(kCmdId));
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
             QString("[Scheduler][SetUIRefreshTimeTask] 指令 '%1' 不存在").arg(kCmdId).toStdString());
@@ -134,7 +137,7 @@ void SetUIRefreshTimeTask::start()
     if (m_totalCount == 0) {
         disconnectAll();
         setState(Failed);
-        emit allFinished(false, 0, m_failedQrCodes, m_logScreenSec, m_propertyScreenSec);
+        emit allFinished(false, 0, m_failedQrCodes, m_logoSec, m_paramTotalSec, m_paramSwitchSec);
         emit finished(false, QString("SetUIRefreshTimeTask: 所有设备无法接收指令（失败数=%1）")
                                 .arg(m_failedQrCodes.count()));
         return;
@@ -249,27 +252,27 @@ void SetUIRefreshTimeTask::forceFinish()
     setState(allSuccess ? Finished : Failed);
 
     emit allFinished(allSuccess, m_successCount, m_failedQrCodes,
-                     m_logScreenSec, m_propertyScreenSec);
+                     m_logoSec, m_paramTotalSec, m_paramSwitchSec);
     emit finished(allSuccess,
                   allSuccess
-                      ? QString("SetUIRefreshTimeTask: log=%1s prop=%2s 设置完成（%3 台）")
-                            .arg(m_logScreenSec).arg(m_propertyScreenSec).arg(m_successCount)
-                      : QString("SetUIRefreshTimeTask: log=%1s prop=%2s %3 台成功，%4 台失败")
-                            .arg(m_logScreenSec).arg(m_propertyScreenSec)
+                      ? QString("SetUIRefreshTimeTask: logo=%1s total=%2s switch=%3s 设置完成（%4 台）")
+                            .arg(m_logoSec).arg(m_paramTotalSec).arg(m_paramSwitchSec).arg(m_successCount)
+                      : QString("SetUIRefreshTimeTask: logo=%1s total=%2s switch=%3s %4 台成功，%5 台失败")
+                            .arg(m_logoSec).arg(m_paramTotalSec).arg(m_paramSwitchSec)
                             .arg(m_successCount).arg(m_failedQrCodes.count()));
 
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(),
         allSuccess ? Level::INFO : Level::WARN,
-        QString("[Scheduler][SetUIRefreshTimeTask] 任务结束: log=%1s prop=%2s %3 台成功，%4 台失败")
-            .arg(m_logScreenSec).arg(m_propertyScreenSec)
+        QString("[Scheduler][SetUIRefreshTimeTask] 任务结束: logo=%1s total=%2s switch=%3s %4 台成功，%5 台失败")
+            .arg(m_logoSec).arg(m_paramTotalSec).arg(m_paramSwitchSec)
             .arg(m_successCount).arg(m_failedQrCodes.count()).toStdString());
 
     // 写入运行日志：任务完成
     auto* opTaskEnd = SharedData::getOperationDispatchTask();
     if (opTaskEnd) {
         if (allSuccess) {
-            const QString desc = QString("SetUIRefreshTime log=%1s prop=%2s task completed: %3 devices succeeded")
-                  .arg(m_logScreenSec).arg(m_propertyScreenSec).arg(m_successCount);
+            const QString desc = QString("SetUIRefreshTime logo=%1s total=%2s switch=%3s task completed: %4 devices succeeded")
+                  .arg(m_logoSec).arg(m_paramTotalSec).arg(m_paramSwitchSec).arg(m_successCount);
             opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
         } else {
             // 每个失败设备单独写一条日志
@@ -282,21 +285,24 @@ void SetUIRefreshTimeTask::forceFinish()
 
 void SetUIRefreshTimeTask::logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode)
 {
-    const QString desc = QString("SetUIRefreshTime log=%1s prop=%2s task failed: device %3")
-        .arg(m_logScreenSec).arg(m_propertyScreenSec).arg(qrcode);
+    const QString desc = QString("SetUIRefreshTime logo=%1s total=%2s switch=%3s task failed: device %4")
+        .arg(m_logoSec).arg(m_paramTotalSec).arg(m_paramSwitchSec).arg(qrcode);
     opTask->log(OperationDispatchTask::MsgType::Error, desc, 0);
 }
 
 QByteArray SetUIRefreshTimeTask::buildPayload() const
 {
-    const quint16 logSec  = static_cast<quint16>(qBound(0, m_logScreenSec,      0xFFFF));
-    const quint16 propSec = static_cast<quint16>(qBound(0, m_propertyScreenSec, 0xFFFF));
+    const quint16 logo    = static_cast<quint16>(qBound(0, m_logoSec,        0xFFFF));
+    const quint16 total   = static_cast<quint16>(qBound(0, m_paramTotalSec,  0xFFFF));
+    const quint16 sw      = static_cast<quint16>(qBound(0, m_paramSwitchSec, 0xFFFF));
 
     QByteArray bytes(kPayloadBytes, 0);
-    bytes[0] = static_cast<char>((logSec  >> 8) & 0xFF);
-    bytes[1] = static_cast<char>(logSec        & 0xFF);
-    bytes[2] = static_cast<char>((propSec >> 8) & 0xFF);
-    bytes[3] = static_cast<char>(propSec       & 0xFF);
+    bytes[0] = static_cast<char>((logo  >> 8) & 0xFF);
+    bytes[1] = static_cast<char>(logo        & 0xFF);
+    bytes[2] = static_cast<char>((total >> 8) & 0xFF);
+    bytes[3] = static_cast<char>(total       & 0xFF);
+    bytes[4] = static_cast<char>((sw    >> 8) & 0xFF);
+    bytes[5] = static_cast<char>(sw          & 0xFF);
     return bytes;
 }
 

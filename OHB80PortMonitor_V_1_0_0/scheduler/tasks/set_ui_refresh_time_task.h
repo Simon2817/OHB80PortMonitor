@@ -16,17 +16,19 @@ class OperationDispatchTask;
 // ====================================================================
 // SetUIRefreshTimeTask — 设置 UI 页面刷新时间（下位机屏幕）
 //
-//   底层指令：WriteUIRefreshTime（FC 0x10, addr 0x0004，2 寄存器，4 字节）
+//   底层指令：WriteUIRefreshTime（FC 0x10, addr 0x0004，3 寄存器，6 字节）
 //   数据布局（大端）：
-//     [0..1] logScreenSec      — log 界面显示时长（秒）
-//     [2..3] propertyScreenSec — 属性页面显示时长（秒）
+//     [0..1] logoSec        — logo 界面展示时间（秒）
+//     [2..3] paramTotalSec  — 参数界面展示总时间（秒）
+//     [4..5] paramSwitchSec — 参数界面切换时间（秒）
 //
 //   信号 allFinished：
-//     allSuccess        — 是否全部成功
-//     successCount      — 成功设备数
-//     failedQrCodes     — 失败设备 QRCode 列表
-//     logScreenSec      — 设置的 log 界面时长
-//     propertyScreenSec — 设置的属性页面时长
+//     allSuccess      — 是否全部成功
+//     successCount    — 成功设备数
+//     failedQrCodes   — 失败设备 QRCode 列表
+//     logoSec         — 设置的 logo 界面时长
+//     paramTotalSec   — 设置的参数界面总时长
+//     paramSwitchSec  — 设置的参数界面切换时间
 // ====================================================================
 class SetUIRefreshTimeTask : public SchedulerTask
 {
@@ -34,8 +36,9 @@ class SetUIRefreshTimeTask : public SchedulerTask
 
 public:
     explicit SetUIRefreshTimeTask(const QVector<QString> &qrcodes,
-                                  int logScreenSec,
-                                  int propertyScreenSec,
+                                  int logoSec,
+                                  int paramTotalSec,
+                                  int paramSwitchSec,
                                   QObject *parent = nullptr);
     ~SetUIRefreshTimeTask();
 
@@ -47,8 +50,9 @@ signals:
     void allFinished(bool allSuccess,
                      int successCount,
                      QStringList failedQrCodes,
-                     int logScreenSec,
-                     int propertyScreenSec);
+                     int logoSec,
+                     int paramTotalSec,
+                     int paramSwitchSec);
 
 private slots:
     void onCommandFinished(ModbusCommand cmd, const QString &masterId);
@@ -63,8 +67,9 @@ private:
 
 private:
     QVector<QString> m_qrcodes;
-    int              m_logScreenSec;
-    int              m_propertyScreenSec;
+    int              m_logoSec;
+    int              m_paramTotalSec;
+    int              m_paramSwitchSec;
 
     QHash<qint64, QString>         m_pendingMap;
     QList<QMetaObject::Connection> m_connections;

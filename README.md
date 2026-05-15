@@ -45,6 +45,51 @@
 ---
 
 ### 2026-05-15 - Simon
+**SetUIRefreshTimeTask 参数扩展：从 2 参数改为 3 参数（3 寄存器/6 字节）**
+
+#### 背景
+根据 CYTC_OHBP 通讯手册 6.3 节，UI 页面刷新时间配置需要 3 个参数：
+- CH_1: logo 界面展示时间
+- CH_2: 参数界面展示总时间
+- CH_3: 参数界面切换时间
+
+原实现只有 2 个参数（logScreenSec, propertyScreenSec），对应 2 寄存器/4 字节，不符合通讯规范。
+
+#### 修改内容
+
+**1. ModbusTcpMasterConfig.xml**
+- WriteUIRefreshTime 指令：
+  - RegisterCount: `00 02` → `00 03`
+  - ByteCount: `04` → `06`
+  - RegisterValue: `00 00 00 00` → `00 00 00 00 00 00`
+  - 响应帧 RegisterCount 同步更新为 `00 03`
+
+**2. SetUIRefreshTimeTask**
+- 构造函数参数：`(qrcodes, logScreenSec, propertyScreenSec)` → `(qrcodes, logoSec, paramTotalSec, paramSwitchSec)`
+- `allFinished` 信号：增加第 3 个参数 `paramSwitchSec`
+- 成员变量：`m_logScreenSec` / `m_propertyScreenSec` → `m_logoSec` / `m_paramTotalSec` / `m_paramSwitchSec`
+- `buildPayload()`: 生成 6 字节大端数据（CH_1 logo时间, CH_2 参数总时间, CH_3 切换时间）
+- 所有日志格式同步更新为 3 参数格式
+
+**3. UIRefreshTimeSettingWidget**
+- UI 从 2 个 SpinBox 改为 3 个 SpinBox：
+  - Logo Screen Duration — Logo screen display duration (seconds)
+  - Param Screen Total Duration — Parameter screen total display duration (seconds)
+  - Param Page Switch Interval — Parameter page switch interval (seconds)
+- Set / Set All 按钮放在最后一个 item 上，传递 3 个参数
+- 所有日志和提示信息同步更新
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/bin/config/ModbusTcpMasterConfig.xml`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_ui_refresh_time_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_ui_refresh_time_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget/uirefreshtimesettingwidget.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget/uirefreshtimesettingwidget.cpp`
+
+---
+
+### 2026-05-15 - Simon
 **Modbus 原始帧日志：收发帧写入 raw_data/{masterId}.log**
 
 #### 修改内容

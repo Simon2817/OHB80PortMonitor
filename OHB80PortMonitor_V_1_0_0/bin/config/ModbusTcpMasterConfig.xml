@@ -501,26 +501,29 @@
         <!-- ========================================
              20. 功能码 10 — 写多个保持寄存器
              设置 UI 页面刷新时间
-             请求帧: 01 10 00 04 00 02 04 XX XX XX XX CRC
-             响应帧: 01 10 00 04 00 02 CRC
-             数据：4 字节（2 个寄存器）
+             请求帧: 01 10 00 04 00 03 06 XX XX XX XX XX XX CRC
+             响应帧: 01 10 00 04 00 03 CRC
+             数据：6 字节（3 个寄存器）
+               CH_1 (2B) logo 界面展示时间
+               CH_2 (2B) 参数界面展示总时间
+               CH_3 (2B) 参数界面切换时间
              ======================================== -->
         <Command id="WriteUIRefreshTime">
             <request>
                 <SlaveAddr>01</SlaveAddr>
                 <Function>10</Function>
                 <StartAddr>00 04</StartAddr>
-                <RegisterCount>00 02</RegisterCount>
-                <!-- 数据长度：4字节（2个寄存器 × 2字节/寄存器） -->
-                <ByteCount>04</ByteCount>
-                <!-- 写入值：UI 页面刷新时间（4字节） -->
-                <RegisterValue>00 00 00 00</RegisterValue>
+                <RegisterCount>00 03</RegisterCount>
+                <!-- 数据长度：6字节（3个寄存器 × 2字节/寄存器） -->
+                <ByteCount>06</ByteCount>
+                <!-- 写入值：UI 页面刷新时间（6字节） -->
+                <RegisterValue>00 00 00 00 00 00</RegisterValue>
             </request>
             <respond>
                 <SlaveAddr>01</SlaveAddr>
                 <Function>10</Function>
                 <StartAddr>00 04</StartAddr>
-                <RegisterCount>00 02</RegisterCount>
+                <RegisterCount>00 03</RegisterCount>
             </respond>
         </Command>
 
