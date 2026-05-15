@@ -103,6 +103,7 @@ void ModbusCommandSender::stop()
 {
     m_running = false;
     m_hasPendingCommand = false;
+    m_lastSendMs = 0;
     if (m_receiver) {
         m_receiver->cancelPending();
     }
@@ -116,6 +117,23 @@ void ModbusCommandSender::dispatch()
 
     if (m_socket->state() != QAbstractSocket::ConnectedState) {
         return;
+    }
+
+    // 最小发送间隔节流：相邻两次 write 之间至少间隔 MIN_SEND_INTERVAL_MS，
+    // 避免在对端无响应时多条 8 字节 RTU 帧被内核合并成一个 TCP segment，
+    // 触发 HF2211 等串口转 TCP 网关因粘帧/缓冲溢出而 RST 关闭连接。
+    if (m_lastSendMs > 0) {
+        const qint64 elapsed = QDateTime::currentMSecsSinceEpoch() - m_lastSendMs;
+        if (elapsed < MIN_SEND_INTERVAL_MS) {
+            if (!m_dispatchScheduled) {
+                m_dispatchScheduled = true;
+                QTimer::singleShot(static_cast<int>(MIN_SEND_INTERVAL_MS - elapsed), this, [this]() {
+                    m_dispatchScheduled = false;
+                    dispatch();
+                });
+            }
+            return;
+        }
     }
 
     if (!m_retryState.queue.isEmpty()) {
@@ -216,6 +234,7 @@ void ModbusCommandSender::doSend(ModbusCommand cmd)
         handleFailedCommand(cmd, QString("发送失败: %1").arg(m_socket->errorString()), false, false);
         return;
     }
+    m_lastSendMs = QDateTime::currentMSecsSinceEpoch();
 
     m_socket->flush();
     const qint64 deadline = QDateTime::currentMSecsSinceEpoch() + qMin(cmd.timeoutMs, 1000);

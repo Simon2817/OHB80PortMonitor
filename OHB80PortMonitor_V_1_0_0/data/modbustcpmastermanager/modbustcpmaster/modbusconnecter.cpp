@@ -28,6 +28,17 @@ ModbusConnecter::ModbusConnecter(QTcpSocket& socket, const QString& host, quint1
     m_connectionCheckTimer->setInterval(30000);
     connect(m_connectionCheckTimer, &QTimer::timeout, this, &ModbusConnecter::checkConnection);
 
+    // 每次 TCP 连接建立后，立即禁用 Nagle 算法（TCP_NODELAY）。
+    // 原因：HF2211 等串口转 TCP 网关串口侧转发慢，ACK 延迟较大；如果 Nagle 开启，
+    // 多次小写入（8 字节 Modbus RTU 帧）会被内核缓存合并为一个 TCP segment，
+    // 导致网关侧收到粘连帧后 RST 关闭连接。
+    // 注意：此 lambda 必须先于 onAsyncReconnectConnected 连接，保证 NODELAY 优先生效。
+    connect(m_socket, &QTcpSocket::connected, this, [this]() {
+        m_socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
+        m_socket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+        LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusConnecter][connected]：设备ID=%1 已启用 TCP_NODELAY，避免 Nagle 合并 Modbus RTU 小帧").arg(m_masterId).toStdString());
+    });
+
     // 异步重连成功信号
     connect(m_socket, &QTcpSocket::connected, this, &ModbusConnecter::onAsyncReconnectConnected);
 
@@ -192,6 +203,10 @@ bool ModbusConnecter::performConnection()
         m_lastError = getErrorString(m_socket->error());
         return false;
     }
+
+    // 同步连接路径下显式设置 TCP_NODELAY（与 connected 信号 lambda 幂等）
+    m_socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    m_socket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
 
     return true;
 }

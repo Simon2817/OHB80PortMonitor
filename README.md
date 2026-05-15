@@ -9,6 +9,42 @@
 ## 更新日志
 
 ### 2026-05-15 - Simon
+**Modbus 通讯防粘帧：启用 TCP_NODELAY 禁用 Nagle 算法**
+
+#### 背景
+线下批量任务（如 SetPurgeFlow / SetHumidityOffsetThreshold）下发时，抓包发现 80 设备中部分设备（如 12007）连接被对端 RST 关闭。Wireshark 分析显示客户端把多达 9 个 Modbus RTU 帧（每帧 8 字节）粘合成一个 72 字节 TCP segment 推送给 HF2211 串口转 TCP 网关，网关串口侧因粘帧无法正确分帧而 RST。
+
+应用层 `ModbusCommandSender` 已经做了串行化（`m_hasPendingCommand` 互斥）以及 50ms 最小发送间隔节流，但内核 TCP 层在对端 ACK 慢时仍然按 **Nagle 算法** 把多个未 ACK 的小 write 合并成一个 segment 发送，应用层节流无法干预内核行为。
+
+#### 修改内容
+
+**1. ModbusCommandSender 加入 50ms 最小发送间隔节流**
+- `modbuscommandsender.h`：新增 `MIN_SEND_INTERVAL_MS = 50` 常量与 `m_lastSendMs` / `m_dispatchScheduled` 成员
+- `modbuscommandsender.cpp::dispatch()`：相邻两次 write 间隔 < 50ms 时改用 `QTimer::singleShot` 延后到时再 dispatch，避免应用层连续灌入小帧
+- `modbuscommandsender.cpp::doSend()`：成功 write 后记录 `m_lastSendMs`
+- `modbuscommandsender.cpp::stop()`：重置 `m_lastSendMs = 0` 避免重连后误节流
+
+**2. ModbusConnecter 启用 TCP_NODELAY**（核心修复）
+- `modbusconnecter.cpp` 构造函数中，挂接 `QTcpSocket::connected` 信号 lambda：
+  - `setSocketOption(QAbstractSocket::LowDelayOption, 1)` 禁用 Nagle 算法
+  - `setSocketOption(QAbstractSocket::KeepAliveOption, 1)` 启用 keepalive
+  - lambda 必须先于 `onAsyncReconnectConnected` 连接，保证选项优先生效
+- `modbusconnecter.cpp::performConnection()`：同步连接路径下 `waitForConnected` 成功后再次显式设置（与信号 lambda 幂等）
+
+#### 效果
+- 禁用 Nagle 后，每次 `socket->write()` 内核立即发为独立 TCP segment，不再等待已发数据的 ACK
+- 配合 50ms 应用层节流，9 个 8 字节 Modbus RTU 帧将变成 9 个独立的 8 字节 TCP segment，HF2211 串口侧严格按 RTU 帧间隔接收，不再误判粘帧
+- 即使设备响应慢、ACK 延迟大，多次 write 也不会被合并成一个超长 segment
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h`
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/modbuscommandsender.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/modbusconnecter.cpp`
+
+---
+
+### 2026-05-15 - Simon
 **Modbus 原始帧日志：收发帧写入 raw_data/{masterId}.log**
 
 #### 修改内容
@@ -58,6 +94,9 @@
   - `OHB80PortMonitor_V_1_0_0/ui/alarmpage.cpp`
 
 ---
+
+### 2026-05-14 - Simon
+**Modbus 协议文档更新：ReadFoupStatus CH_9 设备状态位定义**
 
 #### 修改内容
 - `ModbusTcpMasterConfig.xml`：CH_9 从"预留"更新为设备状态位定义

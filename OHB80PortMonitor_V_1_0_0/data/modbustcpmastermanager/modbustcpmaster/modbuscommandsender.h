@@ -24,6 +24,7 @@ class ModbusCommandSender : public QObject
 public:
     static constexpr int DEFAULT_QUEUE_CAPACITY   = 32;  // 每队列默认最大容量
     static constexpr int DEFAULT_MAX_RETRY         = 3;   // 默认最大重发次数
+    static constexpr int MIN_SEND_INTERVAL_MS      = 50;  // 相邻指令最小发送间隔（毫秒），防止内核合并 TCP segment 触发对端 RST
 
     explicit ModbusCommandSender(QTcpSocket& socket, const QString& masterId = QString(), QObject* parent = nullptr);
 
@@ -87,6 +88,8 @@ private:
     bool                 m_running = false;
     bool                 m_hasPendingCommand = false;
     ModbusCommand        m_pendingCommand;
+    qint64               m_lastSendMs = 0;       // 上一次成功调用 m_socket->write() 的时间戳（毫秒）
+    bool                 m_dispatchScheduled = false; // 是否已经调度了延迟 dispatch（避免重复 singleShot）
     mutable QMutex       m_mutex;  // 线程安全互斥锁
 };
 
