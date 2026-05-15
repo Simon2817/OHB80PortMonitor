@@ -3,7 +3,6 @@
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/read_vefc_flow_unit_medium_status_task.h"
 #include "app/shareddata.h"
-#include "scheduler/tasks/operation_dispatch_task.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 
@@ -107,25 +106,25 @@ void VEFCFlowUnitMediumStatusWidget::submitTask(const QStringList &qrcodes)
     connect(task, &Task::allFinished,
             this, [this](bool /*allSuccess*/, int successCount,
                          QList<Task::DeviceStatus> results) {
-                // 收集失败行
-                QStringList failureLines;
+                // 按类别收集失败设备
+                QStringList commFailedDevices;
+                QStringList unitFailedDevices;
+                QStringList mediumFailedDevices;
                 for (const Task::DeviceStatus &st : results) {
                     if (st.allOk()) continue;
-
                     if (st.commFailed) {
-                        failureLines.append(QString("Device %1: Communication FAILED").arg(st.qrcode));
+                        commFailedDevices.append(st.qrcode);
                     } else {
-                        QStringList parts;
-                        if (!st.unitOk)   parts.append("Unit");
-                        if (!st.mediumOk) parts.append("Medium");
-                        failureLines.append(
-                            QString("Device %1: %2 config FAILED")
-                                .arg(st.qrcode)
-                                .arg(parts.join(" + ")));
+                        if (!st.unitOk)   unitFailedDevices.append(st.qrcode);
+                        if (!st.mediumOk) mediumFailedDevices.append(st.qrcode);
                     }
                 }
 
-                if (failureLines.isEmpty()) {
+                const bool hasFailure = !commFailedDevices.isEmpty()
+                                     || !unitFailedDevices.isEmpty()
+                                     || !mediumFailedDevices.isEmpty();
+
+                if (!hasFailure) {
                     m_readItem->setStatusOK();
                     QMessageBox::information(
                         this, "Read Succeeded",
@@ -133,15 +132,33 @@ void VEFCFlowUnitMediumStatusWidget::submitTask(const QStringList &qrcodes)
                             .arg(successCount));
                 } else {
                     m_readItem->setStatusFailed();
-                    const QString detail = failureLines.join("\n");
+                    const int failCount = results.size() - successCount;
                     QMessageBox::warning(
                         this, "Read Failed",
-                        QString("%1/%2 device(s) passed.\n\nFailures:\n%3")
-                            .arg(successCount).arg(results.size()).arg(detail));
+                        QString("%1/%2 device(s) passed, %3 failed.")
+                            .arg(successCount).arg(results.size()).arg(failCount));
 
-                    SharedData::getOperationDispatchTask()->logMessage(
-                        QString("[VEFC Flow Unit/Medium] %1/%2 passed; failures: %3")
-                            .arg(successCount).arg(results.size()).arg(failureLines.join("; ")));
+                    if (!commFailedDevices.isEmpty()) {
+                        QMessageBox::warning(
+                            this, "Communication Failed",
+                            QString("Communication failed on %1 device(s):\n%2")
+                                .arg(commFailedDevices.size())
+                                .arg(commFailedDevices.join(", ")));
+                    }
+                    if (!unitFailedDevices.isEmpty()) {
+                        QMessageBox::warning(
+                            this, "Unit Config Failed",
+                            QString("Unit config failed on %1 device(s):\n%2")
+                                .arg(unitFailedDevices.size())
+                                .arg(unitFailedDevices.join(", ")));
+                    }
+                    if (!mediumFailedDevices.isEmpty()) {
+                        QMessageBox::warning(
+                            this, "Medium Config Failed",
+                            QString("Medium config failed on %1 device(s):\n%2")
+                                .arg(mediumFailedDevices.size())
+                                .arg(mediumFailedDevices.join(", ")));
+                    }
                 }
             });
 

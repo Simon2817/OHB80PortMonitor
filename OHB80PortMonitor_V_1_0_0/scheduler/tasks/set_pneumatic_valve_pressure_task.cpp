@@ -113,6 +113,9 @@ void SetPneumaticValvePressureTask::start()
         if (!master) {
             qWarning() << "[Scheduler][SetPneumaticValvePressureTask] Master 不存在:" << id;
             m_failedQrCodes.append(id);
+            if (auto* opTask = SharedData::getOperationDispatchTask()) {
+                logFailedDevice(opTask, id);
+            }
             continue;
         }
 
@@ -121,6 +124,9 @@ void SetPneumaticValvePressureTask::start()
             LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
                 QString("[Scheduler][SetPneumaticValvePressureTask] 设备 %1 未连接，跳过下发").arg(id).toStdString());
             m_failedQrCodes.append(id);
+            if (auto* opTask = SharedData::getOperationDispatchTask()) {
+                logFailedDevice(opTask, id);
+            }
             continue;
         }
 
@@ -128,6 +134,9 @@ void SetPneumaticValvePressureTask::start()
         if (!sender) {
             qWarning() << "[Scheduler][SetPneumaticValvePressureTask] Sender 为空:" << id;
             m_failedQrCodes.append(id);
+            if (auto* opTask = SharedData::getOperationDispatchTask()) {
+                logFailedDevice(opTask, id);
+            }
             continue;
         }
 
@@ -135,6 +144,9 @@ void SetPneumaticValvePressureTask::start()
         if (!cmd.isValid()) {
             qWarning() << "[Scheduler][SetPneumaticValvePressureTask] 克隆指令失败:" << id;
             m_failedQrCodes.append(id);
+            if (auto* opTask = SharedData::getOperationDispatchTask()) {
+                logFailedDevice(opTask, id);
+            }
             continue;
         }
 
@@ -176,14 +188,7 @@ void SetPneumaticValvePressureTask::start()
     }
 
     if (m_totalCount == 0) {
-        disconnectAll();
-        setState(Failed);
-        emit allFinished(false, 0, m_failedQrCodes, m_pressureBar);
-        emit finished(false, QString("SetPneumaticValvePressureTask: 所有设备无法接收指令（失败数=%1）")
-                                .arg(m_failedQrCodes.count()));
-        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
-            QString("[Scheduler][SetPneumaticValvePressureTask] 所有设备无法接收指令（失败数=%1）")
-                .arg(m_failedQrCodes.count()).toStdString());
+        forceFinish();
         return;
     }
 
@@ -272,6 +277,9 @@ void SetPneumaticValvePressureTask::onCommandFinished(ModbusCommand cmd, const Q
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
             QString("[Scheduler][SetPneumaticValvePressureTask] 设备 %1 设置失败: timedOut=%2 checksumError=%3 deviceBusy=%4")
                 .arg(masterId).arg(cmd.timedOut).arg(cmd.checksumError).arg(cmd.deviceBusy).toStdString());
+        if (auto* opTask = SharedData::getOperationDispatchTask()) {
+            logFailedDevice(opTask, masterId);
+        }
     }
 
     checkAllFinished();
@@ -306,19 +314,37 @@ void SetPneumaticValvePressureTask::forceFinish()
     if (m_timeoutTimer) m_timeoutTimer->stop();
     disconnectAll();
 
-    for (const QString &qrCode : m_pendingMap.values())
+    // 超时仍未响应的设备：补登失败日志
+    auto* opTaskPending = SharedData::getOperationDispatchTask();
+    for (const QString &qrCode : m_pendingMap.values()) {
         m_failedQrCodes.append(qrCode);
+        if (opTaskPending) {
+            logFailedDevice(opTaskPending, qrCode);
+        }
+    }
     m_pendingMap.clear();
 
-    const int totalDone  = m_successCount + m_failedQrCodes.count();
     const bool allSuccess = m_failedQrCodes.isEmpty();
     setState(allSuccess ? Finished : Failed);
+
+    // 写入运行日志：任务汇总
+    if (auto* opTaskEnd = SharedData::getOperationDispatchTask()) {
+        if (allSuccess) {
+            const QString desc = QString("SetPneumaticValvePressure %1 bar task completed: %2 devices succeeded")
+                  .arg(m_pressureBar).arg(m_successCount);
+            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
+        } else {
+            const QString desc = QString("SetPneumaticValvePressure %1 bar task finished: %2 succeeded, %3 failed")
+                  .arg(m_pressureBar).arg(m_successCount).arg(m_failedQrCodes.count());
+            opTaskEnd->log(OperationDispatchTask::MsgType::Error, desc, 0);
+        }
+    }
 
     emit allFinished(allSuccess, m_successCount, m_failedQrCodes, m_pressureBar);
     emit finished(allSuccess,
                   allSuccess
                       ? QString("SetPneumaticValvePressureTask: 压力 %1 bar 设置完成（%2 台）")
-                            .arg(m_pressureBar).arg(totalDone)
+                            .arg(m_pressureBar).arg(m_successCount)
                       : QString("SetPneumaticValvePressureTask: 压力 %1 bar 设置完成，%2 台成功，%3 台失败")
                             .arg(m_pressureBar).arg(m_successCount).arg(m_failedQrCodes.count()));
 
@@ -326,21 +352,6 @@ void SetPneumaticValvePressureTask::forceFinish()
         allSuccess ? Level::INFO : Level::WARN,
         QString("[Scheduler][SetPneumaticValvePressureTask] 压力 %1 bar 设置完成: %2 台成功，%3 台失败")
             .arg(m_pressureBar).arg(m_successCount).arg(m_failedQrCodes.count()).toStdString());
-
-    // 写入运行日志：任务完成
-    auto* opTaskEnd = SharedData::getOperationDispatchTask();
-    if (opTaskEnd) {
-        if (allSuccess) {
-            const QString desc = QString("SetPneumaticValvePressure %1 bar task completed: %2 devices succeeded")
-                  .arg(m_pressureBar).arg(m_successCount);
-            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
-        } else {
-            // 每个失败设备单独写一条日志
-            for (const QString& qr : m_failedQrCodes) {
-                logFailedDevice(opTaskEnd, qr);
-            }
-        }
-    }
 }
 
 void SetPneumaticValvePressureTask::logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode)

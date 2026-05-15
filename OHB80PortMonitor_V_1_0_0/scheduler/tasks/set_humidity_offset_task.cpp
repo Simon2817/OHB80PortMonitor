@@ -160,6 +160,9 @@ void SetHumidityOffsetTask::start()
             LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
                 QString("[Scheduler][SetHumidityOffsetTask] 设备 %1 不可用，跳过").arg(id).toStdString());
             m_failedQrCodes.append(id);
+            if (auto* opTask = SharedData::getOperationDispatchTask()) {
+                logFailedDevice(opTask, id);
+            }
             continue;
         }
 
@@ -223,14 +226,7 @@ void SetHumidityOffsetTask::start()
     }
 
     if (m_totalDevices == 0) {
-        disconnectAll();
-        setState(Failed);
-        emit allFinished(false, 0, m_failedQrCodes, m_thresholdSet, m_thresholdPct, m_offsetSet, m_offsetPct);
-        emit finished(false, QString("SetHumidityOffsetTask: 所有设备无法接收指令（失败数=%1）")
-                                .arg(m_failedQrCodes.count()));
-        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
-            QString("[Scheduler][SetHumidityOffsetTask] 所有设备无法接收指令（失败数=%1）")
-                .arg(m_failedQrCodes.count()).toStdString());
+        forceFinish();
         return;
     }
 
@@ -358,6 +354,9 @@ void SetHumidityOffsetTask::markDeviceFailed(const QString &qrcode)
     qWarning() << "[Scheduler][SetHumidityOffsetTask] 设备" << qrcode << "整体失败";
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
         QString("[Scheduler][SetHumidityOffsetTask] 设备 %1 整体失败").arg(qrcode).toStdString());
+    if (auto* opTask = SharedData::getOperationDispatchTask()) {
+        logFailedDevice(opTask, qrcode);
+    }
 
     checkAllFinished();
 }
@@ -386,17 +385,35 @@ void SetHumidityOffsetTask::forceFinish()
     if (m_timeoutTimer) m_timeoutTimer->stop();
     disconnectAll();
 
+    // 超时仍未响应的设备：补登失败日志
+    auto* opTaskPending = SharedData::getOperationDispatchTask();
     for (auto it = m_pendingMap.constBegin(); it != m_pendingMap.constEnd(); ++it) {
         const QString &qr = it.value().qrcode;
         if (!m_deviceFailed.value(qr, false)) {
             m_deviceFailed[qr] = true;
             m_failedQrCodes.append(qr);
+            if (opTaskPending) {
+                logFailedDevice(opTaskPending, qr);
+            }
         }
     }
     m_pendingMap.clear();
 
     const bool allSuccess = m_failedQrCodes.isEmpty();
     setState(allSuccess ? Finished : Failed);
+
+    // 写入运行日志：任务汇总
+    if (auto* opTaskEnd = SharedData::getOperationDispatchTask()) {
+        if (allSuccess) {
+            const QString desc = QString("SetHumidityOffset task completed: %1 devices succeeded")
+                  .arg(m_successCount);
+            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
+        } else {
+            const QString desc = QString("SetHumidityOffset task finished: %1 succeeded, %2 failed")
+                  .arg(m_successCount).arg(m_failedQrCodes.count());
+            opTaskEnd->log(OperationDispatchTask::MsgType::Error, desc, 0);
+        }
+    }
 
     emit allFinished(allSuccess, m_successCount, m_failedQrCodes,
                      m_thresholdSet, m_thresholdPct,
@@ -413,21 +430,6 @@ void SetHumidityOffsetTask::forceFinish()
             .arg(m_successCount).arg(m_failedQrCodes.count())
             .arg(m_thresholdSet).arg(m_thresholdPct)
             .arg(m_offsetSet).arg(m_offsetPct).toStdString());
-
-    // 写入运行日志：任务完成
-    auto* opTaskEnd = SharedData::getOperationDispatchTask();
-    if (opTaskEnd) {
-        if (allSuccess) {
-            const QString desc = QString("SetHumidityOffset task completed: %1 devices succeeded")
-                  .arg(m_successCount);
-            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
-        } else {
-            // 每个失败设备单独写一条日志
-            for (const QString& qr : m_failedQrCodes) {
-                logFailedDevice(opTaskEnd, qr);
-            }
-        }
-    }
 }
 
 void SetHumidityOffsetTask::logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode)

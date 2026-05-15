@@ -3,7 +3,6 @@
 #include "scheduler/scheduler.h"
 #include "tasks/set_pneumatic_valve_pressure_task.h"
 #include "app/shareddata.h"
-#include "scheduler/tasks/operation_dispatch_task.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 
@@ -142,11 +141,6 @@ void PneumaticValvePressureSettingWidget::submitPressureTask(const QStringList &
                             .arg(pressureBarFinal)
                             .arg(failedQrCodes.count())
                             .arg(failList));
-
-                    const QString logMsg =
-                        QString("[Pneumatic Valve Pressure] Set %1 bar failed on device(s): %2")
-                            .arg(pressureBarFinal).arg(failList);
-                    SharedData::getOperationDispatchTask()->logMessage(logMsg);
                 }
             });
 

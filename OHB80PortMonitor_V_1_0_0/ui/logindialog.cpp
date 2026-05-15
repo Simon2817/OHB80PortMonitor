@@ -2,8 +2,6 @@
 #include "usermanager.h"
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/user_management_task.h"
-#include "scheduler/tasks/operation_dispatch_task.h"
-#include "app/shareddata.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -110,15 +108,11 @@ void LoginDialog::onCancelClicked()
 void LoginDialog::onLoginSucceeded(const QString& username, UserPermission permission)
 {
     Q_UNUSED(permission)
-    SharedData::getOperationDispatchTask()->logMessage(
-        QStringLiteral("User login success: ") + username);
     accept();  // 登录成功，关闭对话框
 }
 
 void LoginDialog::onLoginFailed(const QString& reason)
 {
-    SharedData::getOperationDispatchTask()->logMessage(
-        QStringLiteral("User login failed: ") + m_usernameEdit->text().trimmed());
     m_errorLabel->setText(reason);
     m_errorLabel->setVisible(true);
     m_passwordEdit->clear();

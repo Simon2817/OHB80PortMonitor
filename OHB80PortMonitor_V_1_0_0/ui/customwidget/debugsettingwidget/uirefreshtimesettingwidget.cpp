@@ -3,7 +3,6 @@
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/set_ui_refresh_time_task.h"
 #include "app/shareddata.h"
-#include "scheduler/tasks/operation_dispatch_task.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 
@@ -175,10 +174,6 @@ void UIRefreshTimeSettingWidget::submitTask(const QStringList &qrcodes,
                         QString("Failed to set UI Refresh Time (logo=%1s, total=%2s, switch=%3s) on %4 device(s):\n%5")
                             .arg(logoFinal).arg(totalFinal).arg(switchFinal)
                             .arg(failedQrCodes.count()).arg(failList));
-
-                    SharedData::getOperationDispatchTask()->logMessage(
-                        QString("[UI Refresh Time] Set logo=%1s total=%2s switch=%3s failed on device(s): %4")
-                            .arg(logoFinal).arg(totalFinal).arg(switchFinal).arg(failList));
                 }
             });
 

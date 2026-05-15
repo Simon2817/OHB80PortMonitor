@@ -78,6 +78,14 @@ void SetVEFCGasTypeTask::start()
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
         QString("[Scheduler][SetVEFCGasTypeTask] gasType=%1 regVal=%2").arg(m_gasType).arg(regVal).toStdString());
 
+    // 写入运行日志：任务启动
+    auto* opTaskStart = SharedData::getOperationDispatchTask();
+    if (opTaskStart) {
+        opTaskStart->log(OperationDispatchTask::MsgType::Message,
+                         QString("SetVEFCGasType task started: gasType=%1 for %2 devices")
+                             .arg(m_gasType).arg(m_qrcodes.size()), 0);
+    }
+
     for (const QString &id : m_qrcodes) {
         ModbusTcpMaster *master = mgr.getMaster(id);
         if (!master || !master->isConnected() || !master->sender()) {
@@ -85,6 +93,9 @@ void SetVEFCGasTypeTask::start()
             LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
                 QString("[Scheduler][SetVEFCGasTypeTask] 设备 %1 不可用，跳过").arg(id).toStdString());
             m_failedQrCodes.append(id);
+            if (auto* opTask = SharedData::getOperationDispatchTask()) {
+                logFailedDevice(opTask, id);
+            }
             continue;
         }
 
@@ -93,6 +104,9 @@ void SetVEFCGasTypeTask::start()
         if (!cmd.isValid()) {
             qWarning() << "[Scheduler][SetVEFCGasTypeTask] 克隆指令失败:" << id;
             m_failedQrCodes.append(id);
+            if (auto* opTask = SharedData::getOperationDispatchTask()) {
+                logFailedDevice(opTask, id);
+            }
             continue;
         }
 
@@ -130,11 +144,7 @@ void SetVEFCGasTypeTask::start()
     }
 
     if (m_totalCount == 0) {
-        disconnectAll();
-        setState(Failed);
-        emit allFinished(false, 0, m_failedQrCodes, m_gasType);
-        emit finished(false, QString("SetVEFCGasTypeTask: 所有设备无法接收指令（失败数=%1）")
-                                .arg(m_failedQrCodes.count()));
+        forceFinish();
         return;
     }
 
@@ -210,6 +220,9 @@ void SetVEFCGasTypeTask::onCommandFinished(ModbusCommand cmd, const QString &mas
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
             QString("[Scheduler][SetVEFCGasTypeTask] 设备 %1 设置失败: timedOut=%2 checksumError=%3 deviceBusy=%4")
                 .arg(masterId).arg(cmd.timedOut).arg(cmd.checksumError).arg(cmd.deviceBusy).toStdString());
+        if (auto* opTask = SharedData::getOperationDispatchTask()) {
+            logFailedDevice(opTask, masterId);
+        }
     }
 
     checkAllFinished();
@@ -239,12 +252,31 @@ void SetVEFCGasTypeTask::forceFinish()
     if (m_timeoutTimer) m_timeoutTimer->stop();
     disconnectAll();
 
-    for (const QString &qr : m_pendingMap.values())
+    // 超时仍未响应的设备：补登失败日志
+    auto* opTaskPending = SharedData::getOperationDispatchTask();
+    for (const QString &qr : m_pendingMap.values()) {
         m_failedQrCodes.append(qr);
+        if (opTaskPending) {
+            logFailedDevice(opTaskPending, qr);
+        }
+    }
     m_pendingMap.clear();
 
     const bool allSuccess = m_failedQrCodes.isEmpty();
     setState(allSuccess ? Finished : Failed);
+
+    // 写入运行日志：任务汇总
+    if (auto* opTaskEnd = SharedData::getOperationDispatchTask()) {
+        if (allSuccess) {
+            const QString desc = QString("SetVEFCGasType gasType=%1 task completed: %2 devices succeeded")
+                  .arg(m_gasType).arg(m_successCount);
+            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
+        } else {
+            const QString desc = QString("SetVEFCGasType gasType=%1 task finished: %2 succeeded, %3 failed")
+                  .arg(m_gasType).arg(m_successCount).arg(m_failedQrCodes.count());
+            opTaskEnd->log(OperationDispatchTask::MsgType::Error, desc, 0);
+        }
+    }
 
     emit allFinished(allSuccess, m_successCount, m_failedQrCodes, m_gasType);
     emit finished(allSuccess,
@@ -258,21 +290,6 @@ void SetVEFCGasTypeTask::forceFinish()
         allSuccess ? Level::INFO : Level::WARN,
         QString("[Scheduler][SetVEFCGasTypeTask] 任务结束: gasType=%1 %2 台成功，%3 台失败")
             .arg(m_gasType).arg(m_successCount).arg(m_failedQrCodes.count()).toStdString());
-
-    // 写入运行日志：任务完成
-    auto* opTaskEnd = SharedData::getOperationDispatchTask();
-    if (opTaskEnd) {
-        if (allSuccess) {
-            const QString desc = QString("SetVEFCGasType gasType=%1 task completed: %2 devices succeeded")
-                  .arg(m_gasType).arg(m_successCount);
-            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
-        } else {
-            // 每个失败设备单独写一条日志
-            for (const QString& qr : m_failedQrCodes) {
-                logFailedDevice(opTaskEnd, qr);
-            }
-        }
-    }
 }
 
 void SetVEFCGasTypeTask::logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode)

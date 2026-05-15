@@ -298,7 +298,7 @@ void ReadVEFCFlowUnitAndMediumStatusTask::forceFinish()
         QString("[Scheduler][ReadVEFCFlowUnitAndMediumStatusTask] 任务结束: %1/%2 台通过")
             .arg(successCount).arg(m_qrcodes.size()).toStdString());
 
-    // 写入运行日志：任务完成
+    // 写入运行日志：任务汇总
     auto* opTaskEnd = SharedData::getOperationDispatchTask();
     if (opTaskEnd) {
         if (allSuccess) {
@@ -306,11 +306,15 @@ void ReadVEFCFlowUnitAndMediumStatusTask::forceFinish()
                 .arg(successCount).arg(m_qrcodes.size());
             opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
         } else {
+            const int failCount = m_qrcodes.size() - successCount;
+            const QString desc = QString("ReadVEFCStatus task finished: %1 succeeded, %2 failed")
+                .arg(successCount).arg(failCount);
+            opTaskEnd->log(OperationDispatchTask::MsgType::Error, desc, 0);
             // 每个失败设备单独写一条日志
             for (const QString &id : m_qrcodes) {
                 if (m_resultMap.contains(id)) {
                     const DeviceStatus &st = m_resultMap[id];
-                    if (st.commFailed) {
+                    if (!st.allOk()) {
                         logFailedDevice(opTaskEnd, id, st);
                     }
                 }

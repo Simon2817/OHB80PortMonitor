@@ -3,7 +3,6 @@
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/set_humidity_offset_task.h"
 #include "app/shareddata.h"
-#include "scheduler/tasks/operation_dispatch_task.h"
 #include "app/applogger.h"
 #include "loggermanager.h"
 
@@ -197,11 +196,6 @@ void HumidityOffsetSettingWidget::submitTask(const QStringList &qrcodes,
                         QString("Failed to set Humidity %1=[%2 %] on %3 device(s):\n%4")
                             .arg(fieldName).arg(valuePct)
                             .arg(failedQrCodes.count()).arg(failList));
-
-                    const QString logMsg =
-                        QString("[Humidity %1] Set %2%% failed on device(s): %3")
-                            .arg(fieldName).arg(valuePct).arg(failList);
-                    SharedData::getOperationDispatchTask()->logMessage(logMsg);
                 }
             });
 

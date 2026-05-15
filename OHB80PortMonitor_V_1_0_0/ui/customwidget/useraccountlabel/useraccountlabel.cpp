@@ -4,8 +4,6 @@
 #include "usermanager.h"
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/user_management_task.h"
-#include "scheduler/tasks/operation_dispatch_task.h"
-#include "app/shareddata.h"
 
 #include <QPixmap>
 #include <QMenu>
@@ -194,8 +192,6 @@ void UserAccountLabel::onLoginNewRequested()
         task->setLogout();
         connect(task, &UserManagementTask::logoutSucceeded,
                 this, [this]() {
-                    SharedData::getOperationDispatchTask()->logMessage(
-                        QStringLiteral("User logout: ") + m_currentUser);
                     // 登出成功后显示登录对话框
                     LoginDialog dlg(this);
                     dlg.exec();
@@ -217,8 +213,6 @@ void UserAccountLabel::onLogoutRequested()
     task->setLogout();
     connect(task, &UserManagementTask::logoutSucceeded,
             this, [this]() {
-                SharedData::getOperationDispatchTask()->logMessage(
-                    QStringLiteral("User logout: ") + m_currentUser);
             });
     connect(task, &UserManagementTask::finished,
             task, &QObject::deleteLater);

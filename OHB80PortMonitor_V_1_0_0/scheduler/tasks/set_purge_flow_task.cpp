@@ -278,7 +278,7 @@ void SetPurgeFlowTask::forceFinish()
     const bool allSuccess = m_failedQrCodes.isEmpty();
     setState(allSuccess ? Finished : Failed);
 
-    // 写入运行日志：任务总结
+    // 写入运行日志：任务汇总
     if (auto* opTaskEnd = SharedData::getOperationDispatchTask()) {
         if (allSuccess) {
             const QString desc = QString("SetPurgeFlow flow=%1 task completed: %2 devices succeeded")
@@ -289,8 +289,6 @@ void SetPurgeFlowTask::forceFinish()
                   .arg(m_flowValue).arg(m_successCount).arg(m_failedQrCodes.count());
             opTaskEnd->log(OperationDispatchTask::MsgType::Error, desc, 0);
         }
-    } else {
-        qWarning() << "[Scheduler][SetPurgeFlowTask] forceFinish: OperationDispatchTask is null, cannot write summary log";
     }
 
     emit allFinished(allSuccess, m_successCount, m_failedQrCodes, m_flowValue);

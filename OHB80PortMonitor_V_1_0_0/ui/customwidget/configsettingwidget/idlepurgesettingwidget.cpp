@@ -1,8 +1,6 @@
 #include "idlepurgesettingwidget.h"
 #include "../settingwidget/settingitemwidget.h"
 #include "scheduler/scheduler.h"
-#include "scheduler/tasks/operation_dispatch_task.h"
-#include "app/shareddata.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -173,12 +171,6 @@ void IdlePurgeSettingWidget::submitCommand(SettingItemWidget *item,
                             .arg(setValue)
                             .arg(failedQrCodes.count())
                             .arg(failList));
-
-                    // 向运行日志投递 Message 级别日志
-                    const QString logMsg =
-                        QString("[Idle Purge] Set %1 = %2 failed on device(s): %3")
-                            .arg(propertyName).arg(setValue).arg(failList);
-                    SharedData::getOperationDispatchTask()->logMessage(logMsg);
                 }
             });
 

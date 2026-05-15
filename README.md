@@ -9,6 +9,87 @@
 ## 更新日志
 
 ### 2026-05-15 - Simon
+**SetUIRefreshTimeTask 参数扩展：从 2 参数改为 3 参数**
+
+#### 背景
+根据 CYTC_OHBP 通讯手册 6.3 节，UI 页面刷新时间配置需要 3 个参数：
+- CH_1: logo 界面展示时间
+- CH_2: 参数界面展示总时间
+- CH_3: 参数界面切换时间
+
+原实现只有 2 个参数（logScreenSec, propertyScreenSec），对应 2 寄存器/4 字节，不符合通讯规范。
+
+#### 修改内容
+- `ModbusTcpMasterConfig.xml`：WriteUIRefreshTime 指令 RegisterCount 从 00 02 改为 00 03，ByteCount 从 04 改为 06，响应帧 RegisterCount 同步更新为 00 03
+- `SetUIRefreshTimeTask` 构造函数参数改为 `(qrcodes, logoSec, paramTotalSec, paramSwitchSec)`，`allFinished` 信号增加第 3 个参数，成员变量改为 `m_logoSec` / `m_paramTotalSec` / `m_paramSwitchSec`，`buildPayload()` 生成 6 字节大端数据
+- `UIRefreshTimeSettingWidget` UI 从 2 个 SpinBox 改为 3 个 SpinBox：Logo Screen Duration、Param Screen Total Duration、Param Page Switch Interval
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/bin/config/ModbusTcpMasterConfig.xml`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_ui_refresh_time_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget/uirefreshtimesettingwidget.{h,cpp}`
+
+---
+
+### 2026-05-15 - Simon
+**调整警报日志信息显示方式**
+
+#### 背景
+原项目中调度任务和 UI 层都直接调用 `OperationDispatchTask::logMessage()` 写入运行日志，造成职责混乱。部分任务在失败时不记录汇总日志，仅依赖 UI 层的冗余日志。
+
+#### 修改内容
+
+**1. 调度任务层运行日志标准化（7 个任务）**
+- 参照 `SetPurgeFlowTask` 的日志模式，统一以下任务的日志写入方式：
+  - `SetUIRefreshTimeTask`、`SetVEFCGasTypeTask`、`SetPneumaticValvePressureTask`、`SetIdlePurgeTask`、`SetHumidityOffsetTask`、`SetFirmwareConfigTask`、`ReadVEFCFlowUnitAndMediumStatusTask`
+- 统一模式：
+  - 任务启动时写一条 `Message` 级日志
+  - 每设备失败在失败发生点立即写一条 `Error` 级日志（设备不可用、克隆失败、命令失败、超时未响应）
+  - `forceFinish()` 中写汇总日志：
+    - 成功：`Message` 级，格式为 `{TaskName} task completed: X devices succeeded`
+    - 失败：`Error` 级，格式为 `{TaskName} task finished: X succeeded, Y failed`
+  - `m_totalCount == 0` 路径改为走 `forceFinish`，确保汇总日志不遗漏
+
+**3. UI 层运行日志写入完全移除（9 个文件）**
+- `uirefreshtimesettingwidget.cpp`：移除失败设备汇总日志
+- `vefcgastypesettingwidget.cpp`：移除失败设备汇总日志
+- `pneumaticvalvepressuresettingwidget.cpp`：移除失败设备汇总日志
+- `idlepurgesettingwidget.cpp`：移除失败设备汇总日志
+- `humidityoffsetsettingwidget.cpp`：移除失败设备汇总日志
+- `vefcflowunitmediumstatuswidget.cpp`：移除 VEFC 自检失败汇总日志
+- `logindialog.cpp`：移除登录成功/失败日志
+- `changepassworddialog.cpp`：移除密码修改成功/失败日志
+- `useraccountlabel.cpp`：移除登出日志
+- 同步清理不再需要的 `#include "scheduler/tasks/operation_dispatch_task.h"` 和 `#include "app/shareddata.h"`
+
+**4. VEFCFlowUnitMediumStatusWidget 失败弹窗分类显示**
+- 失败设备按 3 类分组：Communication Failed / Unit Config Failed / Medium Config Failed
+- 汇总弹窗后，针对每个非空类别单独弹窗显示设备列表
+- 保留 UI 层用于用户交互的 QMessageBox，不涉及运行日志
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_ui_refresh_time_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_vefc_gas_type_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_pneumatic_valve_pressure_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_idle_purge_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_humidity_offset_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_firmware_config_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/read_vefc_flow_unit_medium_status_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget/uirefreshtimesettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget/vefcgastypesettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/pneumaticvalvepressuresettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/idlepurgesettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/humidityoffsetsettingwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget/vefcflowunitmediumstatuswidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/logindialog.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/changepassworddialog.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/useraccountlabel/useraccountlabel.cpp`
+
+---
+
+### 2026-05-15 - Simon
 **Modbus 通讯防粘帧：启用 TCP_NODELAY 禁用 Nagle 算法**
 
 #### 背景

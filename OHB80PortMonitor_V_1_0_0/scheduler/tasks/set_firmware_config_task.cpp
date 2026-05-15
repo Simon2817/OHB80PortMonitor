@@ -3,6 +3,8 @@
 #include "modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h"
 #include "modbustcpmastermanager/modbustcpmaster/firmwareupgrader.h"
 #include "app/applogger.h"
+#include "app/shareddata.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
 #include "loggermanager.h"
 
 #include <QDebug>
@@ -35,6 +37,12 @@ void SetFirmwareConfigTask::start()
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
         "[Scheduler][SetFirmwareConfigTask] 开始配置固件升级参数");
 
+    // 写入运行日志：任务启动
+    if (auto* opTaskStart = SharedData::getOperationDispatchTask()) {
+        opTaskStart->log(OperationDispatchTask::MsgType::Message,
+                         QStringLiteral("SetFirmwareConfig task started"), 0);
+    }
+
     ModbusTcpMasterManager &mgr = ModbusTcpMasterManager::instance();
     const QStringList ids = mgr.masterIds();
 
@@ -65,6 +73,14 @@ void SetFirmwareConfigTask::start()
     emit finished(true, "Firmware config applied");
     LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
         QString("[Scheduler][SetFirmwareConfigTask] 固件升级参数配置完成，应用到 %1 个设备").arg(appliedCount).toStdString());
+
+    // 写入运行日志：任务完成
+    if (auto* opTaskEnd = SharedData::getOperationDispatchTask()) {
+        opTaskEnd->log(OperationDispatchTask::MsgType::Message,
+                       QString("SetFirmwareConfig task completed: applied to %1 devices").arg(appliedCount), 0);
+    } else {
+        qWarning() << "[Scheduler][SetFirmwareConfigTask] OperationDispatchTask is null, cannot write summary log";
+    }
 }
 
 void SetFirmwareConfigTask::stop()
