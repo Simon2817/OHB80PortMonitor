@@ -158,6 +158,18 @@ private:
     void succeedPendingCommand(const QByteArray& frame);
 
     /**
+     * @brief 将原始收发帧写入 raw/{masterId}.log
+     * @param cmdId 指令ID（如 ReadFoupStatus）
+     * @param requestBytes 请求帧原始字节
+     * @param responseBytes 响应帧原始字节（失败时为空）
+     * @param errorInfo 失败时的错误描述（成功时为空）
+     */
+    void logRawFrame(const QString& cmdId,
+                     const QByteArray& requestBytes,
+                     const QByteArray& responseBytes,
+                     const QString& errorInfo);
+
+    /**
      * @brief 向环形缓冲区追加数据
      * @param data 要追加的数据
      */

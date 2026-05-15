@@ -663,6 +663,9 @@ void ModbusCommandReceiver::failPendingCommand(const QString& errorMessage, bool
     failed.timedOut = timedOut;
     failed.checksumError = checksumError;
 
+    logRawFrame(failed.id, failed.request.rawBytes, QByteArray(),
+                errorMessage + (timedOut ? QStringLiteral(" (timeout)") : QString()));
+
     emit commandFailed(failed, timedOut, checksumError);
 }
 
@@ -705,7 +708,33 @@ void ModbusCommandReceiver::succeedPendingCommand(const QByteArray& frame)
         LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::INFO, QString("[data][ModbusCommandReceiver][succeedPendingCommand]：%1").arg(logMsg).toStdString());
     }
 
+    logRawFrame(finished.id, finished.request.rawBytes, finished.response.rawBytes, QString());
+
     emit commandSucceeded(finished);
+}
+
+void ModbusCommandReceiver::logRawFrame(const QString& cmdId,
+                                         const QByteArray& requestBytes,
+                                         const QByteArray& responseBytes,
+                                         const QString& errorInfo)
+{
+    const QString txHex = toHexSpaced(requestBytes);
+
+    QStringList lines;
+    lines << QStringLiteral("\n[%1] TX: %2").arg(cmdId, txHex);
+
+    if (!responseBytes.isEmpty()) {
+        const QString rxHex = toHexSpaced(responseBytes);
+        lines << QStringLiteral("[%1] RX: %2").arg(cmdId, rxHex);
+    } else {
+        lines << QStringLiteral("[%1] ERROR: %2").arg(cmdId, errorInfo);
+    }
+
+    const QString logPath = QStringLiteral("raw_data/%1.log").arg(m_masterId);
+    LoggerManager::instance().log(logPath.toStdString(),
+                                  responseBytes.isEmpty() ? Level::WARN : Level::INFO,
+                                  lines.join(QStringLiteral("\n")).toStdString());
+    LoggerManager::instance().flush(logPath.toStdString());
 }
 
 void ModbusCommandReceiver::ringAppend(const QByteArray& data)

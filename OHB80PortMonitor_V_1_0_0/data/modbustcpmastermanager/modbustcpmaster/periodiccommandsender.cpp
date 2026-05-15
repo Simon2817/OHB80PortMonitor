@@ -63,6 +63,13 @@ void PeriodicCommandSender::onRoundComplete(QList<ModbusCommand> failedCommands)
         qDebug() << "[PeriodicCommandSender] [设备ID=" << m_masterId << "] 连续失败达到阈値，请求断开设备";
         QString disconnectMsg = QString("[PeriodicCommandSender][onRoundComplete]：设备ID=%1 连续失败达到阈值，请求断开设备").arg(m_masterId);
         LoggerManager::instance().log(AppLogger::ModbusMasterLoggerPath(m_masterId).toStdString(), Level::WARN, disconnectMsg.toStdString());
+
+        const QString rawPath = QStringLiteral("raw_data/%1.log").arg(m_masterId);
+        LoggerManager::instance().log(rawPath.toStdString(), Level::WARN,
+            QStringLiteral("[PeriodicCommandSender] 连续失败%1轮达到阈值，准备断开连接")
+                .arg(m_consecutiveFailRounds).toStdString());
+        LoggerManager::instance().flush(rawPath.toStdString());
+
         stop();
         m_consecutiveFailRounds = 0;
         emit disconnectDevice();

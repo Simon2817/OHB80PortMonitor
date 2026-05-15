@@ -105,6 +105,9 @@ void SetPurgeFlowTask::start()
             LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
                 QString("[Scheduler][SetPurgeFlowTask] 设备 %1 不可用，跳过").arg(id).toStdString());
             m_failedQrCodes.append(id);
+            if (auto* opTask = SharedData::getOperationDispatchTask()) {
+                logFailedDevice(opTask, id);
+            }
             continue;
         }
 
@@ -113,6 +116,9 @@ void SetPurgeFlowTask::start()
         if (!cmd.isValid()) {
             qWarning() << "[Scheduler][SetPurgeFlowTask] 克隆指令失败:" << id;
             m_failedQrCodes.append(id);
+            if (auto* opTask = SharedData::getOperationDispatchTask()) {
+                logFailedDevice(opTask, id);
+            }
             continue;
         }
 
@@ -151,11 +157,7 @@ void SetPurgeFlowTask::start()
     }
 
     if (m_totalCount == 0) {
-        disconnectAll();
-        setState(Failed);
-        emit allFinished(false, 0, m_failedQrCodes, m_flowValue);
-        emit finished(false, QString("SetPurgeFlowTask: 所有设备无法接收指令（失败数=%1）")
-                                .arg(m_failedQrCodes.count()));
+        forceFinish();
         return;
     }
 
@@ -231,6 +233,9 @@ void SetPurgeFlowTask::onCommandFinished(ModbusCommand cmd, const QString &maste
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
             QString("[Scheduler][SetPurgeFlowTask] 设备 %1 设置失败: timedOut=%2 checksumError=%3 deviceBusy=%4")
                 .arg(masterId).arg(cmd.timedOut).arg(cmd.checksumError).arg(cmd.deviceBusy).toStdString());
+        if (auto* opTask = SharedData::getOperationDispatchTask()) {
+            logFailedDevice(opTask, masterId);
+        }
     }
 
     checkAllFinished();
@@ -260,12 +265,33 @@ void SetPurgeFlowTask::forceFinish()
     if (m_timeoutTimer) m_timeoutTimer->stop();
     disconnectAll();
 
-    for (const QString &qr : m_pendingMap.values())
+    // 超时仍未响应的设备：补登失败日志
+    auto* opTaskPending = SharedData::getOperationDispatchTask();
+    for (const QString &qr : m_pendingMap.values()) {
         m_failedQrCodes.append(qr);
+        if (opTaskPending) {
+            logFailedDevice(opTaskPending, qr);
+        }
+    }
     m_pendingMap.clear();
 
     const bool allSuccess = m_failedQrCodes.isEmpty();
     setState(allSuccess ? Finished : Failed);
+
+    // 写入运行日志：任务总结
+    if (auto* opTaskEnd = SharedData::getOperationDispatchTask()) {
+        if (allSuccess) {
+            const QString desc = QString("SetPurgeFlow flow=%1 task completed: %2 devices succeeded")
+                  .arg(m_flowValue).arg(m_successCount);
+            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
+        } else {
+            const QString desc = QString("SetPurgeFlow flow=%1 task finished: %2 succeeded, %3 failed")
+                  .arg(m_flowValue).arg(m_successCount).arg(m_failedQrCodes.count());
+            opTaskEnd->log(OperationDispatchTask::MsgType::Error, desc, 0);
+        }
+    } else {
+        qWarning() << "[Scheduler][SetPurgeFlowTask] forceFinish: OperationDispatchTask is null, cannot write summary log";
+    }
 
     emit allFinished(allSuccess, m_successCount, m_failedQrCodes, m_flowValue);
     emit finished(allSuccess,
@@ -278,21 +304,6 @@ void SetPurgeFlowTask::forceFinish()
         allSuccess ? Level::INFO : Level::WARN,
         QString("[Scheduler][SetPurgeFlowTask] 任务结束: flow=%1 %2 台成功，%3 台失败")
             .arg(m_flowValue).arg(m_successCount).arg(m_failedQrCodes.count()).toStdString());
-
-    // 写入运行日志：任务完成
-    auto* opTaskEnd = SharedData::getOperationDispatchTask();
-    if (opTaskEnd) {
-        if (allSuccess) {
-            const QString desc = QString("SetPurgeFlow flow=%1 task completed: %2 devices succeeded")
-                  .arg(m_flowValue).arg(m_successCount);
-            opTaskEnd->log(OperationDispatchTask::MsgType::Message, desc, 0);
-        } else {
-            // 每个失败设备单独写一条日志
-            for (const QString& qr : m_failedQrCodes) {
-                logFailedDevice(opTaskEnd, qr);
-            }
-        }
-    }
 }
 
 void SetPurgeFlowTask::logFailedDevice(OperationDispatchTask* opTask, const QString& qrcode)

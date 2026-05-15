@@ -126,10 +126,6 @@ void PurgeFlowSettingWidget::submitTask(const QStringList &qrcodes, int flowValu
                         this, "Set Failed",
                         QString("Failed to set Purge Flow=[%1] on %2 device(s):\n%3")
                             .arg(flowFinal).arg(failedQrCodes.count()).arg(failList));
-
-                    SharedData::getOperationDispatchTask()->logMessage(
-                        QString("[Purge Flow] Set %1 failed on device(s): %2")
-                            .arg(flowFinal).arg(failList));
                 }
             });
 

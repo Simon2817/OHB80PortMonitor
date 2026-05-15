@@ -8,8 +8,56 @@
 
 ## 更新日志
 
+### 2026-05-15 - Simon
+**Modbus 原始帧日志：收发帧写入 raw_data/{masterId}.log**
+
+#### 修改内容
+- `modbuscommandreceiver.h/cpp`：新增 `logRawFrame` 方法，在 `commandSucceeded` / `commandFailed` 信号发射前将请求/响应原始帧写入 `raw_data/{masterId}.log`
+  - 成功：`[cmdId] TX: ...` / `[cmdId] RX: ...`
+  - 失败：`[cmdId] TX: ...` / `[cmdId] ERROR: ...`
+- `periodiccommandsender.cpp`：在 `disconnectDevice` 信号发射前写入 `raw_data/{masterId}.log`，记录连续失败达到阈值准备断开连接
+- `periodiccommandsender.h`：`MAX_CONSECUTIVE_FAILURES` 从 10 调整为 100
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/modbuscommandreceiver.h`
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/modbuscommandreceiver.cpp`
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.h`
+  - `OHB80PortMonitor_V_1_0_0/data/modbustcpmastermanager/modbustcpmaster/periodiccommandsender.cpp`
+
+---
+
+### 2026-05-15 - Simon
+**SetPurgeFlowTask 运行日志重构：失败日志在发生点写入，总结日志在 emit 前写入**
+
+#### 修改内容
+- `set_purge_flow_task.cpp`：
+  - 每设备失败日志在失败发生点立即写入（设备不可用、克隆失败、命令失败、超时未响应），不再集中到 `forceFinish` 处理
+  - 任务总结日志在 `forceFinish` 中 `emit allFinished` 前统一写入（成功写 Message，失败写 Error）
+  - `m_totalCount == 0` 路径改为走 `forceFinish`，确保总结日志不遗漏
+- `purgeflowsettingwidget.cpp`：移除 UI 层的 `logMessage` 调用，运行日志统一由调度任务类负责
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_purge_flow_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/purgeflowsettingwidget.cpp`
+
+---
+
 ### 2026-05-14 - Simon
-**Modbus 协议文档更新：ReadFoupStatus CH_9 设备状态位定义**
+**NetworkStatusTask DeviceOffline 告警提交条件放宽 + alarmpage 移除冗余提交**
+
+#### 修改内容
+- `network_status_task.cpp`：DeviceOffline 告警提交条件从 `lastStatus == Connected` 改为 `status ∈ {Disconnected, Error}`，避免从未连接成功的设备永远不触发告警
+- `alarmpage.h/cpp`：移除 `onNetworkStatusChanged` 槽及重复的告警提交逻辑，DeviceOffline 告警统一由 NetworkStatusTask 内部处理
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/network_status_task.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/alarmpage.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/alarmpage.cpp`
+
+---
 
 #### 修改内容
 - `ModbusTcpMasterConfig.xml`：CH_9 从"预留"更新为设备状态位定义
