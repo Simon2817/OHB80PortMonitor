@@ -3,6 +3,7 @@
 
 #include "../scheduler_task.h"
 #include "modbustcpmastermanager/modbustcpmaster/firmwareupgrader.h"
+#include "modbustcpmastermanager/modbuscommand/modbuscommand.h"
 
 #include <QStringList>
 #include <QHash>
@@ -52,8 +53,10 @@ private slots:
                             bool success,
                             FirmwareUpgrader::UpgradeState state,
                             const QString &errorMessage);
+    void onWriteQRCodeFinished(ModbusCommand cmd, const QString &masterId);
 
 private:
+    void submitWriteQRCode(const QString &masterId);
     void startUpgrading();
 
     QStringList   m_deviceIds;
@@ -62,6 +65,10 @@ private:
 
     // deviceId → upgrader 映射（用于信号槽中反查设备）
     QHash<QString, FirmwareUpgrader*> m_upgraderMap;
+
+    // 待处理的 WriteQRCode 指令：uuid -> masterId
+    QHash<qint64, QString> m_writeQRCodePendingMap;
+    QList<QMetaObject::Connection> m_qrCodeConnections;
 
     int  m_totalCount    = 0;
     int  m_finishedCount = 0;

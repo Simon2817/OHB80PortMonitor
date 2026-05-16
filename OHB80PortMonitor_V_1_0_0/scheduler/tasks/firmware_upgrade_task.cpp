@@ -1,9 +1,15 @@
 #include "firmware_upgrade_task.h"
 #include "modbustcpmastermanager/modbustcpmastermanager.h"
 #include "modbustcpmastermanager/modbustcpmaster/modbustcpmaster.h"
+#include "modbustcpmastermanager/modbustcpmaster/modbuscommandsender.h"
+#include "modbustcpmastermanager/modbuscommand/commandpool.h"
+#include "modbustcpmastermanager/modbuscommand/modbuscommand.h"
 #include "tool/binfilereader/binfilereader.h"
 #include "loggermanager.h"
 #include "app/applogger.h"
+#include "app/shareddata.h"
+#include "scheduler/tasks/operation_dispatch_task.h"
+#include <QDebug>
 
 FirmwareUpgradeTask::FirmwareUpgradeTask(const QStringList &deviceIds,
                                          const QString &binFilePath,
@@ -77,6 +83,12 @@ void FirmwareUpgradeTask::stop()
             upgrader->stop();  // FirmwareUpgrader::stop() 已内置线程分派
         }
     }
+
+    // 断开所有 WriteQRCode 相关的信号连接
+    for (const QMetaObject::Connection &conn : qAsConst(m_qrCodeConnections)) {
+        QObject::disconnect(conn);
+    }
+    m_qrCodeConnections.clear();
 
     setState(Cancelled);
     emit finished(false, "固件升级任务已取消");
@@ -206,6 +218,11 @@ void FirmwareUpgradeTask::onUpgraderFinished(const QString &masterId,
 
     emit deviceFinished(masterId, success, resultMsg);
 
+    // 固件升级成功后，补发 QRCode 指令【import】
+    if (success) {
+        submitWriteQRCode(masterId);
+    }
+
     m_finishedCount++;
     qDebug() << "[Scheduler][FirmwareUpgradeTask][onUpgraderFinished] 进度:" << m_finishedCount << "/" << m_totalCount;
     emit allProgress(m_finishedCount, m_totalCount);
@@ -221,5 +238,112 @@ void FirmwareUpgradeTask::onUpgraderFinished(const QString &masterId,
         LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
             QString("[Scheduler][FirmwareUpgradeTask][onUpgraderFinished] %1").arg(msg).toStdString());
         emit finished(true, msg);
+    }
+}
+
+void FirmwareUpgradeTask::submitWriteQRCode(const QString &masterId)
+{
+    ModbusTcpMasterManager &mgr = ModbusTcpMasterManager::instance();
+    ModbusTcpMaster *master = mgr.getMaster(masterId);
+    if (!master || !master->sender()) {
+        qWarning() << "[Scheduler][FirmwareUpgradeTask] 下发 WriteQRCode 失败：master 不可用 masterId=" << masterId;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+            QString("[Scheduler][FirmwareUpgradeTask] 下发 WriteQRCode 失败：master 不可用 masterId=%1").arg(masterId).toStdString());
+        return;
+    }
+
+    CommandPool *pool = mgr.commandPool();
+    if (!pool || !pool->contains("WriteQRCode")) {
+        qWarning() << "[Scheduler][FirmwareUpgradeTask] 下发 WriteQRCode 失败：指令池缺少 WriteQRCode";
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+            "[Scheduler][FirmwareUpgradeTask] 下发 WriteQRCode 失败：指令池缺少 WriteQRCode");
+        return;
+    }
+
+    ModbusCommand cmd = pool->clone("WriteQRCode");
+    if (!cmd.isValid()) {
+        qWarning() << "[Scheduler][FirmwareUpgradeTask] 下发 WriteQRCode 失败：指令克隆失败";
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+            "[Scheduler][FirmwareUpgradeTask] 下发 WriteQRCode 失败：指令克隆失败");
+        return;
+    }
+
+    cmd.module = CommandModule::BusinessCommandIssuer;
+
+    // 将 qrcode 转换为 4 字节数据
+    bool ok = false;
+    quint32 qrcodeValue = masterId.toUInt(&ok);
+    if (!ok) {
+        qWarning() << "[Scheduler][FirmwareUpgradeTask] 下发 WriteQRCode 失败：qrcode 转换失败 masterId=" << masterId;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+            QString("[Scheduler][FirmwareUpgradeTask] 下发 WriteQRCode 失败：qrcode 转换失败 masterId=%1").arg(masterId).toStdString());
+        return;
+    }
+
+    // 4 字节大端序：高字节在前
+    QByteArray data;
+    data.append(static_cast<char>((qrcodeValue >> 24) & 0xFF));
+    data.append(static_cast<char>((qrcodeValue >> 16) & 0xFF));
+    data.append(static_cast<char>((qrcodeValue >> 8) & 0xFF));
+    data.append(static_cast<char>(qrcodeValue & 0xFF));
+    // 更新请求寄存器数据
+    cmd.request.registerValue = data;
+    cmd.request.byteCount     = static_cast<quint8>(data.size());
+
+    // 同步更新 rawBytes 中的数据段（FC 0x10，数据从偏移 7 开始，共 4 字节）
+    if (cmd.request.functionCode == 0x10
+        && cmd.request.rawBytes.size() >= 7 + 4
+        && data.size() == 4) {
+        for (int i = 0; i < 4; ++i)
+            cmd.request.rawBytes[7 + i] = data[i];
+    }
+
+    // 记录待处理指令
+    m_writeQRCodePendingMap[cmd.uuid] = masterId;
+
+    qDebug() << "[Scheduler][FirmwareUpgradeTask] 下发 WriteQRCode masterId=" << masterId << "value=" << qrcodeValue << "uuid=" << cmd.uuid;
+    LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+        QString("[Scheduler][FirmwareUpgradeTask] 下发 WriteQRCode masterId=%1 value=%2 uuid=%3").arg(masterId).arg(qrcodeValue).arg(cmd.uuid).toStdString());
+
+    if (SharedData::getOperationDispatchTask()) {
+        SharedData::getOperationDispatchTask()->logMessage(
+            QString("[WriteQRCode] Device %1 → QRCode=%2 (固件升级后补发)").arg(masterId).arg(qrcodeValue));
+    }
+
+    // 连接信号监听响应
+    ModbusCommandSender *sender = master->sender();
+    auto conn = connect(sender, &ModbusCommandSender::commandFinished,
+                        this, &FirmwareUpgradeTask::onWriteQRCodeFinished,
+                        Qt::QueuedConnection);
+    m_qrCodeConnections.append(conn);
+
+    QMetaObject::invokeMethod(sender, [sender, cmd]() {
+        sender->submit(cmd);
+    }, Qt::QueuedConnection);
+}
+
+void FirmwareUpgradeTask::onWriteQRCodeFinished(ModbusCommand cmd, const QString &masterId)
+{
+    if (m_stopped) return;
+
+    // 检查是否是我们关注的 WriteQRCode 指令
+    if (!m_writeQRCodePendingMap.contains(cmd.uuid)) return;
+
+    m_writeQRCodePendingMap.remove(cmd.uuid);
+
+    const bool ok = cmd.received && !cmd.timedOut && !cmd.checksumError && !cmd.deviceBusy;
+
+    if (ok) {
+        qDebug() << "[Scheduler][FirmwareUpgradeTask] WriteQRCode 指令成功 masterId=" << masterId << "uuid=" << cmd.uuid;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::INFO,
+            QString("[Scheduler][FirmwareUpgradeTask] WriteQRCode 指令成功 masterId=%1 uuid=%2").arg(masterId).arg(cmd.uuid).toStdString());
+    } else {
+        qWarning() << "[Scheduler][FirmwareUpgradeTask] WriteQRCode 指令失败 masterId=" << masterId
+                   << "uuid=" << cmd.uuid << "received=" << cmd.received
+                   << "timedOut=" << cmd.timedOut << "checksumError=" << cmd.checksumError
+                   << "deviceBusy=" << cmd.deviceBusy;
+        LoggerManager::instance().log(AppLogger::SystemLoggerPath().toStdString(), Level::WARN,
+            QString("[Scheduler][FirmwareUpgradeTask] WriteQRCode 指令失败 masterId=%1 uuid=%2 received=%3 timedOut=%4 checksumError=%5 deviceBusy=%6")
+                .arg(masterId).arg(cmd.uuid).arg(cmd.received).arg(cmd.timedOut).arg(cmd.checksumError).arg(cmd.deviceBusy).toStdString());
     }
 }

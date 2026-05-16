@@ -9,6 +9,30 @@
 ## 更新日志
 
 ### 2026-05-16 - Simon
+**固件升级任务补发QRCode指令功能**
+
+#### 背景
+设备固件升级完成后，需要补发QRCode指令（WriteQRCode）以更新设备中的QRCode信息，确保固件升级后设备的身份标识正确。
+
+#### 修改内容
+- **FirmwareUpgradeTask**：在 `onUpgraderFinished()` 槽函数中，当设备固件升级成功（`success == true`）时，自动调用 `submitWriteQRCode(masterId)` 补发QRCode指令
+- **submitWriteQRCode()** 方法实现：
+  - 从 `ModbusTcpMasterManager` 获取设备 master 对象和 CommandPool
+  - 从 CommandPool 克隆 WriteQRCode 指令模板
+  - 将 masterId 转换为4字节大端序数据填充到指令中
+  - 通过 `ModbusCommandSender::submit()` 发送指令
+  - 记录待处理指令映射 `m_writeQRCodePendingMap`，用于响应回调匹配
+- **onWriteQRCodeFinished()** 槽函数：处理 WriteQRCode 指令响应，记录成功或失败日志
+- **资源管理**：在 `stop()` 方法中添加 WriteQRCode 信号连接的清理逻辑
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/firmware_upgrade_task.h`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/firmware_upgrade_task.cpp`
+
+---
+
+### 2026-05-16 - Simon
 **三大日志控件 UI 体验优化：列对齐/列宽/权限可见性/Description 弹窗/Hex 显示**
 
 #### 背景
