@@ -8,27 +8,63 @@
 
 ## 更新日志
 
-### 2026-05-15 - Simon
-**SetUIRefreshTimeTask 参数扩展：从 2 参数改为 3 参数**
-
-#### 背景
-根据 CYTC_OHBP 通讯手册 6.3 节，UI 页面刷新时间配置需要 3 个参数：
-- CH_1: logo 界面展示时间
-- CH_2: 参数界面展示总时间
-- CH_3: 参数界面切换时间
-
-原实现只有 2 个参数（logScreenSec, propertyScreenSec），对应 2 寄存器/4 字节，不符合通讯规范。
+### 2026-05-16 - Simon
+**新增设备可用性配置控件（DeviceEnableSettingWidget）**
 
 #### 修改内容
-- `ModbusTcpMasterConfig.xml`：WriteUIRefreshTime 指令 RegisterCount 从 00 02 改为 00 03，ByteCount 从 04 改为 06，响应帧 RegisterCount 同步更新为 00 03
-- `SetUIRefreshTimeTask` 构造函数参数改为 `(qrcodes, logoSec, paramTotalSec, paramSwitchSec)`，`allFinished` 信号增加第 3 个参数，成员变量改为 `m_logoSec` / `m_paramTotalSec` / `m_paramSwitchSec`，`buildPayload()` 生成 6 字节大端数据
-- `UIRefreshTimeSettingWidget` UI 从 2 个 SpinBox 改为 3 个 SpinBox：Logo Screen Duration、Param Screen Total Duration、Param Page Switch Interval
+- 创建 `deviceenablesettingwidget.{h,cpp}`，提供 OHB 设备可用性（Enable/Disable）配置功能
+- UI 组成：
+  - Target Device QRCode SpinBox：选择设备 QRCode，初始值使用 `SharedData::getAllQrcodes()` 第一个
+  - Device Status ComboBox：Enable/Disable 两个选项
+  - Set 按钮：设置按钮
+- 实现功能：
+  - 点击 Set 按钮时，根据 QRCode 调用 `SharedData::getFoupByQRCode()` 获取 `FoupOfOHBInfo*`
+  - 调用 `setEnable()` 修改设备的 enable 属性
+  - 添加成功/失败状态提示（`setStatusOK()` / `setStatusFailed()`）
+- 集成到 ConfigPage：
+  - 在 `configpage.ui` 添加 "Device Enable" 导航按钮
+  - 在 `configpage.{h,cpp}` 添加成员变量和初始化代码
+  - 在 `configsettingwidget.pri` 添加新文件到构建系统
+
+#### 影响范围
+- 新增文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/deviceenablesettingwidget.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/deviceenablesettingwidget.cpp`
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/configpage.ui`
+  - `OHB80PortMonitor_V_1_0_0/ui/configpage.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/configpage.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/configsettingwidget.pri`
+
+---
+
+### 2026-05-16 - Simon
+**运行日志窗口显示问题修复**
+
+#### 背景
+运行日志窗口（OperationLogWidget）打开后，如果被主界面覆盖，点击公告栏无法再次显示。
+
+#### 修改内容
+- 将 OperationLogWidget 创建为无父窗口的独立窗口（`new OperationLogWidget(nullptr)`），避免窗口层级冲突
+- 在 UIDemo6 析构函数中手动释放资源，避免内存泄漏
 
 #### 影响范围
 - 修改文件：
-  - `OHB80PortMonitor_V_1_0_0/bin/config/ModbusTcpMasterConfig.xml`
-  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_ui_refresh_time_task.{h,cpp}`
-  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget/uirefreshtimesettingwidget.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/ui/uidemo6.cpp`
+
+---
+
+### 2026-05-16 - Simon
+**HomePage Disable 颜色标签样式设置统一**
+
+#### 修改内容
+- 将 labDisableColor 的样式设置从 UI 文件移到代码中
+- 将 labDisableColor 添加到 StatusLabelPair 数组中，使用 `FrameDevice::DeviceStatus::Disable` 状态
+- 通过循环统一设置样式，与其他状态标签保持一致
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/homepage.cpp`
 
 ---
 
@@ -86,6 +122,30 @@
   - `OHB80PortMonitor_V_1_0_0/ui/logindialog.cpp`
   - `OHB80PortMonitor_V_1_0_0/ui/changepassworddialog.cpp`
   - `OHB80PortMonitor_V_1_0_0/ui/customwidget/useraccountlabel/useraccountlabel.cpp`
+
+---
+
+### 2026-05-15 - Simon
+**SetUIRefreshTimeTask 参数扩展：从 2 参数改为 3 参数**
+
+#### 背景
+根据 CYTC_OHBP 通讯手册 6.3 节，UI 页面刷新时间配置需要 3 个参数：
+- CH_1: logo 界面展示时间
+- CH_2: 参数界面展示总时间
+- CH_3: 参数界面切换时间
+
+原实现只有 2 个参数（logScreenSec, propertyScreenSec），对应 2 寄存器/4 字节，不符合通讯规范。
+
+#### 修改内容
+- `ModbusTcpMasterConfig.xml`：WriteUIRefreshTime 指令 RegisterCount 从 00 02 改为 00 03，ByteCount 从 04 改为 06，响应帧 RegisterCount 同步更新为 00 03
+- `SetUIRefreshTimeTask` 构造函数参数改为 `(qrcodes, logoSec, paramTotalSec, paramSwitchSec)`，`allFinished` 信号增加第 3 个参数，成员变量改为 `m_logoSec` / `m_paramTotalSec` / `m_paramSwitchSec`，`buildPayload()` 生成 6 字节大端数据
+- `UIRefreshTimeSettingWidget` UI 从 2 个 SpinBox 改为 3 个 SpinBox：Logo Screen Duration、Param Screen Total Duration、Param Page Switch Interval
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/bin/config/ModbusTcpMasterConfig.xml`
+  - `OHB80PortMonitor_V_1_0_0/scheduler/tasks/set_ui_refresh_time_task.{h,cpp}`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/debugsettingwidget/uirefreshtimesettingwidget.{h,cpp}`
 
 ---
 

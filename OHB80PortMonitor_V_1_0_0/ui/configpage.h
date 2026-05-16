@@ -13,6 +13,7 @@ class SH85PeriodicSelfCheckSettingWidget;
 class SH85SelfCheckSettingWidget;
 class HumidityOffsetSettingWidget;
 class PurgeFlowSettingWidget;
+class DeviceEnableSettingWidget;
 
 // ====================================================================
 // ConfigPage — 配置页面
@@ -24,6 +25,7 @@ class PurgeFlowSettingWidget;
 //     - SH85PeriodicSelfCheckSettingWidget：SH85 定期自检配置
 //     - SH85SelfCheckSettingWidget：SH85 手动自检配置
 //     - HumidityOffsetSettingWidget：湿度偏移配置
+//     - DeviceEnableSettingWidget：设备可用性配置
 //     - PurgeFlowSettingWidget：吹扫流量配置
 // ====================================================================
 class ConfigPage : public QWidget
@@ -50,6 +52,7 @@ private:
     PneumaticValvePressureSettingWidget *m_pneumaticValvePressureWidget;  // 气动阀门压力配置控件
     SH85PeriodicSelfCheckSettingWidget *m_sh85PeriodicSelfCheckWidget;   // SH85 定期自检配置控件
     SH85SelfCheckSettingWidget *m_sh85SelfCheckWidget;          // SH85 手动自检配置控件
+    DeviceEnableSettingWidget *m_deviceEnableWidget;            // 设备可用性配置控件
     HumidityOffsetSettingWidget *m_humidityOffsetWidget;        // 湿度偏移配置控件
     PurgeFlowSettingWidget *m_purgeFlowWidget;                  // 吹扫流量配置控件
 };

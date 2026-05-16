@@ -34,6 +34,9 @@ public:
     // 获取系统日志路径: system（UI层、调度层、数据层完整日志）
     static QString SystemLoggerPath();
 
+    // 获取 SH85 自检日志路径: sh85selfcheck/{id}
+    static QString SH85SelfCheckLoggerPath(const QString& id);
+
 private:
     bool m_initialized;
     QString m_logDir;           // 日志目录

@@ -139,7 +139,8 @@ void HomePage::initOverheadCranesWidget()
         {FrameDevice::DeviceStatus::PurgeTime20Min, ui->labPurgeTime20MinColor, ui->labPurgeTime20MinText},
         {FrameDevice::DeviceStatus::PurgeTime30Min, ui->labPurgeTime30MinColor, ui->labPurgeTime30MinText},
         {FrameDevice::DeviceStatus::FoupOut, ui->labFoupOutColor, ui->labFoupOutText},
-        {FrameDevice::DeviceStatus::Alarm, ui->labAlarmColor, ui->labAlarmText}
+        {FrameDevice::DeviceStatus::Alarm, ui->labAlarmColor, ui->labAlarmText},
+        {FrameDevice::DeviceStatus::Disable, ui->labDisableColor, ui->labDisableText}
     };
 
     for (const auto& pair : labels) {

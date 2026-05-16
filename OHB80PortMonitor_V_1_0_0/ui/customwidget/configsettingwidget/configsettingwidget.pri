@@ -4,7 +4,8 @@ HEADERS += \
     $$PWD/sh85periodicselfchecksettingwidget.h \
     $$PWD/sh85selfchecksettingwidget.h \
     $$PWD/humidityoffsetsettingwidget.h \
-    $$PWD/purgeflowsettingwidget.h
+    $$PWD/purgeflowsettingwidget.h \
+    $$PWD/deviceenablesettingwidget.h
 
 SOURCES += \
     $$PWD/idlepurgesettingwidget.cpp \
@@ -12,4 +13,5 @@ SOURCES += \
     $$PWD/sh85periodicselfchecksettingwidget.cpp \
     $$PWD/sh85selfchecksettingwidget.cpp \
     $$PWD/humidityoffsetsettingwidget.cpp \
-    $$PWD/purgeflowsettingwidget.cpp
+    $$PWD/purgeflowsettingwidget.cpp \
+    $$PWD/deviceenablesettingwidget.cpp

@@ -6,6 +6,7 @@
 #include "customwidget/configsettingwidget/sh85selfchecksettingwidget.h"
 #include "customwidget/configsettingwidget/humidityoffsetsettingwidget.h"
 #include "customwidget/configsettingwidget/purgeflowsettingwidget.h"
+#include "customwidget/configsettingwidget/deviceenablesettingwidget.h"
 #include <QScrollBar>
 #include <QScroller>
 #include <QScrollerProperties>
@@ -18,6 +19,7 @@ ConfigPage::ConfigPage(QWidget *parent)
     , m_sh85PeriodicSelfCheckWidget(nullptr)
     , m_sh85SelfCheckWidget(nullptr)
     , m_humidityOffsetWidget(nullptr)
+    , m_deviceEnableWidget(nullptr)
     , m_purgeFlowWidget(nullptr)
 {
     ui->setupUi(this);
@@ -66,6 +68,9 @@ void ConfigPage::initUI()
     m_purgeFlowWidget = new PurgeFlowSettingWidget(this);
     ui->scrollAreaWidgetContents->layout()->addWidget(m_purgeFlowWidget);
 
+    m_deviceEnableWidget = new DeviceEnableSettingWidget(this);
+    ui->scrollAreaWidgetContents->layout()->addWidget(m_deviceEnableWidget);
+
     ui->scrollAreaWidgetContents->layout()->addItem(
         new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding)
         );
@@ -104,6 +109,8 @@ void ConfigPage::navBtnClicked()
         targetWidget = m_humidityOffsetWidget;
     } else if (objName == "btnPurgeFlow") {
         targetWidget = m_purgeFlowWidget;
+    } else if (objName == "btnDeviceEnable") {
+        targetWidget = m_deviceEnableWidget;
     }
 
     if (targetWidget) {

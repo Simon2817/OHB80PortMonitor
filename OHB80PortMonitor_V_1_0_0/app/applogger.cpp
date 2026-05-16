@@ -107,3 +107,8 @@ QString AppLogger::SystemLoggerPath()
 {
     return QString("system");
 }
+
+QString AppLogger::SH85SelfCheckLoggerPath(const QString& id)
+{
+    return QString("sh85selfcheck/%1").arg(id);
+}

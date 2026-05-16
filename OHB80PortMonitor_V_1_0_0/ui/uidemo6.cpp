@@ -29,6 +29,11 @@ UIDemo6::UIDemo6(QWidget *parent) :
 
 UIDemo6::~UIDemo6()
 {
+    if (m_operationLogWindow) {
+        m_operationLogWindow->close();
+        delete m_operationLogWindow;
+        m_operationLogWindow = nullptr;
+    }
     delete ui;
 }
 
@@ -143,7 +148,7 @@ void UIDemo6::on_btnMenu_Close_clicked()
 void UIDemo6::onScrollingTipLabelClicked()
 {
     if (!m_operationLogWindow) {
-        m_operationLogWindow = new OperationLogWidget(this);
+        m_operationLogWindow = new OperationLogWidget(nullptr);
         m_operationLogWindow->setWindowFlags(Qt::Window);
         m_operationLogWindow->setAttribute(Qt::WA_DeleteOnClose, false);
         m_operationLogWindow->setWindowTitle("Operation Logger");
