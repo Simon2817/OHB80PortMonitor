@@ -11,11 +11,13 @@
 #include <QTimer>
 #include <QScroller>
 #include <QScrollerProperties>
+#include <QMessageBox>
 
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/operationlogquerytask.h"
 #include "scheduler/tasks/operation_dispatch_task.h"
 #include "app/shareddata.h"
+#include "usermanager.h"
 #include "paginationwidget.h"
 #include "databasemanager.h"
 #include "operationlogdb/operationlogdbcon.h"
@@ -123,6 +125,10 @@ OperationLogWidget::OperationLogWidget(QWidget *parent)
     };
     enableTouchScroll(ui->tableViewLiveLog);
     enableTouchScroll(ui->tableViewHistoryLog);
+
+    // 连接 live log 点击信号，用于显示 description 完整内容
+    connect(ui->tableViewLiveLog, &QTableView::clicked,
+            this, &OperationLogWidget::onLiveLogClicked);
 }
 
 void OperationLogWidget::initLiveLog()
@@ -136,6 +142,9 @@ void OperationLogWidget::initLiveLog()
     ui->tableViewLiveLog->horizontalHeader()->setStretchLastSection(true);
     ui->tableViewLiveLog->verticalHeader()->setVisible(false);
     ui->tableViewLiveLog->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    // 设置列宽：确保时间字段完整显示
+    ui->tableViewLiveLog->setColumnWidth(0, 180);  // Occur Time
 
     // 订阅 OperationDispatchTask 的即时信号，实现实时显示
     if (auto* opTask = SharedData::getOperationDispatchTask()) {
@@ -157,12 +166,22 @@ void OperationLogWidget::onRecordInserted(const OperationRecord& record)
     auto* model = qobject_cast<QStandardItemModel*>(ui->tableViewLiveLog->model());
     if (!model) return;
 
+    // 权限过滤：仅允许查看不高于当前用户权限的记录
+    const int currentPerm = static_cast<int>(UserManager::instance()->currentPermission());
+    if (record.userPermission > currentPerm) {
+        return;
+    }
+
     const QString logTypeText = LogDB::operationLogTypeName(record.logType);
 
     auto* itemTime    = new QStandardItem(record.occurTime);
     auto* itemLogType = new QStandardItem(logTypeText);
     auto* itemDesc    = new QStandardItem(record.description);
     applyLogTypeForeground(itemTime, itemLogType, itemDesc, record.logType);
+
+    // 设置文本对齐：除 Description 字段（第 2 列）外，其他字段居中
+    itemTime->setTextAlignment(Qt::AlignCenter);
+    itemLogType->setTextAlignment(Qt::AlignCenter);
 
     QList<QStandardItem*> items{ itemTime, itemLogType, itemDesc };
 
@@ -443,6 +462,24 @@ void OperationLogWidget::onHistoryLogClicked(const QModelIndex& index)
     if (!model) {
         return;
     }
+
+    // 检查是否点击了 Description 列（第 3 列）
+    constexpr int kColDescription = 3;
+    if (index.column() == kColDescription) {
+        auto* item = model->item(index.row(), kColDescription);
+        if (item) {
+            const QString description = item->text();
+            if (!description.isEmpty()) {
+                QMessageBox msgBox(this);
+                msgBox.setWindowTitle(tr("Description"));
+                msgBox.setText(description);
+                msgBox.setTextInteractionFlags(Qt::TextSelectableByMouse);
+                msgBox.exec();
+            }
+        }
+        return;
+    }
+
     QStandardItem* firstItem = model->item(index.row(), 0);
     const int recordId = firstItem ? firstItem->data(Qt::UserRole).toInt() : 0;
 
@@ -460,6 +497,31 @@ void OperationLogWidget::onHistoryLogClicked(const QModelIndex& index)
         updatePageInfoLabel();
         updatePrevNextButtonsEnabled();
     }
+}
+
+void OperationLogWidget::onLiveLogClicked(const QModelIndex& index)
+{
+    if (!index.isValid()) return;
+
+    // Live log 的 Description 是第 2 列（Occur Time, Log Type, Description）
+    constexpr int kColDescription = 2;
+    if (index.column() != kColDescription) return;
+
+    auto* model = qobject_cast<QStandardItemModel*>(ui->tableViewLiveLog->model());
+    if (!model) return;
+
+    auto* item = model->item(index.row(), kColDescription);
+    if (!item) return;
+
+    const QString description = item->text();
+    if (description.isEmpty()) return;
+
+    // 弹出模态框显示完整内容
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle(tr("Description"));
+    msgBox.setText(description);
+    msgBox.setTextInteractionFlags(Qt::TextSelectableByMouse);
+    msgBox.exec();
 }
 
 // Pre/Next：跨页跟踪 —— 在范围 + 条件下查找上/下一条命中，
@@ -594,12 +656,23 @@ void OperationLogWidget::setHistoryLogData(const QList<OperationRecord>& data)
     if (data.isEmpty()) {
         return;
     }
+
+    // 权限过滤：仅保留 record.userPermission <= currentPerm 的记录
+    const int currentPerm = static_cast<int>(UserManager::instance()->currentPermission());
+    QList<OperationRecord> filtered;
+    filtered.reserve(data.size());
+    for (const OperationRecord& rec : data) {
+        if (rec.userPermission <= currentPerm) {
+            filtered.append(rec);
+        }
+    }
+
     QStringList headers;
     headers << "Occur Time" << "Log Type" << "Description";
     model->setHorizontalHeaderLabels(headers);
 
-    for (int row = 0; row < data.size(); ++row) {
-        const OperationRecord& record = data[row];
+    for (int row = 0; row < filtered.size(); ++row) {
+        const OperationRecord& record = filtered[row];
         auto* itemTime    = new QStandardItem(record.occurTime);
         auto* itemLogType = new QStandardItem(LogDB::operationLogTypeName(record.logType));
         auto* itemDesc    = new QStandardItem(record.description);

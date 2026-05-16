@@ -41,14 +41,14 @@ SharedData::SharedData() {
                 FoupOfOHBInfo foup;
                 foup.setQrCode(devices.at(index).qrCode);
                 foup.setIp(devices.at(index).ip);
-                foup.setPort(devices.at(index++).port);
+                foup.setPort(devices.at(index).port);
+                foup.setEnable(devices.at(index).enable);
+                index++;
                 foup.setInletPressure(0);
                 foup.setInletFlow(0);
                 foup.setRH(0);
                 foup.setFoupIn(false);
                 foup.setHasAlarm(true);
-                // if (j == 0 && i == 0)
-                    // foup.setEnable(false);
                 foups.append(foup);
 
                 // static int num = 0;

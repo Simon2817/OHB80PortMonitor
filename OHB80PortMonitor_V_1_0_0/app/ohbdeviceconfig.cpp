@@ -39,10 +39,11 @@ QVector<OHBDeviceInfo> OHBDeviceConfig::readDevices() const
         QString qrCode = settings.value("QRCode", "").toString();
         QString ip = settings.value("Ip", "").toString();
         quint16 port = settings.value("Port", 0).toUInt();
+        bool enable = settings.value("Enable", true).toBool();
         settings.endGroup();
 
         if (!qrCode.isEmpty() && !ip.isEmpty() && port > 0) {
-            devices.append(OHBDeviceInfo(qrCode, ip, port));
+            devices.append(OHBDeviceInfo(qrCode, ip, port, enable));
         }
     }
 
@@ -69,6 +70,7 @@ bool OHBDeviceConfig::writeDevices(const QVector<OHBDeviceInfo>& devices)
         settings.setValue("QRCode", devices[i].qrCode);
         settings.setValue("Ip", devices[i].ip);
         settings.setValue("Port", devices[i].port);
+        settings.setValue("Enable", devices[i].enable);
         settings.endGroup();
     }
 
@@ -159,8 +161,9 @@ OHBDeviceInfo OHBDeviceConfig::getDeviceByQRCode(const QString& qrCode) const
         if (qr == qrCode) {
             QString ip = settings.value("Ip", "").toString();
             quint16 port = settings.value("Port", 0).toUInt();
+            bool enable = settings.value("Enable", true).toBool();
             settings.endGroup();
-            return OHBDeviceInfo(qr, ip, port);
+            return OHBDeviceInfo(qr, ip, port, enable);
         }
         settings.endGroup();
     }
@@ -175,7 +178,30 @@ OHBDeviceInfo OHBDeviceConfig::getDeviceByMasterId(const QString& masterId) cons
     QString qrCode = settings.value("QRCode", "").toString();
     QString ip = settings.value("Ip", "").toString();
     quint16 port = settings.value("Port", 0).toUInt();
+    bool enable = settings.value("Enable", true).toBool();
     settings.endGroup();
 
-    return OHBDeviceInfo(qrCode, ip, port);
+    return OHBDeviceInfo(qrCode, ip, port, enable);
+}
+
+bool OHBDeviceConfig::setDeviceEnable(const QString& qrCode, bool enable)
+{
+    QSettings settings(m_configFilePath, QSettings::IniFormat);
+
+    for (int i = 1; i <= 80; ++i) {
+        QString groupName = QString("OHB%1").arg(i);
+        settings.beginGroup(groupName);
+        QString qr = settings.value("QRCode", "").toString();
+        if (qr == qrCode) {
+            settings.setValue("Enable", enable);
+            settings.endGroup();
+            settings.sync();
+            qDebug() << "OHBDeviceConfig: 设置设备" << qrCode << "enable=" << enable;
+            return settings.status() == QSettings::NoError;
+        }
+        settings.endGroup();
+    }
+
+    qWarning() << "OHBDeviceConfig: 未找到 QRCode=" << qrCode << "的设备";
+    return false;
 }

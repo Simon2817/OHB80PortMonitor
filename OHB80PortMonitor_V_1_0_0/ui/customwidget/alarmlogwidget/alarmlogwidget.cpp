@@ -7,10 +7,12 @@
 #include "paginationwidget.h"
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/alarmlogdb/alarmlogdbcon.h"
+#include "usermanager.h"
 #include <QStandardItemModel>
 #include <QScroller>
 #include <QScrollerProperties>
 #include <QDebug>
+#include <QMessageBox>
 
 AlarmLogWidget::AlarmLogWidget(QWidget *parent)
     : QWidget(parent)
@@ -84,6 +86,12 @@ AlarmLogWidget::AlarmLogWidget(QWidget *parent)
     };
     enableTouchScroll(ui->tableViewLiveLog);
     enableTouchScroll(ui->tableViewHistoryLog);
+
+    // 连接表格点击信号，用于显示 description 完整内容
+    connect(ui->tableViewLiveLog, &QTableView::clicked,
+            this, &AlarmLogWidget::onLiveLogClicked);
+    connect(ui->tableViewHistoryLog, &QTableView::clicked,
+            this, &AlarmLogWidget::onHistoryLogClicked);
 }
 
 void AlarmLogWidget::initLiveLog()
@@ -98,6 +106,12 @@ void AlarmLogWidget::initLiveLog()
     ui->tableViewLiveLog->horizontalHeader()->setStretchLastSection(true);
     ui->tableViewLiveLog->verticalHeader()->setVisible(false);
     ui->tableViewLiveLog->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    // 设置列宽：确保时间字段和其他字段完整显示
+    ui->tableViewLiveLog->setColumnWidth(1, 180);  // Occur Time
+    ui->tableViewLiveLog->setColumnWidth(3, 200);  // Alarm Type
+    ui->tableViewLiveLog->setColumnWidth(4, 120);  // Is Resolved
+    ui->tableViewLiveLog->setColumnWidth(5, 180);  // Resolve Time
 
     if (auto* db = LogDB::DatabaseManager::instance().alarmLogCon()) {
         connect(db, &LogDB::AlarmLogDBCon::recordInserted,
@@ -166,7 +180,6 @@ void AlarmLogWidget::onRecordResolved(const QString& qrCode,
             const QColor resolvedColor(200, 255, 200);
             if (auto* it = model->item(r, kColIsResolved)) {
                 it->setBackground(resolvedColor);
-                it->setForeground(QBrush(Qt::white));  // 字体颜色为白色
             }
             return;
         }
@@ -177,6 +190,12 @@ void AlarmLogWidget::onRecordInserted(const AlarmRecord& record)
 {
     auto* model = qobject_cast<QStandardItemModel*>(ui->tableViewLiveLog->model());
     if (!model) return;
+
+    // 权限过滤：仅允许查看不高于当前用户权限的记录
+    const int currentPerm = static_cast<int>(UserManager::instance()->currentPermission());
+    if (record.userPermission > currentPerm) {
+        return;
+    }
 
     // alarm_level / alarm_type / is_resolved 做友好化映射
     const QString levelText = alarmLevelName(record.alarmLevel);
@@ -193,6 +212,13 @@ void AlarmLogWidget::onRecordInserted(const AlarmRecord& record)
           << new QStandardItem(resolvedText)
           << new QStandardItem(record.resolveTime)
           << new QStandardItem(record.description);
+
+    // 设置文本对齐：除 Description 字段（第 6 列）外，其他字段居中
+    for (int i = 0; i < items.size(); ++i) {
+        if (i != 6) {  // Description 列不居中
+            items[i]->setTextAlignment(Qt::AlignCenter);
+        }
+    }
 
     // 仅对 Is Resolved 字段（第 4 列）设置背景色和字体颜色
     constexpr int kColIsResolved = 4;
@@ -213,7 +239,6 @@ void AlarmLogWidget::onRecordInserted(const AlarmRecord& record)
     }
     if (kColIsResolved < items.size()) {
         items[kColIsResolved]->setBackground(resolvedColor);
-        items[kColIsResolved]->setForeground(QBrush(Qt::white));  // 字体颜色为白色
     }
 
     model->insertRow(0, items);
@@ -423,13 +448,23 @@ void AlarmLogWidget::setHistoryLogData(const QList<AlarmRecord>& data)
         return;
     }
 
+    // 权限过滤：仅保留 record.userPermission <= currentPerm 的记录
+    const int currentPerm = static_cast<int>(UserManager::instance()->currentPermission());
+    QList<AlarmRecord> filtered;
+    filtered.reserve(data.size());
+    for (const AlarmRecord& r : data) {
+        if (r.userPermission <= currentPerm) {
+            filtered.append(r);
+        }
+    }
+
     QStringList headers;
     headers << "ID" << "Alarm Level" << "Occur Time" << "QRCode" << "Alarm Type"
             << "Is Resolved" << "Resolve Time" << "Description";
     model->setHorizontalHeaderLabels(headers);
 
-    for (int row = 0; row < data.size(); ++row) {
-        const AlarmRecord& r = data[row];
+    for (int row = 0; row < filtered.size(); ++row) {
+        const AlarmRecord& r = filtered[row];
         // alarm_level 以枚举名称显示
         const QString levelText = alarmLevelName(r.alarmLevel);
         // alarm_type 存为 TEXT（枚举整数字符串），转成名称显示
@@ -445,9 +480,86 @@ void AlarmLogWidget::setHistoryLogData(const QList<AlarmRecord>& data)
         model->setItem(row, 5, new QStandardItem(resolvedText));
         model->setItem(row, 6, new QStandardItem(r.resolveTime));
         model->setItem(row, 7, new QStandardItem(r.description));
+
+        // 为 Is Resolved 字段（第 5 列）设置背景色
+        constexpr int kColIsResolved = 5;
+        QColor resolvedColor;
+        switch (r.isResolved) {
+            case static_cast<int>(AlarmResolvedStatus::Unresolved):
+                resolvedColor = QColor(255, 100, 100);  // 鲜艳红色
+                break;
+            case static_cast<int>(AlarmResolvedStatus::Resolved):
+                resolvedColor = QColor(200, 255, 200);  // 绿色
+                break;
+            case static_cast<int>(AlarmResolvedStatus::NoNeed):
+                resolvedColor = QColor(255, 255, 200);  // 黄色
+                break;
+            default:
+                resolvedColor = QColor(255, 255, 255);  // 白色
+                break;
+        }
+        if (auto* it = model->item(row, kColIsResolved)) {
+            it->setBackground(resolvedColor);
+        }
     }
 
     ui->tableViewHistoryLog->resizeColumnsToContents();
+}
+
+void AlarmLogWidget::onLiveLogClicked(const QModelIndex& index)
+{
+    if (!index.isValid()) return;
+
+    // Live log 的 Description 是第 6 列，QRCode 是第 2 列
+    constexpr int kColDescription = 6;
+    constexpr int kColQRCode = 2;
+    if (index.column() != kColDescription) return;
+
+    auto* model = qobject_cast<QStandardItemModel*>(ui->tableViewLiveLog->model());
+    if (!model) return;
+
+    auto* item = model->item(index.row(), kColDescription);
+    auto* qrCodeItem = model->item(index.row(), kColQRCode);
+    if (!item) return;
+
+    const QString description = item->text();
+    if (description.isEmpty()) return;
+
+    // 弹出模态框显示完整内容，标题栏显示 QRCode
+    QMessageBox msgBox(this);
+    const QString title = qrCodeItem ? tr("Description - %1").arg(qrCodeItem->text()) : tr("Description");
+    msgBox.setWindowTitle(title);
+    msgBox.setText(description);
+    msgBox.setTextInteractionFlags(Qt::TextSelectableByMouse);
+    msgBox.exec();
+}
+
+void AlarmLogWidget::onHistoryLogClicked(const QModelIndex& index)
+{
+    if (!index.isValid()) return;
+
+    // History log 的 Description 是第 7 列，QRCode 是第 3 列（ID, Alarm Level, Occur Time, QRCode, Alarm Type, Is Resolved, Resolve Time, Description）
+    constexpr int kColDescription = 7;
+    constexpr int kColQRCode = 3;
+    if (index.column() != kColDescription) return;
+
+    auto* model = qobject_cast<QStandardItemModel*>(ui->tableViewHistoryLog->model());
+    if (!model) return;
+
+    auto* item = model->item(index.row(), kColDescription);
+    auto* qrCodeItem = model->item(index.row(), kColQRCode);
+    if (!item) return;
+
+    const QString description = item->text();
+    if (description.isEmpty()) return;
+
+    // 弹出模态框显示完整内容，标题栏显示 QRCode
+    QMessageBox msgBox(this);
+    const QString title = qrCodeItem ? tr("Description - %1").arg(qrCodeItem->text()) : tr("Description");
+    msgBox.setWindowTitle(title);
+    msgBox.setText(description);
+    msgBox.setTextInteractionFlags(Qt::TextSelectableByMouse);
+    msgBox.exec();
 }
 
 AlarmLogWidget::~AlarmLogWidget()

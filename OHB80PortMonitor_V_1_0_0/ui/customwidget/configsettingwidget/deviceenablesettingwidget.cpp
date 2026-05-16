@@ -1,6 +1,7 @@
 #include "deviceenablesettingwidget.h"
 #include "../settingwidget/settingitemwidget.h"
 #include "app/shareddata.h"
+#include "app/ohbdeviceconfig.h"
 #include "classes/foupofohbinfo.h"
 
 #include <QDebug>
@@ -81,12 +82,21 @@ void DeviceEnableSettingWidget::onSetClicked()
 
     m_statusItem->setStatusWaiting();
 
+    // 持久化到配置文件
+    bool persistSuccess = OHBDeviceConfig::getInstance().setDeviceEnable(qrcode, enable);
+
     FoupOfOHBInfo* foup = SharedData::getFoupByQRCode(qrcode);
     if (foup) {
         foup->setEnable(enable);
-        m_statusItem->setStatusOK();
-        qDebug() << "[ui][DeviceEnableSettingWidget] Set device enable - QRCode:"
-                 << qrcode << "Enable:" << enable;
+        if (persistSuccess) {
+            m_statusItem->setStatusOK();
+            qDebug() << "[ui][DeviceEnableSettingWidget] Set device enable - QRCode:"
+                     << qrcode << "Enable:" << enable;
+        } else {
+            m_statusItem->setStatusFailed();
+            qWarning() << "[ui][DeviceEnableSettingWidget] Failed to persist enable config for QRCode:"
+                       << qrcode;
+        }
     } else {
         m_statusItem->setStatusFailed();
         qWarning() << "[ui][DeviceEnableSettingWidget] Failed to find FoupOfOHBInfo for QRCode:"

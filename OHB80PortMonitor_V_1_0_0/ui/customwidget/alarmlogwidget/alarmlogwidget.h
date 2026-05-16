@@ -32,6 +32,8 @@ private slots:
     void onRecordResolved(const QString& qrCode,
                           const QString& alarmType,
                           const QString& resolveTime);
+    void onLiveLogClicked(const QModelIndex& index);
+    void onHistoryLogClicked(const QModelIndex& index);
 
 private:
     Ui::AlarmLogWidget *ui;

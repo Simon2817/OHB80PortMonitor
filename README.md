@@ -9,6 +9,90 @@
 ## 更新日志
 
 ### 2026-05-16 - Simon
+**三大日志控件 UI 体验优化：列对齐/列宽/权限可见性/Description 弹窗/Hex 显示**
+
+#### 背景
+三大日志控件（AlarmLogWidget / ComunicateLogWidget / OperationLogWidget）的实时日志（live log）和历史日志（history log）存在多处 UI 体验问题：
+- 列对齐方式不统一，时间字段显示不完整
+- 通讯日志的敏感字段对所有权限用户均可见
+- 历史通讯日志多余 ID 列，QRCode 列位置不直观
+- 警报历史日志的 "Is Resolved" 字段缺少颜色编码
+- 通讯历史日志 Request/Response 字段以原始字节流显示，不便阅读
+- Description 字段可能很长，单元格无法完整显示
+
+#### 修改内容
+
+**1. 列对齐与列宽统一**
+- 三个 log 控件的 live log 和 history log 表格中，除 Description 字段外其余字段均居中对齐
+- 时间字段（Send Time / Response Time / Occur Time / Resolve Time）等关键字段列宽调整：
+  - ComunicateLogWidget Send Time / Response Time 调整为 240px，Description 缩减至 150px，确保高权限用户登录后时间字段完整显示
+
+**2. 权限驱动的列可见性（ComunicateLogWidget）**
+- 新增 `updateColumnVisibility()` 方法：Engineer (UserPermission >= 3) 以下用户隐藏敏感列（Response Time / Duration Ms / Exec Status / Retry Count / Request / Response）
+- 在 `initLiveLog()`、`setHistoryLogData()` 及 `CommunicatePage` 接收 `UserManager::permissionChanged` 信号时调用，保证权限切换或数据刷新后列可见性正确
+- `CommunicatePage` 新增 `onPermissionChanged` 槽，连接 `UserManager::permissionChanged` 信号
+
+**3. 历史通讯日志列结构调整**
+- 移除历史日志 "ID" 列
+- 将 "QRCode" 列移至第 0 列（最前）
+- 同步更新 `updateColumnVisibility()` 中的列索引
+
+**4. AlarmLogWidget 历史日志 "Is Resolved" 背景色**
+- `setHistoryLogData()` 中对 "Is Resolved" 字段（第 5 列）按枚举值染色，与 live log 配色保持一致：
+  - `Unresolved` (0) → `QColor(255, 100, 100)` 红色
+  - `Resolved` (1) → `QColor(200, 255, 200)` 绿色
+  - `NoNeed` (2) → `QColor(255, 255, 200)` 黄色
+
+**5. ComunicateLogWidget 历史日志 Request/Response 字段 Hex 显示**
+- `setHistoryLogData()` 将 `sendFrame` / `responseFrame` (`QByteArray`) 通过 `toHex(' ').toUpper()` 转换为以空格分隔的大写十六进制字符串显示
+- 显式包裹 `QString(...)` 以解决 `QStandardItem(QByteArray)` 重载二义性编译错误
+
+**6. Description 字段单击弹窗**
+- 三个 log 控件的 live log 和 history log 中，单击 Description 单元格弹出 `QMessageBox` 模态框显示完整内容
+- AlarmLogWidget / ComunicateLogWidget 弹窗标题栏显示 `Description - <QRCode>`，便于辨识当前记录
+- OperationLogWidget 在已有 `onHistoryLogClicked` 槽中新增 Description 列分支，不破坏原有匹配命中选中逻辑
+- `QMessageBox` 设置 `Qt::TextSelectableByMouse`，文本可选中复制
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/comunicatelogwidget/comunicatelogwidget.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/comunicatelogwidget/comunicatelogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/operationlogwidget/operationlogwidget.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/operationlogwidget/operationlogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/communicatepage.h`
+  - `OHB80PortMonitor_V_1_0_0/ui/communicatepage.cpp`
+
+---
+
+### 2026-05-16 - Simon
+**三大日志控件按用户权限过滤记录**
+
+#### 背景
+`OperationRecord` / `AlarmRecord` / `CommunicateRecord` 三种日志记录均带有 `user_permission` 字段，UI 层未使用该字段过滤展示，低权限用户登录后能看到高权限用户产生的记录，存在权限泄露风险。
+
+#### 过滤规则
+层级过滤：仅展示 `record.userPermission <= currentPermission` 的记录。Root 可看所有；Guest 仅看 Guest 级。未登录时 `UserManager::currentPermission()` 默认返回 `Guest`，行为正确无需改动。
+
+#### 修改内容
+- **OperationLogWidget**：`onRecordInserted()` 实时过滤；`setHistoryLogData()` 历史查询过滤
+- **AlarmLogWidget**：`onRecordInserted()` 实时过滤（`loadUnresolvedToLiveLog()` 通过该函数自动继承）；`setHistoryLogData()` 历史查询过滤
+- **ComunicateLogWidget**：`setHistoryLogData()` 历史查询过滤（实时 `writeLog()` 不带 user_permission 字段，暂不过滤）
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/operationlogwidget/operationlogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.cpp`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/comunicatelogwidget/comunicatelogwidget.cpp`
+
+#### 已知限制
+- 历史查询过滤在 UI 层进行，分页计数（SQL `COUNT(*)`）仍含被过滤记录，存在轻微不一致
+- 用户切换登录状态后，已展示的实时日志条目不会自动清理或追溯展示
+
+---
+
+### 2026-05-16 - Simon
 **配置文件合并：QRCodeConfig + NetworkConfig 合并为 OHBDeviceConfig**
 
 #### 背景
@@ -71,12 +155,12 @@
 **AlarmLogWidget live log 表格 Is Resolved 字段背景色根据状态显示**
 
 #### 修改内容
-- `onRecordInserted()` 方法：根据 `isResolved` 枚举值仅对第 4 列（Is Resolved 字段）设置背景色和字体颜色
-  - `Unresolved` (0): 鲜艳红色背景 `QColor(255, 100, 100)`，白色字体
-  - `Resolved` (1): 绿色背景 `QColor(200, 255, 200)`，白色字体
-  - `NoNeed` (2): 黄色背景 `QColor(255, 255, 200)`，白色字体
-- `onRecordResolved()` 方法：当记录被标记为已解决时，仅更新第 4 列背景色为绿色，字体颜色为白色
-- `loadUnresolvedToLiveLog()` 方法：通过调用 `onRecordInserted()` 自动继承背景色和字体颜色设置功能
+- `onRecordInserted()` 方法：根据 `isResolved` 枚举值仅对第 4 列（Is Resolved 字段）设置背景色
+  - `Unresolved` (0): 鲜艳红色背景 `QColor(255, 100, 100)`
+  - `Resolved` (1): 绿色背景 `QColor(200, 255, 200)`
+  - `NoNeed` (2): 黄色背景 `QColor(255, 255, 200)`
+- `onRecordResolved()` 方法：当记录被标记为已解决时，仅更新第 4 列背景色为绿色
+- `loadUnresolvedToLiveLog()` 方法：通过调用 `onRecordInserted()` 自动继承背景色设置功能
 
 #### 效果
 - live log 表格的 Is Resolved 字段根据警报的解决状态显示不同的背景颜色，便于用户快速识别未解决的警报

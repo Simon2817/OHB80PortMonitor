@@ -28,6 +28,7 @@ private slots:
     void onSearchClicked();
     void onCancelRequested();
     void onHistoryLogClicked(const QModelIndex& index);
+    void onLiveLogClicked(const QModelIndex& index);
     void onPreClicked();
     void onNextClicked();
     void onPaginationPageChanged(int page);

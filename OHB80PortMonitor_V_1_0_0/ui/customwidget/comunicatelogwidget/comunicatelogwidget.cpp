@@ -8,12 +8,14 @@
 #include "datetimesetdialog.h"
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
+#include "usermanager.h"
 #include "app/shareddata.h"
 #include "modbustcpmastermanager/modbustcpmastermanager.h"
 #include "modbustcpmastermanager/modbuscommand/commandpool.h"
 #include <QHeaderView>
 #include <QScroller>
 #include <QScrollerProperties>
+#include <QMessageBox>
 
 // 固定列头（包含完整的通讯日志字段）
 const QStringList ComunicateLogWidget::kLiveHeaders = {
@@ -97,6 +99,12 @@ ComunicateLogWidget::ComunicateLogWidget(QWidget *parent)
     };
     enableTouchScroll(ui->tableViewLiveLog);
     enableTouchScroll(ui->tableViewHistoryLog);
+
+    // 连接表格点击信号，用于显示 description 完整内容
+    connect(ui->tableViewLiveLog, &QTableView::clicked,
+            this, &ComunicateLogWidget::onLiveLogClicked);
+    connect(ui->tableViewHistoryLog, &QTableView::clicked,
+            this, &ComunicateLogWidget::onHistoryLogClicked);
 }
 
 void ComunicateLogWidget::initLiveLog()
@@ -109,17 +117,47 @@ void ComunicateLogWidget::initLiveLog()
     ui->tableViewLiveLog->verticalHeader()->setVisible(false);
     ui->tableViewLiveLog->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    // 设置列宽
+    // 设置列宽：确保时间字段完整显示
     ui->tableViewLiveLog->setColumnWidth(0, 80);   // QRCode
-    ui->tableViewLiveLog->setColumnWidth(1, 160);  // Send Time
-    ui->tableViewLiveLog->setColumnWidth(2, 160);  // Response Time
-    ui->tableViewLiveLog->setColumnWidth(3, 120);  // Command ID
+    ui->tableViewLiveLog->setColumnWidth(1, 240);  // Send Time
+    ui->tableViewLiveLog->setColumnWidth(2, 240);  // Response Time
+    ui->tableViewLiveLog->setColumnWidth(3, 100);  // Command ID
     ui->tableViewLiveLog->setColumnWidth(4, 80);   // Duration Ms
     ui->tableViewLiveLog->setColumnWidth(5, 80);   // Exec Status
     ui->tableViewLiveLog->setColumnWidth(6, 80);   // Retry Count
-    ui->tableViewLiveLog->setColumnWidth(7, 200);  // Request
-    ui->tableViewLiveLog->setColumnWidth(8, 200);  // Response
-    ui->tableViewLiveLog->setColumnWidth(9, 300);  // Description
+    ui->tableViewLiveLog->setColumnWidth(7, 180);  // Request
+    ui->tableViewLiveLog->setColumnWidth(8, 180);  // Response
+    ui->tableViewLiveLog->setColumnWidth(9, 150);  // Description
+
+    // 根据用户权限设置列的可见性
+    updateColumnVisibility();
+}
+
+void ComunicateLogWidget::updateColumnVisibility()
+{
+    // 获取当前用户权限
+    const int currentPerm = static_cast<int>(UserManager::instance()->currentPermission());
+
+    // Engineer (3) 以下用户隐藏敏感列
+    const bool hideSensitiveColumns = (currentPerm < 3);
+
+    // Live log 列顺序：QRCode(0), Send Time(1), Response Time(2), Command ID(3),
+    // Duration Ms(4), Exec Status(5), Retry Count(6), Request(7), Response(8), Description(9)
+    ui->tableViewLiveLog->setColumnHidden(2, hideSensitiveColumns);   // Response Time
+    ui->tableViewLiveLog->setColumnHidden(4, hideSensitiveColumns);   // Duration Ms
+    ui->tableViewLiveLog->setColumnHidden(5, hideSensitiveColumns);   // Exec Status
+    ui->tableViewLiveLog->setColumnHidden(6, hideSensitiveColumns);   // Retry Count
+    ui->tableViewLiveLog->setColumnHidden(7, hideSensitiveColumns);   // Request
+    ui->tableViewLiveLog->setColumnHidden(8, hideSensitiveColumns);   // Response
+
+    // History log 列顺序：QRCode(0), Send Time(1), Response Time(2), Command ID(3),
+    // Exec Status(4), Retry Count(5), Request(6), Response(7), Description(8)
+    // 注意：History log 没有 Duration Ms 列和 ID 列
+    ui->tableViewHistoryLog->setColumnHidden(2, hideSensitiveColumns); // Response Time
+    ui->tableViewHistoryLog->setColumnHidden(4, hideSensitiveColumns); // Exec Status
+    ui->tableViewHistoryLog->setColumnHidden(5, hideSensitiveColumns); // Retry Count
+    ui->tableViewHistoryLog->setColumnHidden(6, hideSensitiveColumns); // Request
+    ui->tableViewHistoryLog->setColumnHidden(7, hideSensitiveColumns); // Response
 }
 
 void ComunicateLogWidget::initQrcodeList(const QStringList& qrcodes)
@@ -147,6 +185,12 @@ void ComunicateLogWidget::initQrcodeList(const QStringList& qrcodes)
             QList<QStandardItem*> items;
             for (const QString& text : m_liveRecords[i]) {
                 items << new QStandardItem(text);
+            }
+            // 设置文本对齐：除 Description 字段（第 9 列）外，其他字段居中
+            for (int col = 0; col < items.size(); ++col) {
+                if (col != 9) {  // Description 列不居中
+                    items[col]->setTextAlignment(Qt::AlignCenter);
+                }
             }
             model->appendRow(items);
         }
@@ -188,6 +232,15 @@ void ComunicateLogWidget::writeLog(const QString& qrcode, const QString& sendTim
         model->setItem(row, 7, new QStandardItem(request));
         model->setItem(row, 8, new QStandardItem(response));
         model->setItem(row, 9, new QStandardItem(description));
+
+        // 设置文本对齐：除 Description 字段（第 9 列）外，其他字段居中
+        for (int col = 0; col < 10; ++col) {
+            if (col != 9) {  // Description 列不居中
+                if (auto* item = model->item(row, col)) {
+                    item->setTextAlignment(Qt::AlignCenter);
+                }
+            }
+        }
     }
 }
 
@@ -397,25 +450,102 @@ void ComunicateLogWidget::setHistoryLogData(const QList<CommunicateRecord>& data
         return;
     }
 
+    // 权限过滤：仅保留 record.userPermission <= currentPerm 的记录
+    const int currentPerm = static_cast<int>(UserManager::instance()->currentPermission());
+    QList<CommunicateRecord> filtered;
+    filtered.reserve(data.size());
+    for (const CommunicateRecord& r : data) {
+        if (r.userPermission <= currentPerm) {
+            filtered.append(r);
+        }
+    }
+
     QStringList headers;
-    headers << "ID" << "Send Time" << "Response Time" << "Command ID"
-            << "QRCode" << "Exec Status" << "Retry Count"
+    headers << "QRCode" << "Send Time" << "Response Time" << "Command ID"
+            << "Exec Status" << "Retry Count"
             << "Request" << "Response" << "Description";
     model->setHorizontalHeaderLabels(headers);
 
-    for (int row = 0; row < data.size(); ++row) {
-        const CommunicateRecord& r = data[row];
-        model->setItem(row, 0, new QStandardItem(QString::number(r.id)));
+    for (int row = 0; row < filtered.size(); ++row) {
+        const CommunicateRecord& r = filtered[row];
+        model->setItem(row, 0, new QStandardItem(r.qrCode));
         model->setItem(row, 1, new QStandardItem(r.sendTime));
         model->setItem(row, 2, new QStandardItem(r.responseTime));
-        model->setItem(row, 3, new QStandardItem(r.commandId));
-        model->setItem(row, 4, new QStandardItem(r.qrCode));
-        model->setItem(row, 5, new QStandardItem(QString::number(r.execStatus)));
-        model->setItem(row, 6, new QStandardItem(QString::number(r.retryCount)));
-        model->setItem(row, 7, new QStandardItem(QString::fromUtf8(r.sendFrame)));
-        model->setItem(row, 8, new QStandardItem(QString::fromUtf8(r.responseFrame)));
-        model->setItem(row, 9, new QStandardItem(r.description));
+        model->setItem(row, 3, new QStandardItem(r.qrCode));
+        model->setItem(row, 4, new QStandardItem(QString::number(r.execStatus)));
+        model->setItem(row, 5, new QStandardItem(QString::number(r.retryCount)));
+        model->setItem(row, 6, new QStandardItem(QString(r.sendFrame.toHex(' ').toUpper())));
+        model->setItem(row, 7, new QStandardItem(QString(r.responseFrame.toHex(' ').toUpper())));
+        model->setItem(row, 8, new QStandardItem(r.description));
     }
 
-    ui->tableViewHistoryLog->resizeColumnsToContents();
+    // 设置列宽：确保时间字段完整显示
+    ui->tableViewHistoryLog->setColumnWidth(0, 80);   // QRCode
+    ui->tableViewHistoryLog->setColumnWidth(1, 240);  // Send Time
+    ui->tableViewHistoryLog->setColumnWidth(2, 240);  // Response Time
+    ui->tableViewHistoryLog->setColumnWidth(3, 100);  // Command ID
+    ui->tableViewHistoryLog->setColumnWidth(4, 80);   // Exec Status
+    ui->tableViewHistoryLog->setColumnWidth(5, 80);   // Retry Count
+    ui->tableViewHistoryLog->setColumnWidth(6, 180);  // Request
+    ui->tableViewHistoryLog->setColumnWidth(7, 180);  // Response
+    ui->tableViewHistoryLog->setColumnWidth(8, 150);  // Description
+
+    // 根据用户权限设置列的可见性
+    updateColumnVisibility();
+}
+
+void ComunicateLogWidget::onLiveLogClicked(const QModelIndex& index)
+{
+    if (!index.isValid()) return;
+
+    // Live log 的 Description 是第 9 列，QRCode 是第 0 列
+    constexpr int kColDescription = 9;
+    constexpr int kColQRCode = 0;
+    if (index.column() != kColDescription) return;
+
+    auto* model = qobject_cast<QStandardItemModel*>(ui->tableViewLiveLog->model());
+    if (!model) return;
+
+    auto* item = model->item(index.row(), kColDescription);
+    auto* qrCodeItem = model->item(index.row(), kColQRCode);
+    if (!item) return;
+
+    const QString description = item->text();
+    if (description.isEmpty()) return;
+
+    // 弹出模态框显示完整内容，标题栏显示 QRCode
+    QMessageBox msgBox(this);
+    const QString title = qrCodeItem ? tr("Description - %1").arg(qrCodeItem->text()) : tr("Description");
+    msgBox.setWindowTitle(title);
+    msgBox.setText(description);
+    msgBox.setTextInteractionFlags(Qt::TextSelectableByMouse);
+    msgBox.exec();
+}
+
+void ComunicateLogWidget::onHistoryLogClicked(const QModelIndex& index)
+{
+    if (!index.isValid()) return;
+
+    // History log 的 Description 是第 8 列，QRCode 是第 0 列
+    constexpr int kColDescription = 8;
+    constexpr int kColQRCode = 0;
+    if (index.column() != kColDescription) return;
+
+    auto* model = qobject_cast<QStandardItemModel*>(ui->tableViewHistoryLog->model());
+    if (!model) return;
+
+    auto* item = model->item(index.row(), kColDescription);
+    auto* qrCodeItem = model->item(index.row(), kColQRCode);
+    if (!item) return;
+
+    const QString description = item->text();
+    if (description.isEmpty()) return;
+
+    // 弹出模态框显示完整内容，标题栏显示 QRCode
+    QMessageBox msgBox(this);
+    const QString title = qrCodeItem ? tr("Description - %1").arg(qrCodeItem->text()) : tr("Description");
+    msgBox.setWindowTitle(title);
+    msgBox.setText(description);
+    msgBox.setTextInteractionFlags(Qt::TextSelectableByMouse);
+    msgBox.exec();
 }

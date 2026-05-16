@@ -35,6 +35,9 @@ public:
     // 初始化 qrcode 列表（固定行数表格）
     void initQrcodeList(const QStringList& qrcodes);
 
+    // 根据用户权限设置列的可见性
+    void updateColumnVisibility();
+
 private slots:
     void onCheckBoxAllStateChanged(int state);
     void onSearchClicked();
@@ -42,6 +45,8 @@ private slots:
     void onPaginationPageChanged(int page);
     void onPageWithConditionsResult(const QList<CommunicateRecord>& records);
     void onTotalCountWithConditionsResult(int totalCount);
+    void onLiveLogClicked(const QModelIndex& index);
+    void onHistoryLogClicked(const QModelIndex& index);
 
 private:
     Ui::ComunicateLogWidget *ui;

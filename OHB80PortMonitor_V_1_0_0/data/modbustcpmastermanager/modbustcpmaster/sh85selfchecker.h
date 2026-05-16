@@ -138,7 +138,7 @@ signals:
     void started(const QString& masterId);
 
     /**
-     * @brief 整体倒计时（1Hz），自检启动后开始发出
+     * @brief 整体倒计时（1s），自检启动后开始发出
      * @param remainingSeconds 剩余秒数（70 → 0）
      * @param masterId         设备 ID
      */

@@ -4,6 +4,7 @@
 #include "scheduler/tasks/monitor_data_task.h"
 #include "logdatabases/databasemanager.h"
 #include "logdatabases/communicatelogdb/communicatelogdbcon.h"
+#include "usermanager.h"
 
 #include <QJsonObject>
 #include <QDateTime>
@@ -22,6 +23,10 @@ CommunicatePage::CommunicatePage(QWidget *parent)
                 this, &CommunicatePage::onCommunicationCompleted,
                 Qt::QueuedConnection);
     }
+
+    // 连接权限变化信号，更新 live log 列可见性
+    connect(UserManager::instance(), &UserManager::permissionChanged,
+            this, &CommunicatePage::onPermissionChanged);
 }
 
 CommunicatePage::~CommunicatePage()
@@ -88,4 +93,11 @@ void CommunicatePage::onCommunicationCompleted(ModbusCommand cmd, QString master
     );
 
     // 数据库写入已移至 MonitorDataTask::onCommunicationRecorded 中完成
+}
+
+void CommunicatePage::onPermissionChanged(UserPermission permission)
+{
+    Q_UNUSED(permission);
+    // 更新 live log 列可见性
+    ui->commLoggerWidget->updateColumnVisibility();
 }
