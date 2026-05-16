@@ -9,6 +9,87 @@
 ## 更新日志
 
 ### 2026-05-16 - Simon
+**配置文件合并：QRCodeConfig + NetworkConfig 合并为 OHBDeviceConfig**
+
+#### 背景
+原有 `qrcode.ini`（二维码映射）和 `network.ini`（IP/Port）配置分散在两个文件中，对应两个独立的配置类 `QRCodeConfig` / `NetworkConfig`。每个 OHB 设备的完整信息（QRCode + IP + Port）被拆分管理，调用方需同时引用两个类，维护成本高。
+
+#### 修改内容
+
+**1. 配置文件合并**
+- 新增 `bin/config/ohb_device.ini`，合并原 `qrcode.ini` + `network.ini` 内容
+- 节结构：
+  - `[MasterDevices] list=...`：主设备列表
+  - `[OHB1] QRCode=12001 / Ip=... / Port=...`：每个设备一节，包含 QRCode + IP + Port
+- 删除 `bin/config/qrcode.ini` 和 `bin/config/network.ini`
+
+**2. 新增 OHBDeviceConfig 类（位于 app/ 目录）**
+- `app/ohbdeviceconfig.{h,cpp}`：单例配置类，封装 ohb_device.ini 的读写
+- 新增 `OHBDeviceInfo` 结构体（qrCode + ip + port）
+- 主要接口：
+  - `readDevices()` / `writeDevices()`：批量读写所有设备
+  - `readQRCodes()`：仅读取 QR 码列表
+  - `readMasterDevices()` / `writeMasterDevices()`：主设备列表
+  - `getDeviceByQRCode()` / `getDeviceByMasterId()`：单设备查询
+
+**3. AppConfig 同步重构**
+- 移除 `getNetworkConfig()` / `getQRCodeConfig()` / `getNetworkConfigPath()` / `getQRCodeConfigPath()`
+- 新增 `getOHBDeviceConfig()` / `getOHBDeviceConfigPath()`
+- 移除对 `networkconfig.h` / `qrcodeconfig.h` 的依赖
+
+**4. 调用方更新**
+- `app/shareddata.cpp`：原来分别调用 `getNetworkConfig().readNetworkConfig()` + `getQRCodeConfig().readQRCodeMapping()`，合并为单次 `getOHBDeviceConfig().readDevices()`
+- `ui/customwidget/configsettingwidget/sh85selfchecksettingwidget.cpp`：移除未使用的 `qrcodeconfig.h` 包含
+
+**5. 构建系统**
+- `app/app.pri`：加入 `ohbdeviceconfig.{h,cpp}`
+- `config/config.pri`：移除 `qrcodeconfig.{h,cpp}` / `networkconfig.{h,cpp}`
+
+#### 影响范围
+- 新增文件：
+  - `OHB80PortMonitor_V_1_0_0/app/ohbdeviceconfig.h`
+  - `OHB80PortMonitor_V_1_0_0/app/ohbdeviceconfig.cpp`
+  - `OHB80PortMonitor_V_1_0_0/bin/config/ohb_device.ini`
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/app/appconfig.h`
+  - `OHB80PortMonitor_V_1_0_0/app/appconfig.cpp`
+  - `OHB80PortMonitor_V_1_0_0/app/shareddata.cpp`
+  - `OHB80PortMonitor_V_1_0_0/app/app.pri`
+  - `OHB80PortMonitor_V_1_0_0/config/config.pri`
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/configsettingwidget/sh85selfchecksettingwidget.cpp`
+- 删除文件：
+  - `OHB80PortMonitor_V_1_0_0/config/qrcodeconfig.h`
+  - `OHB80PortMonitor_V_1_0_0/config/qrcodeconfig.cpp`
+  - `OHB80PortMonitor_V_1_0_0/config/networkconfig.h`
+  - `OHB80PortMonitor_V_1_0_0/config/networkconfig.cpp`
+  - `OHB80PortMonitor_V_1_0_0/bin/config/qrcode.ini`
+  - `OHB80PortMonitor_V_1_0_0/bin/config/network.ini`
+
+---
+
+### 2026-05-16 - Simon
+**AlarmLogWidget live log 表格 Is Resolved 字段背景色根据状态显示**
+
+#### 修改内容
+- `onRecordInserted()` 方法：根据 `isResolved` 枚举值仅对第 4 列（Is Resolved 字段）设置背景色和字体颜色
+  - `Unresolved` (0): 鲜艳红色背景 `QColor(255, 100, 100)`，白色字体
+  - `Resolved` (1): 绿色背景 `QColor(200, 255, 200)`，白色字体
+  - `NoNeed` (2): 黄色背景 `QColor(255, 255, 200)`，白色字体
+- `onRecordResolved()` 方法：当记录被标记为已解决时，仅更新第 4 列背景色为绿色，字体颜色为白色
+- `loadUnresolvedToLiveLog()` 方法：通过调用 `onRecordInserted()` 自动继承背景色和字体颜色设置功能
+
+#### 效果
+- live log 表格的 Is Resolved 字段根据警报的解决状态显示不同的背景颜色，便于用户快速识别未解决的警报
+- 未解决警报显示红色背景，已解决警报显示绿色背景，无需解决警报显示黄色背景
+- 仅该字段有背景色，不影响其他列
+
+#### 影响范围
+- 修改文件：
+  - `OHB80PortMonitor_V_1_0_0/ui/customwidget/alarmlogwidget/alarmlogwidget.cpp`
+
+---
+
+### 2026-05-16 - Simon
 **新增设备可用性配置控件（DeviceEnableSettingWidget）**
 
 #### 修改内容

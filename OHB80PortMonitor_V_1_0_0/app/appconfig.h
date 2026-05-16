@@ -7,8 +7,7 @@
 #include <QStandardPaths>
 
 // 前置声明
-class NetworkConfig;
-class QRCodeConfig;
+class OHBDeviceConfig;
 class UserInfoConfig;
 
 class AppConfig
@@ -27,11 +26,10 @@ public:
     QString getConfigDir() const;      // 获取配置文件目录
     QString getDebugLogDir() const;    // 获取调试日志目录
     QString getUserLogDir() const;     // 获取用户日志目录
-    QString getGraphConfigPath() const; // 获取天车地图配置文件路径
-    QString getNetworkConfigPath() const; // 获取网络配置文件路径
-    QString getQRCodeConfigPath() const;  // 获取二维码配置文件路径
-    QString getUserInfoConfigPath() const; // 获取用户信息配置文件路径
-    QString getModbusConfigPath() const;  // 获取 Modbus 配置文件路径
+    QString getGraphConfigPath() const;     // 获取天车地图配置文件路径
+    QString getOHBDeviceConfigPath() const; // 获取 OHB 设备配置文件路径
+    QString getUserInfoConfigPath() const;  // 获取用户信息配置文件路径
+    QString getModbusConfigPath() const;    // 获取 Modbus 配置文件路径
 
     // 数据库相关路径
     QString getDatabaseDir() const;                    // 获取数据库目录（可执行文件目录/databases）
@@ -47,8 +45,7 @@ public:
     QVariant getValue(const QString& key, const QVariant& defaultValue = QVariant()) const;
 
     // 配置类实例获取
-    NetworkConfig& getNetworkConfig() const;
-    QRCodeConfig& getQRCodeConfig() const;
+    OHBDeviceConfig& getOHBDeviceConfig() const;
     UserInfoConfig& getUserInfoConfig() const;
 
 private:
@@ -67,8 +64,7 @@ private:
     QString m_userLogDir;
     QString m_databaseDir;
     
-    mutable NetworkConfig* m_networkConfig;
-    mutable QRCodeConfig* m_qrCodeConfig;
+    mutable OHBDeviceConfig* m_ohbDeviceConfig;
     mutable UserInfoConfig* m_userInfoConfig;
 };
 

@@ -161,6 +161,13 @@ void AlarmLogWidget::onRecordResolved(const QString& qrCode,
         if (rowQr == qrCode && rowType == typeText && rowRes != resolvedText) {
             if (auto* it = model->item(r, kColIsResolved))  it->setText(resolvedText);
             if (auto* it = model->item(r, kColResolveTime)) it->setText(resolveTime);
+
+            // 仅更新 Is Resolved 字段（第 4 列）背景色为绿色（已解决）
+            const QColor resolvedColor(200, 255, 200);
+            if (auto* it = model->item(r, kColIsResolved)) {
+                it->setBackground(resolvedColor);
+                it->setForeground(QBrush(Qt::white));  // 字体颜色为白色
+            }
             return;
         }
     }
@@ -186,6 +193,28 @@ void AlarmLogWidget::onRecordInserted(const AlarmRecord& record)
           << new QStandardItem(resolvedText)
           << new QStandardItem(record.resolveTime)
           << new QStandardItem(record.description);
+
+    // 仅对 Is Resolved 字段（第 4 列）设置背景色和字体颜色
+    constexpr int kColIsResolved = 4;
+    QColor resolvedColor;
+    switch (record.isResolved) {
+        case static_cast<int>(AlarmResolvedStatus::Unresolved):
+            resolvedColor = QColor(255, 100, 100);  // 鲜艳红色
+            break;
+        case static_cast<int>(AlarmResolvedStatus::Resolved):
+            resolvedColor = QColor(200, 255, 200);  // 绿色
+            break;
+        case static_cast<int>(AlarmResolvedStatus::NoNeed):
+            resolvedColor = QColor(255, 255, 200);  // 黄色
+            break;
+        default:
+            resolvedColor = QColor(255, 255, 255);  // 白色
+            break;
+    }
+    if (kColIsResolved < items.size()) {
+        items[kColIsResolved]->setBackground(resolvedColor);
+        items[kColIsResolved]->setForeground(QBrush(Qt::white));  // 字体颜色为白色
+    }
 
     model->insertRow(0, items);
 

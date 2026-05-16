@@ -1,7 +1,6 @@
 #include "shareddata.h"
 #include "appconfig.h"
-#include "networkconfig.h"
-#include "qrcodeconfig.h"
+#include "ohbdeviceconfig.h"
 #include "modbustcpmastermanager/modbustcpmastermanager.h"
 #include "scheduler/scheduler.h"
 #include "scheduler/tasks/network_status_task.h"
@@ -25,10 +24,8 @@ SharedData::SharedData() {
         setOfOHBInfoList.reserve(20);
         QVector<int> uiIds = {2,3,4,5,6,7,8,9,10,11,12,13,36,37,38,39,40,41,42,43};
         
-        // 读取网络配置
-        QVector<OHBNetworkInfo> networkInfos = AppConfig::getInstance().getNetworkConfig().readNetworkConfig();
-        // 读取二维码配置
-        QVector<QString> qrCodeInfos = AppConfig::getInstance().getQRCodeConfig().readQRCodeMapping();
+        // 读取 OHB 设备配置（QRCode + 网络信息合并）
+        QVector<OHBDeviceInfo> devices = AppConfig::getInstance().getOHBDeviceConfig().readDevices();
         // 索引
         int index = 0;
 
@@ -42,9 +39,9 @@ SharedData::SharedData() {
             QVector<FoupOfOHBInfo> foups;
             for (int j = 0; j < 4; ++j) {
                 FoupOfOHBInfo foup;
-                foup.setQrCode(qrCodeInfos.at(index));
-                foup.setIp(networkInfos.at(index).ip);
-                foup.setPort(networkInfos.at(index++).port);
+                foup.setQrCode(devices.at(index).qrCode);
+                foup.setIp(devices.at(index).ip);
+                foup.setPort(devices.at(index++).port);
                 foup.setInletPressure(0);
                 foup.setInletFlow(0);
                 foup.setRH(0);

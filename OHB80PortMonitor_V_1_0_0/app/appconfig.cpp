@@ -1,6 +1,5 @@
 #include "appconfig.h"
-#include "networkconfig.h"
-#include "qrcodeconfig.h"
+#include "ohbdeviceconfig.h"
 #include "userinfoconfig.h"
 #include <QCoreApplication>
 #include <QDebug>
@@ -12,8 +11,7 @@ AppConfig& AppConfig::getInstance()
 }
 
 AppConfig::AppConfig()
-    : m_networkConfig(nullptr)
-    , m_qrCodeConfig(nullptr)
+    : m_ohbDeviceConfig(nullptr)
     , m_userInfoConfig(nullptr)
 {
     initializePaths();
@@ -112,14 +110,9 @@ QString AppConfig::getGraphConfigPath() const
     return m_configDir + "/graph_config.xml";
 }
 
-QString AppConfig::getNetworkConfigPath() const
+QString AppConfig::getOHBDeviceConfigPath() const
 {
-    return m_configDir + "/network.ini";
-}
-
-QString AppConfig::getQRCodeConfigPath() const
-{
-    return m_configDir + "/qrcode.ini";
+    return m_configDir + "/ohb_device.ini";
 }
 
 QString AppConfig::getUserInfoConfigPath() const
@@ -162,20 +155,12 @@ QString AppConfig::getOperationLogQueriesSqlPath() const
     return m_databaseDir + "/operation_log_queries.sql";
 }
 
-NetworkConfig& AppConfig::getNetworkConfig() const
+OHBDeviceConfig& AppConfig::getOHBDeviceConfig() const
 {
-    if (!m_networkConfig) {
-        m_networkConfig = &NetworkConfig::getInstance();
+    if (!m_ohbDeviceConfig) {
+        m_ohbDeviceConfig = &OHBDeviceConfig::getInstance();
     }
-    return *m_networkConfig;
-}
-
-QRCodeConfig& AppConfig::getQRCodeConfig() const
-{
-    if (!m_qrCodeConfig) {
-        m_qrCodeConfig = &QRCodeConfig::getInstance();
-    }
-    return *m_qrCodeConfig;
+    return *m_ohbDeviceConfig;
 }
 
 UserInfoConfig& AppConfig::getUserInfoConfig() const
